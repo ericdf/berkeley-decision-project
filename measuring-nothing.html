@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Measuring Nothing — Why Berkeley Cannot Rank Its Own Programs</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Calendar placement is the whole argument on this page, so it gets a visual token rather
+   than being buried in a sentence. Consent and action are colored differently for the same
+   reason the bond page colors instrument type: the reader should be able to scan a column
+   and see the pattern before reading a word of it. */
+.cal { font-family: var(--sans); font-size: .7rem; font-weight: 700; white-space: nowrap;
+       letter-spacing: .06em; text-transform: uppercase; }
+.cal-c { color: var(--accent); }
+.cal-a { color: var(--quote); }
+.yr { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+      color: var(--ink-2); white-space: nowrap; }
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+/* The auditor callout. This page's central claim is not ours — it is the City's own
+   independent auditor's, in a published report. That distinction is the difference between
+   an opinion piece and a finding, so it gets the page's only accent-filled panel rather than
+   sitting in the body text where a skimming reader would take it for our assertion. */
+.aud { background: var(--accent-soft); border: 1px solid var(--accent);
+       border-left: 5px solid var(--accent); border-radius: 0 4px 4px 0;
+       padding: 1.25rem 1.4rem; margin: 1.8rem 0; }
+.aud-h { font-family: var(--sans); font-size: .69rem; font-weight: 800; letter-spacing: .13em;
+         text-transform: uppercase; color: var(--accent); margin-bottom: .75rem; }
+.aud-q { font-size: 1.12rem; line-height: 1.5; font-weight: 600; color: var(--ink);
+         margin-bottom: .8rem; }
+.aud p { font-size: .95rem; margin-bottom: .7rem; }
+.aud p:last-child { margin-bottom: 0; }
+.aud-src { font-family: var(--sans); font-size: .76rem; color: var(--ink-2); line-height: 1.55; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+  <div class="kicker">Analysis</div>
+  <h1>Measuring Nothing</h1>
+  <p class="standfirst">Berkeley counts what its departments do. It does not, for the most part, know whether any of it works. That sounds like a reporting problem. It is a major reason the city cannot prioritize &mdash; and why an across-the-board cut can arrive as though it were a decision.</p>
+  <div class="byline">An argument about the precondition for every other choice &middot; August 2026</div>
+
+  <p>This page is about a missing capability rather than a missing document. Berkeley publishes performance measures. It has published them in every budget book since fiscal year 2022. The question is narrower and harder: <strong>do those measures tell anyone whether a program is producing the result it exists to produce?</strong></p>
+
+  <p>Mostly they do not. They record volume. Inspections completed, permits processed, outreach contacts made, tickets closed, miles installed. Those are real numbers and they are useful for managing workload. They answer the question <em>what did we do</em>. They do not answer the question <em>what changed because we did it</em>.</p>
+
+  <div class="beat">
+    <div class="beat-h">The distinction, in one line</div>
+    <p><strong>Activity measurement asks what government did. Outcome measurement asks what changed because government acted.</strong> A city can do more and more of something without the underlying condition improving at all &mdash; and it will not be able to tell.</p>
+  </div>
+
+  <p>The difference is not academic. Consider the pairs:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>What gets counted</th><th>What would need to be known</th></tr></thead>
+      <tbody>
+        <tr><td>Homeless outreach contacts made</td><td>Share of clients still housed after twelve months</td></tr>
+        <tr><td>Potholes repaired</td><td>Change in Pavement Condition Index</td></tr>
+        <tr><td>Miles of bicycle infrastructure installed</td><td>Change in serious cyclist injuries, adjusted for exposure</td></tr>
+        <tr><td>Building permits processed</td><td>Median end-to-end approval time and applicant cost</td></tr>
+        <tr><td>Trees planted</td><td>Canopy still standing after five years</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Why this decides the budget</h2>
+
+  <p>Prioritizing means ranking. Ranking means knowing what each program delivers for what it costs. A city relying primarily on activity data has no systematic basis for ranking programs by what they deliver for what they cost &mdash; and therefore no defensible way to distinguish a program that works from one that merely stays busy.</p>
+
+  <p>Watch what follows from that. Faced with a roughly $29&nbsp;million General Fund shortfall, the City Manager asked every department to model reductions at a <em>common percentage</em>. That method has an obvious defect &mdash; it assumes every activity is equally important and equally able to absorb a cut &mdash; and the city&rsquo;s own budget documents describe the consequences in specific departments as severe.</p>
+
+  <p>But notice what the alternative would have required. To protect one service and cut another deeper, someone has to be able to say, on the record, that the first delivers more per dollar than the second. Absent outcome data, nobody can say that. The flat percentage is not the lazy option. On this evidence base it is close to the only option.</p>
+
+  <div class="pull">The across-the-board cut is what remains when ranking is impossible: not a decision about priorities, but the absence of one.</div>
+
+  <p>The same gap disables the rest of the toolkit. <a href="framework.html#stop">STOP</a> &mdash; the decision to cease an activity altogether &mdash; requires evidence that it is not working. Without that evidence, stopping becomes much harder to justify and the cost base tends to persist. <a href="crayon-box.html">Exploring alternatives</a> requires something to compare alternatives on. Deciding whether a purchase was worth making requires knowing what it has delivered since. Each of those failures is documented elsewhere on this site. This is the condition underneath them.</p>
+
+  <h2>What the City&rsquo;s own auditor found</h2>
+
+  <p>Everything above is an argument. What follows is the strongest direct evidence for it: the City&rsquo;s independently elected Auditor found precisely this problem in one of Berkeley&rsquo;s largest discretionary spending areas.</p>
+
+  <div class="aud">
+    <div class="aud-h">&#9888; A finding of the City Auditor, not of this site</div>
+    <p class="aud-q">Berkeley has no outcome tracking system for its homeless programs. The city cannot assess whether they are working.</p>
+    <p>The programs in question account for more than <strong>$21.7 million a year</strong>, spread across some <strong>33 programs</strong>. The Auditor recommended implementing outcome tracking, and requiring performance benchmarks <em>before</em> renewing program contracts.</p>
+    <p class="aud-src">City Auditor, <em>Berkeley Homeless Response Team: Coordination, Oversight, and Outcome Tracking</em>, July 2025. The Auditor is elected by Berkeley voters and reports independently of the City Manager and the Council.</p>
+  </div>
+
+  <p>That is a single department&rsquo;s programs. It is also the largest discretionary spending area the city controls, and the one where the question &ldquo;is this working&rdquo; has been asked in public most often. That does not establish that every Berkeley program lacks outcome measures. It does establish that the problem is real, consequential, and present in one of the city&rsquo;s largest discretionary spending areas. The Auditor&rsquo;s broader 2026 review gives reason to ask how much further it extends.</p>
+
+  <p>In February 2026 the Auditor followed with a research report, <em>A Guide to Measuring Performance in the City of Berkeley</em>. Its register is worth stating precisely: it is framed as opportunities for management consideration, not as a finding of non-compliance. It observes that Berkeley&rsquo;s measures are scattered across documents, that some data is hard to find, and that peer cities use standardized reporting periods, public dashboards, and in some cases outcome-based budgeting. It notes that Berkeley&rsquo;s police report 911 response times in their annual report &mdash; but that the figure does not appear in the budget book.</p>
+
+  <p>That last detail is the shape of the whole problem. The number exists. It is simply not where a decision-maker would look for it.</p>
+
+  <h2>The attention question</h2>
+
+  <p>Here is what makes this a habit rather than an oversight. A council that lacked outcome measures and understood what that cost would spend serious floor time fixing it, because everything else depends on it.</p>
+
+  <p>In April 2026 the Council adopted an item directing the City Manager to develop ten to twenty measurable, outcome-oriented goals across the city&rsquo;s major priorities, with quarterly progress updates and a public dashboard. It is a good item. It asks the right question and it names the right deliverables.</p>
+
+  <p>It was adopted on the <a href="consent-drip.html">consent calendar</a>. No debate, no discussion, <strong>zero speakers and zero letters</strong>. The instrument by which the city proposed to learn whether its major priorities were producing results was handled on consent.</p>
+
+  <p>It also went out as a referral with no return date. The item asks for quarterly updates and a dashboard <em>once goals exist</em>, but sets no deadline for the goals themselves &mdash; so nothing is ever late, and no meeting arrives at which someone must account for the absence. A referral without a date is a request the calendar cannot enforce.</p>
+
+  <div class="beat">
+    <div class="beat-h">What the council did examine</div>
+    <p>For comparison, from the same record: 197 speakers on a resolution about a foreign ceasefire; 160 on a single street&rsquo;s paving alignment; 156 and again 132 on a surveillance contract; 128 on a General Plan amendment. Berkeley is entirely capable of sustained public deliberation. It allocates that capacity to contention, not to consequence.</p>
+  </div>
+
+  <p>Across seventy-four annotated agendas in this project&rsquo;s record, the phrase &ldquo;measurable goals&rdquo; appears on <strong>one</strong>. Nothing is yet overdue, because nothing was ever due. But in the three months and eight meetings that followed &mdash; including the adoption of an entire biennial budget, the exact decision such measures exist to inform &mdash; no member asked about it once.</p>
+
+  <p>The Council did not reject outcome measurement. The record instead shows repeated recognition of the problem without sustained attention sufficient, so far, to make outcome measurement part of ordinary budgeting.</p>
+
+  <h2>Six years earlier, the same shape</h2>
+
+  <p>This is not new, which is what makes it a habit. In 2019 Berkeley began a performance-measurement pilot under the Results-Based Accountability framework, organized around three questions: how much did we do, how well did we do it, and <em>is anyone better off</em>. The third question is the right one, and it was written into the design from the start.</p>
+
+  <p>The pilot came to Council on April 14, 2020. It was placed on the Information Calendar. The annotated agenda records the action in three words:</p>
+
+  <blockquote><p>&ldquo;Received and filed.&rdquo;</p><div class="attrib">Annotated Agenda, April 14, 2020</div></blockquote>
+
+  <p>No resolution establishing outcome standards. No direction to departments to replace activity measures with outcome measures. No requirement to connect the measures to appropriations. No recurring public review. The framework contained the conceptual basis for all of it; the Council received the framework and moved on.</p>
+
+  <p>Performance measures duly appeared in the budget book from fiscal 2022. That is institutional progress and it should be credited. But appearing in a budget book is not the same as governing by them, and the available record does not show appropriations being made contingent on results in the years since.</p>
+
+  <div class="notclaim">
+    <h3>What this page does not claim</h3>
+    <p><strong>It does not claim Berkeley measures nothing.</strong> The city publishes measures in every budget book and some are genuine outcome measures &mdash; police clearance rates and 911 response times among them. <strong>The claim is about the absence of a system:</strong> measures that are consistent over time, centrally reported, and actually used to allocate money.</p>
+    <p><strong>It does not claim the 2026 item was a failure.</strong> It is the most serious attempt in this record, it specifies outcomes rather than more statistics, and it deserves to be recognized as such. Whether it becomes real depends on what returns &mdash; and the quarterly dashboard is the thing to watch for.</p>
+    <p><strong>It does not claim measurement is free.</strong> Building an outcome system costs staff time, in a budget environment that is cutting staff time. That trade-off was raised at Council and it is a fair objection. The counter is that the cost of <em>not</em> having it is paid every time the city cuts across the board because it cannot rank.</p>
+    <p><strong>It does not claim bad faith.</strong> Nothing here suggests anyone preferred ignorance. Activity measures are what most organizations produce by default; outcome measures require deliberate design. The finding is that the deliberate design was never given the attention it needed.</p>
+  </div>
+
+  <h2>What would count as fixed</h2>
+
+  <p>The test is not whether a dashboard appears. It is whether the measures change what the Council does. For each major program, that means a stated public condition it is meant to improve, a baseline, a target, a date, the cost of reaching it, a reporting frequency &mdash; and a stated consequence if performance does not move.</p>
+
+  <p>Until then, Berkeley will continue making major financial decisions without the information required to rank what it buys &mdash; leaving percentage cuts as the easiest defensible substitute for prioritization.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p>City Auditor, <em>Berkeley Homeless Response Team: Coordination, Oversight, and Outcome Tracking</em>, July 2025 &mdash; no outcome tracking system in place; $21.7M+ annually across 33+ programs; recommendation to require performance benchmarks before renewing program contracts. City Auditor Jenny Wong, <em>A Guide to Measuring Performance in the City of Berkeley</em>, February 5, 2026, presented to Council February 24, 2026 &mdash; framed as opportunities for management consideration rather than as an audit finding. City of Berkeley, <em>Strategic Plan Performance Measures Pilot</em>, Council Item 42, April 14, 2020, Information Calendar; action recorded in the annotated agenda as &ldquo;Received and filed.&rdquo; City of Berkeley, <em>Setting Measurable Goals and Metrics for Key City Priorities</em>, item 17, April 21, 2026, consent calendar, authored by one councilmember and co-sponsored by two others, forwarded with a qualified positive recommendation by the Health, Life Enrichment, Equity &amp; Community Policy Committee on January 28, 2026. Budget method and departmental consequences: City of Berkeley, Proposed FY2027 &amp; FY2028 Biennial Budget. Speaker counts from the annotated agendas of April 28 2025, March 24 2026, May 7 2026, June 23 2026 and July 28 2026.</p>
+    <h3>A note on method</h3>
+    <p>Speaker and letter counts are those recorded in the annotated agendas. The count of agendas mentioning &ldquo;measurable goals&rdquo; covers the seventy-four annotated agendas held in this project&rsquo;s record, which begins in December 2024; the phrase&rsquo;s absence before that date is not evidence, since those agendas are not in the set. The characterization of the 2019&ndash;2020 pilot and of measures published since fiscal 2022 follows the City Auditor&rsquo;s February 2026 report and the April 2020 agenda record. This page describes council-wide method and does not attribute conduct to individual members; the April 2026 item is credited to its sponsors in the sources above without naming them in the argument.</p>
+    <h3>Related</h3>
+    <p><a href="crayon-box.html">The Crayon Box</a> &middot; <a href="consent-drip.html">Two Calendars</a> &middot; <a href="small-sites.html">Buy once, maintain forever</a> &middot; <a href="framework.html">The Berkeley Budget Framework</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

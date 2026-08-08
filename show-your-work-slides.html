@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Show Your Work — Presentation</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+body { background: #0f1526; color: #2c3e50; }
+a { color: #2980b9; }
+
+/* ── Pinned nav: brand + document actions in one bar ── */
+.navbar { position: sticky; top: 0; z-index: 100; background: #1a1a2e;
+          border-bottom: 1px solid #2f3d5c; box-shadow: 0 2px 14px rgba(0,0,0,.32); }
+.nav-inner { display: flex; align-items: center; gap: 12px; padding: 9px 30px; }
+.nav-brand { text-decoration: none; flex-shrink: 0; }
+.nav-brand .brand-title { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; white-space: nowrap; }
+.nav-brand .brand-sub { font-size: 11px; color: #8899bb; margin-top: 3px; white-space: nowrap; }
+.nav-brand:hover .brand-title { color: #4e8ecb; }
+.nav-acts { display: flex; gap: 8px; align-items: center; margin-left: auto; flex-wrap: wrap;
+            justify-content: flex-end; }
+.dl-btn { display: inline-block; background: #4e8ecb; color: #fff; text-decoration: none;
+          font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: 4px; white-space: nowrap; }
+.dl-btn:hover { background: #6ba3d9; }
+.dl-btn.alt { background: transparent; border: 1px solid #3d5680; color: #8fbde8; }
+.dl-btn.alt:hover { background: #1e2a47; border-color: #4e8ecb; }
+.lbl-full { display: inline; }
+.lbl-short { display: none; }
+@media (max-width: 900px) {
+  .nav-inner { padding: 8px 16px; gap: 8px; flex-wrap: wrap; }
+  .nav-brand .brand-sub { display: none; }
+  .dl-btn { font-size: 11px; padding: 6px 10px; }
+  .lbl-full { display: none; }
+  .lbl-short { display: inline; }
+}
+@media (max-width: 620px) {
+  .nav-brand .brand-title { font-size: 0; letter-spacing: 0; }
+  .nav-brand .brand-title::before { content: "\2302 DECISION PROJECT"; font-size: 11.5px; letter-spacing: .4px; }
+  /* Give the actions their own full-width row rather than squeezing one line. */
+  .nav-brand { flex: 1 1 100%; }
+  .nav-acts { flex: 1 1 100%; margin-left: 0; justify-content: flex-start;
+              gap: 6px; padding-top: 2px; }
+  .dl-btn { font-size: 10.5px; padding: 6px 9px; }
+}
+
+/* deck */
+.deck { max-width: 1000px; margin: 0 auto; padding: 26px 20px 50px; }
+.slide-wrap { margin-bottom: 26px; }
+.slide-num { font-size: 10px; font-weight: 700; letter-spacing: 1.6px; color: #5a6a8a;
+             text-transform: uppercase; margin-bottom: 7px; padding-left: 2px; }
+.slide { position: relative; background: #fff; border-radius: 8px; box-shadow: 0 6px 26px rgba(0,0,0,.35);
+         aspect-ratio: 16 / 9; padding: 44px 52px; display: flex; flex-direction: column; overflow: hidden; }
+.slide.dark { background: #1a1a2e; }
+.slide.dark .s-title, .slide.dark .s-big { color: #fff; }
+.slide.dark .s-sub { color: #aab4cc; }
+.slide-rule { position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: #4e8ecb; }
+
+.s-eyebrow { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+             color: #4e8ecb; margin-bottom: 12px; flex-shrink: 0; }
+.s-title { font-size: 30px; font-weight: 900; color: #1a1a2e; line-height: 1.15; letter-spacing: -.4px; }
+.s-sub { font-size: 15px; color: #5d6d7e; margin-top: 9px; line-height: 1.5; flex-shrink: 0; }
+.s-body { margin-top: 22px; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-start; }
+.s-foot { font-size: 11px; color: #95a5a6; margin-top: auto; padding-top: 14px; flex-shrink: 0; }
+
+/* numbered claim list (slide 2) */
+.claims { display: flex; flex-direction: column; gap: 14px; }
+.claim { display: flex; align-items: center; gap: 18px; }
+.claim-n { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: #eaf2fa;
+           color: #2471a3; font-size: 17px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+.claim-t { font-size: 19px; font-weight: 700; color: #1a1a2e; line-height: 1.35; }
+
+/* label / description rows */
+.rows { display: flex; flex-direction: column; gap: 11px; }
+.row { display: flex; gap: 18px; align-items: baseline; }
+.row-k { flex: 0 0 150px; font-size: 11px; font-weight: 800; text-transform: uppercase;
+         letter-spacing: 1.1px; color: #4e8ecb; padding-top: 2px; }
+.row-v { flex: 1; font-size: 14.5px; line-height: 1.6; color: #34495e; }
+.row-v strong { color: #1a1a2e; }
+
+/* two-col warning grid */
+.quad { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 22px; }
+.quad-item { border-left: 3px solid #e0e4e8; padding-left: 14px; }
+.quad-k { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1px; color: #1a1a2e; }
+.quad-v { font-size: 13px; line-height: 1.55; color: #566573; margin-top: 5px; }
+.quad-fix { font-size: 12.5px; line-height: 1.5; color: #1e8449; margin-top: 7px; font-weight: 600; }
+
+/* flow */
+.flow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.flow-box { background: #f0f4f9; border: 1px solid #d6e0ea; border-radius: 6px; padding: 12px 14px;
+            font-size: 12.5px; font-weight: 700; color: #2c3e50; text-align: center; flex: 1; min-width: 0; line-height: 1.35; }
+.flow-arr { color: #4e8ecb; font-size: 18px; font-weight: 900; flex-shrink: 0; }
+.flow-end { background: #fdf0ee; border-color: #f1c7bf; color: #c0392b; }
+
+/* categories */
+.cats3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.c3 { border-top: 4px solid; border-radius: 6px; padding: 16px 16px 18px; }
+.c3.a { background: #eafaf1; border-color: #1e8449; }
+.c3.b { background: #fef9e7; border-color: #b7950b; }
+.c3.c { background: #fdf0ee; border-color: #c0392b; }
+.c3-n { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.4px; }
+.c3.a .c3-n { color: #1e8449; } .c3.b .c3-n { color: #9a7d0a; } .c3.c .c3-n { color: #c0392b; }
+.c3-h { font-size: 19px; font-weight: 900; color: #1a1a2e; margin: 5px 0 9px; }
+.c3-p { font-size: 12.5px; line-height: 1.55; color: #4a5c6a; }
+
+/* checklist */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; }
+.check-h { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.6px; color: #7f8c8d; margin-bottom: 12px; }
+.check { display: flex; flex-direction: column; gap: 9px; }
+.check-i { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; color: #34495e; line-height: 1.45; }
+.tick { color: #1e8449; font-weight: 900; flex-shrink: 0; }
+.big-q { font-size: 34px; font-weight: 900; color: #1a1a2e; line-height: 1.12; letter-spacing: -.5px; }
+
+/* evidence grid */
+.ev { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.ev-i { background: #f4f7fa; border-radius: 6px; padding: 13px 12px; text-align: center;
+        font-size: 12.5px; font-weight: 700; color: #2c3e50; line-height: 1.4; }
+
+/* pull quote */
+.pull { border-left: 4px solid #4e8ecb; padding: 12px 0 12px 22px; }
+.pull-t { font-size: 21px; font-weight: 800; color: #1a1a2e; line-height: 1.45; }
+.dark .pull-t { color: #fff; }
+
+/* ssc rows */
+.ssc3 { display: flex; flex-direction: column; gap: 13px; }
+.ssc3-i { display: flex; gap: 18px; align-items: flex-start; }
+.ssc3-k { flex: 0 0 110px; font-size: 13px; font-weight: 900; text-transform: uppercase;
+          letter-spacing: 1.2px; padding-top: 1px; }
+.ssc3-i.st .ssc3-k { color: #1e8449; } .ssc3-i.sp .ssc3-k { color: #c0392b; } .ssc3-i.co .ssc3-k { color: #2471a3; }
+.ssc3-v { flex: 1; font-size: 14px; line-height: 1.6; color: #34495e; }
+
+/* phases */
+.phases { display: flex; flex-direction: column; gap: 10px; }
+.ph { display: flex; gap: 16px; align-items: flex-start; }
+.ph-n { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: #1a1a2e; color: #fff;
+        font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.ph-k { flex: 0 0 130px; font-size: 13.5px; font-weight: 800; color: #1a1a2e; padding-top: 3px; }
+.ph-v { flex: 1; font-size: 13px; line-height: 1.55; color: #566573; padding-top: 4px; }
+
+.closing { text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.closing .s-eyebrow { color: #6f9fd0; }
+
+@media (max-width: 820px) {
+  .slide { padding: 26px 24px; aspect-ratio: auto; min-height: 340px; }
+  .s-title { font-size: 21px; }
+  .big-q { font-size: 24px; }
+  .cats3, .quad, .ev, .split { grid-template-columns: 1fr; }
+  .flow { flex-direction: column; }
+  .flow-arr { transform: rotate(90deg); }
+  .row { flex-direction: column; gap: 3px; }
+  .row-k { flex: none; }
+}
+
+/* ── Show Your Work deck additions ──────────────────────────────────────────
+   The crayon box is the deck's recurring image (slides 5 and 12). It is the
+   same asset the essay uses, so the two read as one argument. */
+.crayon { display: block; width: 100%; height: auto; border-radius: 6px;
+          flex: 0 1 auto; min-height: 0; align-self: center; }
+/* The image slide cannot honor a fixed 16:9 box: the picture plus its labels exceed
+   the height and overflow:hidden silently clips them. Let it grow. */
+.slide.tall { aspect-ratio: auto; }
+/* The image labels individual crayons, not the two families, so the families are
+   named in text above it. */
+.tools { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 22px; margin-bottom: 16px;
+         width: 100%; flex: 0 0 auto; }
+.tool-h { font-size: 10px; font-weight: 900; letter-spacing: 1.3px; text-transform: uppercase;
+          margin-bottom: 5px; }
+.tool-h.collect { color: #b4453a; }
+.tool-h.spend   { color: #1e8449; }
+.tool-v { font-size: 13.5px; font-weight: 700; color: #2c3e50; line-height: 1.5; }
+.crayon-cap { display: flex; flex: 0 0 auto; gap: 26px; justify-content: center; flex-wrap: wrap;
+              font-size: 11px; font-weight: 700; letter-spacing: .6px; color: #7f8c8d;
+              text-transform: uppercase; margin-top: 10px; }
+.crayon-cap b { color: #2c3e50; }
+
+/* Two-city comparison (slide 7) */
+.cities { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; width: 100%; flex: 0 0 auto; }
+.city-h { font-size: 12px; font-weight: 900; letter-spacing: 1.4px; text-transform: uppercase;
+          color: #2471a3; margin-bottom: 10px; }
+.city-l { counter-reset: step; display: flex; flex-direction: column; gap: 7px; }
+.city-l div { font-size: 13px; line-height: 1.5; color: #34495e; padding-left: 22px; position: relative; }
+.city-l div::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 1px;
+                      font-size: 10px; font-weight: 900; color: #4e8ecb; }
+
+/* Funnel (slide 9) */
+.funnel { display: flex; flex-direction: column; gap: 8px; }
+.fn { display: flex; gap: 16px; align-items: baseline; padding: 8px 14px; background: #f4f7fa;
+      border-left: 3px solid #4e8ecb; border-radius: 0 4px 4px 0; }
+.fn-k { flex: 0 0 190px; font-size: 11px; font-weight: 900; letter-spacing: 1.1px;
+        text-transform: uppercase; color: #2471a3; }
+.fn-v { flex: 1; font-size: 13px; line-height: 1.5; color: #34495e; }
+.fn.gap { background: #1a1a2e; border-left-color: #4e8ecb; }
+.fn.gap .fn-k, .fn.gap .fn-v { color: #fff; }
+
+/* Arithmetic example (slide 10) */
+/* Boxed aside. Ranks above body copy, below the slide title. */
+.callout { background: #f0f4f9; border-left: 4px solid #4e8ecb; border-radius: 0 5px 5px 0;
+           padding: 13px 17px; margin-top: 18px; flex: 0 0 auto; }
+.callout-t { font-size: 15.5px; font-weight: 800; color: #1a1a2e; line-height: 1.4; }
+.callout-v { font-size: 12.5px; line-height: 1.6; color: #566573; margin-top: 6px; }
+
+.math { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+.math-n { font-size: 30px; font-weight: 900; color: #1a1a2e; letter-spacing: -.5px; }
+.math-op { font-size: 13px; font-weight: 800; color: #4e8ecb; text-transform: uppercase; letter-spacing: 1.2px; }
+/* A bare operator carries the argument on slide 4, so it is sized with the terms,
+   not with the connective prose on slide 10. */
+.math-sym { font-size: 34px; font-weight: 900; color: #4e8ecb; line-height: 1; letter-spacing: 0; }
+.math-sym.neq { color: #c0392b; font-size: 40px; }
+.math-faint { opacity: .38; margin-top: 14px; }
+
+/* Denials list (slide 12) */
+.nots { display: flex; flex-direction: column; gap: 7px; }
+.nots div { font-size: 14px; line-height: 1.5; color: #566573; padding-left: 24px; position: relative; }
+.nots div::before { content: "\00d7"; position: absolute; left: 4px; top: -1px; color: #c0392b;
+                    font-size: 16px; font-weight: 900; }
+
+@media (max-width: 820px) {
+  .cities { grid-template-columns: 1fr; gap: 18px; }
+  .fn { flex-direction: column; gap: 3px; }
+  .fn-k { flex: none; }
+  .math-n { font-size: 22px; }
+  .math-sym { font-size: 26px; }
+  .math-sym.neq { font-size: 30px; }
+  .crayon-cap { gap: 12px; font-size: 10px; }
+  .tools { grid-template-columns: 1fr; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <div class="brand-title">&#8962; BERKELEY DECISION PROJECT</div>
+      <div class="brand-sub">Better questions. Better evidence. Better choices.</div>
+    </a>
+    <div class="nav-acts">
+      <a class="dl-btn alt" href="show-your-work.html"><span class="lbl-full">Read the full essay</span><span class="lbl-short">Full essay</span></a>
+      <a class="dl-btn alt" href="framework-slides.html"><span class="lbl-full">The framework deck</span><span class="lbl-short">Framework</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="deck">
+
+  <!-- 1 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 1 of 14</div>
+    <div class="slide dark">
+      <div class="closing">
+        <div class="s-eyebrow">Show Your Work</div>
+        <div class="s-title" style="font-size:38px;max-width:820px;margin:0 auto;">Before Berkeley asks for more money, show the work.</div>
+        <p style="font-size:15px;color:#8fa0bd;line-height:1.7;margin-top:24px;max-width:680px;margin-left:auto;margin-right:auto;">Before Council asks residents for a tax, bond, fee, or assessment, it should show why the need cannot reasonably be met with the resources the City already controls.</p>
+        <div style="margin-top:26px;padding:14px 22px;background:#243352;border-radius:6px;max-width:520px;margin-left:auto;margin-right:auto;">
+          <div style="font-size:15px;font-weight:700;color:#fff;">The proposal is not <em>cut first</em>. It is <em>compare first</em>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 2 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">First ask whether it earns a place in the portfolio. Then ask how to pay for it.</div>
+      <div class="s-sub">These are two different decisions, and they belong in this order.</div>
+      <div class="s-body" style="justify-content:space-evenly;">
+        <div class="flow">
+          <div class="flow-box" style="font-size:14px;padding:16px;">EARNS A PLACE?</div>
+          <div class="flow-arr">&rarr;</div>
+          <div class="flow-box" style="font-size:14px;padding:16px;">HOW DO WE PAY?</div>
+        </div>
+        <div class="rows" style="margin-top:20px;">
+          <div class="row"><div class="row-k">1 &middot; Portfolio</div><div class="row-v">Does the undertaking deserve City money, staff capacity, Council attention, and public trust? That is the job of the <a href="framework.html">broader decision framework</a> &mdash; municipal role, resident benefit, institutional fit, evidence, lifecycle cost, capacity, partners, metrics, decision gates, and exit criteria.</div></div>
+          <div class="row"><div class="row-k">2 &middot; Financing</div><div class="row-v">Once the undertaking has earned a place, what is the best way to pay for it? <strong>This deck is mostly about Question 2.</strong></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 3 of 14</div>
+    <div class="slide tall">
+      <div class="slide-rule"></div>
+      <div class="s-title">Once the project earns a place, Berkeley still has more than one way to pay for it.</div>
+      <div class="s-sub">Berkeley&rsquo;s own fiscal policy already recognizes two branches: <strong>new expenditure &rarr; additional revenue OR expenditure reductions.</strong> The arithmetic is sound. What is missing is a decision rule requiring Council to examine the choices seriously before selecting new revenue.</div>
+      <div class="s-body" style="justify-content:center;">
+        <div class="tools">
+          <div class="tool-g">
+            <div class="tool-h collect">Ways to collect more</div>
+            <div class="tool-v">taxes &middot; bonds &middot; assessments &middot; fees &middot; grants &middot; other outside funding</div>
+          </div>
+          <div class="tool-g">
+            <div class="tool-h spend">Ways to spend differently</div>
+            <div class="tool-v">efficiency &middot; reprioritization &middot; alternatives</div>
+          </div>
+        </div>
+        <img class="crayon" style="max-height:46vh;object-fit:contain;" src="images/crayons.png" width="1264" height="843" alt="A yellow crayon box labeled Berkeley Budgeting Palette. Four crayons are pulled forward and worn down to stubs: sales tax, property taxes, bonds, and higher fees. Three sit behind them with their points still sharp and unused: reprioritize, efficiency, and explore alternatives.">
+        <div class="crayon-cap"><span><b>Worn down</b> &mdash; the four Berkeley uses</span><span><b>Still sharp</b> &mdash; the three it does not</span></div>
+      </div>
+      <div class="s-foot">Those choices are not politically equivalent.</div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 4 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">The current rules give the revenue crayons an easier path.</div>
+      <div class="s-sub">New funding is additive. It can finance a new priority without requiring a direct comparison with other ways of achieving the same goal.</div>
+      <div class="s-body" style="justify-content:space-evenly;">
+        <p style="font-size:13.5px;font-weight:700;color:#2c3e50;">A stronger process gives Council reason to explore the full palette.</p>
+        <div class="rows" style="margin-top:14px;">
+          <div class="row"><div class="row-k">Efficiency</div><div class="row-v">Can we produce the same outcome with fewer resources?</div></div>
+          <div class="row"><div class="row-k">Reprioritization</div><div class="row-v">Does the new objective matter more than something already being funded?</div></div>
+          <div class="row"><div class="row-k">Alternatives</div><div class="row-v">Can the outcome be delivered differently &mdash; through redesign, partnerships, regional cooperation, contracting, nonprofit delivery, or cost sharing?</div></div>
+        </div>
+        <div class="pull" style="margin-top:18px;"><div class="pull-t" style="font-size:19px;">Good decision rules give every option a fair hearing.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 5 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">Other cities ask &ldquo;what can we change?&rdquo; before &ldquo;how can we raise more?&rdquo;</div>
+      <div class="s-sub">Berkeley already looks to other cities for practices worth borrowing. Fiscal decision-making need not be exempt.</div>
+      <div class="s-body">
+        <div class="cities">
+          <div>
+            <div class="city-h">San Jos&eacute; &middot; FY2024&ndash;25</div>
+            <div class="city-l">
+              <div>Find savings and efficiencies without service impacts;</div>
+              <div>remove unnecessary capacity where service can still be maintained;</div>
+              <div>confront lower-priority services;</div>
+              <div>then identify revenue that could offset reductions.</div>
+            </div>
+          </div>
+          <div>
+            <div class="city-h">Palo Alto &middot; FY2023 guidelines</div>
+            <div class="city-l">
+              <div>Redesign and reallocation;</div>
+              <div>alternative service delivery;</div>
+              <div>savings opportunities;</div>
+              <div>expanded or new revenue;</div>
+              <div>offsets for new spending whenever possible.</div>
+            </div>
+          </div>
+        </div>
+        <div class="pull" style="margin-top:18px;"><div class="pull-t" style="font-size:19px;">Neither city removes the revenue option. They require a broader comparison before using it.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 6 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">Borrowing capacity tells us what we <em>can</em> borrow &mdash; not what we <em>should</em> buy.</div>
+      <div class="s-sub">Knowing Berkeley&rsquo;s prudent debt capacity is useful financial management. But capacity is a financing fact, not a policy objective.</div>
+      <div class="s-body" style="justify-content:space-evenly;">
+        <p style="font-size:14px;line-height:1.65;color:#566573;">A household with a <strong>$50,000 credit-card limit</strong> is not &ldquo;underspent&rdquo; because some of the limit remains unused. The same logic applies to municipal debt.</p>
+        <p style="font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:#4e8ecb;margin-top:18px;">Before borrowing, Council should have established</p>
+        <div class="flow" style="margin-top:10px;">
+          <div class="flow-box">The problem</div><div class="flow-arr">&rarr;</div>
+          <div class="flow-box">City responsibility</div><div class="flow-arr">&rarr;</div>
+          <div class="flow-box">Justified intervention</div><div class="flow-arr">&rarr;</div>
+          <div class="flow-box">Priority</div><div class="flow-arr">&rarr;</div>
+          <div class="flow-box">Alternatives</div><div class="flow-arr">&rarr;</div>
+          <div class="flow-box">Remaining gap</div>
+        </div>
+        <p style="font-size:13px;color:#7f8c8d;margin-top:14px;text-align:center;">Only then does the financing tool belong in the discussion.</p>
+        <div class="pull" style="margin-top:16px;"><div class="pull-t" style="font-size:19px;">A high credit limit is not a shopping list.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 7 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">Show the efficiencies, alternatives, and tradeoffs &mdash; then show the gap that remains.</div>
+      <div class="s-sub">Before seeking new voter-approved revenue, Council should publish the reasoning. The public should be able to see:</div>
+      <div class="s-body">
+        <div class="funnel">
+          <div class="fn"><div class="fn-k">Efficiency</div><div class="fn-v">Can the same outcome be achieved at lower cost without materially degrading service?</div></div>
+          <div class="fn"><div class="fn-k">Alternatives</div><div class="fn-v">Is there a materially different and better delivery method?</div></div>
+          <div class="fn"><div class="fn-k">Reprioritization</div><div class="fn-v">What existing discretionary spending could be reduced, deferred, redesigned, transferred, or discontinued &mdash; and why should the new priority outrank it?</div></div>
+          <div class="fn"><div class="fn-k">Restricted funds</div><div class="fn-v">Which resources are truly unavailable, and which discretionary subsidies, transfers, or commitments could change?</div></div>
+          <div class="fn gap"><div class="fn-k">Remaining gap</div><div class="fn-v">After those choices are quantified, how much additional revenue is actually required?</div></div>
+        </div>
+      </div>
+      <div class="s-foot">This is not a mandatory cut cascade. The point is comparison and explanation, not predetermined reductions.</div>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 8 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">If the analysis still says &ldquo;raise revenue,&rdquo; then make that case to voters.</div>
+      <div class="s-sub">Suppose Council identifies a $20 million need. A serious review may find $2 million in reasonable efficiencies or reprioritization, alternatives that do not solve the remaining problem, and existing programs Council can publicly justify preserving.</div>
+      <div class="s-body" style="justify-content:center;">
+        <div class="math">
+          <div class="math-n">$20M</div><div class="math-op">&rarr; analysis &rarr;</div><div class="math-n" style="color:#2471a3;">$18M GAP</div>
+        </div>
+        <div class="math math-faint">
+          <div class="math-n">$20M</div><div class="math-op">&rarr; analysis &rarr;</div><div class="math-n">$20M GAP</div>
+        </div>
+        <p style="font-size:13.5px;line-height:1.65;color:#566573;margin-top:22px;text-align:center;max-width:720px;margin-left:auto;margin-right:auto;">Show voters the gap. Explain why the alternatives fail, why the existing expenditures should remain, and why the proposed tax, bond, fee, or assessment is the appropriate financing tool. <strong>If the serious review leaves the full $20 million, show that instead.</strong></p>
+        <div class="pull" style="margin-top:16px;"><div class="pull-t" style="font-size:19px;">The non-revenue crayons do not have to win. Council just has to show that it honestly and carefully considered them.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 9 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">The public should see the choices before the decision hardens &mdash; not afterward.</div>
+      <div class="s-sub">A long justification published after Council has already selected the project, financing mechanism, or ballot measure is disclosure. It is not deliberation.</div>
+      <div class="s-body" style="justify-content:space-evenly;">
+        <div class="flow">
+          <div class="flow-box">Define</div><div class="flow-arr">&rarr;</div>
+          <div class="flow-box">Compare</div><div class="flow-arr">&rarr;</div>
+          <div class="flow-box">Public challenge</div><div class="flow-arr">&rarr;</div>
+          <div class="flow-box">Decide</div>
+        </div>
+        <p style="font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:#c0392b;margin-top:16px;text-align:center;">Not: decide &rarr; justify</p>
+        <p style="font-size:13.5px;line-height:1.6;color:#566573;margin-top:18px;">Residents need a meaningful opportunity to say: <em>that is not the problem; that is not Berkeley&rsquo;s job; that intervention does not follow from the evidence; you missed an alternative; this existing expenditure is less important; your claimed savings would destroy the service</em> &mdash; or <strong>you have made the case, put the measure on the ballot.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 10 of 14</div>
+    <div class="slide dark">
+      <div class="s-eyebrow">The proposal</div>
+      <div class="s-title" style="font-size:30px;">Use every crayon in the box. Just show us that you considered them.</div>
+      <div class="s-body" style="justify-content:space-evenly;">
+        <div class="nots" style="margin-top:6px;">
+          <div style="color:#aab4cc;">This proposal does not prohibit taxes.</div>
+          <div style="color:#aab4cc;">It does not prohibit bonds.</div>
+          <div style="color:#aab4cc;">It does not require layoffs.</div>
+          <div style="color:#aab4cc;">It does not require privatization.</div>
+          <div style="color:#aab4cc;">It does not require the cheapest possible service.</div>
+        </div>
+        <div style="margin-top:20px;padding:16px 22px;background:#243352;border-radius:6px;">
+          <div style="font-size:15px;font-weight:700;color:#fff;line-height:1.6;">It gives Council a way to show the reasoning behind a request for more money.</div>
+          <div style="font-size:13px;color:#8fa0bd;margin-top:10px;letter-spacing:.4px;">Portfolio first. Financing second. Show why this choice beats the alternatives.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 11 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="closing">
+        <div class="s-title" style="font-size:44px;max-width:760px;margin:0 auto;">What about free money?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 12 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">Available money does not make a project a priority.</div>
+      <div class="s-sub">Money that shows up answers <strong>how we would pay</strong>. It never answers <strong>whether we should do it</strong>.</div>
+      <div class="s-body" style="justify-content:space-evenly;">
+        <div class="rows">
+          <div class="row"><div class="row-k">Answers this</div><div class="row-v">A state grant, a one-time capital award, a philanthropic gift, matching funds, unused bond capacity, a newly identified revenue source. <strong>Any of these can change the price Berkeley pays.</strong></div></div>
+          <div class="row"><div class="row-k">Not this</div><div class="row-v">Is this Berkeley&rsquo;s job? Does it beat what we would give up to do it? Can we operate it in year five? <strong>None of those answers change because the money appeared.</strong></div></div>
+        </div>
+        <p style="font-size:13.5px;line-height:1.6;color:#566573;margin-top:16px;">A funding deadline can create real urgency. Urgency is not the same as priority, and a deadline cannot stand in for the decision about whether the undertaking belongs in Berkeley&rsquo;s portfolio at all.</p>
+        <div class="pull" style="margin-top:14px;"><div class="pull-t" style="font-size:19px;">&ldquo;There is a state grant&rdquo; is not an answer to &ldquo;Should Berkeley do this?&rdquo;</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 13 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">Even a 4-to-1 match is not a free pass.</div>
+      <div class="s-sub">Suppose Berkeley can spend $5 million to unlock $20 million from another source. That may be an excellent bargain.</div>
+      <div class="s-body" style="justify-content:space-evenly;">
+        <div class="math">
+          <div class="math-n">$5M LOCAL</div><div class="math-sym">+</div>
+          <div class="math-n">$20M OUTSIDE</div><div class="math-sym neq">&ne;</div>
+          <div class="math-n" style="color:#c0392b;">AUTOMATIC YES</div>
+        </div>
+        <div class="rows" style="margin-top:20px;">
+          <div class="row"><div class="row-k">Not the question</div><div class="row-v">Would you like $25 million for $5 million?</div></div>
+          <div class="row"><div class="row-k">The question</div><div class="row-v"><strong>Is this the best use of Berkeley&rsquo;s $5 million, staff capacity, land, management attention, and future operating commitments?</strong></div></div>
+        </div>
+        <div class="callout">
+          <div class="callout-t">The match changes the price. It does not establish the priority.</div>
+          <div class="callout-v">One-time outside money can also create long-lived obligations for staffing, maintenance, security, insurance, compliance, replacement, and operations.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 14 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 14 of 14</div>
+    <div class="slide dark">
+      <div class="closing">
+        <div class="s-title" style="font-size:36px;max-width:780px;margin:0 auto;">A bargain on something that should not enter the portfolio is not a bargain.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:14px 0 0;">
+    <a href="show-your-work.html" style="color:#8fbde8;font-size:13px;font-weight:700;text-decoration:none;">Read the full essay &rarr;</a>
+    <div style="font-size:11px;color:#5a6a8a;margin-top:10px;">Eric Friedman &middot; August 2026 &middot; Prepared for civic discussion</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build Once — A Facility Funded for Fifteen Years With No Operating Budget</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Calendar placement is the whole argument on this page, so it gets a visual token rather
+   than being buried in a sentence. Consent and action are colored differently for the same
+   reason the bond page colors instrument type: the reader should be able to scan a column
+   and see the pattern before reading a word of it. */
+.cal { font-family: var(--sans); font-size: .7rem; font-weight: 700; white-space: nowrap;
+       letter-spacing: .06em; text-transform: uppercase; }
+.cal-c { color: var(--accent); }
+.cal-a { color: var(--quote); }
+.yr { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+      color: var(--ink-2); white-space: nowrap; }
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+  <div class="kicker">Analysis</div>
+  <h1>Build Once</h1>
+  <p class="standfirst">Berkeley has committed roughly $15 million to a building that opens in April 2028. The budget adopted in June 2026 records what it will cost to run as three letters: <strong>TBD</strong>. Eight years earlier, a City-commissioned study put the figure at $1.5 to $2 million a year. The number did not get firmer as the building got closer. It disappeared.</p>
+  <div class="byline">An argument about the order in which questions get asked &middot; August 2026</div>
+
+  <p>This is the companion to <a href="small-sites.html">Buy once, maintain forever</a>. That page follows a program from first appropriation to fourth to show what ownership costs when nobody counts it. This one catches the same failure eighteen months before the consequence arrives, in a document the Council adopted with the gap printed on the page.</p>
+
+  <p>Every figure below comes from the City&rsquo;s own feasibility study, its own budget, or the Council&rsquo;s own record. Where a document is characterized rather than quoted, it is identified.</p>
+
+  <h2>What the budget says</h2>
+
+  <p>The biennial budget presented for adoption on 23 June 2026 lists the African American Holistic Resource Center in its table of strategic priority projects:</p>
+
+  <blockquote>
+    <p><strong>Department:</strong> City Manager&rsquo;s Office<br>
+    <strong>Title:</strong> African American Holistic Resource Center<br>
+    <strong>Description:</strong> Delivering full service community engagement and support models in the new building to be completed April 2028.<br>
+    <strong>Start/End:</strong> December 2026 &ndash; Ongoing<br>
+    <strong>New or Continuing:</strong> New<br>
+    <strong>Estimated Budget:</strong> Staff Time; <strong>Budget TBD</strong></p>
+    <div class="attrib">Proposed Biennial Budget FY2027&ndash;28, strategic priority table, p.&nbsp;113</div>
+  </blockquote>
+
+  <p>Read the row across. A project the City classifies as <em>new</em> and <em>ongoing</em>, delivering services in a building with a completion date already fixed, and no number for what delivering them will cost.</p>
+
+  <p>The Council adopted that budget and the accompanying Five-Year Capital Improvement Program the same night. The appropriations ordinance &mdash; $921,596,116 gross &mdash; passed with <strong>zero speakers</strong>.</p>
+
+  <div class="pull">The building has a completion date. The operating budget has three letters.</div>
+
+  <h2>The number existed once</h2>
+
+  <p>This is not a case of an unknowable figure. In 2018 the City commissioned a feasibility study for the facility. It was transmitted to Council as an information item in March 2019, and it contains an operating estimate:</p>
+
+  <blockquote>
+    <p>&ldquo;The projected annual budget for the AAHRC will range from <strong>$1.5 &ndash; $2 million dollars</strong>.&rdquo;</p>
+    <div class="attrib">AAHRC Feasibility Study, 2019</div>
+  </blockquote>
+
+  <p>Set that against the capital numbers in the same study. It priced the building itself at between <strong>$1.16 million</strong> to rehabilitate a single-storey structure and <strong>$1.905 million</strong> for new two-storey construction &mdash; excluding land, and flagged as subject to major uncertainty.</p>
+
+  <p>So the study told the City, in 2019, that the facility would cost roughly as much to run <em>every year</em> as it would cost to build once. That is the central fact about this kind of project, it was in the City&rsquo;s hands before construction money was committed, and it is the fact that went missing.</p>
+
+  <h2>What the estimate did not include</h2>
+
+  <p>The $1.5&ndash;2 million figure was a range in a sentence, not a model. The study did not provide a staffing plan, salary assumptions, program budgets, expected service volumes, utilization projections, revenue commitments, a cost per participant, a ceiling on the City&rsquo;s subsidy, an allocation of responsibility among partners, or a multiyear lifecycle analysis.</p>
+
+  <p>It listed possible revenue sources &mdash; event rental, retail rental, office rental, membership fees, cooperative enterprises, grants, contracts, donations, City support. Those are possibilities. None was a commitment.</p>
+
+  <p>The study concluded the project was feasible on the grounds that it had community and political support, that potential funders had been identified, that possible sites existed, that similar organizations existed elsewhere, and that revenue-generating activities might contribute.</p>
+
+  <div class="beat">
+    <div class="beat-h">What feasibility should mean</div>
+    <p>Identifying possible funders is not securing funding. Identifying possible sites is not establishing site viability. Finding analogous organizations elsewhere is not demonstrating comparable costs, governance, or outcomes. A feasibility study that concludes a project is feasible because people want it and money might be found has not tested feasibility. It has recorded enthusiasm.</p>
+  </div>
+
+  <h2>The order the questions came in</h2>
+
+  <p>The documentary trail starts in 2011, with a report prepared by the African American/Black Professionals and Community Network. Its problem statement reads:</p>
+
+  <blockquote>
+    <p>&ldquo;The Black community in Berkeley requires a place to meet in order to organize, strategize, socialize, and be at home with each other; in a welcoming environment that offers culturally congruent services for African American/Black residents.&rdquo;</p>
+    <div class="attrib">A Community Approach for African American/Black Culturally Congruent Services, April 2011</div>
+  </blockquote>
+
+  <p>Its first recommendation reads: <em>&ldquo;The City of Berkeley donates a building to the African American Community.&rdquo;</em></p>
+
+  <p>That is a legitimate thing for a community organization to ask for. Advocacy is supposed to name what it wants. The question this page asks is what the City did next.</p>
+
+  <p>What it did, seven years later, was commission a study to assess the viability of <em>developing an African American Holistic Resource Center in South Berkeley</em>. The building was in the terms of reference. The study asked how to deliver it, where to put it, and what it might cost. It did not ask whether a building was the intervention most likely to close the gaps the 2011 report described.</p>
+
+  <div class="pull">The building entered as the request. It was never converted into a question.</div>
+
+  <p>This is the <a href="crayon-box.html">crayon box</a> at the earliest possible stage. Not four options considered and three ignored &mdash; one option carried forward from the beginning, with the analytical work arranged behind it.</p>
+
+  <h2>What a serious alternatives search would have priced</h2>
+
+  <p>Suppose the City had treated the 2011 report as a statement of the problem rather than a specification of the answer. The problem, as stated: existing services were not reaching Black residents effectively, and there was no dedicated place for the community to gather.</p>
+
+  <p>That admits more than one remedy, and each one has a cost the City could have compared:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Option</th><th>What it would have cost to find out</th></tr></thead>
+      <tbody>
+        <tr><td>Fix the existing services &mdash; audit which City programs underserve Black residents, and why</td><td>Staff time. No capital.</td></tr>
+        <tr><td>Fund Black-led providers directly to deliver the same services</td><td>Priceable against the $1.5&ndash;2M annual operating estimate</td></tr>
+        <tr><td>Lease or share space rather than build</td><td>Priceable against the $1.16&ndash;1.905M capital estimate</td></tr>
+        <tr><td>Co-locate in a building the City already owns</td><td>Comparable against surplus public property</td></tr>
+        <tr><td>Time-limited pilot to establish demand before committing</td><td>A fraction of either figure</td></tr>
+        <tr><td>Build the center</td><td>The option that was chosen</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>None of these is obviously right. The last one may well be. The point is that the record does not show them being compared &mdash; not in 2011, not in the 2019 study, and not at any of the appropriations since.</p>
+
+  <p>One of them is worth a further sentence. Through the entire period this project was being funded and designed, Berkeley owned a 1.26-acre site with a paved yard, restrooms and a commercial kitchen, sitting empty about a mile away. It sold in October 2025 for $3 million, to the only bidder who appeared. Nobody costed it for this use either. That is <a href="oxford-site.html">documented separately</a>, and the two facts are set side by side here without any claim that one caused the other.</p>
+
+  <h2>Where the money came from</h2>
+
+  <p>The capital arrived in pieces, across four separate decisions and three different funding sources:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Source</th><th class="amt">Amount</th><th>When</th></tr></thead>
+      <tbody>
+        <tr><td>General Fund</td><td class="amt">$250,000</td><td>2020</td></tr>
+        <tr><td>General Fund</td><td class="amt">$6,850,000</td><td>13 June 2023</td></tr>
+        <tr><td>Measure T1, Phase 2</td><td class="amt">$7,000,000</td><td>Council allocation</td></tr>
+        <tr><td>Federal earmark / HUD</td><td class="amt">$1,000,000</td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>These figures are as stated by a councilmember in writing in August 2026, in response to a constituent asking what the facility would cost to operate. They have not been independently reconciled against each appropriating document.</p>
+
+  <p>Two things about that table. The first is the arithmetic: roughly $15 million committed against a 2019 study that priced the building at under $2 million. Those are not like-for-like &mdash; the study excluded land, and scope and costs both grew over six years &mdash; but the gap is large enough to have prompted a documented re-estimate, and no such document has been located.</p>
+
+  <p>The second is <a href="bond-alibi.html">Measure T1</a>. Seven of the fifteen million came from an infrastructure bond, which is to say from borrowing that Berkeley is still repaying, on a program the City Auditor has separately reported is running short of what it promised.</p>
+
+  <h2>The question, put to a member</h2>
+
+  <p>In August 2026 a resident asked a councilmember four questions: what annual operating cost he understood the completed facility would impose, what ongoing source would cover it, whether he had reviewed a staff analysis before supporting the latest commitment, and whether Council should require a sustainable operating plan before approving a new facility at all.</p>
+
+  <p>He answered in writing rather than routing it to staff, which is worth noting. On the general question he agreed:</p>
+
+  <blockquote>
+    <p>&ldquo;you are suggesting that the analyses provided by the City may not fully capture such lifecycle costs &mdash; most likely because operational and maintenance costs come out of a different pot of the budget than funds allocated toward design, engineering, and construction. <strong>I believe that this concern is well-placed.</strong>&rdquo;</p>
+  </blockquote>
+
+  <p>On whether Council should require an operating plan first: <em>&ldquo;As discussed above, yes.&rdquo;</em></p>
+
+  <p>On what the facility would actually cost to run, he could not say, and cited the budget line &mdash; the TBD &mdash; in answer to whether he had seen an analysis. He said he would ask the City Manager when a figure might exist.</p>
+
+  <p>He is right that the capital decisions predate him; he took office in June 2024 and all four appropriations were earlier. But on 23 June 2026 he moved the appropriations ordinance himself.</p>
+
+  <div class="pull">The standard was stated, the gap was known, and the motion was made anyway.</div>
+
+  <h2>What is actually missing</h2>
+
+  <p>Fifteen years after the request and eighteen months before the doors open, the record does not establish who the final operator will be, what the annual operating budget is, what share of it the City will carry, what outside revenue is committed, what service population the facility is sized for, what it is expected to achieve, how that will be measured, or under what conditions the City would stop, redesign, or hand off the project.</p>
+
+  <p>Two contracts exist. Each is not-to-exceed $300,000, funded by the State through the Mental Health Services Act, and each expires <strong>30 June 2026</strong> &mdash; twenty-one months before the building opens. They fund services during construction. They are not an operating plan for a completed facility, and they are not a commitment by anyone to carry its costs.</p>
+
+  <div class="notclaim">
+    <h3>What this page does not claim</h3>
+    <p><strong>It does not claim the facility is unnecessary.</strong> The needs described in the 2011 report &mdash; gaps in health, education, and service outcomes for Berkeley&rsquo;s Black residents &mdash; are real and documented elsewhere by the City itself. Nothing here argues they should go unaddressed.</p>
+    <p><strong>It does not claim a building is the wrong answer.</strong> It may be the right one. A serious comparison might have concluded exactly that, and would have been far stronger for having been made.</p>
+    <p><strong>It does not claim anyone acted in bad faith.</strong> A community organization asked for what it wanted, which is what advocacy does. Council funded a project with broad support, which is what councils do. No part of this requires anyone to have behaved improperly.</p>
+    <p><strong>It does not claim the operating cost is unknowable.</strong> The opposite: it was estimated at $1.5&ndash;2 million a year in 2019. The failure is not that the number is hard. It is that the number stopped being asked for.</p>
+    <p><strong>It does not claim the $15 million and the $1.9 million are comparable.</strong> The 2019 estimate excluded land and described a smaller building. Scope grew, and six years of construction inflation are real. The point is that a gap of that size should have produced a documented re-estimate, and none has been located.</p>
+  </div>
+
+  <h2>The habit</h2>
+
+  <p>Berkeley funds buildings through one process and operates them through another. Capital money is appropriated, designed, and built. Operating money arrives later, in a different budget cycle, from a different pot, decided by people who were not in the room when the commitment was made.</p>
+
+  <p>Nothing in that sequence requires anyone to fill in a TBD before the doors open. Not the capital appropriations, not the service contracts, not the budget adoption. The question arrives when the building does &mdash; and by then the answer changes nothing, because the building exists and somebody has to run it.</p>
+
+  <div class="pull">A city that decides what to build before deciding what it can afford to operate will always be able to afford the building.</div>
+
+  <p>The facility opens in April 2028. There is still time to answer the question before it does.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p><strong>Budget.</strong> City of Berkeley, Proposed Biennial Budget FY2027 &amp; FY2028, strategic priority projects table, p.&nbsp;113 &mdash; verified at PDF p.&nbsp;125 of the Council agenda packet for 23 June 2026. <strong>Council record.</strong> Annotated Agenda, 23 June 2026: adoption of the biennial budget and the FY2027&ndash;31 Five-Year Capital Improvement Program, and the FY2027 Annual Appropriations Ordinance No. 8,029&ndash;N.S., gross $921,596,116, moved and carried with zero speakers. <strong>Feasibility.</strong> <em>An assessment of the viability, sustainability, and feasibility of the development of an African American Holistic Resource Center (AAHRC) in South Berkeley</em>, transmitted to Council as an information item 6 March 2019 &mdash; operating range at p.&nbsp;30 of the study text; capital estimates at Table 11, source SABI Design Build; survey results, 133 completed responses. <strong>Origin.</strong> African American/Black Professionals &amp; Community Network, <em>A Community Approach for African American/Black Culturally Congruent Services</em>, April 2011 &mdash; problem statement and recommendations, section &ldquo;African American Resource Center: A Community Meeting Place.&rdquo; <strong>Capital sources and operating contracts.</strong> Councilmember correspondence with a constituent, August 2026, quoted with permission of the recipient. <strong>Oxford site.</strong> Berkeley Unified School District Notice of Sale, August 2025; auction result October 2025.</p>
+    <h3>A note on method</h3>
+    <p>The 2019 operating and capital figures were read from the study itself rather than from any summary of it, and are quoted exactly. The capital funding table is as stated by a councilmember in writing and has not been independently reconciled against each appropriating document; it is presented as his account. The characterization of what the feasibility study did not contain is based on reading the study; it is a statement about what is absent from that document, not a claim that no such analysis exists anywhere. A California Public Records Act request for the 2020 site-specific implementation and operating-cost work directed by Council is outstanding; this page will be updated when it is answered. This page describes a decision process and does not attribute the outcome to any individual member; the one member quoted is quoted because he answered a direct question in writing, and his answer is set out in full.</p>
+    <h3>Related</h3>
+    <p><a href="small-sites.html">Buy once, maintain forever</a> &middot; <a href="crayon-box.html">The Crayon Box</a> &middot; <a href="measuring-nothing.html">Measuring Nothing</a> &middot; <a href="oxford-site.html">The site nobody bid on</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

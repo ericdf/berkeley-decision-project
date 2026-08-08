@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Hopkins Street Fire Review — What Happened</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#b5471f; --accent-soft:#fdf1ec;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#e08055; --accent-soft:#2a1d17;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#e08055; --accent-soft:#2a1d17;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#b5471f; --accent-soft:#fdf1ec;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.clock { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+         color: var(--accent); font-size: .8rem; letter-spacing: .04em; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Explainer</div>
+  <h1>The Hopkins Street Fire Review</h1>
+  <p class="standfirst">On July 28, 2026, Berkeley&rsquo;s City Council approved a new Hopkins Street bike-lane configuration on the stated premise that the Fire Department had found it compatible with emergency access. Four hours before the vote, the fire chief told Council that his department had not reviewed that configuration.</p>
+  <div class="byline">Written for readers with no prior knowledge of the project &middot; August 2026</div>
+
+  <p>This explains one decision, from the beginning, assuming you know nothing about Hopkins Street or Berkeley&rsquo;s council. Every quotation comes from the public record.</p>
+
+  <h2>First: what a &ldquo;Class IV bike lane&rdquo; is</h2>
+  <p>A <strong>Class IV separated bikeway</strong> &mdash; also called a protected bike lane or a cycle track &mdash; is a bike lane physically separated from car traffic by a barrier: posts, a planter, a curb, or a row of parked cars.</p>
+  <p>Its purpose is to provide cyclists greater protection than paint alone. It also takes up more room. On a street of fixed width, that room has to come from somewhere: usually parking spaces, sometimes the width of the driving lanes themselves.</p>
+  <p>That last part is why the fire department gets involved.</p>
+
+  <h2>Why the fire department has a say</h2>
+  <p>Fire engines are big. To reach a burning building, a truck needs enough clear width to drive down the street, and enough room at the curb to set up and work. If you narrow a street&rsquo;s driving lanes to make space for a bike lane, you may have made it harder for a fire engine to get through.</p>
+  <p>Hopkins Street matters more than most. It is a <strong>designated Emergency Access and Evacuation Route</strong> &mdash; one of the roads the city expects to use to move fire equipment in and residents out during a wildfire. Berkeley&rsquo;s own wildfire plan identifies narrow streets and constrained evacuation capacity as core vulnerabilities of the city.</p>
+  <p>So on Hopkins, Fire Department review is not a formality. It is the technical check directed at the specific emergency-access and evacuation risks raised by this design.</p>
+
+  <h2><span class="when">April 2023</span>The project stalls over fire concerns</h2>
+  <p>Berkeley had been planning bike improvements on Hopkins since 2018, and the Council approved a conceptual design in 2022.</p>
+  <p>Then the City Manager circulated a memo placing the project on indefinite pause. Three problems: lane widths had not been resolved; the fire code official had never approved the traffic-calming devices; and nobody could quantify what the project would do to <strong>evacuation times</strong>.</p>
+  <p>The project went into an indefinite pause. Fire department concerns were the reason.</p>
+
+  <h2><span class="when">February 2026</span>Kesarwani proposes the cautious version</h2>
+  <p>Three years later, Councilmember Rashi Kesarwani brought forward a proposal to finally repave Hopkins &mdash; with <strong>pedestrian safety improvements only</strong>. No protected bike lanes.</p>
+  <p>Her own later explanation for why: the pedestrian-only version <em>&ldquo;was based on our prior understanding of the need for significant infrastructure upgrades to meet concerns raised by the Fire Department.&rdquo;</em></p>
+  <p>In plain terms: under the understanding then in place, adding protected bike lanes would require costly infrastructure work to resolve Fire Department concerns. Estimated cost of the pedestrian-only version: about <strong>$11 million</strong>.</p>
+
+  <h2><span class="when">April 15, 2026</span>Two things happen on the same day</h2>
+
+  <div class="beat">
+    <div class="beat-h">One &mdash; colleagues push back</div>
+    <p>A council committee voted to send her item to the full Council with a <strong>negative recommendation unless she added protected bike lanes</strong>. She was being told by fellow councilmembers that pedestrian-only was not good enough.</p>
+  </div>
+
+  <div class="beat">
+    <div class="beat-h">Two &mdash; staff present a fire review</div>
+    <p>At that same meeting, staff presented a document titled <em>&ldquo;Hopkins Street Alternatives 1 and 2 Overview.&rdquo;</em> This document is the hinge of the whole story, so it is worth being exact about what was in it.</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Design</th><th>What it was</th><th>What fire said</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Alternative 1</strong></td>
+          <td>A <strong>two-way</strong> cycle track &mdash; bikes traveling both directions on <strong>one side</strong> of the street</td>
+          <td>&ldquo;Alternative 1 retains workable emergency access overall.&rdquo;</td>
+        </tr>
+        <tr>
+          <td><strong>Alternative 2</strong></td>
+          <td>Pedestrian safety only &mdash; crosswalks, refuge islands, no protected bike lane</td>
+          <td>&ldquo;Alternative 2 retains workable emergency access overall.&rdquo;</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The Fire Department reviewed <strong>those two specific alternatives</strong> and found that each retained workable emergency access. It also confirmed a general lane-width standard: 11 feet preferred and 10.5 feet minimum.</p>
+
+  <h2><span class="when">July 2026</span>A third design appears</h2>
+  <p>Kesarwani came back with a new version. Not Alternative 1. Not Alternative 2. A <strong>third design</strong>:</p>
+  <div class="pull">One-way protected bike lanes on <em>both</em> sides of the street.</div>
+  <p>This is a genuinely different layout from Alternative 1&rsquo;s two-way track on one side. Different lane positions, different curb impacts, a different distribution of the street&rsquo;s width.</p>
+  <p>Here is what her written proposal said, on page 7, under her own office letterhead:</p>
+  <blockquote>
+    <p><strong>&ldquo;Updated Review by Fire Department Shows Class IV Separated Bikeways Can Retain Workable Emergency Access.&rdquo;</strong></p>
+    <div class="attrib">Agenda Packet, July 28 2026, Item 27, page 7 of 28</div>
+  </blockquote>
+  <p>It went on to say the fire safety objections that had paused the project since 2023 <strong>&ldquo;no longer exist.&rdquo;</strong></p>
+  <p>And the very first line of her formal recommendation &mdash; the operative clause the Council would vote on &mdash; began:</p>
+  <blockquote>
+    <p><em>&ldquo;Given new information presented by the Fire Department that pedestrian and bike safety infrastructure on Hopkins Street &lsquo;retains workable emergency access&rsquo;&hellip;&rdquo;</em></p>
+  </blockquote>
+  <p>The fire finding was not background detail. It was the proposal&rsquo;s stated answer to the objection that had stalled protected bike lanes since 2023, and it appeared in the recommendation&rsquo;s operative opening clause.</p>
+  <p>It also changed the cost comparison. The proposal argued that protected bike lanes could now be added <em>&ldquo;without the need for costly infrastructure upgrades&rdquo;</em> previously thought necessary to satisfy Fire Department concerns. On that premise, Council was asked to select a design estimated at <strong>$14&ndash;15 million</strong> rather than the roughly <strong>$11 million</strong> pedestrian-only version &mdash; an increase the item justified as worth bearing.</p>
+
+  <h2>The reasoning, and the gap in it</h2>
+  <p>How do you get from what fire approved to what the proposal claimed?</p>
+  <p><strong>The logic:</strong> Fire approved 11-foot and 10.5-foot lane widths &rarr; this Class IV design uses those widths &rarr; therefore fire&rsquo;s approval covers this design.</p>
+  <p><strong>The gap:</strong> Lane width is <em>one</em> input to emergency access. It is not the whole question. Where the barriers and bike lanes sit, how apparatus would position and operate, and what the full configuration could mean for emergency access or evacuation flow &mdash; none of that follows from a lane-width number.</p>
+  <p>And critically: the document cited as the source does not say what the heading says. It names <em>Alternative 1</em> and <em>Alternative 2</em>. It evaluates a two-way cycle track. It never evaluates one-way lanes on both sides, because that design did not exist when it was written.</p>
+
+  <h2><span class="when">July 28, 2026</span>The meeting</h2>
+  <p>The meeting ran past midnight. Roughly three hours of public comment. Item 27 was why the room was full.</p>
+  <p><span class="clock">1 HOUR 31 MINUTES IN</span> &mdash; a councilmember asked Fire Chief David Sprague directly for the fire department&rsquo;s position. His answer:</p>
+  <blockquote>
+    <p>&ldquo;FIRE has reviewed and approved the traffic calming features in the Hopkins Alternative 1 and 2&hellip; We also generally have confirmed that lane widths&hellip; are acceptable.</p>
+    <p><strong>&ldquo;However, for the new&hellip; proposed configuration that you&rsquo;re discussing tonight&hellip; There is not a design yet, so we have not seen that, we have not reviewed it, and we would need a complete design set from Public Works.</strong></p>
+    <p>&ldquo;Once that&rsquo;s available, we can evaluate&hellip; potential impacts to evacuation times, and confirm that design maintains workable access for day-to-day fire and medical emergencies.&rdquo;</p>
+    <div class="attrib">Fire Chief David Sprague, Council transcript, 01:31:48 elapsed</div>
+  </blockquote>
+  <p>Asked how long a review would take, he said <strong>two to four weeks</strong>, once Public Works produced a design set.</p>
+  <p>So the fire chief told the Council, in open session and in response to a direct question, that the proposal&rsquo;s claim of an updated Fire Department review did not apply to the new configuration before them.</p>
+  <p>He had also stated the same point in writing. A member of the public read his letter aloud that night: <em>&ldquo;The newly proposed configuration involving one-way protected bicycle lanes on both sides of Hopkins is a different design, and the fire department has not reviewed that configuration.&rdquo;</em></p>
+
+  <h2>What happened next: nothing</h2>
+  <p>Between the chief&rsquo;s correction and the vote, <strong>four hours passed</strong>. In those four hours:</p>
+  <div class="tw">
+    <table>
+      <tbody>
+        <tr><td>The proposal was not amended</td></tr>
+        <tr><td>The page 7 heading was not corrected</td></tr>
+        <tr><td>The recommendation&rsquo;s opening clause &mdash; &ldquo;Given new information presented by the Fire Department&rdquo; &mdash; was left standing</td></tr>
+        <tr><td>Nobody moved to defer the design commitment long enough for the two-to-four-week review the chief described</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Councilmember Blackaby offered a substitute motion that would have continued studying alternatives in parallel rather than committing exclusively to the proposed configuration. It failed 4&ndash;5.</p>
+  <p><span class="clock">6 HOURS 15 MINUTES IN</span> &mdash; the Council adopted the plan <strong>7&ndash;2</strong>.</p>
+  <p>The two no votes were Councilmembers O&rsquo;Keefe and Blackaby, whose districts include the neighborhoods most directly affected by the redesign.</p>
+
+  <h2>What this does and does not mean</h2>
+
+  <div class="notclaim">
+    <h3>It does not mean the bike lanes are dangerous</h3>
+    <p>Chief Sprague never said that. He said <em>unreviewed</em>. The design may ultimately pass Fire Department review without any material change.</p>
+    <h3>It does not establish that anyone lied deliberately</h3>
+    <p>The record shows what the document claimed, what its own cited source actually said, and what the chief said. It does not reveal whether this was deception, a genuine misreading, or advocacy that outran its evidence. No motive is asserted here.</p>
+    <h3>It does not challenge the case for safety improvements</h3>
+    <p>Hopkins has a real collision record, including a pedestrian fatality and severe injuries at identified intersections. Nothing here disputes that the corridor needs work.</p>
+  </div>
+
+  <h2>Why it matters anyway</h2>
+  <p>Berkeley&rsquo;s nine councilmembers cannot personally verify fire code compliance or model evacuation times. They depend on the written record in front of them being an accurate account of what the professionals concluded. Reliable staff and sponsor representations are indispensable to a part-time council governing technically complex matters.</p>
+  <div class="pull">On July 28, the written proposal said the Fire Department&rsquo;s updated review supported the new configuration before Council. It did not: Fire had reviewed two different alternatives.</div>
+  <p>The responsible department head said so aloud roughly four hours before the vote, in answer to a direct question. Council nevertheless committed to advancing the new configuration &mdash; estimated at roughly $3&ndash;4 million more than the pedestrian-only version &mdash; without correcting the written premise or waiting for the Fire Department review the chief said was still required.</p>
+  <p>A councilmember may argue that a design will satisfy the fire department. A councilmember may not tell the Council that the fire department already has.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p>All quotations are from the public record. <strong>Agenda Packet, July 28 2026</strong>, Item 27, page 7 of 28 and the Recommendation and Fiscal Impacts sections. <strong>&ldquo;Hopkins Street Alternatives 1 and 2 Overview,&rdquo;</strong> Facilities, Infrastructure, Transportation, Environment &amp; Sustainability Policy Committee, April 15 2026 &mdash; the document cited in the item&rsquo;s own footnote 1. <strong>Berkeley City Council meeting transcript, July 28 2026</strong>, at 01:08:51, 01:31:48, and 06:15:05 elapsed; the transcript is generated by Zoom and expressly uncertified by the City; quotations here are drawn from explicitly attributed passages and may be checked against the meeting recording at the cited timestamps. <strong>Annotated Agenda, July 28 2026</strong>, for the vote record.</p>
+    <h3>Related</h3>
+    <p><a href="https://ericdf.github.io/council-scorecards/hopkins-assessment.html">Full assessment of the July 28 meeting</a> &middot; <a href="crayon-box.html">The crayon box &mdash; how the votes on this item were read</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

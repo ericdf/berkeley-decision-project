@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What If Hopkins Was the Wrong Question? — A Worked Example</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Instrument type is load-bearing on this page: a GO bond is borrowed capital repaid
+   through property tax over decades, a parcel tax is recurring revenue collected annually.
+   The table distinguishes them so the reader can see that the pattern is not "bonds" but
+   "any new money except reprioritization". */
+.inst { font-family: var(--sans); font-size: .74rem; font-weight: 700; white-space: nowrap;
+        letter-spacing: .02em; }
+.inst-bond { color: var(--accent); }
+.inst-tax  { color: var(--quote); }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.clock { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+         color: var(--accent); font-size: .8rem; letter-spacing: .04em; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+
+/* Fixed-pie vs expanded-option-set. The graphic carries the thesis. */
+.pie { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 1.8rem 0;
+       border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+.pie-half { padding: 1.1rem 1.2rem; background: var(--panel); }
+.pie-half + .pie-half { border-left: 1px solid var(--rule); }
+.pie-lbl { font-family: var(--sans); font-size: .62rem; font-weight: 800; letter-spacing: .13em;
+           text-transform: uppercase; margin-bottom: .7rem; }
+.pie-fixed .pie-lbl { color: var(--used, #b4453a); }
+.pie-open  .pie-lbl { color: #2f7d5c; }
+.pie-half ul { margin: 0; padding-left: 1.1rem; }
+.pie-half li { font-family: var(--sans); font-size: .84rem; line-height: 1.65;
+               color: var(--ink-2); margin-bottom: .35rem; }
+.pie-half li.on { color: var(--ink); font-weight: 600; }
+@media (max-width: 640px) { .pie { grid-template-columns: 1fr; }
+  .pie-half + .pie-half { border-left: 0; border-top: 1px solid var(--rule); } }
+
+/* Coverage bands. Who can actually use each answer, as nested shares of the
+   same population. Deliberately unscaled — no mode-share data supports exact
+   proportions, and the argument is about relative reach, not percentages. */
+.cov { margin: 1.7rem 0; border: 1px solid var(--rule); border-radius: 4px;
+       background: var(--panel); padding: 1.1rem 1.2rem .9rem; }
+.cov-row { display: grid; grid-template-columns: 8.5rem 1fr; gap: .8rem;
+           align-items: center; margin-bottom: .7rem; }
+.cov-lbl { font-family: var(--sans); font-size: .78rem; font-weight: 700;
+           text-align: right; line-height: 1.3; }
+.cov-lbl small { display: block; font-weight: 400; font-size: .68rem; color: var(--ink-3); }
+.cov-bar { height: 1.5rem; border-radius: 2px; position: relative; background: var(--rule-soft); }
+.cov-fill { height: 100%; border-radius: 2px; display: flex; align-items: center;
+            padding-left: .6rem; font-family: var(--sans); font-size: .7rem;
+            font-weight: 700; color: #fff; white-space: nowrap; }
+.cov-bike  .cov-fill { width: 30%; background: #2c6e8f; }
+.cov-park  .cov-fill { width: 45%; background: #b4453a; }
+.cov-must  .cov-fill { width: 16%; background: #6b4c8f; font-size: .66rem; }
+.cov-cond  .cov-fill { width: 55%; background: #2c8f8f; }
+.cov-conn  .cov-fill { width: 78%; background: #2f7d5c; }
+.cov-note { font-family: var(--sans); font-size: .74rem; color: var(--ink-3);
+            line-height: 1.55; border-top: 1px solid var(--rule-soft);
+            padding-top: .7rem; margin-top: .3rem; }
+@media (max-width: 640px) {
+  .cov-row { grid-template-columns: 1fr; gap: .25rem; }
+  .cov-lbl { text-align: left; }
+}
+
+/* Worked applications. */
+.app { border-left: 3px solid var(--quote); padding: .2rem 0 .2rem 1.1rem; margin: 1.5rem 0; }
+.app h3 { font-family: var(--sans); font-size: 1rem; font-weight: 800; margin: 0 0 .45rem; }
+.app p { font-size: .97rem; }
+.app .app-src { font-family: var(--sans); font-size: .74rem; color: var(--ink-3);
+                margin-top: .5rem; }
+</style></head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Case study</div>
+  <h1>What If Hopkins Was the Wrong Question?</h1>
+  <p class="standfirst">Every other page on this site documents a decision that went badly. This one does the opposite: it takes the <a href="crayon-box.html">sharpest crayon in the box</a> &mdash; <em>explore alternatives</em> &mdash; and shows what an hour of using it could have produced. The answer is a small errand shuttle nobody costed &mdash; and it turns out to touch Hopkins, the Marina, the ferry, and where Berkeley puts homeless services.</p>
+  <div class="byline">A worked example of the framework, not a finding against anyone &middot; August 2026</div>
+
+  <p>The Hopkins debate was framed as a contest over a fixed resource. Should the street space belong to parked cars, or to bicycles?</p>
+
+  <p>Once those became the only two choices, the argument became zero-sum. Every gain for one side had to come out of the other. The reasoning on both sides grew more detailed and more heated, and all of it rested on one assumption nobody examined:</p>
+
+  <div class="pull">The pie was fixed. It doesn&rsquo;t have to be.</div>
+
+  <div class="beat">
+    <div class="beat-h">The option this page follows</div>
+    <p>Because it recurs from here on, it is worth naming at the outset. There was a third answer
+    available throughout, and it was never costed: a <strong>small, frequent, fare-free shuttle
+    built for short errand trips within the city, with cargo</strong> &mdash; ride down to the
+    shops, ride back up with the shopping. Emeryville and the Presidio have run services of this
+    shape for years.</p>
+    <p>This page calls it a <em>connector</em>. It is introduced here rather than at the end
+    because the whole argument turns on it having been available the entire time. Everything that
+    follows &mdash; the interests beneath the positions, who each answer actually reaches, what it
+    would cost &mdash; is an attempt to work out what an hour of considering it would have produced.</p>
+  </div>
+
+  <p>This site&rsquo;s <a href="crayon-box.html">crayon box</a> counts seven ways Berkeley could
+  answer a fiscal or service problem, and finds that four are worn to stubs while three keep their
+  points. One of the sharp ones is <strong>explore alternatives</strong>. This page picks it up.
+  The corridor itself is examined separately as
+  <a href="framework.html#case-a">Case Study A in the framework</a>.</p>
+
+
+
+  <p>Fisher and Ury, in <em>Getting to Yes</em>, give this failure a name and a remedy. The failure
+  is bargaining over <strong>positions</strong> &mdash; the specific outcome each side demands. The
+  remedy is to step back to <strong>interests</strong>, the underlying needs those positions were
+  meant to serve, and then look for options that satisfy the interests on both sides at once. That
+  is what a win-win actually is: not a compromise in which each side gives up part of its position,
+  but a different option that serves what each side was really after.</p>
+
+  <p>Hopkins is a clean example, because the positions and the interests come apart so plainly.</p>
+
+  <div class="pie">
+    <div class="pie-half pie-fixed">
+      <div class="pie-lbl">&#9888; The positions</div>
+      <ul>
+        <li class="on">Keep the parking</li>
+        <li class="on">Build the separated cycle track</li>
+      </ul>
+      <p style="font-size:.84rem;color:var(--ink-3);margin-top:.7rem;margin-bottom:0">Mutually
+      exclusive. One must lose.</p>
+    </div>
+    <div class="pie-half pie-open">
+      <div class="pie-lbl">&#9670; The interests underneath</div>
+      <ul>
+        <li>Get the shopping home without carrying it far</li>
+        <li>Reach the neighborhood businesses</li>
+        <li>Let a senior get to the pharmacy</li>
+        <li>Be safe on the street</li>
+        <li>Meet the city&rsquo;s climate commitments</li>
+      </ul>
+      <p style="font-size:.84rem;color:var(--ink-3);margin-top:.7rem;margin-bottom:0">Not in
+      conflict. Nobody wants the other side to fail at these.</p>
+    </div>
+  </div>
+
+  <p>Stated as positions, the two sides cannot both win. Stated as interests, there is considerably
+  more overlap: cyclists also benefit from reachable shops and pharmacies, while many people who
+  need or prefer to drive may still support the city&rsquo;s safety and climate goals. The fight was real, but it was a fight about the instrument, conducted as if
+  it were a fight about the goal.</p>
+
+  <p>It is worth being exact about the instrument, because the public argument has not been. The
+  contested item was not a bike lane in the ordinary sense &mdash; a painted lane alongside traffic
+  is uncontroversial and largely already there. It was a <strong>Class IV separated bikeway</strong>,
+  a cycle track physically divided from the roadway by posts, curbs, planters or a row of parked
+  cars. That is a different object with different consequences: it consumes street width
+  permanently, it changes how a fire engine reaches a curb, and it complicates refuse collection,
+  loading and passenger drop-off in ways paint does not.</p>
+
+  <p>Those consequences are precisely what the Fire Chief was being asked about on 28 July 2026,
+  and precisely what the record put before Council said had been reviewed when it had not &mdash;
+  see <a href="hopkins-fire-review.html">the Hopkins Street fire review</a>. Collapsing &ldquo;cycle
+  track&rdquo; into &ldquo;bike lane&rdquo; is how a specific engineering dispute became a
+  referendum on whether you support cycling.</p>
+
+  <p>It also matters for the argument this page is making. Reducing vehicle trips could also change the design problem
+  itself. With meaningfully lower traffic volumes and speeds, less space-intensive bicycle
+  treatments might become more plausible. Whether they would provide adequate safety is an
+  engineering question that should be tested rather than assumed &mdash; and it is a question nobody
+  put, because the debate had already narrowed to two fixed designs.</p>
+
+  <p>There is also a question about the safety evidence that we cannot answer. The case for
+  separated tracks is usually made on cyclist injury rates against motor vehicles, which is a real
+  and well-studied benefit. Whether anyone has modeled that alongside the rest of the ledger
+  &mdash; delayed emergency response on a narrowed street, refuse and delivery vehicles obstructing
+  a lane they can no longer pull clear of, conflicts between cyclists and pedestrians at crossings
+  and bus stops, and the behavior of cyclists themselves &mdash; we do not know. Such an analysis
+  may well exist. We have not seen one cited in the Hopkins record, and we have not searched the
+  literature for it.</p>
+
+  <p>We raise it as a question rather than a finding, because a question is what it is. If the
+  integrated analysis exists, it belongs in the staff report. If it does not, that is worth knowing
+  before narrowing a street.</p>
+
+  <p>A broader alternatives search could also have widened the evidence base. UC Berkeley&rsquo;s
+  <strong>Institute of Transportation Studies</strong> and <strong>SafeTREC</strong> &mdash; the
+  Safe Transportation Research and Education Center, which runs a Center for Pedestrian and
+  Bicyclist Safety &mdash; sit about a mile from Hopkins Street and specialize in
+  transportation-safety questions. Neither appears in nineteen months of Council transcripts, the
+  agenda record, or the technical basis cited for the July 2026 item. That does not establish that
+  they would have recommended a different design. It establishes that the record does not show
+  Council asking.</p>
+
+  <p>That is the <a href="crayon-box.html">crayon box</a> again, in its purest form: the option was not rejected, it was not
+  considered.</p>
+
+  <p>There is a second thing the positions hide. Each of them only works for part of the
+  population, and the argument has largely been over whose part matters more.</p>
+
+  <p>The comparison below sets the two debated answers against the groups each one actually
+  reaches, and includes the connector for the same reason it was named at the top: a coverage
+  comparison containing only the two debated answers would beg the question the debate was already
+  begging.</p>
+
+  <div class="cov">
+    <div class="cov-row cov-bike">
+      <div class="cov-lbl">Cycling provision<small>serves people who can cycle&hellip;</small></div>
+      <div class="cov-bar"><div class="cov-fill">&hellip;and are willing to, today, in this weather</div></div>
+    </div>
+    <div class="cov-row cov-park">
+      <div class="cov-lbl">Parking<small>serves people who choose to drive&hellip;</small></div>
+      <div class="cov-bar"><div class="cov-fill">&hellip;and can find a space</div></div>
+    </div>
+    <div class="cov-row cov-must">
+      <div class="cov-lbl">&mdash; and people who <em>must</em><small>disability, injury, caring for someone</small></div>
+      <div class="cov-bar"><div class="cov-fill">no substitute exists for this group</div></div>
+    </div>
+    <div class="cov-row cov-cond">
+      <div class="cov-lbl">&mdash; and people who could ride<small>but not uphill, not loaded, not in rain</small></div>
+      <div class="cov-bar"><div class="cov-fill">currently served by nothing</div></div>
+    </div>
+    <div class="cov-row cov-conn">
+      <div class="cov-lbl">A connector<small>serves much of all of the above&hellip;</small></div>
+      <div class="cov-bar"><div class="cov-fill">&hellip;and the people who can neither cycle nor drive</div></div>
+    </div>
+    <p class="cov-note">Illustrative, not measured &mdash; no mode-share data for these trips has
+    been published, and the bars show relative reach rather than exact shares. The fourth band is
+    the one most often left out of this argument: Berkeley is built on
+    a hill, and the difference between &ldquo;can ride a bicycle&rdquo; and &ldquo;can ride a
+    bicycle up Marin Avenue with a week&rsquo;s shopping in February&rdquo; is most of the
+    population. Cycling provision serves the trip down. Nothing currently serves the trip back. The
+    distinction that matters most, though, is the third band. Some people drive because it is easiest; some drive because
+    nothing else works &mdash; a disability, an injury that will heal in six weeks, a parent
+    managing a toddler and a week&rsquo;s shopping. For that group there is no substitute, and any
+    proposal that treats their spaces as available is not a serious proposal. Conflating the two
+    groups is what makes this argument so bitter: each side hears the other denying a need rather
+    than debating a convenience.</p>
+  </div>
+
+  <p>Set out this way, the connector&rsquo;s claim is narrower than it first sounds, and better for
+  it. It does not serve everyone. It takes pressure off the first two bands &mdash; which is
+  precisely what would leave more spaces for the third. The people who must drive do better under a
+  proposal that reduces competition for parking than under one that rations it, and better still
+  than under one that removes it.</p>
+
+  <p>This is also why the bicycle argument keeps running aground on weather and on the hill. A lane
+  is an excellent answer in September on the flat and a poor one in a February downpour on a grade,
+  and a policy that relies heavily on year-round uphill cycling will fit a narrower population than
+  one that does not. The asymmetry is the giveaway: the ride down to the shops is easy and the ride
+  back is the whole problem, which is why the bicycle answer works best for exactly the trip that
+  needs it least.</p>
+
+  <p>A connector does not replace cycling provision. It makes cycling usable as a
+  <em>choice</em> rather than a commitment. That hybrid would become another available choice: ride
+  down when conditions are suitable, take the connector back with the shopping, or use it both ways
+  when cycling is unattractive.</p>
+
+  <p>Once the underlying interests are visible, the curb question does not disappear. A Class IV
+  bikeway and existing curb parking cannot occupy the same space. The decision still requires
+  Council to decide who gets the curb.</p>
+
+  <p>What changes is the size of the option set around that decision:</p>
+
+  <div class="pull">What other street configurations or complementary measures could preserve the
+  safety benefits sought through a Class IV bikeway while reducing the access costs created by
+  removing parking?</div>
+
+  <p>That question still permits the separated bikeway. It also invites other alignments,
+  parking-management changes, delivery arrangements, transit improvements, and a connector designed
+  for short errands &mdash; the one this page follows, because it is the one nobody costed.
+  Exploring those possibilities does not make the conflict imaginary. It tests whether the conflict
+  must remain as zero-sum as it first appears.</p>
+
+  <p>Hopkins was directly about parked cars and a Class IV bikeway. But the consequences extended
+  beyond the curb: how residents reach neighborhood businesses, carry groceries home, reach a
+  pharmacy, make several stops, and travel safely. A better process would have decided the curb
+  question with those broader access needs explicitly in view.</p>
+
+  <h2>The option that was never costed</h2>
+
+  <p>Call it a <strong>Berkeley Community Connector</strong>: a small, frequent, fare-free shuttle optimized for one job that no existing service does well &mdash; short errand trips within the city, with cargo.</p>
+
+  <p>It would not replace AC Transit or duplicate BART. Transit networks are built for different jobs. BART moves people across a region. AC Transit is built for corridor throughput across a large service area. Neither is designed for the trip that ends with someone carrying two bags four blocks uphill, and neither should be. That job currently has no service designed for it, which is precisely why it keeps being addressed through street design instead.</p>
+
+  <h2>This model already runs &mdash; and one of them already stops in Berkeley</h2>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th></th><th>Emery Go-Round</th><th>PresidiGo</th></tr></thead>
+      <tbody>
+        <tr><td>Riders</td><td>~1.4M/year pre-2020, about 5,000 a day</td><td>300,000+ a year</td></tr>
+        <tr><td>Fare</td><td>Free, open to the public</td><td>Free, open to the public</td></tr>
+        <tr><td>Owner</td><td>Nonprofit transportation management association</td><td>Presidio Trust</td></tr>
+        <tr><td>Operator</td><td>MV Transportation, on contract</td><td>MV Transportation, on contract</td></tr>
+        <tr><td>Governance</td><td>Nine-member board &mdash; property, business, employer and residential seats &mdash; meeting publicly each month</td><td>Federal trust, funded by commercial leasing rather than appropriation</td></tr>
+        <tr><td>Funding</td><td>Property-based improvement district. In 2016 parcel owners voted by <strong>71.25%</strong> to expand the assessment because they had concluded the service was worth paying for.</td><td>Lease revenue</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Neither is a city department. Both are governed by a board that meets in public and buys operations on a contract. That is the shape of the thing, and it is not speculative.</p>
+
+  <p>There is a sharper way to put this. <strong>The Emery Go-Round already runs into Berkeley, and
+  it already does the grocery run.</strong> Its Hollis route crosses the city line, turns off Hollis
+  and makes a loop up 9th Street specifically to reach <strong>Berkeley Bowl West</strong>, which is
+  the route&rsquo;s northern terminus. The stop is named for the store. Service runs
+  <strong>every fifteen minutes</strong> from just after six in the morning, and it is fare-free and
+  open to anyone &mdash; including any Berkeley resident standing at the stop.</p>
+
+  <p>So a neighboring city of about 13,000 people funds a shuttle that detours into Berkeley to
+  bring its residents to a Berkeley grocery store, at a frequency no Berkeley service matches.
+  Berkeley, with roughly ten times the population, has nothing comparable in either direction
+  &mdash; not to Berkeley Bowl West, not to the Oregon Street store, not to Monterey Market, not to
+  Solano or North Shattuck or Fourth Street.</p>
+
+  <p>The model is not hypothetical and it is not distant. It is operating on Berkeley streets, on a
+  fifteen-minute headway, paid for by somebody else.</p>
+
+  <p>Now hold that next to Hopkins.</p>
+
+  <p>Monterey Market is the North Berkeley version of the same destination: a grocer people travel
+  to rather than stumble across, drawing customers from well beyond walking distance, with parking
+  that has been contested for as long as anyone can remember, sitting on the corridor the city spent
+  years arguing about. It presents a strikingly similar access problem to one Emeryville addresses by routing a frequent
+  shuttle to a grocery store.</p>
+
+  <p>Emeryville&rsquo;s operating network includes a frequent route terminating at a grocery store.
+  Berkeley&rsquo;s Hopkins debate treated access to a major neighborhood market primarily as a
+  contest over curb space. One of those cities treated &ldquo;how do
+  people get their groceries home&rdquo; as a transportation question with transportation answers.
+  The other treated it as a territorial dispute between drivers and cyclists, and then held a vote
+  to see who won.</p>
+
+  <p>That is what the missing crayon costs. Not a shuttle &mdash; a whole category of answer.</p>
+
+  <h2 id="ferry">What one option unlocks in four other places</h2>
+
+  <p>The reason to take this seriously is not Hopkins. Hopkins merely exposed the gap. The same missing option appears in four other places on this site, each one already documented.</p>
+
+  <div class="app">
+    <h3>The ferry: the same fixed pie, on the waterfront</h3>
+    <p>Hopkins was a fight over a curb. The waterfront is heading into a fight over a parking lot,
+    and it has exactly the same shape.</p>
+    <p>The City&rsquo;s own transportation plan projects peak weekday demand of <strong>421 spaces
+    against a baseline of 250</strong> &mdash; 171 short before ferry service begins. The Draft
+    Environmental Impact Report describes 425 to 475 spaces being used by the project&rsquo;s new
+    trips, on a site that holds about 404 today. Whatever the final numbers, the structure is set:
+    ferry passengers and existing waterfront users &mdash; the people who come for Cesar Chavez Park,
+    Adventure Playground, Shorebird Park, the sailing clubs, the launch ramps, the sunset &mdash;
+    will be allocating a fixed supply between them.</p>
+    <p>Two constituencies, one lot, and the arithmetic guarantees that one of them loses. That is
+    the Hopkins argument again, relocated three miles west and not yet begun.</p>
+    <p>There is a second problem, and it is more awkward. The business plan models
+    <strong>68% of ferry passengers arriving by car</strong> and 5% by public transit, and the EIR
+    projects <strong>1,127 new vehicle trips a day</strong> to the waterfront. The project&rsquo;s
+    stated objective is to reduce single-occupancy vehicle travel; its own model says it works by
+    generating it. The environmental case rests on those drivers otherwise having driven 25 miles
+    to San Francisco &mdash; a comparison nobody has tested, because the business plan contains no
+    analysis of how many riders would be diverted from BART, AC Transit or the Richmond ferry
+    rather than from cars.</p>
+    <p>This is the part that ought to trouble the people who argued hardest for Hopkins. The case
+    for narrowing a street was that Berkeley should make driving less convenient in order to meet
+    its climate commitments. The case for the ferry accepts a project whose access model is
+    two-thirds cars and several hundred new parking spaces. Both positions can be held. Holding
+    both without noticing is what happens when each decision is judged on its own.</p>
+    <p>A frequent connector does not resolve the ferry&rsquo;s finances or its permits. It does
+    change the parking arithmetic from a fixed pie into a variable one, and it is one option that could make the project&rsquo;s access model more
+    consistent with the climate rationale used in the Hopkins debate. It appears nowhere in the project record.</p>
+    <p class="app-src">Figures from the WETA Berkeley Ferry Service Business Plan, the March 2025
+    Parking and Transportation Demand Management Plan, and the February 2026 Draft Environmental
+    Impact Report &mdash; see <a href="pier-ferry.html">the pier-ferry explainer</a>. The framework treats
+    recreation, the Marina and ferry expansion together as
+    <a href="framework.html#case-h">Case Study H</a>.</p>
+  </div>
+
+  <div class="app">
+    <h3>The Marina&rsquo;s isolation</h3>
+    <p>The waterfront hotel is separated from downtown, the campus and BART by a freeway interchange. Visitors increasingly choose accommodation by asking whether they can stay somewhere without renting a car, and for the Berkeley Marina the honest answer today is no. That is a competitive disadvantage the City has never addressed with a service, in a fund the City Manager described in 2021 as <em>&ldquo;on the brink of insolvency.&rdquo;</em> A connector does not fix the Marina Fund. It removes one of the reasons the waterfront underperforms as a destination.</p>
+  </div>
+
+  <div class="app">
+    <h3>Housing and service siting on University Avenue</h3>
+
+  <p>Berkeley has also made a series of individually considered housing and service decisions along
+  University Avenue without addressing their cumulative effect on the corridor. Transportation does
+  not resolve those siting choices. But access changes the option set: if residents of a facility
+  can reliably reach services without a car, location and service access become less tightly
+  coupled.</p>
+
+  <p>That does not make every site appropriate or answer questions of neighborhood concentration. It
+  illustrates the same principle as Hopkins: changing one constraint can reveal options that remain
+  invisible while the constraint is treated as fixed. The acquisitions and siting record is
+  documented in <a href="oxford-site.html">the Oxford Street case</a> and
+  <a href="district4-siting.html">the District 4 siting record</a>.</p>
+
+  <h3>Neighborhood commercial districts and seniors</h3>
+    <p>Solano, North Shattuck, Fourth Street and Downtown all depend on customers who currently arrive by car, and all face the same constrained parking. Meanwhile the residents least able to drive &mdash; and least able to carry a load any distance &mdash; are the ones for whom every errand becomes a logistical problem. Both are access problems, and curb allocation is one part of them rather than the whole of them.</p>
+  </div>
+
+  <h2>The hardest question, which is also the first one</h2>
+
+  <p>Everyone asks about groceries, and they are right to. The reason people drive to a grocery
+  store is the load they carry home, and a fixed-stop loop can reintroduce exactly the walk the trip
+  was meant to avoid.</p>
+
+  <p>Which is why the Berkeley Bowl West stop is worth sitting with. The Emery Go-Round is a
+  commuter shuttle built to connect Emeryville to MacArthur BART. Nothing about that job requires
+  detouring across the city line and looping a residential block to reach a grocery store, and yet
+  the route does exactly that, and the store is the northern terminus. Somebody, at some point,
+  concluded the grocery trip was worth designing for.</p>
+
+  <p>That is not proof the load problem is solved &mdash; no origin-destination data for that stop
+  appears to have been published, and how people actually carry their shopping home from it is
+  unknown. It is precisely the kind of thing a serious option search would go and find out, and it
+  is available for the cost of a phone call to the Emeryville Transportation Management
+  Association.</p>
+
+  <p>It is also worth being precise about how large the objection really is. The load argument is
+  usually made against the shuttle and rarely against the bicycle, and the two do not survive the
+  comparison. <strong></strong> The physical ask is comparable, and the bike version requires
+  balancing it at speed in traffic.</p>
+
+  <p>So the group genuinely defeated by a short walk from a stop &mdash; someone with a mobility
+  impairment, a large family shop, several children in tow &mdash; is substantially the same group
+  already defeated by a bike lane. Some residents would remain poorly served by either a bicycle
+  facility or a fixed-stop shuttle. That is not a reason to stop considering the connector; it is a
+  reason to identify the unmet group and test design responses such as demand-responsive returns,
+  carefully located pickup points, cart handling, or delivery partnerships. It is the population
+  that <em>neither existing position ever served</em>, and the one a demand-responsive return leg
+  could actually reach.</p>
+
+  <p>Berkeley would not need to invent this service model from scratch. Emeryville has years of
+  nearby operating experience. A serious alternatives search would begin by asking what trips riders
+  actually make, what the grocery terminus accomplishes, what the service costs, what has failed,
+  and what Berkeley could learn before spending public money.</p>
+
+  <p>That is a design constraint, not a fatal objection, and it is the thing a pilot exists to answer. Plausible responses include demand-responsive routing on the return leg, siting the small number of pick-up points for walkability rather than coverage, coordinating with stores on cart handling, or pairing the service with delivery for the heaviest trips. Which of those works is an empirical question that six months and a modest budget would settle.</p>
+
+  <p>What none of this requires is perfect substitution. If a meaningful share of errand trips shift out of single-occupant cars, parking pressure eases for the people who genuinely need to drive, commercial districts get more reachable, and the street-space argument gets less zero-sum &mdash; without anyone having to lose it.</p>
+
+  <h2>Why this is a <a href="framework.html#cat2">Category 2</a> problem</h2>
+
+  <p>The <a href="framework.html">framework</a> this site measures against sorts municipal work into three categories. This is not <a href="framework.html#cat1">Category 1</a> &mdash; Berkeley does not need to own a shuttle to benefit from one. It is a textbook <strong>Category 2</strong>: an undertaking whose scale, expertise and beneficiaries require genuine partners.</p>
+
+  <p><a href="framework.html#cat2">Category 2</a> carries a condition, and it is the part that
+  usually gets skipped: <em>&ldquo;Collaboration must be binding, not aspirational. A Category 2 proposal should identify each partner contribution, governance right, continuing obligation, service area, benefit allocation, and exit condition.&rdquo;</em></p>
+
+  <p>Listing willing partners is not a plan. Emeryville&rsquo;s answer is a plan: a nonprofit association with a public board and defined seats, funded by an assessment the payers voted on, operating through a contract that can be re-bid. Berkeley&rsquo;s version might look different &mdash; the plausible partners here are the commercial district associations, Visit Berkeley, AC Transit, BART, waterfront stakeholders, and the ferry project if it proceeds &mdash; but it needs the same skeleton.</p>
+
+  <p>One further condition, from the same framework:
+  <strong><a href="framework.html#provider-neutrality">provider neutrality</a>.</strong> The operating model should be chosen by comparing city staff, a transit agency, a nonprofit, a private contractor and a partnership on equal criteria. Emeryville landed on a nonprofit contracting to a private operator. That may or may not suit Berkeley. It should be the result of a competitive process, not an assumption written into the first staff report.</p>
+
+  <h2>What a serious version would ask</h2>
+
+  <p>A six-month pilot, competitively bid, with private, nonprofit and public operators all eligible, reporting against measures that can be compared directly with the infrastructure alternatives:</p>
+
+  <ul>
+    <li><strong>Cost per car trip removed</strong> from the corridor &mdash; the same measure applied to street reconfiguration, so the two can be ranked against each other.</li>
+    <li><strong>Cost per resident given access</strong> they do not have today.</li>
+    <li>Whether corridor merchants and property owners would fund a benefit district, as Emeryville&rsquo;s did.</li>
+    <li>A specific answer to the grocery-load problem above.</li>
+  </ul>
+
+  <p>The next step would not be to create a permanent service. It would be to cost a limited pilot
+  and decide whether the price of finding out is justified by the questions it could answer.</p>
+
+  <div class="notclaim">
+    <h3>What this page does not claim</h3>
+    <p><strong>That a shuttle would have resolved Hopkins.</strong> It might not have. The point is narrower and harder to dispute: it was never costed, so nobody knows.</p>
+    <p><strong>That this is the only missing option.</strong> It is one. The argument is about the size of the option set, not about this particular answer to it.</p>
+    <p><strong>That the option set was the only thing wrong with Hopkins.</strong> It was not. The
+    item that passed rested on a claim that the Fire Department had reviewed the adopted design. The
+    Fire Chief told the Council on the record, four hours before the vote, that it had not. The
+    recommendation was never corrected and the plan was adopted anyway, and that is a separate and
+    more serious failure &mdash; documented at
+    <a href="hopkins-fire-review.html">the Hopkins Street fire review</a>. A wider option set would
+    not have excused it. This page is about a different fault in the same decision.</p>
+  </div>
+
+  <h2>The point is not the shuttle</h2>
+
+  <p>Every other analysis on this site documents something that went wrong. This one is here because a critique that only ever prosecutes is easy to dismiss, and because the framework is worth more as a tool than as a verdict.</p>
+
+  <p>Berkeley&rsquo;s decisions are routinely framed as a choice between two positions, each with a constituency, each requiring the other to lose. That framing feels like rigor &mdash; the arguments get very detailed &mdash; but it is what a small option set looks like from the inside. The most valuable question in a public meeting is rarely <em>which side should win.</em> It is:</p>
+
+  <div class="pull">What problem are we actually trying to solve?</div>
+
+  <p>On Hopkins, that question would not have eliminated the need to choose between parking and a
+  Class IV bikeway. It could have produced additional configurations and complementary measures
+  that changed the costs of that choice &mdash; at least one option touching the ferry, the Marina,
+  the commercial districts, the siting fights, and the people on both sides of the curb argument.
+  The connector is one such option. It might have failed. Nobody costed it, so nobody knows.</p>
+
+  <p>Hopkins is decided. Most of what it touches is not. The waterfront parking fight has not
+  started. University Avenue has no plan. The ferry&rsquo;s use permit still needs findings from
+  the Planning Commission, the Zoning Adjustments Board and the Council, and its construction money
+  does not exist yet. Every one of those is a live decision where somebody could still ask what
+  else is on the table.</p>
+
+  <p>The curb space on Hopkins was fixed. The option set around it did not have to be. That is the
+  standard the next decision can be measured against.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p>Emery Go-Round: emerygoround.com and the Emeryville Transportation Management Association; ridership of approximately 1.4 million annually and 5,000 daily is the pre-2020 figure; the 2016 property-based improvement district expansion passed with 71.25% of parcel owners voting in favor. PresidiGo: presidio.gov and the Presidio Trust. Both services contract operations to MV Transportation. The Emery Go-Round Hollis route enters Berkeley and terminates at a stop named for Berkeley Bowl West, at 9th Street; both routes begin and end at MacArthur BART. Route map and weekday timetable published by the Emeryville Transportation Management Association. Ferry mode-of-access and parking figures: WETA Berkeley Ferry Service Business Plan, 17 March 2022, and the Draft Environmental Impact Report, February 2026 &mdash; see <a href="pier-ferry.html">the pier-ferry explainer</a>. Homeless facility siting counts and the Marina Fund characterization: see <a href="oxford-site.html">the Oxford Elementary site</a> and Unfunded Liability Obligations and Unfunded Infrastructure Needs, Council worksession, 16 March 2021. Roger Fisher and William Ury, <em>Getting to Yes</em>, for the negotiation concept. UC Berkeley Institute of Transportation Studies and the Safe Transportation Research and Education Center (SafeTREC), its.berkeley.edu and safetrec.berkeley.edu, for the research capacity described.</p>
+    <h3>Related</h3>
+    <p><a href="framework.html">The Berkeley Budget Framework</a> &middot;
+    <a href="crayon-box.html">The crayon box</a> &middot;
+    <a href="pier-ferry.html">The ferry terminal</a> &middot;
+    <a href="hopkins-fire-review.html">The Hopkins Street fire review</a> &middot;
+    <a href="index.html">Berkeley Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

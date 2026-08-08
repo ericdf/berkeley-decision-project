@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berkeley Budget Framework — A Strategy for Strategy</title>
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --ok:#1e8449; --ok-soft:#eafaf1; --ok-line:#a9dfbf;
+  --warn:#c0392b; --warn-soft:#fdf5f5;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331;
+  --ok:#5cb98a; --ok-soft:#16261d; --ok-line:#2e7d55;
+  --warn:#e08b7e; --warn-soft:#2a1d1c; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+  --ok:#5cb98a; --ok-soft:#16261d; --ok-line:#2e7d55;
+  --warn:#e08b7e; --warn-soft:#2a1d1c;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --ok:#1e8449; --ok-soft:#eafaf1; --ok-line:#a9dfbf;
+  --warn:#c0392b; --warn-soft:#fdf5f5;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Instrument type is load-bearing on this page: a GO bond is borrowed capital repaid
+   through property tax over decades, a parcel tax is recurring revenue collected annually.
+   The table distinguishes them so the reader can see that the pattern is not "bonds" but
+   "any new money except reprioritization". */
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+
+/* Fixed-pie vs expanded-option-set. The graphic carries the thesis. */
+/* Coverage bands. Who can actually use each answer, as nested shares of the
+   same population. Deliberately unscaled — no mode-share data supports exact
+   proportions, and the argument is about relative reach, not percentages. */
+/* Worked applications. */
+@media (max-width: 640px) { .set figcaption { gap: .7rem; font-size: .68rem; } }
+/* The hero supplies the separation; the wrap opens on a heading. */
+/* Hero + slide-summary card, styled as on the white paper. The hero is a dark band on a
+   light page; in dark mode it must separate from the body rather than merge into it, so it
+   lightens as the page darkens and keeps a visible edge either way. */
+/* ── White-paper components, on the explainer palette ─────────────────────── */
+
+/* Section container. The old design used white panels on gray; here a section is
+   a rule and a heading, like every other explainer. */
+.panel { margin: 2.8rem 0 0; }
+.panel-pad { padding: 0; }
+.section-eyebrow { font-family: var(--sans); font-size: .69rem; font-weight: 700;
+                   text-transform: uppercase; letter-spacing: .14em; color: var(--accent);
+                   margin-bottom: .5rem; }
+.lede { font-size: 1.1rem; line-height: 1.6; color: var(--ink-2); margin-bottom: 1.1rem; }
+h3 { font-family: var(--sans); font-size: 1.02rem; font-weight: 700; margin: 1.7rem 0 .6rem;
+     color: var(--ink); }
+h4 { font-family: var(--sans); font-size: .88rem; font-weight: 700; margin: 1.3rem 0 .45rem;
+     color: var(--ink); }
+
+/* Callout — bare accent rule, no fill. */
+.callout { border-left: 4px solid var(--accent); padding: 1.1rem 0 1.1rem 1.3rem; margin: 1.8rem 0; }
+.callout p { font-size: 1.16rem; font-weight: 600; line-height: 1.45; color: var(--ink); margin: 0; }
+
+/* Warning */
+.warn { background: var(--warn-soft); border-left: 4px solid var(--warn); padding: .9rem 1.1rem;
+        border-radius: 0 4px 4px 0; margin: 1.3rem 0; }
+.warn p { font-size: .95rem; color: var(--ink-2); margin: 0; line-height: 1.65; }
+
+/* Category cards */
+.cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.cat { border-top: 4px solid; border-radius: 4px; padding: 1rem 1.1rem 1.1rem; background: var(--panel);
+       border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); border-left: 1px solid var(--rule); }
+.cat p { font-size: .89rem; line-height: 1.6; color: var(--ink-2); margin: 0; }
+.cat-tag { font-family: var(--sans); font-size: .62rem; font-weight: 800; text-transform: uppercase;
+           letter-spacing: .13em; margin-bottom: .35rem; }
+.cat-head { font-family: var(--sans); font-size: 1rem; font-weight: 800; color: var(--ink);
+            margin-bottom: .5rem; line-height: 1.3; }
+.cat-1 { border-top-color: var(--ok); }   .cat-1 .cat-tag { color: var(--ok); }
+.cat-2 { border-top-color: var(--accent); } .cat-2 .cat-tag { color: var(--accent); }
+.cat-3 { border-top-color: var(--warn); } .cat-3 .cat-tag { color: var(--warn); }
+
+/* Start / Stop / Continue */
+.ssc { display: flex; flex-direction: column; gap: .8rem; margin: 1.4rem 0; }
+.ssc-item { background: var(--panel); border: 1px solid var(--rule); border-left: 4px solid var(--ink-3);
+            border-radius: 0 4px 4px 0; padding: .9rem 1.1rem; }
+.ssc-item p { font-size: .93rem; line-height: 1.6; margin: 0; color: var(--ink-2); }
+.ssc-name { font-family: var(--sans); font-size: .72rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: .12em; margin-bottom: .35rem; }
+.ssc-item.start { border-left-color: var(--ok); }    .ssc-item.start .ssc-name { color: var(--ok); }
+.ssc-item.stop  { border-left-color: var(--warn); }  .ssc-item.stop  .ssc-name { color: var(--warn); }
+.ssc-item.cont  { border-left-color: var(--quote); } .ssc-item.cont  .ssc-name { color: var(--quote); }
+
+/* Case studies */
+.case { border-top: 1px solid var(--rule); padding: 1.4rem 0 0; margin-top: 1.4rem; }
+.case:first-of-type { border-top: 0; margin-top: 0; }
+.case h3 { margin: 0 0 .35rem; font-size: 1.05rem; }
+.case-label { font-family: var(--sans); font-size: .64rem; font-weight: 800; text-transform: uppercase;
+              letter-spacing: .13em; color: var(--accent); margin-bottom: .3rem; }
+.case-class { display: inline-block; font-family: var(--sans); background: var(--rule-soft);
+              border-radius: 3px; padding: .2rem .55rem; font-size: .68rem; font-weight: 700;
+              color: var(--ink-2); margin-bottom: .7rem; }
+.num { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink); }
+
+/* Interactive-tool box — keeps a fill; the color is the signal. */
+.tool { background: var(--ok-soft); border: 1px solid var(--ok-line); border-left: 4px solid var(--ok);
+        border-radius: 0 4px 4px 0; margin: 1.6rem 0; overflow: hidden; }
+.tool-eyebrow { background: var(--ok); color: #fff; font-family: var(--sans); font-size: .62rem;
+                font-weight: 800; text-transform: uppercase; letter-spacing: .13em; padding: .45rem 1.1rem; }
+.tool-body { padding: 1rem 1.1rem 1.1rem; }
+.tool-body p { font-size: .93rem; line-height: 1.62; color: var(--ink-2); }
+.tool-btns { display: flex; gap: .55rem; flex-wrap: wrap; margin-top: .8rem; }
+.tool-btn { display: inline-block; background: var(--ok); color: #fff; font-family: var(--sans);
+            font-size: .74rem; font-weight: 700; padding: .5rem .9rem; border-radius: 4px; text-decoration: none; }
+.tool-btn.alt { background: transparent; border: 1px solid var(--ok-line); color: var(--ok); }
+
+/* Notes */
+.notes { margin-top: 2.4rem; padding-top: 1.3rem; border-top: 1px solid var(--rule); }
+.notes ol { margin-left: 1.2rem; }
+.notes li { font-family: var(--sans); font-size: .76rem; line-height: 1.62; color: var(--ink-2); margin-bottom: .55rem; }
+.notes a { color: var(--quote); word-break: break-word; }
+:target { background: var(--accent-soft); }
+
+/* Sticky nav + hero, shared with the explainers */
+.navbar { position: sticky; top: 0; z-index: 100; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav-inner { display: flex; align-items: center; gap: 12px; padding: 9px 26px; max-width: 62rem; margin: 0 auto; }
+.nav-brand { text-decoration: none; flex-shrink: 0; }
+.brand-title { font-family: var(--sans); font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; }
+.brand-sub { font-family: var(--sans); font-size: 11px; color: #8899bb; margin-top: 3px; }
+.nav-brand:hover .brand-title { color: #4e8ecb; }
+.nav-acts { display: flex; gap: 8px; align-items: center; margin-left: auto; flex-wrap: wrap; justify-content: flex-end; }
+.dl-btn { display: inline-block; background: #4e8ecb; color: #fff; text-decoration: none; font-family: var(--sans);
+          font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: 4px; white-space: nowrap; }
+.dl-btn:hover { background: #6ba3d9; }
+.dl-btn.alt { background: transparent; border: 1px solid #3d5680; color: #8fbde8; }
+.dl-btn.alt:hover { background: #1e2a47; border-color: #4e8ecb; }
+.lbl-full { display: inline; } .lbl-short { display: none; }
+
+.fw-hero { background: #1a1a2e; padding: 3rem 1.4rem 2.4rem; border-bottom: 1px solid #2f3d5c; }
+.fw-hero-inner { max-width: 40rem; margin: 0 auto; }
+.fw-kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; text-transform: uppercase;
+             letter-spacing: .16em; color: #4e8ecb; margin-bottom: .9rem; }
+.fw-hero h1 { font-size: 2.3rem; color: #fff; margin-bottom: .9rem; }
+.fw-hero .sub { font-size: 1.16rem; color: #aab4cc; line-height: 1.6; margin-bottom: 0; }
+.fw-hero .byline { font-family: var(--sans); font-size: .78rem; color: #7d8aa5; margin-top: 1.2rem;
+                   padding-bottom: 0; border-bottom: 0; margin-bottom: 0; }
+.fw-pull { border-left: 3px solid #4e8ecb; padding: .6rem 0 .6rem 1.1rem; margin-top: 1.4rem;
+           font-size: 1.16rem; font-weight: 700; color: #fff; line-height: 1.5; }
+
+.short-ver { display: inline-flex; align-items: center; gap: 14px; margin-top: 1.4rem; font-family: var(--sans);
+             background: #223052; border: 1px solid #35486f; border-radius: 7px;
+             padding: 13px 20px 13px 16px; text-decoration: none; transition: background .15s, border-color .15s; }
+.short-ver:hover { background: #2a3a61; border-color: #4e8ecb; }
+.short-ver-ico { font-size: 20px; color: #4e8ecb; line-height: 1; flex-shrink: 0; }
+.short-ver-h { font-size: 14px; font-weight: 800; color: #cfe0f2; line-height: 1.35; }
+.short-ver:hover .short-ver-h { color: #fff; }
+.short-ver-p { font-size: 12px; color: #8fa0bd; margin-top: 4px; line-height: 1.5; }
+
+.footer { margin-top: 2.4rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); font-family: var(--sans);
+          font-size: .72rem; color: var(--ink-3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.footer a { color: var(--ink-3); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
+.tbl-scroll { overflow-x: auto; margin: 1.3rem 0; }
+
+@media (max-width: 760px) {
+  .cat-grid { grid-template-columns: 1fr; }
+  .fw-hero { padding: 2rem 1.1rem 1.8rem; }
+  .fw-hero h1 { font-size: 1.75rem; }
+  .nav-inner { padding: 8px 16px; }
+  .brand-sub { display: none; }
+  .lbl-full { display: none; } .lbl-short { display: inline; }
+  .short-ver { display: flex; padding: 12px 14px; gap: 12px; }
+  .short-ver-h { font-size: 13px; } .short-ver-p { font-size: 11.5px; }
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <div class="brand-title">&#8962; BERKELEY DECISION PROJECT</div>
+      <div class="brand-sub">Better questions. Better evidence. Better choices.</div>
+    </a>
+    <div class="nav-acts">
+      <a class="dl-btn alt" href="framework-slides.html"><span class="lbl-full">View the slides</span><span class="lbl-short">Slides</span></a>
+      <a class="dl-btn" href="documents/Berkeley_Budget_Framework_Whitepaper.pdf" target="_blank" rel="noopener noreferrer"><span class="lbl-full">White paper (PDF)</span><span class="lbl-short">PDF</span></a>
+      <a class="dl-btn alt" href="documents/Berkeley_Budget_Framework_Slides.pdf" target="_blank" rel="noopener noreferrer"><span class="lbl-full">Slides (PDF)</span><span class="lbl-short">Slides PDF</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="fw-hero">
+  <div class="fw-hero-inner">
+    <div class="fw-kicker">Berkeley Budget Framework</div>
+    <h1>A Strategy for Strategy</h1>
+    <p class="sub">How Berkeley should decide what earns money, staff capacity, Council attention, and public trust &mdash; a decision framework for determining what the City must do, what it should do with others, and what it must decline, transfer, repair, or stop.</p>
+    <div class="fw-pull">The goal is not less government. It is government capable of doing important things well.</div>
+    <div class="byline">Eric Friedman &middot; Draft white paper, August 2026 &middot; Prepared for civic discussion</div>
+
+    <a class="short-ver" href="framework-slides.html">
+      <div class="short-ver-ico">&#9636;</div>
+      <div class="short-ver-txt">
+        <div class="short-ver-h">In a hurry? Read the slide summary &rarr;</div>
+        <div class="short-ver-p">The whole argument in 15 slides &mdash; about five minutes, versus roughly forty-five for the full paper.</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- About / exec summary -->
+  <div class="panel"><div class="panel-pad">
+    <div class="section-eyebrow">About this paper</div>
+    <p>This paper proposes a repeatable method for setting municipal priorities. It is not a catalogue of positions on individual Berkeley controversies, and it does not assume that every example has only one permissible outcome. Its central claim is procedural: before judging the political appeal of a proposal, Berkeley needs a common method for deciding whether it deserves money, staff time, managerial attention, and Council deliberation.</p>
+    <p>The framework separates three things that Berkeley often blends together: the importance of an outcome, the institutional fit of the proposed delivery model, and the evidence that performance justifies continuation. The case studies show how those distinctions can change decisions.</p>
+
+    <h2 style="margin-top:26px;">Executive summary</h2>
+    <p class="lede">Berkeley has no shortage of values, plans, initiatives, referrals, grants, commissions, projects, and demands. Its recurring failure is more basic: the City lacks a durable method for deciding which of them deserve priority. There is no strategy for strategy.</p>
+    <p>Without such a framework, decisions become ad hoc. Ad hoc decisions are necessarily political in the narrowest sense: the item with the strongest constituency, the most available grant funding, the most urgent deadline, the longest meeting, or the greatest emotional leverage can displace work that is more fundamental but less visible. Council and staff then carry more commitments than they can competently process. Core work deteriorates, collaborative projects outlive the partnerships that justified them, and obligations accumulate without a mechanism for stopping them.</p>
+    <div class="callout"><p>A priority is not something the City calls important. It is something the City protects with durable money, staffing, and attention &mdash; and for which it is willing to decline competing commitments.</p></div>
+
+    <h3>The proposed framework</h3>
+    <ul>
+      <li><strong>Focus and simplify.</strong> Choose a limited portfolio and remove, consolidate, transfer, or decline work that competes with it.</li>
+      <li><strong>Classify.</strong> Assign every major responsibility and delivery model to Category 1, 2, or 3.</li>
+      <li><strong>Review.</strong> Use recurring Start, Stop, Continue decisions to move work among categories as facts change.</li>
+      <li><strong>Measure.</strong> Require public outcomes, baselines, targets, minimum service levels, lifecycle cost, readiness, and decision gates.</li>
+      <li><strong>Test readiness.</strong> Ask whether Berkeley can do the work well; if evidence, capacity, time, or operating responsibility are missing, narrow, delay, or pass.</li>
+      <li><strong>Budget attention.</strong> Limit concurrent referrals and projects; every new item must identify displaced work.</li>
+      <li><strong>Preserve a real STOP.</strong> Labor, contracting, governance, and capital decisions must not make obsolete functions practically permanent.</li>
+      <li><strong>Select providers by outcomes.</strong> Do not presume that city employees, counties, nonprofits, private firms, or partnerships are categorically superior.</li>
+      <li><strong>Budget by priority.</strong> Protect viable Category 1 service, test Category 2 commitments, and stop or transfer Category 3 work before asking every department to absorb the same percentage cut.</li>
+    </ul>
+  </div></div>
+
+  <!-- 1 -->
+  <div class="panel"><div class="panel-pad">
+    <h2><span class="num">1.</span> The missing strategy for strategy</h2>
+    <p>Strategy ordinarily means choosing a destination and allocating resources to reach it. Berkeley produces strategies within individual domains &mdash; housing, transportation, climate, public safety, infrastructure, equity, homelessness, public health, recreation, and economic development. What is missing is a strategy for choosing among strategies.</p>
+    <p>The governing questions come first: What is important enough to earn recurring money and attention? Which outcomes are mandatory? Which undertakings require partners? Which activities should Berkeley refuse even when their purposes are worthy? How much concurrent work can staff and Council absorb without degrading judgment and execution?</p>
+    <p>Broad values do not answer these questions by themselves. Safety, equity, climate, housing, health, community, and economic development can each justify a nearly unlimited portfolio. Unless the City ranks objectives and establishes admission rules, those values become language used to support decisions reached through coalition, urgency, constituency pressure, convention, and available funding.</p>
+
+    <h3>What earns a place in the priority portfolio?</h3>
+    <ol>
+      <li><strong>Legal or essential responsibility.</strong> The outcome is required for basic municipal competence, safety, fiscal integrity, or stewardship.</li>
+      <li><strong>Material resident benefit.</strong> The result is specific, local, and large enough to justify the cost and attention.</li>
+      <li><strong>Institutional fit.</strong> Berkeley has the authority, scale, expertise, resilience, and comparative advantage to own the work.</li>
+      <li><strong>Executable evidence.</strong> The proposal has a baseline, target, service standard, delivery plan, lifecycle cost, and evaluation rule.</li>
+      <li><strong>Capacity.</strong> The City can absorb the work without degrading more important commitments, or it identifies what will stop.</li>
+      <li><strong>Durability.</strong> Funding, staffing, partners, and governance are credible for the full life of the commitment.</li>
+    </ol>
+    <p>A proposal that cannot pass these tests may still be admirable. It has not yet earned public priority.</p>
+
+    <h3>Workload without opportunity cost</h3>
+    <p>Berkeley has repeatedly acknowledged that Council referrals overwhelm staff. The City created referral-ranking and improvement processes because the portfolio had become too large for cohesive direction. Ranking a large backlog is useful, but it is not the same as limiting the backlog or requiring each new item to displace an old one.<sup><a href="#n1" id="r1">[1]</a></sup></p>
+    <p>A referral looks inexpensive because it often arrives without an appropriation. In practice it consumes analyst hours, legal review, departmental coordination, public engagement, management supervision, report production, agenda space, and Council reading time. It can interrupt already-prioritized work. The operative question must therefore be: if staff does this, what will staff not do?<sup><a href="#n2" id="r2">[2]</a></sup></p>
+    <p>When the institution cannot process its own workload, representation breaks down. Material arrives too late, packets become unmanageable, meetings become marathons, and decision makers must choose between delay and judgment without adequate review. Very long meetings also favor organized participants who can devote extraordinary time to municipal process. Attention budgeting is therefore both an execution reform and a democratic-access reform.</p>
+  </div></div>
+
+  <!-- 2 -->
+  <div class="panel"><div class="panel-pad">
+    <h2><span class="num">2.</span> Governing values: focus, simplify, and do not institutionalize workarounds</h2>
+    <p>Focus chooses what matters. Simplification removes, consolidates, or declines the commitments and processes that compete with it. The two values are inseparable: no organization can focus on a thousand priorities, and no declaration of priority is meaningful unless it changes durable budgeting and staffing decisions.</p>
+    <p>Berkeley often applies simplification tactically. A permit form may be shortened, one pathway expedited, or a special office asked to shepherd difficult cases. Those changes can help, but they do not establish simplification as a governing value. Genuine simplification asks whether the City should still own the process, whether two functions should be merged, whether a larger provider can supply resilience, whether a review can be converted into objective standards, and whether a program has earned continuation.</p>
+
+    <h3>Do not institutionalize the workaround</h3>
+    <p>A shortcut created by convention, necessity, or accident does not become the correct durable design merely because people now use it. Workarounds are diagnostic evidence: they show that the normal path is slow, confusing, inaccessible, or unresponsive.</p>
+    <p>Berkeley should track common shortcuts &mdash; council-office intervention in routine service requests, bespoke reviews for similar buildings, repeated emergency referrals, unofficial escalation channels, and one-off waivers. The right response is not to add a permanent layer around the failure. It is to measure the underlying process and subject it to Start, Stop, Continue review.</p>
+    <div class="callout"><p>A workaround should generate a metric and a redesign question, not a new institution that makes the workaround permanent.</p></div>
+
+    <h3>The discipline of refusal</h3>
+    <p>The hardest municipal decisions are rarely between good and bad. They are between multiple defensible purposes that cannot all receive competent execution. The framework does not ask only whether an idea is admirable. It asks whether Berkeley must own it, whether the necessary conditions exist, whether performance can be measured, and what higher-priority work it will displace.</p>
+    <p>This is not an argument for small government as an abstract ideology. It is an argument for competent government within finite capacity. A city may choose an ambitious portfolio. It cannot choose an unlimited one.</p>
+  </div></div>
+
+  <!-- 3 -->
+  <div class="panel"><div class="panel-pad">
+    <h2><span class="num">3.</span> The Category 1 / 2 / 3 taxonomy</h2>
+    <p>Every major function, initiative, referral, capital project, grant opportunity, ballot measure, and delivery model should receive an explicit classification before approval. The category applies separately to the public outcome and to the proposed method of delivering it. Those classifications may differ.</p>
+
+    <div class="cat-grid">
+      <div class="cat cat-1">
+        <div class="cat-tag">Category 1</div>
+        <div class="cat-head">Berkeley must ensure the outcome</div>
+        <p>Protect a minimum competent service level. The delivery model may still change.</p>
+      </div>
+      <div class="cat cat-2">
+        <div class="cat-tag">Category 2</div>
+        <div class="cat-head">Berkeley should act only with necessary partners</div>
+        <p>Require binding contributions, shared risk, governance, proportional benefit, and exit rules.</p>
+      </div>
+      <div class="cat cat-3">
+        <div class="cat-tag">Category 3</div>
+        <div class="cat-head">Berkeley should not own or continue it</div>
+        <p>Decline, transfer, merge, contract, sunset, or stop when scale, expertise, partners, or local benefit are inadequate.</p>
+      </div>
+    </div>
+
+    <h3 id="cat1">Category 1: Berkeley must ensure it is done</h3>
+    <p>Category 1 contains core municipal outcomes: emergency response, wildfire preparation, policing, street and facility maintenance, safe public spaces, usable recreation, competent permitting and inspections, fiscal management, and stewardship of City assets.</p>
+    <p><em>Must ensure</em> does not always mean <em>must perform through a standalone Berkeley department.</em> The City must ensure safe restaurants, for example. If Alameda County can provide inspections more reliably and efficiently, Berkeley can preserve the Category 1 outcome by transferring a Category 3 delivery model.</p>
+    <p>Category 1 work needs a minimum competent service level. A pool that exists but is unavailable when families can use it, a street program that remains far below its pavement target, or a fire system weakened below an accepted response standard is not successfully funded Category 1 service. Ownership is not performance.</p>
+
+    <h3 id="cat2">Category 2: Berkeley should act with necessary partners</h3>
+    <p>Category 2 contains undertakings whose scale, expertise, risks, authority, costs, or benefits require genuine collaboration. Regional transportation, homelessness, major financial institutions, watershed management, mutual aid, and some housing or public-health programs may belong here.</p>
+    <p>Collaboration must be binding, not aspirational. A Category 2 proposal should identify each partner contribution, governance right, continuing obligation, service area, benefit allocation, and exit condition. Berkeley should not capitalize a regional undertaking alone while other jurisdictions remain potential beneficiaries.</p>
+
+    <h3 id="cat3">Category 3: Berkeley should not own or continue it</h3>
+    <p>Category 3 includes work that is outside the City's proper scale, duplicates a capable provider, lacks the partners essential to its design, has open-ended obligations disproportionate to local benefit, or materially dilutes Category 1 performance. The appropriate action may be to decline, transfer, merge, contract, sunset, or stop.</p>
+    <p>Category 3 is not a moral judgment. A valuable service may belong with a community provider, county, regional agency, private specialist, or partnership because Berkeley lacks the scale or expertise to do it well. The intended beneficiaries deserve competent delivery, not municipal ownership for its own sake.</p>
+
+    <h3 id="cat-not-permanent">Categories are not permanent</h3>
+    <p>Classification is conditional. A proposal can move from Category 2 to Category 3 when partners withdraw, matching funds disappear, authority changes, operating costs exceed the plan, or the benefit becomes substantially external to Berkeley. A Category 3 delivery model can move back to Category 2 if binding partners and a sustainable structure are secured. Start, Stop, Continue is the mechanism for making these movements explicit.</p>
+  </div></div>
+
+  <!-- 4 -->
+  <div class="panel"><div class="panel-pad">
+    <h2><span class="num">4.</span> Start, Stop, Continue</h2>
+    <p>Focus and simplification become habits through recurring portfolio review. At least annually &mdash; and before each biennial budget &mdash; every major function, program, delivery model, capital commitment, and referral should face a Start, Stop, Continue decision.</p>
+
+    <div class="ssc">
+      <div class="ssc-item start"><div class="ssc-name">Start</div><p>Add or repair work only when it earns entry and a named tradeoff makes room.</p></div>
+      <div class="ssc-item stop"><div class="ssc-name">Stop</div><p>End, transfer, merge, or redesign work that no longer fits &mdash; even outside a crisis.</p></div>
+      <div class="ssc-item cont"><div class="ssc-name">Continue</div><p>Protect work that meets a defined service level at a defensible total cost.</p></div>
+    </div>
+
+    <h3 id="start">START is constrained by tradeoffs</h3>
+    <p>Start does not mean compile an unlimited list of unmet needs. A new program, repair, reform, or partnership enters a finite portfolio. It must identify the problem, evidence, service target, full cost, responsible owner, and the work that will pause, shrink, transfer, or end to make room. Repairing a neglected Category 1 function may outrank launching a new one.</p>
+
+    <h3 id="stop">STOP must be a real management option</h3>
+    <p>Organizations often preserve programs because employees, contracts, facilities, commissions, grants, or constituencies have grown around them. That makes STOP politically painful, but not optional. A government that can stop work only during a fiscal collapse has surrendered management.</p>
+    <p>Within collective-bargaining law and good-faith labor relations, the City should preserve its ability to discontinue, consolidate, transfer, automate, outsource, or redesign functions. Employee protections should govern how change occurs; they should not make every existing task institutionally permanent. Capital and lease decisions should likewise avoid structures that make exit practically impossible.</p>
+    <p>Calling every existing position essential confuses respect for employees with evidence that every task, unit, and delivery model must continue unchanged. A closed facility, obsolete process, or duplicative function can be stopped even when the affected people have served honorably.</p>
+
+    <h3 id="continue">CONTINUE must be earned</h3>
+    <p>Continue is not the default. It means the function meets a defined service level, its outcomes are visible, its total cost remains defensible, its delivery model compares favorably with alternatives, and it still fits the City's priorities. Continuation should protect successful Category 1 work from repeated political re-litigation while preventing institutional habit from substituting for performance.</p>
+
+    <h3>Scale and resilience</h3>
+    <p>Small standalone units can be fragile. One vacancy, leave, retirement, or failed recruitment may sharply reduce service because there is no bench, specialization, or surge capacity. Larger organizations can spread fixed costs, cross-train staff, absorb leave, and maintain continuity. Scale is not automatically superior, but resilience should be measured before Berkeley preserves a small unit out of habit.</p>
+    <p>Restaurant food safety illustrates the distinction. The outcome is Category 1. Berkeley's separate delivery model deserves continuation only if it can meet inspection standards reliably and demonstrate a local advantage over Alameda County, which performs the same standardized function at larger scale.<sup><a href="#n3" id="r3">[3]</a></sup></p>
+  </div></div>
+
+  <!-- 5 -->
+  <div class="panel"><div class="panel-pad">
+    <h2><span class="num">5.</span> The evidence package</h2>
+    <p>Classification without evidence can become rhetoric. Category 1 can shield inefficiency, Category 2 can disguise vague collaboration, and Category 3 can be used as a political label. Every major decision therefore needs a public evidence package that an auditor, resident, journalist, or competing provider can independently evaluate.</p>
+
+    <h3>Audit the result, not only the expenditure</h3>
+    <p>Ballot measures often reassure voters that a program or tax will be audited. That assurance can be much narrower than it sounds. A financial or compliance audit may establish that money was accounted for, lawfully handled, and spent on authorized purposes. It does not necessarily determine whether the program improved the intended condition, achieved a reasonable cost per result, avoided material harms, or still deserves continuation.</p>
+    <p>Berkeley's elected Auditor is not limited to financial review: the City Charter expressly authorizes financial, compliance, efficiency-and-economy, and program-results auditing, and the office maintains a dedicated Performance Audit Division. But audit resources are finite, and a generic promise of an &ldquo;audit&rdquo; does not specify which question will be answered. Ballot language and enabling legislation should therefore distinguish an independent financial audit from an independent performance audit and require both when both are needed.<sup><a href="#n31" id="r31">[31]</a></sup><sup><a href="#n32" id="r32">[32]</a></sup></p>
+    <p>A performance audit should test the evidence package already approved with the undertaking: the baseline, outcome target, minimum service level, cost per result, peer benchmark, adverse-effect measures, lifecycle cost, and Start/Stop/Continue decision rule. The Auditor should not be forced to reconstruct the program's purpose after money has been spent. Berkeley's 2026 performance-measure guide emphasizes outcomes, baselines, targets, regular reporting, and alignment with public priorities.<sup><a href="#n33" id="r33">[33]</a></sup></p>
+    <p>The distinction is not semantic. Berkeley ballot materials have used &ldquo;financial audit&rdquo; language to verify both expenditures and progress toward a pavement goal, while other provisions expressly require a &ldquo;performance audit.&rdquo; Those are not interchangeable forms of assurance. Traceable spending is necessary; demonstrable public value is the governing question.<sup><a href="#n34" id="r34">[34]</a></sup></p>
+
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th style="width:32%">Required element</th><th>Question that must be answered</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Outcome and beneficiary</strong></td><td>What condition for residents changes, and for whom?</td></tr>
+        <tr><td><strong>Baseline and target</strong></td><td>Current performance, target, date, data source, and minimum competent level.</td></tr>
+        <tr><td><strong>Full cost of ownership</strong></td><td>Capital, operations, maintenance, staffing, technology, insurance, legal, oversight, replacement, and closure.</td></tr>
+        <tr><td><strong>Capacity and opportunity cost</strong></td><td>Staff hours, management attention, Council time, and the work that will pause or end.</td></tr>
+        <tr><td><strong>Delivery alternatives</strong></td><td>City staff, county, regional agency, nonprofit, private contractor, or public-private partnership compared on equal criteria.</td></tr>
+        <tr><td><strong>Partners and dependencies</strong></td><td>Binding contributions, approvals, prerequisites, governance, benefit allocation, and exit rules.</td></tr>
+        <tr><td><strong>Risks and externalities</strong></td><td>Costs imposed on neighborhoods, businesses, other agencies, future budgets, or nonparticipants.</td></tr>
+        <tr><td><strong>Evaluation and decision gate</strong></td><td>Who evaluates, what evidence is public, and what result triggers continue, modify, transfer, or stop?</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>No moving goalposts</h3>
+    <p>Outcomes and metrics must be fixed before money is committed. A program may learn and evolve, but changing the goal after results are known is a redesign, not proof of success. The City should publish the original target, the reason for revision, the new target, the cost of change, and the authority that approved it.</p>
+    <p>Community-defined programming, participant feedback, and adaptive services can be valuable inputs. They do not substitute for a measurable public purpose. A broad promise to evolve as users identify needs can make almost any activity appear successful after the fact unless the City predeclares the outcomes, eligible population, service limits, and evidence required for continuation.</p>
+
+    <h3>Urgency requires a bounded exception</h3>
+    <p>The governing question is not only whether Berkeley can act, whether money is available, or whether a deadline is approaching. The question is whether Berkeley can do the work <em>well</em> &mdash; with enough evidence, time, capacity, expertise, funding, operating ownership, and attention to produce the intended public result.</p>
+    <p>Urgency can justify a faster process. It does not justify pretending that quality gates do not apply. Emergency action, grant windows, expiring leases, and safety hazards should identify the minimum evidence, cap the exposure, name the operating owner, set a review date, and require retrospective evaluation.</p>
+    <div class="warn"><p>When the minimum standard cannot be met in time, the responsible answer may be to narrow the proposal, delay it, or pass. Missing a funding window may be less costly than accepting a durable obligation the City cannot execute well.</p></div>
+
+    <h3>A pilot must be a test</h3>
+    <p>Approving something as a pilot must mean more than temporary funding followed by renewal. A genuine pilot has a stated hypothesis, baseline, target, duration, full cost, responsible evaluator, adverse-effect measures, public data, and a scheduled decision to continue, modify, scale, transfer, or stop.</p>
+    <p>A report containing activity counts is not automatically an evaluation. The decisive question is whether the evidence answers the predeclared go/no-go criteria. If Council makes a pilot permanent or places it in the baseline budget, the record should contain an explicit verdict against those criteria.</p>
+
+    <h3>Dependencies must be linked</h3>
+    <p>Council referrals and project decisions are often treated as separate agenda items even when one is a prerequisite for another. The work system should record those dependencies. If an operating-cost study is required before a capital commitment, expiration or noncompletion of the study should automatically pause the dependent capital action and trigger reassessment.</p>
+    <p>A dormant prerequisite should not simply disappear from the referral backlog while the project it was meant to inform continues. Dependency tracking converts reports from optional paperwork into decision gates.</p>
+
+    <h3>The grant rule</h3>
+    <p>Available outside funding is not a strategy. A grant changes the financing of an undertaking; it does not determine the undertaking's category or priority. One-time capital can create permanent staffing, maintenance, security, insurance, compliance, and service obligations.</p>
+    <p>A grant should be accepted only after the City identifies full cost of ownership, the post-grant funding source, the responsible operating unit, the local benefit, the regional burden-sharing plan, and the work displaced. <em>Dollars attracted</em> is not a success metric if the award creates obligations that outlive the money.</p>
+
+    <h3>CAPEX is not OPEX</h3>
+    <p>Capital funds can buy a building. They cannot by themselves staff, program, maintain, secure, insure, and operate it. Every capital proposal should include a durable operating plan and answer a simple question: what is the value of building something if the City cannot afford to open its doors?</p>
+
+    <h3 id="provider-neutrality">Provider neutrality</h3>
+    <p>Berkeley should not begin with an ideological presumption that a service must be delivered by city employees, a nonprofit, or any other favored class. The evidence package should compare city staff, county or regional delivery, nonprofit contracts, private contractors, and public-private partnerships on the same criteria: outcome, cost, expertise, governance, compensation, resilience, transparency, liability, and exit flexibility.</p>
+    <p>A nonprofit mission does not establish good governance or efficient compensation. A private firm is not disqualified merely because it earns a return. City employees are not the correct provider merely because the City has historically performed the work. The public decision is which structure produces the required result with lawful accountability and a defensible total cost.</p>
+  </div></div>
+
+  <!-- 6 -->
+  <div class="panel"><div class="panel-pad">
+    <h2><span class="num">6.</span> The attention budget</h2>
+    <p>Municipal capacity is not simply the sum of appropriated dollars and authorized positions. Work must be read, understood, coordinated, supervised, debated, implemented, and evaluated. These activities consume attention, and attention is finite.</p>
+    <p>The absence of attention budgeting produces a predictable overload cycle:</p>
+    <ol>
+      <li>Council generates more work than staff can complete competently.</li>
+      <li>Reports, projects, and amendments arrive late, incomplete, or disconnected from earlier decisions.</li>
+      <li>Category 1 work deteriorates while management responds to visible deadlines.</li>
+      <li>Council responds with additional referrals, studies, oversight, and reporting requirements.</li>
+      <li>Council itself becomes unable to absorb the resulting material.</li>
+      <li>Decisions become more dependent on political alignment, urgency, endurance, and exhaustion.</li>
+    </ol>
+
+    <h3>Required controls</h3>
+    <ul>
+      <li>A hard work-in-progress limit for major Council referrals and projects, both citywide and by department.</li>
+      <li>A displaced-work statement for every new referral: if this begins, the named item pauses or ends.</li>
+      <li>A staff-capacity certification before an item receives a deadline.</li>
+      <li>A minimum review period for major items and substantial amendments, except genuine emergencies.</li>
+      <li>Automatic expiration of dormant referrals unless Council affirmatively renews them.</li>
+      <li>A public dashboard showing referral age, dependencies, estimated and actual staff hours, status, next decision, and displaced work.</li>
+      <li>A completion definition: a referral is not done merely because a report was filed; the decision and implementation consequence must be clear.</li>
+      <li>Reserved capacity for emergencies instead of filling the portfolio to 100 percent.</li>
+    </ul>
+    <div class="callout"><p>If a new item does not displace, delay, or consume capacity reserved for something else, it has not actually been prioritized.</p></div>
+
+    <h3>Decision quality is a performance metric</h3>
+    <p>The City should track packet volume, late material, continuances, meeting duration, unresolved dependencies, and decisions made without required analysis. These are not administrative curiosities. They measure whether elected representatives and the public have a realistic opportunity to understand the choices before them.</p>
+    <p>A councilmember can provide district concierge service only by diverting attention into individual cases, often compensating for unmeasured departmental response. The workaround may help a constituent, but it can conceal the need for objective service standards. At the same time, citywide coalitions can impose concentrated local costs that a district representative cannot prevent. Better attention governance does not resolve every representation problem, but it reduces the volume and opacity that make those problems worse.</p>
+  </div></div>
+
+  <!-- 7 -->
+  <div class="panel"><div class="panel-pad">
+    <h2><span class="num">7.</span> Priority-based budgeting and organizational flexibility</h2>
+    <p>Across-the-board reductions are not prioritization. They assume every activity is equally important and equally able to absorb a cut. A 10 percent reduction can remove an operating unit from an expensive Category 1 service such as fire protection. The same percentage can leave a small department with most of its fixed overhead but too little frontline capacity to perform competently. The result preserves every institution while degrading the portfolio.</p>
+
+    <h3>The proper sequence</h3>
+    <ol>
+      <li>Define and cost the minimum competent level of Category 1 services.</li>
+      <li>Repair measurable Category 1 delivery failures before adding new ambitions.</li>
+      <li>Review Category 2 work for binding partners, shared cost, and proportional Berkeley benefit.</li>
+      <li>Stop, transfer, consolidate, contract, or redesign Category 3 activity.</li>
+      <li>Use Start, Stop, Continue to eliminate nonviable small units rather than preserve hollow structures.</li>
+      <li>Calculate the remaining structural deficit only after priorities have been applied.</li>
+      <li>Ask voters for additional revenue with a transparent account of what was protected, what was ended, and why the remaining gap cannot be closed responsibly.</li>
+    </ol>
+
+    <div class="tool">
+      <div class="tool-eyebrow">&#9881; Do this yourself &mdash; both sides of the ledger</div>
+      <div class="tool-body">
+        <p><strong>The Berkeley Budget Lab</strong> puts the sequence above in your hands. Choose one of the City Manager's actual scenarios &mdash; the sales tax passes, or it fails &mdash; then assign each department to <strong>protect</strong>, <strong>accept the baseline cut</strong>, or <strong>absorb more</strong>. Every service you protect pushes the savings requirement onto the ones you did not. That constraint is the entire argument of this section: an across-the-board reduction lets everyone avoid it, and prioritization does not. The tool also drafts a message to Council stating what you chose to protect and what you were willing to give up.</p>
+        <p><strong>The Berkeley Tax Explorer</strong> answers a simpler and more personal question: <strong>what will all of this actually cost me?</strong> Find your home by assessed value and square footage and it estimates your household's total annual bill &mdash; the proposed bonds and taxes together with the ones you are already paying &mdash; and projects it out over thirty years, showing when existing bonds fall off.</p>
+        <p style="font-size:12.5px;color:#3d7a58;margin-bottom:14px;">Each measure arrives on the ballot with its own price tag. None of them arrives with the total. Berkeley votes on them one at a time; residents pay them all at once &mdash; and, as the next section explains, usually not yet.</p>
+        <div class="tool-btns">
+          <a class="tool-btn" href="https://ericdf.github.io/budget_lab/" target="_blank" rel="noopener noreferrer">Open the Budget Lab &rarr;</a>
+          <a class="tool-btn alt" href="https://ericdf.github.io/berkeley-tax-explorer/" target="_blank" rel="noopener noreferrer">Open the Tax Explorer &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <h3>The lag problem: voters approve the next measure before paying for the last one</h3>
+    <p>There is a timing defect in how Berkeley asks for money, and it is structural rather than accidental. A measure approved in one cycle does not appear on a homeowner's bill immediately. Bonds must be issued, sometimes in tranches over several years; parcel taxes and rate changes phase in on their own schedules; assessments arrive on the property tax bill a fiscal year or more after the vote.</p>
+    <p>In Berkeley the gap is not abstract, and the calendar makes it acute. General elections fall in early November. Alameda County's secured property tax bills go out in late October, with the first installment due November 1 and delinquent after December 10.<sup><a href="#n42" id="r42">[42]</a></sup> A homeowner is therefore voting on the next round of measures at essentially the same moment the bill for the previous round is arriving &mdash; and before the payment that makes its size concrete has come due. Measures approved in that November do not reach a tax bill until the following autumn at the earliest.</p>
+    <p>The practical result is a rolling one-year blind spot. Each vote is cast against a bill that does not yet include what was just approved, and often does not yet fully include what was approved the cycle before.</p>
+    <p>The consequence is that voters judge affordability at the one moment they have the least information about it. The measure in front of them carries a stated annual cost. The measures approved in prior cycles carry costs that are still ramping or have not yet appeared at all. What a household is paying today understates what it has already committed to pay, so the felt burden at the moment of voting is reliably lower than the obligation actually incurred.</p>
+    <div class="warn">
+      <p>This is not a claim that any measure was misrepresented. Each can be individually accurate and the aggregate can still be invisible. The defect is that the disclosure unit is the measure, while the thing residents actually experience is the bill &mdash; and the two are separated by years.</p>
+    </div>
+    <p>The remedy follows the same logic as the rest of this framework: disclose the commitment, not just the increment. Before placing a revenue measure on the ballot &mdash; and early enough to reach voters before ballots are returned &mdash; the City should publish, for representative households, four figures: the current annual cost of existing voter-approved obligations; the additional cost of measures <em>already approved but not yet appearing on a tax bill</em>; the cost of the proposed measure; and the resulting combined annual total by year over the life of the obligation.</p>
+    <p>The second of those figures is the one the current process never supplies, and it is the one the lag makes indispensable. That is a modest analytical burden. It is the difference between asking voters what one measure costs and asking them what they are committing to.</p>
+    <p>The same lag deserves a place in the evidence package. A measure whose costs land after the next election is a measure whose accountability arrives after the accountability moment has passed.</p>
+
+    <h3>The firemen-first problem</h3>
+    <p>When the most visible proposed consequence of a failed tax is closure of a fire station, voters face a choice structured around a high-consequence Category 1 service. Regardless of political motive, that structure creates leverage. A priority-based budget would first demonstrate that lower-priority work had been stopped, transferred, or reduced before presenting emergency response as the marginal cut.</p>
+    <p>This is especially important when the threatened station serves a city that acknowledges severe wildfire-interface, ingress, egress, and evacuation risks. The budget should not treat core protective capacity as interchangeable with discretionary or poorly performing work.</p>
+
+    <h3>Organizational flexibility is fiscal capacity</h3>
+    <p>The City should bargain, contract, lease, build, and organize with the assumption that conditions will change. A service may lose partners. Technology may replace a process. A county may develop superior scale. Demand may decline. A pilot may fail. A property may have a higher public use. Preserving lawful capacity to change course is not hostility to workers or service recipients. It is a prerequisite for honest stewardship.</p>
+  </div></div>
+
+  <!-- 8 case studies -->
+  <div class="panel">
+    <div class="panel-pad" style="padding-bottom:6px;">
+      <h2><span class="num">8.</span> Berkeley case studies</h2>
+      <p>The cases do not constitute the framework. They test it. Each illustrates a different failure mode: weak execution of Category 1, loss of Category 2 conditions, accumulation of Category 3 work, missing lifecycle analysis, neglected metrics, false pilots, foreclosed STOP decisions, or overloaded attention.</p>
+    </div>
+
+    <div class="case" id="case-a">
+      <div class="case-label">Case Study A</div>
+      <h3>Hopkins Street</h3>
+      <div class="case-class">Category 1 responsibility &middot; failed decision gate</div>
+      <p>Street design, emergency access, traffic safety, transit operations, sanitation, and evacuation are core municipal responsibilities. Council approved the Hopkins conceptual design in May 2022. A later City Manager memorandum stated that the approved configuration lacked required approval from the fire-code official, included lane widths then considered too narrow for safe opposing traffic, affected an emergency-access and evacuation route, and required further study.<sup><a href="#n4" id="r4">[4]</a></sup><sup><a href="#n5" id="r5">[5]</a></sup></p>
+      <p>The issue is not that fire concerns could never be resolved. The issue is sequencing: emergency access should have been a gate to approval, not a problem to reconcile after the political decision. Hopkins shows how advocacy, process, and Council attention can outrun cross-departmental validation. Relevant metrics include emergency response, evacuation throughput, collision outcomes, bus and sanitation operations, disability access, business access, and resident use.</p>
+      <p style="font-size:13px;color:#566573;"><strong>Update, July 28, 2026:</strong> Council approved the corridor plan 7&ndash;2 after fixing the basic alignment ahead of merchant, transit, paratransit, and disability analysis &mdash; the same sequencing failure, repeated. See the <a href="https://ericdf.github.io/council-scorecards/incidents/2026-07/incident_Hopkins_Votes.html">incident record</a> and <a href="https://ericdf.github.io/council-scorecards/hopkins-assessment.html">full assessment</a>.</p>
+    </div>
+
+    <div class="case" id="case-b">
+      <div class="case-label">Case Study B</div>
+      <h3>The Public Bank initiative</h3>
+      <div class="case-class">Category 2 premise &middot; Category 3 if binding regional conditions fail</div>
+      <p>The Public Bank East Bay viability study described a cooperative venture involving Berkeley, Oakland, Richmond, and Alameda County. Berkeley's 2023 action likewise treated the City as one of several founding owners. The 2026 citizen initiative would impose a Berkeley parcel tax to capitalize and support a public bank whose service area includes Berkeley; the initiative does not condition the tax on matching capitalization or binding participation by the original jurisdictions.<sup><a href="#n6" id="r6">[6]</a></sup><sup><a href="#n7" id="r7">[7]</a></sup></p>
+      <p>The regional structure was not an alternative invented by critics; it was part of the project's asserted design. The loan analogy is direct: if a loan is justified by co-signers who later do not execute their commitments, one does not proceed on the original terms while allowing noncontributing parties to retain access to benefits. Even a supporter of public banking should require binding partners, proportional capitalization, governance, local benefit, risk allocation, and an exit rule. Without them, a Category 2 concept becomes Category 3.</p>
+    </div>
+
+    <div class="case" id="case-c">
+      <div class="case-label">Case Study C</div>
+      <h3>African American Holistic Resource Center</h3>
+      <div class="case-class">Category 1 stewardship &middot; CAPEX/OPEX, evidence, and dependency failures</div>
+      <p>The 2018 feasibility study projected an annual operating budget of $1.5 million to $2 million while acknowledging many unknowns. Its mission and service descriptions are broad and community-defined, spanning health, mental wellness, education, legal matters, culture, recreation, housing advocacy, referrals, and other services.<sup><a href="#n8" id="r8">[8]</a></sup> Broad and adaptive programming may be appropriate, but it is not a measurement plan. Without predeclared outcomes and limits, the program can evolve in ways that move the goalposts.</p>
+      <p>In March 2020, Council directed the City Manager to report on the cost of ongoing operations by a nonprofit, along with implementation and physical-improvement costs. The current City project page identifies about $15.1 million in capital funding after the project changed from renovation to new construction.<sup><a href="#n9" id="r9">[9]</a></sup><sup><a href="#n10" id="r10">[10]</a></sup> If the operating-cost prerequisite remains unanswered, its dormancy should automatically pause or reopen the dependent capital decision. A structural deficit and contemplated staff reductions make the question unavoidable: what is the point of building a facility if the City cannot sustainably staff, program, maintain, and open it?</p>
+      <p>The assumed nonprofit operating model should also be tested rather than inherited. Why a nonprofit? Which one? What governance, compensation, performance, and audit standards would apply? What other delivery models were compared? Provider selection is part of the evidence package, not a conclusion embedded in the project premise.</p>
+    </div>
+
+    <div class="case" id="case-d">
+      <div class="case-label">Case Study D</div>
+      <h3>Food safety and the separate health-delivery model</h3>
+      <div class="case-class">Category 1 outcome &middot; possible Category 3 delivery</div>
+      <p>Berkeley's 2024 audit found that the City completed only 29 percent of its target food inspections in 2023 and that 45 percent of food facilities received no inspection. Alameda County reported that only 3 percent of facilities elsewhere in the county missed an annual inspection.<sup><a href="#n3" id="r3b">[3]</a></sup> The audit also identified prolonged staff shortages, vacancies, incomplete public data, and weak spending information.</p>
+      <p>Food safety remains Category 1. The question is whether a very small standalone unit is a viable delivery model when one vacancy or leave can materially reduce capacity and the county has a larger pool of inspectors, management, systems, and surge capacity. Berkeley may retain local delivery if it demonstrates superior outcomes or a unique need. Otherwise the City should transfer the function while preserving oversight of resident outcomes. The same function-by-function test should be applied to the broader separate health department.</p>
+    </div>
+
+    <div class="case" id="case-e">
+      <div class="case-label">Case Study E</div>
+      <h3>Street maintenance and public works</h3>
+      <div class="case-class">Category 1 performance failure measured by PCI</div>
+      <p>Pavement Condition Index is an objective regional measure. Berkeley's recent plans report a citywide PCI of about 56 against a policy target of 70. The City Auditor documented substantial deferred maintenance and emphasized that timely maintenance is far cheaper than reconstruction. Current plans acknowledge construction-cost escalation and use several policy criteria to select work.<sup><a href="#n11" id="r11">[11]</a></sup></p>
+      <p>The framework does not reject equity, transit, bicycle routes, or geographic balance as considerations. It requires the City to disclose the cost of each constraint and show that project bundling, mobilization, utility coordination, pavement-life optimization, and allocation rules produce the greatest defensible result from limited funds. A five-year plan that does not reflect realistic labor and material inflation, or that disperses crews inefficiently, cannot be judged only by projects listed. It must be judged by PCI gained per dollar and whether the target is closing.</p>
+      <p>Leadership continuity is also a metric. Repeated turnover among Public Works directors in a department responsible for major assets should trigger a governance review. Focus means managing to PCI, cost per lane-mile, schedule reliability, and asset life &mdash; not producing repeated explanations for missed outcomes.</p>
+    </div>
+
+    <div class="case" id="case-f">
+      <div class="case-label">Case Study F</div>
+      <h3>Fire, wildfire, and the structural-deficit budget</h3>
+      <div class="case-class">Category 1 protection &middot; Category 2 regional coordination</div>
+      <p>Berkeley wildfire planning recognizes narrow hill streets, constrained ingress and egress, shared evacuation routes, and dependence on mutual aid. The City has struggled to implement parking, access, land-use, and evacuation changes that impose visible costs on residents.<sup><a href="#n12" id="r12">[12]</a></sup> Those are difficult Category 1 decisions with Category 2 dependencies.</p>
+      <p>The proposed FY 2027&ndash;28 budget treated Fire Station 4 closure as a contingency tied to the sales-tax outcome and acknowledged degraded response capacity if closure occurred.<sup><a href="#n13" id="r13">[13]</a></sup> The City Manager's broader reduction exercise asked departments for common percentage scenarios. Council should have challenged that method with a ranked Category 1/2/3 budget. Across-the-board cuts hit expensive essential services hard and can leave small units too weak to be viable. Protecting fire capacity while avoiding difficult STOP decisions elsewhere is not prioritization.</p>
+    </div>
+
+    <div class="case" id="case-g">
+      <div class="case-label">Case Study G</div>
+      <h3>Police staffing, oversight, and technology</h3>
+      <div class="case-class">Category 1 outcomes &middot; evaluate oversight by results</div>
+      <p>Police accountability is part of Category 1 public safety, not an opposing value. The question is whether the combined system improves complaint resolution, misconduct correction, policy quality, public trust, recruitment, retention, and operational performance.</p>
+      <p>Berkeley's 2025 Police Department report describes significant sworn and dispatch vacancies and continuing recruitment challenges. Police Accountability Board reporting shows material disagreement with the chief on some sustained allegations.<sup><a href="#n14" id="r14">[14]</a></sup><sup><a href="#n15" id="r15">[15]</a></sup> These facts do not establish a single cause, but they require public metrics: applications, academy entry and completion, lateral arrivals and departures, exit reasons, case time, evidentiary standards, sustained findings, discipline, policy change, and administrative cost.</p>
+      <p>Modern tools should be handled through controlled, auditable tests rather than ideological acceptance or rejection. ALPRs and cameras can be evaluated against defined crime outcomes, false positives, access controls, retention, misuse audits, and public reporting. The purpose of oversight is effective and lawful policing, not the production of parallel processes without shared standards.</p>
+    </div>
+
+    <div class="case" id="case-h">
+      <div class="case-label">Case Study H</div>
+      <h3>Recreation, the Marina, and ferry expansion</h3>
+      <div class="case-class">Category 1 stewardship before Category 2 expansion</div>
+      <p>Recreational facilities make a city enjoyable and are a legitimate Category 1 service. The West Campus Pool schedule places Saturday family swim at 4:30&ndash;6:30 p.m., Sunday family swim at 8&ndash;10 a.m., and leaves substantial midday weekend gaps.<sup><a href="#n16" id="r16">[16]</a></sup> The metric is not simply that a pool exists. It is whether residents can use it at sensible times, compared with neighboring systems and demonstrated demand.</p>
+      <p>The marina presents the same stewardship question at larger scale. City reports describe long-running Marina Fund weakness and a major revenue loss after the hotel stopped paying base rent.<sup><a href="#n17" id="r17">[17]</a></sup> The former Hs Lordships site has remained unproductive through years of process. Category 1 management should test business development, lease enforcement, destination marketing, hotel partnership, and frequent connection to the University before concluding that a transformative project is the remedy.</p>
+      <p>The proposed ferry remains potentially Category 2 because regional transportation partners exist. But planning anticipates substantial commuter parking demand and relies on parking management to balance ferry use with recreation.<sup><a href="#n18" id="r18">[18]</a></sup> The sequencing question is whether Berkeley should add a large new operation before restoring the performance and access of waterfront assets it already owns, and how a car-dependent terminal fits the City's transportation strategy and the region's existing BART system.</p>
+    </div>
+
+    <div class="case" id="case-i">
+      <div class="case-label">Case Study I</div>
+      <h3>Homekey+, homelessness, and grant-driven obligations</h3>
+      <div class="case-class">Category 2 regional responsibility &middot; lifecycle and externality test</div>
+      <p>Homekey+ can provide major acquisition and construction funding, but permanent supportive housing carries long operating and affordability commitments. State materials require a 55-year affordability term while operating awards are finite. Berkeley applications identify local and partner operating subsidies.<sup><a href="#n19" id="r19">[19]</a></sup><sup><a href="#n20" id="r20">[20]</a></sup></p>
+      <p>Antioch's 2026 deliberation provides a useful contrast: the city declined or considered declining a large Homekey+ award after confronting capital, administrative, and recurring operating obligations.<sup><a href="#n21" id="r21">[21]</a></sup> The point is not that Berkeley must reach the same conclusion. It is that declining available money can be rational when total cost of ownership conflicts with fiscal capacity and focus.</p>
+      <p>Homelessness is regional by nature. Regional responsibility requires regional burden-sharing. Berkeley should count not only provider contracts and buildings but also policing, fire, sanitation, public health, neighborhood use, commercial effects, and the distribution of clients and benefits. The leptospirosis response around Harrison Street shows that externalities can become concrete public-health costs.<sup><a href="#n22" id="r22">[22]</a></sup><sup><a href="#n23" id="r23">[23]</a></sup> Those facts should not be stretched into a single-cause explanation for every downtown condition, but they belong in the full-cost analysis.</p>
+    </div>
+
+    <div class="case" id="case-j">
+      <div class="case-label">Case Study J</div>
+      <h3>University Avenue Center, formerly Premier Cru</h3>
+      <div class="case-class">STOP failure &middot; highest-and-best-public-use review</div>
+      <p>The former Premier Cru property, now the University Avenue Center, is a STOP-failure case. City budget materials describe a $6.7 million acquisition of 1001, 1007, and 1011 University Avenue and 1925 Ninth Street, with the majority of the site intended for below-market-rate housing and part of the building identified as an interim Council Chamber seating 150&ndash;200 people.<sup><a href="#n24" id="r24">[24]</a></sup><sup><a href="#n35" id="r35">[35]</a></sup> The public-meeting need arose because Old City Hall had become seismically unsafe and essentially vacant, and Council meetings were moved to the Berkeley Unified School District Boardroom.<sup><a href="#n36" id="r36">[36]</a></sup></p>
+      <p>The strategy did not resolve into durable public value. The City still meets at BUSD, while lease materials show fragmented uses at the University Avenue Center, including Berkeley Food Network at $12 annual base rent, Meals on Wheels, City uses, vacant or underused space, and other nominal-rent arrangements.<sup><a href="#n26" id="r26">[26]</a></sup><sup><a href="#n27" id="r27">[27]</a></sup> If access, public-office, ADA, reuse-cost, or demolition issues defeated the original premises, the correct response was not to preserve temporary workarounds indefinitely. It was to call STOP, reassess highest and best public use, and decide whether the asset should be redeveloped, sold, transferred, leased at fair value, or recommitted to a better-defined public purpose.<sup><a href="#n25" id="r25">[25]</a></sup></p>
+    </div>
+
+    <div class="case" id="case-k">
+      <div class="case-label">Case Study K</div>
+      <h3>Pathways and the STAIR Center</h3>
+      <div class="case-class">Pilot discipline</div>
+      <p>The Pathways STAIR Center illustrates the difference between useful data and a real pilot gate. The City welcomed its first STAIR guests on June 27, 2018, and later produced a first-year data evaluation and Results-Based Accountability dashboard reporting occupancy, exits to housing, exits to homelessness, returns to homelessness, and time to placement.<sup><a href="#n37" id="r37">[37]</a></sup> That evidence was valuable, but a pilot requires more than a later dashboard. It requires a predeclared duration, baseline, success threshold, cost per result, adverse-effect measures, outside-funding dependency, and a scheduled continue/modify/stop vote.</p>
+      <p>Council considered expansion and additional funding in November 2019 while the pilot-to-permanent logic remained underdefined.<sup><a href="#n38" id="r38">[38]</a></sup> The lesson is not that STAIR helped no one. It is that external funding pressure was foreseeable and should have been built into the pilot design. If Council later says it must renew or expand before a completed evaluation because money may otherwise be lost, the pilot has failed as a decision tool.</p>
+    </div>
+
+    <div class="case" id="case-l">
+      <div class="case-label">Case Study L</div>
+      <h3>Bespoke building review and objective standards</h3>
+      <div class="case-class">Do not institutionalize the workaround</div>
+      <p>Contractors report an operational failure that fits the same pattern: repeated plan-review cycles in which a first submission receives comments A, B, and C; the resubmittal addresses them; and later comments D, E, and F appear even though the conditions were present in the original submission. The City's plan-check process allows applicants to track comments and resubmit, and the Fire Department publishes targets for first and subsequent rounds, but the public-facing process does not itself show whether comments are complete, timely, and limited to newly created issues.<sup><a href="#n39" id="r39">[39]</a></sup></p>
+      <p>This is where strategic objectives should become efficient policy. Berkeley has begun moving some housing types toward clearer and more objective standards, explaining that clearer standards can make outcomes faster and more certain.<sup><a href="#n40" id="r40">[40]</a></sup> That principle should not remain selective. Where the City knows what it wants &mdash; safety, access, fire protection, sunlight, form, affordability, climate performance, neighborhood fit &mdash; it should encode those objectives into objective standards and measure review cycles. Bespoke judgment should be reserved for genuinely exceptional cases, not used as the default operating system.<sup><a href="#n29" id="r29">[29]</a></sup><sup><a href="#n30" id="r30">[30]</a></sup></p>
+    </div>
+
+    <div class="case" id="case-m">
+      <div class="case-label">Case Study M</div>
+      <h3>The referral portfolio itself</h3>
+      <div class="case-class">Category 1 governance capacity</div>
+      <p>The most important case study is the decision system. Berkeley has built annual referral-ranking processes because the volume is too large for coherent execution.<sup><a href="#n1" id="r1b">[1]</a></sup> Ranking occurs after Council has generated the workload. The City should instead govern admission to the portfolio.</p>
+      <p>A new item must earn entry by category, measurable outcome, urgency, legal necessity, staff cost, dependency, and opportunity cost. Dormant referrals should expire. Dependent projects should pause when prerequisites fail. If a new item does not displace another item or use explicitly reserved capacity, it has not actually been prioritized. This is the strategy for strategy: a method for deciding what deserves decision-making capacity before the City debates the merits of the individual proposal.</p>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="panel"><div class="panel-pad">
+    <h2><span class="num">9.</span> A proposed Berkeley Prioritization and Attention Budget Framework</h2>
+    <p>The framework can be implemented without waiting for a charter overhaul or comprehensive reorganization. Council can adopt a decision standard, integrate it into agenda rules and budget instructions, and require the City Manager to maintain the portfolio.</p>
+
+    <h4>A. Adopt a &ldquo;Strategy for Strategy&rdquo; resolution</h4>
+    <ul>
+      <li>Declare focus, simplification, measurable performance, lifecycle costing, provider neutrality, and opportunity cost as governing values.</li>
+      <li>Require Category 1/2/3 classification for major referrals, projects, grants, ballot measures, capital acquisitions, and new programs.</li>
+      <li>State that classifications apply separately to outcomes and delivery models.</li>
+      <li>Require reclassification when partners, costs, authority, benefits, staffing, or operating assumptions materially change.</li>
+    </ul>
+
+    <h4>B. Require a one-page Priority and Capacity Statement</h4>
+    <ul>
+      <li>Category and institutional-fit rationale.</li>
+      <li>Outcome, beneficiary, baseline, target, minimum competent service, and data source.</li>
+      <li>Full lifecycle cost and post-grant operating source.</li>
+      <li>Delivery alternatives and provider comparison.</li>
+      <li>Staff and Council attention requirement.</li>
+      <li>Named displaced work.</li>
+      <li>Partners, dependencies, and approvals.</li>
+      <li>Pilot or decision gate, evaluation date, and exit rule.</li>
+    </ul>
+
+    <h4>C. Create an attention budget</h4>
+    <ul>
+      <li>Set maximum active major referrals per department and citywide.</li>
+      <li>Require Council to remove, defer, or complete an item before adding work above the limit.</li>
+      <li>Publish estimated and actual staff hours for major referrals.</li>
+      <li>Reserve emergency capacity.</li>
+      <li>Reject date-certain referrals when staff cannot certify capacity unless Council identifies displaced work.</li>
+      <li>Link dependent referrals and automatically pause dependent actions when prerequisites expire or fail.</li>
+    </ul>
+
+    <h4>D. Tie Start, Stop, Continue to the budget calendar</h4>
+    <p>The City Manager should present the portfolio review before proposing departmental reductions or new revenue. Council should vote first on what will start, stop, and continue; then on funding levels. This reverses the tendency to preserve the full portfolio and distribute reductions across it.</p>
+
+    <h4>E. Preserve STOP authority</h4>
+    <ul>
+      <li>Review labor agreements, leases, capital commitments, commission mandates, and contracts for provisions that make redesign or exit impractical.</li>
+      <li>Use lawful bargaining, transition support, notice, retraining, and reassignment where appropriate, while preserving the ability to discontinue functions.</li>
+      <li>Require a highest-and-best-public-use review for underused City property and nominal-rent arrangements.</li>
+      <li>Sunset pilots, emergency programs, and temporary leases unless Council affirmatively renews them after evaluation.</li>
+    </ul>
+
+    <h4>F. Protect decision quality</h4>
+    <ul>
+      <li>Establish a minimum review period for major action items and material amendments.</li>
+      <li>Require an emergency finding for material items added after the review deadline.</li>
+      <li>Require a readiness finding for urgent actions: can Berkeley do this well with the evidence, capacity, and time available?</li>
+      <li>Provide a standardized digest separating facts, assumptions, unresolved questions, and policy choices.</li>
+      <li>Permit deferral when prerequisites or required analyses are missing.</li>
+      <li>Track packet volume, late material, continuances, meeting duration, and unresolved decision dependencies.</li>
+    </ul>
+
+    <h4>G. Measure the framework itself</h4>
+    <ul>
+      <li>Number and age of active referrals and projects.</li>
+      <li>Share with displaced-work statements and complete evidence packages.</li>
+      <li>Percentage of Category 1 functions meeting minimum service standards.</li>
+      <li>Category 2 projects with complete binding partner agreements.</li>
+      <li>Programs transferred, merged, sunset, or stopped through annual review.</li>
+      <li>Difference between projected and actual lifecycle costs.</li>
+      <li>Public assets under nominal rent, vacancy, temporary use, or unresolved redevelopment plans.</li>
+      <li>Pilot decisions completed on schedule.</li>
+      <li>Council packet volume, late-item frequency, meeting duration, and implementation backlog.</li>
+    </ul>
+
+    <h4>H. Treat adoption as political, not merely administrative</h4>
+    <p>The framework can begin by resolution, agenda rules, budget instructions, and City Manager procedures. But adoption is inherently political because it changes who can place work on the institutional agenda, how easily departments can be tasked, and when favored programs must face STOP. A purely administrative reform can be reversed when it becomes inconvenient.</p>
+    <p>A charter amendment may therefore be necessary if Berkeley wants durable rules that bind future Councils, especially rules requiring a Priority and Capacity Statement for major actions, displaced-work disclosure for referrals, minimum review periods, dependency tracking, mandatory performance metrics for ballot measures and pilots, and a public Start/Stop/Continue review before new taxes or across-the-board reductions. Under California law, a city charter may be amended by majority vote of the city electors; Berkeley already uses ballot measures for charter changes.<sup><a href="#n41" id="r41">[41]</a></sup></p>
+
+    <h4>I. Phase the adoption path</h4>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th style="width:24%">Phase</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 &middot; Resolution</strong></td><td>Adopt the vocabulary, require classification and evidence packages for major items, and pilot the one-page Priority and Capacity Statement.</td></tr>
+        <tr><td><strong>2 &middot; Rules + budget</strong></td><td>Add work-in-progress limits, displaced-work statements, review deadlines, and budget-calendar Start/Stop/Continue votes.</td></tr>
+        <tr><td><strong>3 &middot; Independent measurement</strong></td><td>Ask the Auditor to help standardize outcome measures and publish a dashboard of active referrals, pilots, lifecycle-cost gaps, and Category 1 service levels.</td></tr>
+        <tr><td><strong>4 &middot; Charter entrenchment</strong></td><td>If Council cannot or will not sustain the framework voluntarily, put a narrow charter amendment before voters to protect the core decision rules while leaving policy choices democratic.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout"><p>What category is this? What measured outcome will it produce? Why is Berkeley the right owner? What is the full cost? What must be true before approval? What work will not be done? When will we review, renew, transfer, or conclude it?</p></div>
+  </div></div>
+
+  <!-- 10 FAQ -->
+  <div class="panel"><div class="panel-pad">
+    <h2><span class="num">10.</span> Frequently asked questions</h2>
+    <h4>Are category assignments permanent?</h4>
+    <p>No. Categories describe current institutional conditions, not indelible identities. Start, Stop, Continue is how an undertaking moves when partners, costs, performance, authority, or needs change.</p>
+    <h4>Does Category 3 mean the activity is bad or unworthy?</h4>
+    <p>No. It means Berkeley is not the right owner or delivery organization under current conditions. The work may belong with the county, a regional agency, a community provider, a private specialist, or no public entity at all.</p>
+    <h4>Does Category 1 mean City employees must perform the service?</h4>
+    <p>No. Category 1 means Berkeley must ensure the outcome. Delivery can be municipal, county, nonprofit, private, or collaborative if the evidence shows that model best meets the service standard.</p>
+    <h4>Can Berkeley start new programs under this framework?</h4>
+    <p>Yes, but START is capacity-limited. A new item must earn entry, identify full cost and evidence, and name the work that will pause, shrink, transfer, or end.</p>
+    <h4>Does STOP mean indiscriminate layoffs?</h4>
+    <p>No. STOP applies first to functions, programs, delivery models, and commitments. The City must comply with law and bargaining obligations and should use reassignment, retraining, transition support, and notice where appropriate. But those obligations cannot make every function permanent.</p>
+    <h4>What makes a pilot a real pilot?</h4>
+    <p>A predeclared hypothesis, baseline, target, duration, cost, evaluator, public data, adverse-effect measures, and a scheduled continue/modify/stop decision. Temporary funding alone is not a pilot.</p>
+    <h4>What happens when a required study or referral expires?</h4>
+    <p>If another decision depends on it, the dependent project pauses and returns for reassessment. Prerequisites must be linked rather than allowed to disappear independently.</p>
+    <h4>How does the framework treat equity?</h4>
+    <p>As an explicit objective or constraint that must be defined and measured. The framework does not exclude equity; it requires disclosure of how equity affects costs, sequencing, beneficiaries, and other outcomes instead of using the word as an exemption from comparison.</p>
+    <h4>What about grants that cover most of the initial cost?</h4>
+    <p>The grant does not determine priority. Berkeley must still examine lifecycle cost, post-grant funding, staffing, externalities, partner contributions, and opportunity cost.</p>
+    <h4>How does the framework handle urgent deadlines?</h4>
+    <p>It permits urgent action, but requires a bounded exception: a real deadline or hazard, minimum evidence, capped exposure, an operating owner, a review date, and retrospective evaluation. If Berkeley cannot meet the minimum standard in time, narrowing, delaying, or passing may be the responsible decision.</p>
+    <h4>Does an audit prove that a program works?</h4>
+    <p>No. The word <em>audit</em> describes a family of reviews, not a single test. A financial or compliance audit can show that funds were properly handled and spent within legal authority. A performance audit asks whether the undertaking produced the intended outcome efficiently and whether it should continue. Measures should state which audit is required and provide the predeclared metrics needed to answer it.</p>
+    <h4>Who decides the categories?</h4>
+    <p>Council makes the policy decision, but staff should supply the evidence package, the City Manager should certify capacity, the Auditor should be able to test the metrics, and the public should see the classification and alternatives before approval.</p>
+    <h4>Would this require a Charter amendment?</h4>
+    <p>Not to start. Council can adopt much of the framework by resolution, rules, budget instructions, and management practice. A Charter amendment may be needed if the City wants the requirements to survive future political pressure.</p>
+    <h4>Will this eliminate politics?</h4>
+    <p>No. Democratic government must choose among values. The framework makes those choices more explicit and comparable so that urgency, coalition strength, convention, and available money do not operate as hidden decision rules.</p>
+    <h4>Does this framework create another layer of bureaucracy?</h4>
+    <p>It should replace scattered, repetitive analysis with one short standardized statement and a shared portfolio. The framework itself should be reviewed after two budget cycles and simplified if its administrative cost exceeds its value.</p>
+  </div></div>
+
+  <!-- conclusion -->
+  <div class="panel"><div class="panel-pad">
+    <h2>Conclusion</h2>
+    <p class="lede">Berkeley's central governance problem is not a lack of intelligence, compassion, plans, audits, consultants, or public participation. It is the refusal to convert values into ranked commitments and ranked commitments into durable limits.</p>
+    <p>Without a strategy for strategy, everything is ad hoc. When everything is ad hoc, every decision becomes political in the narrowest sense: which coalition can move an item, which deadline can force action, which funding source is available, which constituency can sustain attention, and which essential service can be made the consequence of saying no.</p>
+    <p>Category 1/2/3 supplies institutional boundaries. Start, Stop, Continue supplies a recurring habit. The evidence package supplies independently evaluable facts. Lifecycle costing supplies fiscal honesty. Provider neutrality protects outcomes from ideology. Readiness review asks whether Berkeley can do the work well before it says yes. Dependency tracking preserves decision gates. The attention budget supplies a limit. Priority-based budgeting turns all of them into choices that can survive beyond a single meeting or election.</p>
+    <div class="callout"><p>The framework does not promise agreement. It promises that disagreement will occur inside a common discipline: what must Berkeley do, what must it do with others, what must it refuse, how will performance be measured, and what will not be done if the proposal proceeds?</p></div>
+  </div></div>
+
+  <!-- endnotes -->
+  <div class="panel notes"><div class="panel-pad">
+    <h2>Endnotes</h2>
+    <p style="font-size:12px;color:#7f8c8d;">Source links open in a new tab.</p>
+    <ol>
+      <li id="n1">City of Berkeley, &ldquo;Bureaucratic Effectiveness and Referral Improvement and Prioritization Effort (BE RIPE),&rdquo; Council item, March 14, 2023; and later referral-prioritization materials. <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-march-14-2023" target="_blank" rel="noopener noreferrer">berkeleyca.gov</a></li>
+      <li id="n2">City of Berkeley, Agenda &amp; Rules Committee materials on referral prioritization and operational impacts. <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-agendas/2021-03-22%20Agenda%20Packet%20-%20Agenda%20Committee.pdf" target="_blank" rel="noopener noreferrer">Agenda packet (PDF)</a></li>
+      <li id="n3">City of Berkeley Auditor, &ldquo;Berkeley Restaurant Inspections: Chronically Understaffed Program Did Not Meet Targets,&rdquo; July 10, 2024. <a href="https://berkeleyca.gov/sites/default/files/documents/Berkeley_Restaurant_Inspections_-_Chronically_Understaffed_Program_Did_Not_Meet_Targets.pdf" target="_blank" rel="noopener noreferrer">Audit report (PDF)</a></li>
+      <li id="n4">City of Berkeley, May 10, 2022 Council action approving the conceptual design for the Hopkins Corridor Project. <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-may-10-2022" target="_blank" rel="noopener noreferrer">eAgenda</a></li>
+      <li id="n5">City of Berkeley, &ldquo;Public Information for Hopkins Corridor Project,&rdquo; April 5, 2023. <a href="https://berkeleyca.gov/sites/default/files/documents/2023-04-05%20Public%20Information%20for%20Hopkins%20Corridor%20Project.pdf" target="_blank" rel="noopener noreferrer">Memorandum (PDF)</a></li>
+      <li id="n6">City of Berkeley, &ldquo;Approval of the Public Bank East Bay Viability Study,&rdquo; April 11, 2023. <a href="https://berkeleyca.gov/sites/default/files/documents/2023-04-11%20Item%2034%20Approval%20of%20the%20Public%20Bank%20East.pdf" target="_blank" rel="noopener noreferrer">Item 34 (PDF)</a></li>
+      <li id="n7">City of Berkeley, 2026 initiative petition and ordinance creating a parcel tax to fund a public bank. <a href="https://berkeleyca.gov/sites/default/files/city-council-meetings/2026-07-14%20Agenda%20Packet%20-%20Council%20-%20Web.pdf" target="_blank" rel="noopener noreferrer">Agenda packet (PDF)</a></li>
+      <li id="n8">City of Berkeley, African American Holistic Resource Center Feasibility Study, 2018. <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-agendas/2019-03-06_PC%20Agenda%20Packet.pdf" target="_blank" rel="noopener noreferrer">Planning Commission packet (PDF)</a></li>
+      <li id="n9">City of Berkeley, March 10, 2020 Council directive concerning the AAHRC. <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-agendas/2021-05-06%20Agenda%20Packet%20-%20Budget.pdf" target="_blank" rel="noopener noreferrer">Budget packet (PDF)</a></li>
+      <li id="n10">City of Berkeley, African American Holistic Resource Center capital-project page. <a href="https://berkeleyca.gov/your-government/our-work/capital-projects/african-american-holistic-resource-center" target="_blank" rel="noopener noreferrer">Project page</a></li>
+      <li id="n11">City of Berkeley, five-year street rehabilitation and paving materials; City Auditor, &ldquo;Rocky Road: Berkeley Streets at Risk and Significantly Underfunded&rdquo;; MTC pavement reporting. <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-attachments/5yr-Plan-FF%20-%202026-06-17_FITES.pdf" target="_blank" rel="noopener noreferrer">Five-year plan (PDF)</a></li>
+      <li id="n12">City of Berkeley, Community Wildfire Protection Plan and Safe Passages materials. <a href="https://berkeleyca.gov/sites/default/files/documents/Community-Wildfire-Protection-Plan_CWPP.pdf" target="_blank" rel="noopener noreferrer">CWPP (PDF)</a></li>
+      <li id="n13">City of Berkeley, proposed FY 2027 and FY 2028 budget and Fire Department materials concerning Station 4. <a href="https://berkeleyca.gov/sites/default/files/2026-05/2026-05-19%20Item%2021%20Proposed%20FY%202027%20and%20FY%202028.pdf" target="_blank" rel="noopener noreferrer">Item 21 (PDF)</a></li>
+      <li id="n14">Berkeley Police Department, 2025 Annual Report, March 24, 2026. <a href="https://berkeleyca.gov/sites/default/files/2026-03/2026-03-24%20Special%20Item%2001%202025%20Berkeley%20Police%20Department%20Annual.pdf" target="_blank" rel="noopener noreferrer">Annual report (PDF)</a></li>
+      <li id="n15">Berkeley Police Accountability Board, 2024 Annual Report. <a href="https://berkeleyca.gov/sites/default/files/documents/2025-11-18%20Special%20Item%2001%202024%20Police%20Accountability%20Board.pdf" target="_blank" rel="noopener noreferrer">PAB report (PDF)</a></li>
+      <li id="n16">City of Berkeley, West Campus Pool schedule, accessed August 2, 2026. <a href="https://berkeleyca.gov/community-recreation/parks-recreation/facilities/pools-and-aquatic-programs/west-campus-pool" target="_blank" rel="noopener noreferrer">Pool schedule</a></li>
+      <li id="n17">City of Berkeley, Marina Fund Update, May 22, 2025. <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-attachments/2025-05-22%20Item%2001%20Presentation%20-%20Marina%20Fund%20Update.pdf" target="_blank" rel="noopener noreferrer">Presentation (PDF)</a></li>
+      <li id="n18">City of Berkeley, draft Pier-Ferry Parking Management Implementation Plan, May 2026. <a href="https://berkeleyca.gov/sites/default/files/2026-05/Pier-Ferry%20Parking%20Management%20Plan%20-%20Public%20Review%20Draft.pdf" target="_blank" rel="noopener noreferrer">Draft plan (PDF)</a></li>
+      <li id="n19">California HCD, Homekey+ program materials: 55-year affordability term, finite operating awards. <a href="https://www.hcd.ca.gov/grants-and-funding/homekey-plus/timeline-and-eligibility" target="_blank" rel="noopener noreferrer">HCD program page</a></li>
+      <li id="n20">City of Berkeley, 2026 joint Homekey+ applications. <a href="https://berkeleyca.gov/sites/default/files/2026-05/2026-05-19%20Item%2006%20Joint%20Homekey%2B%20Application.pdf" target="_blank" rel="noopener noreferrer">Item 06 (PDF)</a></li>
+      <li id="n21">City of Antioch, staff report on acceptance or rejection of a Homekey+ award, June 2026. <a href="https://www.antiochca.gov/AgendaCenter/ViewFile/Item/624?fileID=4219" target="_blank" rel="noopener noreferrer">Staff report</a></li>
+      <li id="n22">City of Berkeley, &ldquo;Gap Analysis of Berkeley's Homelessness System of Care,&rdquo; July 9, 2024. <a href="https://berkeleyca.gov/sites/default/files/documents/2024-07-09%20Item%2016%20Referral%20Response%20%20Gap%20Analysis%20of%20Berkeley%E2%80%99s%20Homelessness.pdf" target="_blank" rel="noopener noreferrer">Item 16 (PDF)</a></li>
+      <li id="n23">City of Berkeley Public Health, &ldquo;Addressing Leptospirosis at Harrison Street Encampments,&rdquo; January 12, 2026. <a href="https://berkeleyca.gov/sites/default/files/2026-01/January%2012%2C%202026%20Lepto%20Health%20Alert%20Final.pdf" target="_blank" rel="noopener noreferrer">Health alert (PDF)</a></li>
+      <li id="n24">City of Berkeley, FY 2019 year-end budget materials: ~$6.7M acquisition of 1001&ndash;1011 University Avenue and 1925 Ninth Street. <a href="https://berkeleyca.gov/sites/default/files/documents/2019-11-19%20Item%2015%20FY%202019%20Year-End%20Results%20and%20FY%202020.pdf" target="_blank" rel="noopener noreferrer">Item 15 (PDF)</a></li>
+      <li id="n25">Housing Advisory Commission packet, October 3, 2019 &mdash; criticism that the property was acquired without first considering reuse or demolition costs. <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-agendas/2019-10-03%20HAC_PACKET.pdf" target="_blank" rel="noopener noreferrer">HAC packet (PDF)</a></li>
+      <li id="n26">City of Berkeley lease list, April 9, 2026; University Avenue Center uses and Berkeley Food Network annual base rent. <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-attachments/2026-04-09%20Item%2003%20PW%20and%20PRW%20and%20HHCS%20Lease%20List.pdf" target="_blank" rel="noopener noreferrer">Lease list (PDF)</a></li>
+      <li id="n27">City of Berkeley, City Real Property: Leases and License Agreements presentation, April 9, 2026. <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-attachments/2026-04-09%20Item%2003%20Budget%20Lease%20Presentation.pdf" target="_blank" rel="noopener noreferrer">Presentation (PDF)</a></li>
+      <li id="n29">City of Berkeley, Objective Design Standards discussion, April 15, 2026. <a href="https://berkeleyca.gov/sites/default/files/2026-04/2026-04-15_PC_Item%2010B_Objective%20Design%20Standards_0.pdf" target="_blank" rel="noopener noreferrer">Item 10B (PDF)</a></li>
+      <li id="n30">City of Berkeley, Residential Objective Standards materials. <a href="https://berkeleyca.gov/sites/default/files/documents/2022-09-20%20WS%20Item%2001%20Residential%20Objective%20Standards.pdf" target="_blank" rel="noopener noreferrer">Worksession item (PDF)</a></li>
+      <li id="n31">Berkeley City Charter, section 61 &mdash; authorizes performance and financial audits, including compliance, efficiency and economy, and program-results auditing. <a href="https://berkeley.municipal.codes/Charter/61" target="_blank" rel="noopener noreferrer">Charter &sect; 61</a></li>
+      <li id="n32">City of Berkeley Auditor, &ldquo;Fiscal Year 2026 Audit Plan,&rdquo; July 22, 2025. <a href="https://berkeleyca.gov/sites/default/files/documents/2025-07-22%20Item%2022%20City%20Auditor%20Fiscal%20Year%202026%20Audit%20Plan.pdf" target="_blank" rel="noopener noreferrer">Audit plan (PDF)</a></li>
+      <li id="n33">City of Berkeley Auditor, &ldquo;A Guide to Measuring Performance in the City of Berkeley,&rdquo; February 5, 2026. <a href="https://berkeleyca.gov/sites/default/files/2026-02/A_Guide_to_Measuring_Performance_in_the_City_of_Berkeley.pdf" target="_blank" rel="noopener noreferrer">Guide (PDF)</a></li>
+      <li id="n34">City of Berkeley, November 2024 ballot-measure documents illustrating differing financial and performance audit provisions. <a href="https://berkeleyca.gov/sites/default/files/documents/Ballot%20Measure%20Documents%20for%20Web%20-%20Nov%202024.pdf" target="_blank" rel="noopener noreferrer">Ballot measures (PDF)</a></li>
+      <li id="n35">City of Berkeley budget materials describing the University Avenue/Premier Cru acquisition and interim Council Chamber use. <a href="https://berkeleyca.gov/sites/default/files/documents/2021-12-14%20Item%2044%20FY%202021%20Year-End%20and%20FY%202022%20First%20Quarter%20Budget%20Update.pdf" target="_blank" rel="noopener noreferrer">Item 44 (PDF)</a></li>
+      <li id="n36">Materials describing Old City Hall as seismically unsafe and the relocation of Council meetings to the BUSD Boardroom. <a href="https://rentboard.berkeleyca.gov/sites/default/files/documents/12-18-2025_RSB_ITEM_9E_ACTION_Proposed_Rent_Board_Meeting_Schedule_for-2026.pdf" target="_blank" rel="noopener noreferrer">Rent Board item (PDF)</a> &middot; <a href="https://berkeleyca.gov/your-government/city-council/participating-city-council-meetings" target="_blank" rel="noopener noreferrer">Council meeting location</a></li>
+      <li id="n37">City of Berkeley, Pathways STAIR Center: First Year Data Evaluation and RBA Dashboard, October 15, 2019. <a href="https://berkeleyca.gov/sites/default/files/documents/2019-10-15%20Item%2037%20Pathways%20STAIR%20Center%20%20First%20Year%20Data.pdf" target="_blank" rel="noopener noreferrer">Item 37 (PDF)</a></li>
+      <li id="n38">City of Berkeley, November 12, 2019 Council minutes concerning STAIR Center expansion. <a href="https://berkeleyca.gov/sites/default/files/documents/2019-12-10%20Item%2001%20Minutes%20for%20Approval.pdf" target="_blank" rel="noopener noreferrer">Minutes (PDF)</a></li>
+      <li id="n39">City of Berkeley plan-check process and Fire Department plan-review guidance. <a href="https://berkeleyca.gov/construction-development/permits-design-parameters/permit-process/plan-check" target="_blank" rel="noopener noreferrer">Plan check</a> &middot; <a href="https://berkeleyca.gov/construction-development/permits-design-parameters/permit-process/fire-department-plan-review" target="_blank" rel="noopener noreferrer">Fire plan review</a></li>
+      <li id="n40">City of Berkeley, middle-housing and objective-standards materials. <a href="https://berkeleyca.gov/community-recreation/news/new-zoning-changes-allow-faster-cheaper-process-build-homes" target="_blank" rel="noopener noreferrer">Zoning changes</a></li>
+      <li id="n41">California Constitution, Article XI, section 3; and City of Berkeley 2026 charter-amendment placement materials. <a href="https://law.justia.com/constitution/california/article-xi/section-3/" target="_blank" rel="noopener noreferrer">Cal. Const. art. XI &sect; 3</a> &middot; <a href="https://berkeleyca.gov/sites/default/files/2026-06/2026-06-16%20Item%2037%20Placing%20a%20Charter%20Amendment.pdf" target="_blank" rel="noopener noreferrer">Item 37 (PDF)</a></li>
+      <li id="n42">Alameda County Treasurer and Tax Collector, secured property tax schedule: bills mailed in late October; first installment due November 1 and delinquent after 5 p.m. on December 10; second installment due February 1 and delinquent after April 10. <a href="https://alamedacountyca.gov/news/pressreleases/ACSecuredPropertyTaxDue20252026-PressRelease.pdf" target="_blank" rel="noopener noreferrer">County press release (PDF)</a></li>
+    </ol>
+
+    <div class="warn" style="margin-top:22px;">
+      <p><strong>Publication note.</strong> This is a draft framework for public discussion. Factual statements tied to evolving 2026 ballot measures, budgets, schedules, projects, staffing, negotiations, and litigation should be refreshed against the final official record before formal publication. Claims about motive or causation should remain identified as interpretation unless supported by direct evidence.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span><a href="index.html">← Berkeley Decision Project home</a> &middot; <a href="https://ericdf.github.io/council-scorecards/methodology.html">Methodology</a></span>
+    <span>Eric Friedman · Draft, August 2026</span>
+  </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bonds Win Elections; Budget Discipline Does Not — Why Berkeley Keeps Borrowing for Streets It Could Budget For</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Instrument type is load-bearing on this page: a GO bond is borrowed capital repaid
+   through property tax over decades, a parcel tax is recurring revenue collected annually.
+   The table distinguishes them so the reader can see that the pattern is not "bonds" but
+   "any new money except reprioritization". */
+.inst { font-family: var(--sans); font-size: .74rem; font-weight: 700; white-space: nowrap;
+        letter-spacing: .02em; }
+.inst-bond { color: var(--accent); }
+.inst-tax  { color: var(--quote); }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.clock { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+         color: var(--accent); font-size: .8rem; letter-spacing: .04em; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Analysis</div>
+  <h1>Bonds Win Elections; Budget Discipline Does Not</h1>
+  <p class="standfirst">Berkeley&rsquo;s streets have been formally documented as failing since 2011. Four bond and tax measures later, the backlog is larger. This is not a story about incompetence. It is a story about which of the two available fixes a councilmember can campaign on.</p>
+  <div class="byline">An argument about incentives, not a scorecard &middot; August 2026</div>
+
+  <p>Two audits, two consultant updates, and fifteen years of council minutes describe the same mechanism. What none of them explain is why it repeats. This page is an attempt at that &mdash; and it is an argument, not a finding. Where it makes factual claims they are sourced; where it draws inferences about motive, it says so.</p>
+
+  <h2>The two tools</h2>
+  <p>A councilmember confronting a chronically underfunded core service ultimately faces two kinds of choices: increase the recurring commitment from existing resources, or obtain additional revenue. Politically, they are not equally usable.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th></th><th>The General Fund baseline</th><th>The bond or parcel tax</th></tr></thead>
+      <tbody>
+        <tr><td><strong>What it is</strong></td><td>A recurring line in the operating budget</td><td>A ballot measure with a name and a number</td></tr>
+        <tr><td><strong>Where it happens</strong></td><td>A budget hearing</td><td>A citywide campaign</td></tr>
+        <tr><td><strong>Requires</strong></td><td>Taking money from something else</td><td>Assembling a two-thirds coalition</td></tr>
+        <tr><td><strong>Produces</strong></td><td>A larger number in a spreadsheet</td><td>A signed ballot argument, a mailer, a ribbon-cutting</td></tr>
+        <tr><td><strong>Fixes the structural problem</strong></td><td><strong>Yes</strong></td><td>No &mdash; it buys projects, not a maintenance base</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Only one of those is visible to a voter. A voter can readily see a bond campaign. A decision not to increase a formula-based budget allocation is far harder to see &mdash; and harder still to attribute to an individual officeholder.</p>
+
+  <p>Berkeley's own fiscal policy treats the two as equivalent. Stated in the transmittal letter of
+  the city's audited financial statements, restated in FY2023 and again in FY2025:</p>
+
+  <blockquote>
+    <p>&ldquo;Any new expenditure requires new revenue <strong>or</strong> expenditure
+    reductions.&rdquo;</p>
+    <div class="attrib">City of Berkeley, Annual Comprehensive Financial Report, transmittal letter</div>
+  </blockquote>
+
+  <p>On paper the council may do either. In the record it does one. And because the policy is
+  written as a choice, taking the same branch every time satisfies it every time &mdash; so nothing
+  in Berkeley's own rules registers the pattern this page describes. The policy is not being
+  broken. It is being met, from one side, on each occasion.</p>
+
+  <p>That is worth stating precisely, because it is where the argument actually sits. Nothing here
+  alleges a breach of fiscal policy. The claim is that the policy does not distinguish between the
+  two instruments, while the political economy distinguishes between them sharply &mdash; and that
+  a rule which cannot tell those apart will not correct the imbalance it appears to guard against.</p>
+
+  <h2>Why the measures keep getting broader</h2>
+  <p>California requires a two-thirds supermajority for special taxes and general obligation bonds. That single constitutional fact shapes everything downstream.</p>
+  <p>A measure dedicated purely to pavement assembles a thin coalition: people who care about pavement. A measure covering streets, sidewalks, safety, parks, green infrastructure and public art assembles a thick one. Each added purpose brings a constituency and dilutes the pavement share.</p>
+  <div class="pull">The dilution is not indiscipline. It is the price of 66.7 percent.</div>
+  <p>The record bears this out at every cycle:</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Measure</th><th>Instrument</th><th>Scope</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td><strong>M</strong> (2012)</td><td class="inst inst-bond">GO bond</td><td>$30M &mdash; street improvements <em>and</em> integrated green infrastructure. Funded 63 street projects and 11 green-infrastructure projects.</td><td>Passed</td></tr>
+        <tr><td><strong>T1</strong> (2016)</td><td class="inst inst-bond">GO bond</td><td>$100M for a broad infrastructure portfolio: streets, sidewalks, buildings, parks, storm drains, community centers. Streets eligible, not protected.</td><td>Passed</td></tr>
+        <tr><td><strong>L</strong> (2022)</td><td class="inst inst-bond">GO bond</td><td>$650M &mdash; housing, streets, undergrounding, buildings, climate resilience, safety. The broadest package attempted.</td><td><strong>Failed at 59.42%</strong></td></tr>
+        <tr><td><strong>EE vs FF</strong> (2024)</td><td class="inst inst-tax">Parcel tax</td><td>Competing special taxes, not bonds. EE: ~$10.5M/yr, at least 36% pavement. FF: ~$15M/yr, 45% pavement, 30% safety, 15% sidewalks, 10% environmental and administrative &mdash; levied at $0.17 per square foot on residential and $0.25 on other property, for 14 years.</td><td>FF passed, EE failed</td></tr>
+        <tr><td><strong>Nov 2026</strong></td><td class="inst inst-bond">GO bond</td><td>$300M covering 34 projects including the 911 dispatch center, waterfront sea-level work and Civic Center seismic renovation.</td><td>On the ballot</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The instrument column matters more than it first appears. A general obligation bond is borrowed capital repaid from property taxes over decades; a parcel tax is recurring revenue collected every year. They are different tools with different costs and different legal tests. What does not vary is the direction: <strong>every measure in this table asks voters for money the city does not currently collect.</strong> None of them reallocates a dollar the city already has. The 2024 contest is the clearest case &mdash; EE and FF were competing parcel taxes, so the choice put to voters was not whether to raise new revenue for streets but which new revenue to raise, and how widely to spread it.</p>
+
+  <p>Measure T1&rsquo;s first allocation makes the arithmetic explicit. Of the initial $37.365 million, <strong>Complete Streets received $8.5 million &mdash; 22.7 percent</strong>. Facilities received $14.4 million, parks nearly $7 million, and project management and bond costs another $5.4 million.</p>
+
+  <h2>What was happening to the baseline meanwhile</h2>
+  <p>While each measure was campaigned for, the recurring city contribution sat still. The 2020 City Auditor found the General Fund&ndash;derived contribution to street rehabilitation had been held at <strong>$1.925 million a year from 2014</strong>. Matching its 2014 purchasing power by 2020 would have required $2.123 million &mdash; so the flat nominal figure bought roughly 9 percent less work.</p>
+  <p>Over the same period, consultants put the annual requirement merely to <em>hold</em> pavement condition at $17.3 million (2018), $18.3 million (2022), and $19.8 million (2024).</p>
+  <div class="pull">The city was campaigning for hundreds of millions in debt while its durable General Fund commitment to preventing the backlog stayed below $2 million.</div>
+  <p>These are not the same measurement &mdash; the full annual paving program was larger, drawing on county transportation taxes, state gas-tax revenue, grants and bond proceeds. That distinction <em>is</em> the point. The durable, city-controlled commitment was the small one.</p>
+
+  <h2>The alibi</h2>
+  <p>A bond does more than provide capital. It also gives elected officials a visible answer to a problem whose less visible cause &mdash; the recurring budget commitment &mdash; can otherwise escape political accountability.</p>
+  <p>&ldquo;I delivered a $100 million infrastructure bond&rdquo; is a sentence a voter can be shown. &ldquo;I declined to move two million dollars from other General Fund priorities into street maintenance&rdquo; is not a sentence anyone will ever be asked about, because the decision not to do it leaves no trace.</p>
+  <p>This requires no bad faith. It requires only that officials correctly perceive which actions are legible to voters.</p>
+
+  <h2>The exception, and what it cost to get</h2>
+  <div class="notclaim">
+    <h3>2022: the pattern breaks once</h3>
+    <p>Council added approximately <strong>$5.1 million for FY2023 and $9 million for FY2024</strong> to the baseline paving commitment. This was a real policy correction &mdash; streets began receiving a substantial recurring city allocation rather than relying almost entirely on outside revenues and bond cycles.</p>
+    <p>It followed the November 2020 audit, which projected a $328 million backlog by 2023 on the then-current path. The correction followed an outside auditor putting a number on the consequence and coincided with a revenue windfall. It did not follow from an election.</p>
+  </div>
+  <p>And in the same period the countervailing pressure is visible. In spring 2023 the Budget and Finance Committee endorsed redirecting <strong>$2.8 million earmarked for the Hopkins Street project</strong> toward other needs, to help close a Measure T1 shortfall of up to $9.1 million &mdash; delaying repaving on a street the Council was separately treating as urgent.</p>
+
+  <h2>The diagnosis and the remedy do not match</h2>
+  <p>The clearest evidence for this argument is not an outside critique. It is a June 2025 Council referral proposing the next round of borrowing, which begins by explaining why the last one failed.</p>
+  <p>Measure L, the $650 million infrastructure bond, failed to reach two thirds in 2022. The referral records the post-election assessments from the Budget &amp; Finance Policy Committee, the League of Women Voters, Berkeley Neighborhoods Council and Berkeleyans for a Livable City, and lists their findings. The first one:</p>
+  <blockquote>
+    <p>&ldquo;<strong>Insufficient project prioritization</strong> and lack of transparency&rdquo;</p>
+    <div class="attrib">Referral to the City Manager on strategic bond issuance, Budget and Finance Committee, June 17 2025</div>
+  </blockquote>
+  <p>The remedy the same document proposes is a standing schedule for issuing bonds &mdash; a policy establishing &ldquo;a regular, predictive schedule for general obligation bond issuance,&rdquo; informed by analysis of the city&rsquo;s bonding capacity. Prioritization is named as the diagnosed failure. Borrowing is what gets systematized.</p>
+
+  <h3>The number comes from capacity, not from need</h3>
+  <p>The referral is explicit about where its figure originates:</p>
+  <blockquote>
+    <p>&ldquo;Based on peer practices and Berkeley&rsquo;s current <strong>assessed valuation growth</strong>, it is fiscally viable to issue a series of general obligation bonds totaling <strong>$250&ndash;$300 million</strong> over the next 25&ndash;30 years, without breaching responsible debt thresholds.&rdquo;</p>
+    <div class="attrib">Same referral</div>
+  </blockquote>
+  <p>Assessed valuation growth measures what the tax base can be made to bear. Debt thresholds measure what the credit markets will tolerate. Neither measures what the city has to accomplish. The program is sized to the borrowing envelope and the projects are fitted into it &mdash; which is the reason reprioritization never becomes a live question. Nothing was ranked against anything, so nothing can displace anything.</p>
+
+  <h3>What a 40 percent overrun was taken to mean</h3>
+  <p>The same referral documents Measure T1&rsquo;s cost overruns candidly and with specifics. Strawberry Creek Park came in <strong>40 percent over budget</strong>, attributed to unexpected subsurface conditions and underestimated permitting costs. Ohlone Park ran <strong>25 percent over</strong>. Willard Clubhouse needed ADA and systems work &ldquo;not captured in initial scoping.&rdquo;</p>
+  <p>Two of the four causes the referral lists &mdash; &ldquo;insufficient early-stage geotechnical assessments&rdquo; and scoping that missed required work &mdash; are failures to find out what a project would cost before committing to it. The conclusion drawn is that these overruns highlight &ldquo;the need for greater <strong>fiscal agility</strong>&rdquo; and the absence of contingency funding.</p>
+  <p>Contingency funding is good practice and its absence is a real defect. But it is offered here as the entire answer to a 40 percent miss. A cost increase is also information: it can mean the estimate was wrong, the scope was wrong, or the project is worth less than it now costs. An organization that reassesses would ask, at the new price, whether the work still outranks what it declined to fund. Nothing in the referral contemplates a project being reduced, deferred, or dropped because of what it turned out to cost. <a href="framework.html#continue">Continue</a> is the only available response, and contingency is what keeps it available &mdash; which is the same thing as saying <a href="framework.html#stop">stop</a> was never on the table.</p>
+
+  <h2>The irony at the end</h2>
+  <p>There is exactly one inflation-indexed, durable commitment in Berkeley&rsquo;s street funding structure. It is not a Council policy.</p>
+  <blockquote>
+    <p>&ldquo;The measure requires that the City maintain existing funding from other sources at least at the current annual amount of <strong>$15.3 million for street maintenance, adjusted for inflation</strong>.&rdquo;</p>
+    <div class="attrib">City of Berkeley, Measure FF maintenance-of-effort provision</div>
+  </blockquote>
+  <p>That is a floor the <em>electorate</em> imposed on the Council, written into the same broad measure this page has criticized for dilution. The one mechanism that behaves the way a maintenance obligation should behave arrived because voters attached it as a condition &mdash; not because the body responsible for the budget chose it.</p>
+
+  <h2>What this argument does not claim</h2>
+  <div class="notclaim">
+    <h3>Not that any member acted in bad faith</h3>
+    <p>No motive is asserted. The claim is about which tools are legible to voters and how rational officials respond to that. Every current member inherited this structure; none designed it.</p>
+    <h3>Not that the bonds were wasted</h3>
+    <p>Measures M and T1 funded real projects. The criticism is opportunity cost, not illegality or fraud: scarce debt capacity was spread across many objectives while the pavement network stayed underfunded.</p>
+    <h3>Not that Measure FF was the wrong choice</h3>
+    <p>Because FF raised more revenue, its 45 percent pavement share was projected to produce <em>more</em> pavement dollars than Measure EE&rsquo;s 36 percent minimum. It would be inaccurate to say the broader measure delivered less road money. The narrower and valid criticism is that 55 percent of a new tax went to purposes other than pavement.</p>
+    <h3>Not that funding is the only problem</h3>
+    <p>In 2018 Berkeley sent construction bids out late, <strong>paved no scheduled streets that year</strong>, and rebid the work in 2019 &mdash; despite having set aside $8.6 million. That was a delivery failure, not a funding shortage. Public Works has also seen repeated director turnover and substantial engineering vacancies.</p>
+  </div>
+
+  <h2>The through-line</h2>
+  <p>Berkeley allowed a chronic street-funding problem to persist while repeatedly postponing the ordinary budget decision required to address it, then relied heavily on debt, restricted revenues, and increasingly broad project packages to catch up. By the time recurring support rose materially in 2022, the backlog was a liability measured in hundreds of millions.</p>
+  <p>The question for any voter facing the November 2026 bond is not whether the projects in it are worthwhile. It is whether approving it will, once again, substitute for the decision that would actually stop the backlog from regenerating.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p>Berkeley City Auditor, <em>Failing Streets: Time to Change Direction to Achieve Sustainability</em> (2011). Berkeley City Auditor, <em>Rocky Road: Berkeley Streets at Risk and Significantly Underfunded</em> (November 2020). Pavement Engineering Inc., Berkeley Pavement Management Program Updates (2022; 2024 final April 2025). City Council, <em>Implementing Phase 1 of the Measure T1 Infrastructure Bond Program</em>, June 27 2017. City of Berkeley measure pages for Measure M, Measure T1 and Measure FF, including the FF allocation and maintenance-of-effort terms. City of Berkeley November 2024 ballot measure documents, Measures EE and FF, including signed arguments. Confirmation of the November 8 2022 election results (Measure L, 59.42%). Street Rehabilitation Five-Year Plan / FY2023&ndash;FY2024 funding update. Berkeleyside reporting on the 2023 Measure T1 shortfall and the redirection of Hopkins project funds. City Council agenda, March 17 2026, on the potential $300 million bond and 0.5% sales tax. <em>Recommendations for the Formulation of Advanced Fiscal Policies to Institutionalize Strategic Bond Issuance, Optimize Municipal Investment Returns, and Leverage Intergovernmental and Philanthropic Capital Funding</em>, referral to the Budget and Finance Committee, June 17 2025 &mdash; the source of the Measure L post-election findings, the Measure T1 overrun figures, and the $250&ndash;$300 million bonding-capacity estimate quoted above.</p>
+    <h3>Related</h3>
+    <p><a href="crayon-box.html">The crayon box</a> &middot;
+  <a href="framework.html">The Berkeley Budget Framework</a> &middot; <a href="hopkins-fire-review.html">The Hopkins Street fire review</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

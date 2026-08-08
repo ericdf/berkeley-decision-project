@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Budget That Restored Fire Positions and Cut Police, Dispatch and Crisis Response</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#b5471f; --accent-soft:#fdf1ec;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#e08055; --accent-soft:#2a1d17;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#e08055; --accent-soft:#2a1d17;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#b5471f; --accent-soft:#fdf1ec;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.clock { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+         color: var(--accent); font-size: .8rem; letter-spacing: .04em; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Explainer</div>
+  <h1>One Motion, Two Answers</h1>
+  <p class="standfirst">On June 23, 2026, Berkeley&rsquo;s City Council found $200,000 to preserve nine firefighter positions and decline a packaged fire station closure. In the same motion it eliminated 39 authorized Police Department positions &mdash; officers, sergeants and dispatchers &mdash; and the last General Fund&ndash;funded mental-health crisis-response positions, after its own budget warned that the dispatch reductions would &ldquo;threaten the department&rsquo;s ability to answer 9-1-1 calls.&rdquo;</p>
+  <div class="byline">Written for readers with no prior knowledge of the budget &middot; August 2026</div>
+
+  <p>Every quotation below is from the City of Berkeley&rsquo;s own proposed budget or from the official record of the meeting.</p>
+
+  <h2>The problem the City was solving</h2>
+  <p>Berkeley faced a roughly <strong>$29 million</strong> annual General Fund shortfall. The City Manager asked every department to model 10% and 12.5% reductions and assembled a balancing plan. Roughly 138 positions across the city were slated for elimination.</p>
+  <p>That is a genuinely hard problem, and nothing here suggests otherwise. Cuts had to fall somewhere. The question this page examines is where the Council chose to make an exception.</p>
+
+  <h2>The method nobody challenged</h2>
+  <p>Notice what the City Manager asked for: a common percentage from every department. A common-percentage exercise is not, by itself, prioritization. It asks each department to model the same nominal reduction without first ranking functions by importance, effectiveness, or the minimum staffing needed to remain viable &mdash; so it takes an operating unit out of an expensive essential service and leaves a small department with most of its overhead but too little frontline capacity to work. Every institution survives; the portfolio gets weaker. <a href="framework.html#case-f">The framework calls this out directly</a>: Council should have answered the flat-percentage exercise with a budget ranked by <a href="framework.html#cat1">category</a>, and did not.</p>
+  <p>There is a harder version of this, and the budget makes it in its own words. A uniform percentage does not produce a uniform effect. For some functions a 10% reduction trims a margin; for others it takes the unit below the level at which the service works at all. The City&rsquo;s own document says the police reduction &ldquo;materially reduces public safety service levels,&rdquo; that the dispatch reduction &ldquo;will threaten the department&rsquo;s ability to answer 9-1-1 calls,&rdquo; and that the crisis-response cut ends city delivery of the service outright. Those are not trims. When a reduction eliminates a service entirely, it is a <a href="framework.html#stop">STOP</a> decision whether or not Council names it that way. When it leaves a function nominally intact but below the level needed to deliver reliably, it approaches the same threshold: a capability has been surrendered without being debated as a capability choice.</p>
+  <p>That is what goes unexamined. An explicit STOP is a defensible act: it says this is no longer something Berkeley will do, here is why, and here is what happens to the people who relied on it. A flat percentage can reach the same place with none of that accountability, leaving every institution intact on paper while the portfolio quietly loses the capability. Nothing in the nineteen months of transcripts, the annotated agenda for the June 23 budget adoption, or the May 19 budget hearing shows the Council asking which departments sat at that threshold &mdash; where the percentage stopped being a reduction and became a termination &mdash; or directing staff to identify them before the plan was adopted.</p>
+  <p>There is also a reason the flat percentage is hard to escape, and it is not cowardice. Prioritizing requires a basis for ranking, and ranking requires credible information about what programs produce. Berkeley&rsquo;s own Auditor has documented serious gaps in that capacity. In July 2025 the City Auditor reported that the City had <strong>no outcome tracking system</strong> for its homeless programs &mdash; no mechanism to assess whether they were working &mdash; against more than $21.7 million a year spread across some 33 programs. In February 2026 the Auditor followed with a guide to measuring performance, noting that Berkeley&rsquo;s measures are scattered across reports and that peer cities practice outcome-based budgeting. A city that counts what it does but not what changes has no defensible way to rank its programs. The across-the-board cut is what remains when ranking is impossible: not a decision about priorities, but the absence of one.</p>
+  <p>A different budgeting method was named aloud in the room five weeks earlier. At the May 19, 2026 budget hearing a public commenter described <strong>priority-based budgeting</strong> and told the Council that a study commissioned by the City Auditor had recommended a hybrid version of it for Berkeley. A councilmember picked it up in the same meeting: <em>&ldquo;I do want to call out what the person said about priority-based budgeting&hellip; that resonates with me. I think it&rsquo;s easier said than done. There are 9 of us, there are 8 districts.&rdquo;</em></p>
+  <p>It resonated and it went nowhere. The phrase appears in one of the sixty-one transcripts in this corpus, spoken first by a resident rather than a member. <a href="framework.html#start">Start, Stop, Continue</a> &mdash; the mechanism for deciding what the city should cease doing altogether &mdash; appears in none of them. No motion, no referral, and nothing on the May 19 or June 23 agenda proposed ranking the budget before cutting it.</p>
+  <p>This matters for how the sales tax was argued. The proposed FY 2027&ndash;28 budget treated the Fire Station 4 closure as <strong>a contingency tied to the sales-tax outcome</strong>, and acknowledged the degraded response capacity that would follow. A voter was therefore shown a vivid and specific service consequence attached to a particular ballot question &mdash; while the option of first establishing which services the city must ensure, which it should only undertake with partners, and which it should stop owning was never placed beside it. When the only two options on offer are a new tax or a closed fire station, that is not the full set of choices. It is <a href="crayon-box.html">four crayons out of seven</a>.</p>
+
+  <h2>What the budget said would happen to police</h2>
+  <p>The City did not hide the consequences. Its own document states them:</p>
+  <blockquote>
+    <p>&ldquo;the proposed 10% reduction in the Police Department requires significant personnel reductions that <strong>materially reduces public safety service levels</strong> and compromises the department&rsquo;s specialized units&hellip;</p>
+    <p>&ldquo;For the Communications Center (9-1-1 Dispatch), the proposed budget reductions <strong>will threaten the department&rsquo;s ability to answer 9-1-1 calls</strong> and reliably dispatch police and fire resources&hellip;</p>
+    <p>&ldquo;the City risks <strong>replicating the post-COVID staffing crisis</strong>, where depleted staffing led to slower response times, reduced service capacity, and prolonged recovery.&rdquo;</p>
+    <div class="attrib">City of Berkeley, Proposed FY2027 &amp; FY2028 Biennial Budget</div>
+  </blockquote>
+  <p>The cuts themselves:</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Eliminated</th><th class="d">Positions</th></tr></thead>
+      <tbody>
+        <tr><td>Police officers (14 vacant, <strong>9 filled</strong>)</td><td class="d">23</td></tr>
+        <tr><td>Police sergeants (vacant)</td><td class="d">2</td></tr>
+        <tr><td>Public safety dispatchers (vacant)</td><td class="d">13</td></tr>
+        <tr><td>Office specialist</td><td class="d">1</td></tr>
+        <tr><td><strong>Total police department reduction</strong></td><td class="d"><strong>39</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The dispatch center was already stretched. By the City&rsquo;s account it operates at <strong>20 of 32 authorized positions</strong> and relies on mandatory overtime; new dispatchers leave at a rate of <strong>70&ndash;80%</strong>. It handles roughly <strong>180,000 police and fire calls a year</strong>. The budget proposed removing 13 more dispatcher positions.</p>
+
+  <h2>What the budget said would happen to crisis response</h2>
+  <p>Berkeley spent years building an alternative to sending police to mental health calls. The budget ends the city&rsquo;s part in it:</p>
+  <blockquote>
+    <p>&ldquo;Eliminates 2.6 filled FTE, representing <strong>the last General Fund&ndash;funded mental health crisis response positions</strong>.</p>
+    <p>&ldquo;The City will no longer provide crisis response services and will rely on Alameda County, which is a County responsibility. <strong>However, the County&rsquo;s ability to provide this service over the long-term remains uncertain</strong> due to budget challenges and policy shifts.</p>
+    <p>&ldquo;Responsibility for wellness checks and psychiatric emergencies will shift <strong>solely to the Berkeley Police Department</strong>.&rdquo;</p>
+    <div class="attrib">City of Berkeley, Proposed FY2027 &amp; FY2028 Biennial Budget, Mental Health Division</div>
+  </blockquote>
+  <p>Read those three sentences together. The work moves to the County; the County may not be able to do it; and in the meantime it falls to the police department &mdash; the one being cut in the same document.</p>
+  <div class="pull">Before this program existed, police handled these calls. After it ends, police handle them again &mdash; with fewer officers.</div>
+
+  <h2>The part they got right, and what it proves</h2>
+  <p>Set the outcome aside for a moment and look at the structure of the decision, because this one is not simple. Crisis response <em>is</em> a County responsibility &mdash; Berkeley&rsquo;s own budget says so. Handing work to the level of government that actually owns it, instead of automatically continuing a city-run version whose performance record was mixed and whose function the City itself identifies as a County responsibility, is precisely what <a href="framework.html#cat2">Category&nbsp;2</a> and <a href="framework.html#provider-neutrality">provider neutrality</a> ask a council to be willing to do. The framework does not say the city should deliver everything itself. It says compare the providers &mdash; city staff, county, regional, nonprofit, private &mdash; on outcome, cost, expertise, governance and exit flexibility, and choose the structure that produces the required result.</p>
+  <p>So the transfer is not by itself the failure. It is evidence that this Council <strong>can</strong> reach for a Category 2 tool when it decides to. That is worth saying plainly, and it makes the rest of the record harder to explain rather than easier.</p>
+  <p>What is missing is the other half. A Category 2 handoff is only sound if the receiving partner is committed, the service level is specified, and there are exit criteria for the case where the partner cannot perform. Berkeley&rsquo;s budget states in the same breath that <em>&ldquo;the County&rsquo;s ability to provide this service over the long-term remains uncertain.&rdquo;</em> That is a written acknowledgment that the partner might fail &mdash; published with no partner commitment, service standard or failure-case plan identified in the adopted budget materials, while the fallback lands by default on a department losing 39 positions in the same motion.</p>
+  <p>Which is the pattern in its most instructive form. The tool was in the box and the Council picked it up. It just did not finish: the structure was chosen, the terms were never written, and the risk was disclosed rather than managed. A transfer done properly would look almost identical on the night of the vote and entirely different three years later.</p>
+
+  <h2>The same question, asked about a different service, and dropped</h2>
+  <p>Two weeks before the June 23 budget vote, the Council took up fee increases for the Environmental Health Division &mdash; the unit that permits and inspects Berkeley&rsquo;s 1,100-plus food facilities. The program does not cover its costs. Fees had gone unraised for years, staff described being in &ldquo;catch-up mode,&rdquo; and even after the increase the General Fund was still expected to subsidize the division by roughly <strong>$750,000 a year</strong>.</p>
+  <p>Alameda County already performs this exact function for other cities in the county. A councilmember said so from the dais, and asked the obvious question:</p>
+  <blockquote>
+    <p>&ldquo;The county does, I think, a pretty decent job at this work. Should this be something that we at least look at?&hellip; If this is a function that the county is providing to every other city in the county&hellip; I don&rsquo;t know what kind of cost we would bear to make that transfer, but I at least think this should be on the list of things to look at&hellip; What would it look like if we transferred some of this over?&rdquo;</p>
+    <div class="attrib">Councilmember Brent Blackaby, June 9 2026</div>
+  </blockquote>
+  <p>A second member agreed before the vote, asking to &ldquo;look into that, and also understanding cost-benefit analysis of having this in-house versus the county.&rdquo; The Council then adopted the fee increase, unanimously. No referral was made, no analysis was directed, and nothing on the annotated agenda for that item asks staff to return with the county comparison. The request was to put it &ldquo;on the list of things to look at&rdquo; &mdash; and there is no list.</p>
+  <p>Put the two decisions side by side because they present the same structural question: when should Berkeley continue delivering a service itself, and when should it rely on the County?</p>
+  <ul>
+    <li><strong>Crisis response.</strong> Underperforming, a County responsibility, County alternative available. <em>Transferred</em> &mdash; without terms, standards, or exit criteria.</li>
+    <li><strong>Food safety inspection.</strong> Not covering its costs, a service the County already provides to every other city in the county. <em>Not transferred, and not studied</em> &mdash; the fee went up instead.</li>
+  </ul>
+  <p>That contrast is what makes the finding something other than an argument about one program. The Council is plainly capable of moving work to the County; it did so, in the same budget cycle, for a harder and more visible service. The contrast shows that Berkeley is not categorically opposed to transferring a service to the County. What the record does not show is a consistent standard applied to both cases. Whatever the reasoning was, it was not written down, and the record does not contain a comparison that would let a resident check it.</p>
+
+  <h2>The warning the Council already had</h2>
+  <p>In 2024 the City commissioned an independent consultant, Citygate Associates, to study police staffing. The study made <strong>54 recommendations</strong> and recommended <strong>adding 15 patrol officers</strong>. It found <strong>60% of surveyed department employees expected to leave within three years</strong>, with many comments describing a perceived lack of support from the community and City Council.</p>
+  <p>An implementation update came to Council on <strong>September 9, 2025</strong>. Fourteen of the 54 recommendations were done or underway. Here is the entire Council discussion of it:</p>
+  <blockquote>
+    <p>&ldquo;Item 30, Berkeley Police Department&rsquo;s update on the Citygate staffing report. I will note there were 54 recommendations in that report about how to adjust staffing and structure of the department. They have already implemented or in process of implementing 14. I appreciate that update and look forward to continuing updates on that work.&rdquo;</p>
+    <div class="attrib">Berkeley City Council, September 9 2025 &mdash; the only remark on the item</div>
+  </blockquote>
+  <p>No motion was made, no implementation deadline was set, and no date was established for the next update.</p>
+
+  <h2><span class="when">June 23, 2026</span>The night of the vote</h2>
+  <p>Two competing motions were offered to adopt the budget. Both adopted the City Manager&rsquo;s proposed budget; they differed over affordable-housing allocations, not over the police or crisis-response cuts.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Motion</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>Kesarwani / Blackaby</td><td><strong>Failed 3&ndash;5&ndash;1.</strong> Ayes: Kesarwani, Taplin, Blackaby. Noes: Bartlett, Tregub, O&rsquo;Keefe, Lunaparra, Ishii. Abstain: Humbert.</td></tr>
+        <tr><td>Humbert / Tregub</td><td><strong>Carried.</strong> Adopted as Resolution 72,340&ndash;N.S.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The carried motion contained this amendment:</p>
+  <blockquote>
+    <p>&ldquo;In both FY 2027 and FY 2028 increase the amount of the revenue transfer for the Annual Ambulance Transport Revenue by $200,000 <strong>to fund the 9.0 positions in the Fire Department</strong>.&rdquo;</p>
+    <div class="attrib">Annotated Agenda, June 23 2026, Resolution 72,340&ndash;N.S.</div>
+  </blockquote>
+  <p>The budget had presented the Station 4 closure as an all-or-nothing package worth <strong>$3,631,106</strong>: <em>&ldquo;if accepted, the whole amount will be reduced. If not accepted, the whole amount will stay in the budget.&rdquo;</em> Council declined the package, which left the closure savings out of the plan, and the $200,000 revenue transfer funded the nine positions.</p>
+  <p>No equivalent amendment was offered for the 39 authorized police and dispatch positions, or for the 2.6 crisis-response positions.</p>
+  <p>Mayor Ishii acknowledged that employees affected elsewhere in the budget would view the Fire restoration differently:</p>
+  <blockquote>
+    <p>&ldquo;I recognize that we&rsquo;ve had conversations with some of the other unions and folks who will be upset by this decision, and I really want to say that I&rsquo;m sorry.&rdquo;</p>
+    <div class="attrib">Mayor Adena Ishii, June 23 2026, as reported</div>
+  </blockquote>
+  <p>The police union&rsquo;s president, Sgt. Neil Egbert, replied in a guest essay: <em>&ldquo;An apology was offered. A solution was not.&rdquo;</em></p>
+  <p>The FY2027 Appropriations Ordinance &mdash; $921.6 million gross &mdash; then passed <strong>All Ayes</strong>, with no additional speakers recorded on that item.</p>
+
+  <h2>The premise that failed</h2>
+  <p>Set the sequence out in order, because the order is the finding. The proposed budget presented
+  the Fire Station 4 closure as the identified consequence of failing to obtain new sales-tax
+  revenue, and acknowledged the degraded response capacity that would follow. That framing ran in
+  public for weeks. Then, on June 23 &mdash; before the election &mdash; Council declined the closure
+  package and funded the nine positions from an internal revenue transfer.</p>
+  <p>That does not prove the original contingency was fabricated. Forecasts change, revenues can be
+  reassigned, and budgets are amended; that is ordinary. What it establishes is narrower and harder
+  to escape: <strong>the public-facing binary &mdash; new revenue or a closed fire station &mdash;
+  was not the only available choice, and Council demonstrated as much in the same decision that
+  adopted the budget.</strong></p>
+  <div class="pull">The most alarming consequence was attached to the ballot question. Then the
+  money was found without it.</div>
+  <p>The failure is therefore not that anyone knowingly stated a falsehood. It is that an incomplete
+  binary was allowed to carry the weight of necessity &mdash; and that the capabilities left on the
+  wrong side of it, 9-1-1 answering and psychiatric emergency response, received no equivalent
+  search for money.</p>
+
+  <h2>Why the fire comparison matters</h2>
+  <p>Without it, this would be a story about a city with no money making painful cuts. The fire amendment changes that. It demonstrates that at least one major staffing reduction could be reversed within the adopted balancing plan, and that Council had practical authority to make exceptions on the night. The question is therefore not whether every cut could have been avoided. It is what standard Council used to decide which capability received an exception.</p>
+  <div class="pull">The Council used that power once. The question is not whether it could act. It is what it chose to act on.</div>
+  <p>Nothing here argues the fire positions should have been cut. Nine firefighters and a station are a real public safety asset. The point is narrower: the same body, in the same motion, demonstrated that the proposed reductions were not immutable and that Council could amend the balancing plan when it chose to protect a function.</p>
+
+  <h2>What this does and does not establish</h2>
+  <div class="notclaim">
+    <h3>It does not claim the budget was written to frighten voters</h3>
+    <p>No intent is asserted or established here. Tying a service reduction to a revenue contingency is ordinary budgeting practice, and the $29 million shortfall was real. What the record shows is the shape of the choice put to the public &mdash; a vivid, specific loss set against a specific ballot measure, with no ranked alternative developed beside it, and an explicit prioritization method raised from the floor, acknowledged from the dais, and never calendared. The record does not establish whether the framing was strategic, habitual, or simply the product of the budgeting method used. The finding is that a third option was available and went unexamined, not that anyone set out to mislead.</p>
+
+    <h3>It does not claim the crisis-response transfer was wrong in principle</h3>
+    <p>Crisis response is a County responsibility, the city-run program had a mixed performance record, and moving work to the government that owns it is a legitimate &mdash; even preferred &mdash; Category 2 decision. Nothing here argues Berkeley should have kept delivering the service by default. The finding concerns the terms: no partner commitment, no service standard, no exit criteria, and an acknowledged risk that the County could not sustain the work, with the police department as the unstated fallback.</p>
+
+    <h3>It does not claim any policy caused officers to quit</h3>
+    <p>Berkeley&rsquo;s sworn staffing has fallen and recruiting is difficult, and the Citygate study reports that employees perceive a lack of council support. That is evidence of perception, not a causal finding. No claim is made here that a named Council decision produced a specific number of departures.</p>
+    <h3>Two different staffing numbers are in circulation</h3>
+    <p>The budget&rsquo;s &ldquo;174 baseline&rdquo; counts <em>authorized</em> positions. The police union&rsquo;s figure of 137&ndash;139 counts <em>actual</em> sworn officers. Both can be true; they measure different things. Authorized strength has moved from 181 to 174 to 164.</p>
+    <h3>It does not claim the budget was easy</h3>
+    <p>A $29M structural deficit is real and the Council did not create it in a night. Cuts had to fall somewhere.</p>
+  </div>
+
+  <footer>
+    <h3>Sources</h3>
+    <p><strong>Budget.</strong> City of Berkeley, Proposed FY2027 and FY2028 Biennial Budget (Council item, May 19 2026) &mdash; Police Department, Mental Health Division, and Fire Department sections, including the FTE change tables and the Fire Station Closure package line of $3,631,106. <strong>Council record.</strong> Annotated Agenda, June 23 2026: Resolution 72,340&ndash;N.S. and the FY2027 Annual Appropriations Ordinance No. 8,029&ndash;N.S. Annotated Agenda and transcript, September 9 2025, Item 30. <strong>Outcome measurement.</strong> City Auditor, <em>Berkeley Homeless Response Team: Coordination, Oversight, and Outcome Tracking</em>, July 2025 &mdash; finding that no outcome tracking system was in place and that the City could not assess whether its homeless programs were working, against $21.7M+ annually across 33+ programs; and City Auditor Jenny Wong, <em>A Guide to Measuring Performance in the City of Berkeley</em>, February 5 2026, presented to Council February 24 2026. The February report is framed as opportunities for management consideration rather than as an audit finding. <strong>Station 4 contingency.</strong> City of Berkeley, proposed FY2027&ndash;28 budget and Fire Department materials concerning Station 4 (Item 21), which tie the closure to the sales-tax outcome and state the resulting response-capacity effect. <strong>Priority-based budgeting.</strong> Public comment and Council response, Berkeley City Council special and regular meeting, May 19 2026, captioned transcript &mdash; the quoted councilmember response appears there. The commenter attributed a hybrid priority-based budgeting recommendation to a study commissioned by the City Auditor in 2013; that study has not been independently retrieved and is reported here as what was said to Council, not as a verified finding. <strong>Study.</strong> Citygate Associates, Workload Organizational Study of the Berkeley Police Department, 2024. <strong>Reporting.</strong> The Berkeley Scanner, April 14 2026 and June 29 2026 &mdash; the latter a guest essay by Berkeley Police Association President Neil Egbert, an interested party, identified as such.</p>
+    <h3>Related</h3>
+    <p><a href="hopkins-fire-review.html">The Hopkins Street fire review</a> &middot; <a href="framework.html">The Berkeley Budget Framework</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

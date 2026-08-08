@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Funding a Ferry With More Questions Than Answers — The Berkeley Pier-Ferry Project</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Instrument type is load-bearing on this page: a GO bond is borrowed capital repaid
+   through property tax over decades, a parcel tax is recurring revenue collected annually.
+   The table distinguishes them so the reader can see that the pattern is not "bonds" but
+   "any new money except reprioritization". */
+.inst { font-family: var(--sans); font-size: .74rem; font-weight: 700; white-space: nowrap;
+        letter-spacing: .02em; }
+.inst-bond { color: var(--accent); }
+.inst-tax  { color: var(--quote); }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.clock { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+         color: var(--accent); font-size: .8rem; letter-spacing: .04em; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+
+/* Consent-calendar ledger: the procedural spine of this page. */
+.led { font-family: var(--sans); font-size: .8rem; }
+.led td.cal-consent { color: var(--used); font-weight: 700; white-space: nowrap; }
+.led td.cal-other   { color: var(--ink-2); white-space: nowrap; }
+.led td.amt { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+/* Promise-vs-record pairs. */
+.pvr { margin: 1.6rem 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+.pvr-row { display: grid; grid-template-columns: 1fr 1fr; }
+.pvr-row + .pvr-row { border-top: 1px solid var(--rule); }
+.pvr-cell { padding: .9rem 1.1rem; font-family: var(--sans); font-size: .84rem; line-height: 1.6; }
+.pvr-cell.said { background: var(--panel); color: var(--ink-2); border-right: 1px solid var(--rule); }
+.pvr-cell.is   { background: var(--accent-soft); color: var(--ink); }
+.pvr-lbl { display: block; font-size: .62rem; font-weight: 800; letter-spacing: .13em;
+           text-transform: uppercase; margin-bottom: .35rem; color: var(--ink-3); }
+.pvr-cell.is .pvr-lbl { color: var(--accent); }
+@media (max-width: 640px) { .pvr-row { grid-template-columns: 1fr; }
+  .pvr-cell.said { border-right: 0; border-bottom: 1px solid var(--rule); } }
+</style></head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Analysis</div>
+  <h1>Funding a Ferry With More Questions Than Answers</h1>
+  <p class="standfirst">Berkeley is designing a $104&nbsp;million ferry terminal it has no money to build &mdash; a figure that covers the terminal, not the ferries. Two waterfront experts who have chaired the City&rsquo;s own commissions put the complete undertaking nearer $200&nbsp;million. Six of the seven decisions that got it here passed on the <a href="consent-drip.html">consent calendar</a>, without debate. This is not an argument that the ferry would fail. It is an account of a question that was never put.</p>
+  <div class="byline">Every figure below comes from the City&rsquo;s or WETA&rsquo;s own documents &middot; August 2026</div>
+
+  <p>The Berkeley Pier has been closed since July 2015. It is one of the few places on this stretch of the Bay where anyone can walk out over the water for free, and getting it back is a genuinely popular idea. When the City surveyed residents in 2021, what they asked for was benches, viewing spots, fishing, restrooms, and a safe place to take children.</p>
+
+  <p>What is being built is a ferry terminal, and the pier comes with it.</p>
+
+  <p>That distinction matters, because the two things have different costs, different risks, and different answers to the question of who pays. The record shows the City has never separated them for a public decision.</p>
+
+  <h2>What the Council actually voted on</h2>
+
+  <p>Seven decisions moved this project from an idea to a design contract. <strong>Six of them were on the consent calendar</strong> &mdash; the block of items adopted in a single motion, without discussion, at the start of a meeting. The seventh was a worksession, which takes no vote at all.</p>
+
+  <div class="tw">
+    <table class="led">
+      <thead><tr><th>Date</th><th>Decision</th><th class="amt">Amount</th><th>Calendar</th></tr></thead>
+      <tbody>
+        <tr><td>12 Mar 2019</td><td>City&ndash;WETA Memorandum of Understanding</td><td class="amt">$325,000</td><td class="cal-consent">Consent</td></tr>
+        <tr><td>7 Dec 2021</td><td>Preferred concept presented</td><td class="amt">&mdash;</td><td class="cal-other">Worksession, no vote</td></tr>
+        <tr><td>11 Jul 2023</td><td>Accept Alameda CTC grant</td><td class="amt">$5,138,685</td><td class="cal-consent">Consent</td></tr>
+        <tr><td>5 Dec 2023</td><td>Rename the pier for Sen. Nancy Skinner</td><td class="amt">&mdash;</td><td class="cal-consent">Consent</td></tr>
+        <tr><td>14 May 2024</td><td>Amendment&nbsp;#1 to the WETA MOU</td><td class="amt">$3,000,000</td><td class="cal-consent">Consent</td></tr>
+        <tr><td>14 May 2024</td><td>COWI engineering and design contract</td><td class="amt">$6,500,000</td><td class="cal-consent">Consent</td></tr>
+        <tr><td>9 Jul 2024</td><td>Rincon environmental services contract</td><td class="amt">$3,080,000</td><td class="cal-consent">Consent</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The annotated agenda for 9 July 2024 records the whole of that evening&rsquo;s consent business in one line: <em>&ldquo;adopt the Consent Calendar in one motion&hellip; Vote: All Ayes.&rdquo;</em> A $3,080,000 contract, and no member asked a question on the record.</p>
+
+  <p>Consent is not improper. It exists so that routine business does not consume a meeting. Any single councilmember may pull an item from it for debate, and none did &mdash; not once, across five years and roughly <strong>$9.6&nbsp;million in contracts and $11.1&nbsp;million in grants</strong>.</p>
+
+  <div class="pull">The mechanism that treats a decision as routine is the same mechanism that can make it invisible.</div>
+
+  <h2>The gate that never closed</h2>
+
+  <p>The 2019 agreement was careful. It committed Berkeley only to a feasibility study, and it set an explicit condition on everything after:</p>
+
+  <blockquote>
+    <p>&ldquo;the City and WETA will execute subsequent MOU agreements for each additional phase (design, construction, and operations phases), each of which shall be subject to approval by the City Council and the WETA Board, <strong>contingent upon the availability of regional transportation funding and City funding</strong>.&rdquo;</p>
+    <p class="attrib">City Manager report, Item 9, 12 March 2019 &mdash; consent calendar</p>
+  </blockquote>
+
+  <p>Six years later, the City Manager reported to Council on the project&rsquo;s status. On the question the 2019 condition turned on, the answer was a single sentence:</p>
+
+  <blockquote>
+    <p>&ldquo;<strong>Construction funding has not been identified.</strong>&rdquo;</p>
+    <p class="attrib">Berkeley Pier-Ferry Project Update, 24 October 2025</p>
+  </blockquote>
+
+  <p>The same report puts the preliminary construction estimate at <strong>$103,639,467</strong>, and notes that this figure <em>&ldquo;does not include the cost of ferry vessels.&rdquo;</em> WETA&rsquo;s business plan prices those at roughly $16&nbsp;million each.</p>
+
+  <p>Design proceeded anyway. The condition was written as a gate and has functioned as a preamble.</p>
+
+  <h2>The case for the ferry, tested against its own documents</h2>
+
+  <div class="pvr">
+    <div class="pvr-row">
+      <div class="pvr-cell said"><span class="pvr-lbl">The public account</span>The City&rsquo;s October 2025 FAQ: &ldquo;<strong>No</strong>, Berkeley is not required to subsidize WETA ferry operations.&rdquo;</div>
+      <div class="pvr-cell is"><span class="pvr-lbl">The business plan Berkeley relies on</span>Pages 47&ndash;48 propose Berkeley fund the gap through a <strong>Transient Occupancy Tax surcharge</strong> on Marina hotel stays, and cite two precedents: Alameda contributes property-tax assessments for Harbor Bay; Contra Costa sales tax provides <strong>$27.8&nbsp;million</strong> for Richmond ferry operations.</div>
+    </div>
+    <div class="pvr-row">
+      <div class="pvr-cell said"><span class="pvr-lbl">The project objective</span>&ldquo;Provide efficient and environmentally friendly <strong>zero emission</strong> public ferry service.&rdquo;</div>
+      <div class="pvr-cell is"><span class="pvr-lbl">The financial model</span>&ldquo;the Business Plan analysis assumes the Berkeley services will operate two 250-passenger, <strong>diesel-powered boats</strong>, as reliable cost information for electric zero-emission vessels is limited.&rdquo; WETA&rsquo;s electric fleet is built in 150- and 400-passenger sizes. There is no 250-passenger electric vessel.</div>
+    </div>
+    <div class="pvr-row">
+      <div class="pvr-cell said"><span class="pvr-lbl">The stated purpose</span>&ldquo;Reduces the use of single-occupancy vehicles for Transbay trips.&rdquo;</div>
+      <div class="pvr-cell is"><span class="pvr-lbl">The modeled behavior</span>The plan&rsquo;s own table: <strong>68% of passengers reach the terminal by car</strong> &mdash; 31% driving alone, 15% carpool, 15% dropped off, 7% by Uber or Lyft. <strong>5% arrive by public transit.</strong> The Draft EIR adds 1,127 new vehicle trips a day to the waterfront.</div>
+    </div>
+    <div class="pvr-row">
+      <div class="pvr-cell said"><span class="pvr-lbl">The resilience case</span>A ferry gives Berkeley an emergency crossing if the Bay Bridge and BART go down.</div>
+      <div class="pvr-cell is"><span class="pvr-lbl">WETA, in the same plan</span>&ldquo;Potential emergency response services <strong>have not been studied or fully evaluated</strong> as part of this Plan&hellip; It is generally WETA&rsquo;s position that new ferry routes must meet acceptable farebox recovery thresholds so that any emergency benefits&hellip; rest on solid financial feasibility grounds.&rdquo;</div>
+    </div>
+  </div>
+
+  <h2>What two waterfront experts say the estimate leaves out</h2>
+
+  <p>The figures above are the City&rsquo;s and WETA&rsquo;s own. Two people with unusual standing to read them have since said the public number describes a terminal rather than a ferry system.</p>
+
+  <p><strong>Jim McGrath</strong> chaired Berkeley&rsquo;s Parks and Waterfront Commission and was environmental manager at the Port of Oakland from 1990 to 2005, with later service on the San Francisco Bay Regional Water Quality Control Board and at the Bay Conservation and Development Commission. His professional work covered CEQA and NEPA review, dredging, wetlands and shoreline erosion. <strong>Paul Kamen</strong> is a naval architect and professional engineer who chaired the Berkeley Waterfront Commission for six terms between 1999 and 2018; his practice includes urban ferry-system design, propulsion and vessel performance.</p>
+
+  <p>Three points from their review bear on the numbers already on this page.</p>
+
+  <p><strong>The $104 million is the terminal, not the system.</strong> In a published analysis, McGrath traces the estimates: $119.5 million in the 2019 GHD feasibility study; $137,543,316 presented at a City meeting on June 17, 2026 &mdash; a figure that excludes both the second berth carried in earlier estimates at $29.14 million and the ferries at $38 million. He puts the full project over $200 million, with the City&rsquo;s share at least $30 million.</p>
+
+  <p>The escalation is the point. No current project document states an all-in cost at all &mdash; the last one that did was the December 2021 Preferred Concept, at $121.7 million. The public figure has since narrowed to the terminal while the undertaking has grown.</p>
+
+  <p><strong>The vessel allowance is where the numbers stop agreeing.</strong> McGrath&rsquo;s account is that the $38 million vessel line assumed one new dedicated diesel ferry at $22 million plus a 50 percent allocation of an existing Oakland/Alameda vessel. We went looking for that breakdown and could not reproduce it from the published documents, which say something different and are worth setting out plainly.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Document</th><th>Vessels</th><th>Stated cost</th></tr></thead>
+      <tbody>
+        <tr><td>Preferred Concept, 7 Dec 2021</td><td>&ldquo;Two Electric Ferry Vessels&rdquo;</td><td class="amt">$38.2M<br><span style="font-size:.9em;color:var(--ink-3)">total project $121.7M</span></td></tr>
+        <tr><td>WETA Business Plan, 17 Mar 2022</td><td>Two electric zero-emission vessels</td><td class="amt">$16M each &mdash; $32M</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Both documents say <em>electric</em>, and both say <em>two dedicated vessels</em>. Neither mentions a diesel boat or a shared Oakland/Alameda vessel. On the published record, McGrath&rsquo;s specific breakdown is not confirmed, and we say so rather than repeat it. If a working table behind the $38.2 million figure shows the diesel-and-half-share construction, it has not been released, and it should be.</p>
+
+  <p>What the documents do show is a different problem, and it is on the City&rsquo;s own page. The 2021 estimate put the <strong>total capital project cost at $121.7 million</strong> &mdash; waterside $69.5M, landside $14M, vessels $38.2M &mdash; explicitly including a cost escalation to a construction start in 2025. Construction has not started. The figure the public now hears, $104 million, is the terminal alone. The all-in number that was once printed in a single line has quietly dropped out of the conversation, and no current document replaces it.</p>
+
+  <p>The vessel financing has never been settled either. The business plan states that &ldquo;the respective share of vessel costs borne by WETA and the City of Berkeley will be determined at a future date&rdquo; &mdash; and says the same of the waterside and landside shares. Four years on, the record still does not say who pays for what.</p>
+
+  <p><strong>Electric vessels change the arithmetic, and the arithmetic is checkable.</strong> Kamen supplied his comparison and gave permission to publish it. It rests on two public sources &mdash; WETA&rsquo;s own fleet page and the trade report of its battery-electric order &mdash; and it reproduces:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th></th><th>Newest diesel<br>(Dorado class)</th><th>Newest electric<br>(2025 order)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Cost</strong></td><td class="amt">$15M</td><td class="amt">$15.3M<br><span style="font-size:.9em;color:var(--ink-3)">$46M for three</span></td></tr>
+        <tr><td><strong>Passengers</strong></td><td class="amt">320</td><td class="amt">150</td></tr>
+        <tr><td><strong>Speed</strong></td><td class="amt">36 knots</td><td class="amt">24 knots</td></tr>
+        <tr><td><strong>Cost per seat</strong></td><td class="amt"><strong>$46,900</strong></td><td class="amt"><strong>$102,200</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>That is <strong>2.2 times the capital cost per seat</strong>. Against the most expensive Dorado-class boat, which came in at $19.1 million or $59,700 per seat, the ratio is 1.7. So &ldquo;roughly twice as much per seat&rdquo; is fair, and the honest range is 1.7 to 2.2 depending on which diesel vessel you compare against.</p>
+
+  <p>Speed compounds it. At 36 knots against 24, the diesel boats move 50 percent more passengers per seat per day before dwell time is counted. A fleet that costs twice as much per seat and turns fewer trips is not a like-for-like substitution, and the business plan Berkeley relies on modeled the diesel case.</p>
+
+  <p>Kamen also put a related point to the City in writing, published in the project&rsquo;s own document library:</p>
+
+  <blockquote>
+    <p>&ldquo;And finally, electric ferries for emergencies? The shore power grid is likely to be interrupted, and electric ferries need to recharge during dwell time at the terminals. The work-around is fixed diesel-generators and batteries at the terminals, but that essentially doubles the cost of the prime movers.&rdquo;</p>
+    <p class="attrib">Paul Kamen, Naval Architect, P.E. &mdash; addendum to EIR scoping comments, 19 May 2025</p>
+  </blockquote>
+
+  <p>He also asked the EIR to examine whether WETA&rsquo;s electrification promise is enforceable at all, quoting WETA&rsquo;s own December 2021 board material that an all-electric fleet &ldquo;may be cited as a milestone for incentivizing a community to come out and support the development of a new ferry terminal.&rdquo; Without a binding requirement, he wrote, that reads as &ldquo;a disingenuous bait-and-switch promise designed to calm the opposition.&rdquo;</p>
+
+  <div class="beat">
+    <div class="beat-h">What happened to the cost questions</div>
+    <p>Both men put cost in front of the City formally. The EIR&rsquo;s own scoping table records McGrath raising &ldquo;operational costs of the Project&rdquo; and &ldquo;pricing, fares, and project costs,&rdquo; and Kamen raising &ldquo;costs associated with the project.&rdquo;</p>
+    <p>The published response to each is the same: <strong>&ldquo;Economic factors, including costs, are not an environmental impact of CEQA&rdquo;</strong> and <strong>&ldquo;The cost of a project is not an environmental impact under CEQA.&rdquo;</strong></p>
+    <p>As a narrow statement about what CEQA compels, that is correct. Cost is not an environmental impact, and no EIR is obliged to price a project.</p>
+
+  <p>It is also, as McGrath points out, only partly responsive &mdash; because <em>feasibility</em> is a term of art in CEQA, and it is the mechanism by which an EIR decides which alternatives deserve study. An alternative may be dismissed as infeasible. So cost enters through the back door whenever the City wants it to, and stays outside whenever it does not. His objection is precise:</p>
+
+  <blockquote>
+    <p>&ldquo;The city can&rsquo;t have it both ways &mdash; a ferry terminal inside the marina isn&rsquo;t feasible and doesn&rsquo;t need to be evaluated in an EIR because it would take 4 minutes longer &mdash; even if it saves more than $100 million and prevents fill and 400,000 cubic yards of dredging?&rdquo;</p>
+    <p class="attrib">Jim McGrath, former chair, Berkeley Parks and Waterfront Commission</p>
+  </blockquote>
+
+  <p>That is the shape of the thing. A four-minute travel-time penalty was sufficient to rule an alternative out. A nine-figure cost difference and 400,000 cubic yards of dredging were not admissible to rule it back in. Both moves were made under the same statute.</p>
+
+  <p>The effect is that the most rigorous public document this project will produce cannot answer what two qualified reviewers most wanted answered, and no other document has been assigned the job. Their comments were routed to &ldquo;City decision-makers as part of the project approval process&rdquo; &mdash; which, for six of the seven decisions that got this project here, has been the consent calendar.</p>
+
+  <div class="beat">
+    <div class="beat-h">The pattern the responses form</div>
+    <p>Taken singly, each of these is defensible. Cost is genuinely outside CEQA. Consent calendars are genuinely routine. A new commission genuinely has to hold a first meeting.</p>
+    <p>Taken together, a former chair of the Parks and Waterfront Commission asked how much the project costs and who pays; was told the question was out of scope; asked why the cheaper alternative was not studied and was told it was infeasible on four minutes; found the grant application had gone to a different commission under a different name; filed an ethics complaint; and was told the City did not intend to share its response with him. At each step the City was within its rights. At no step did anyone answer the question.</p>
+    <p>Consider who this was aimed at. Not a litigant, not a developer, not an opponent of public waterfront access &mdash; a man who gave the City three decades of unpaid service on its commissions, who helped put the public-access language into the Bay Plan that the project must now answer to, and who has nothing to gain from the outcome. If anyone had earned an answer on the merits, it was him.</p>
+    <p>He did not get one. He got a letter to the county disputing his account, and a decision &mdash; put in writing &mdash; that he would not be shown it. That is not a records-handling detail. Someone considered whether to give the City&rsquo;s own former commissioner the courtesy of its reasoning, and chose not to.</p>
+    <p>We are not in a position to say what the City is protecting, and the page does not claim to know. What can be said is narrower and sufficient: an institution that treats its most qualified critic this way is not going to be more forthcoming with anyone else.</p>
+  </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-h">Why this matters more than inflation</div>
+    <p>Each substitution runs the same direction. Diesel operating costs priced a service promised as electric. A vessel estimate set years ago carried forward against a market that has since doubled the per-seat price. A terminal figure stood in for a system. None of these is a cost overrun, which is what happens when a known thing turns out to cost more. They are a business case describing a different project than the one being built.</p>
+  </div>
+
+  <h2>The consent calendar was not the only route around review</h2>
+
+  <p>Berkeley has a Parks, Recreation and Waterfront Commission whose job is to advise Council on exactly this. McGrath, who chaired it, reports that the WETA memorandum of understanding and the scopes of work for the project studies did not go to that commission &mdash; they went to the consent calendar.</p>
+
+  <p>He describes a second instance in more detail. When the City applied to the Alameda County Transportation Commission for design funding, the item again bypassed the Parks Commission. It was heard instead at the first meeting of the newly created Infrastructure Commission, noticed, he says, simply as &ldquo;complete streets review.&rdquo; On learning of it, he wrote to ACTC asserting that the notice violated the Ralph M. Brown Act and <strong>filed a complaint with the City&rsquo;s ethics commission</strong>. The City responded to ACTC disputing his account. He reports that when ACTC staff asked whether the City would copy him on that response, the reply was that Berkeley did not intend to share it with him.</p>
+
+  <p>The source here is the former chair of the commission that was bypassed, a man who spent thirty years on the Bay Conservation and Development Commission protecting public access, who has no financial interest in the outcome, and who took formal action at the time rather than complaining afterward. His account is reported as his. Whether the notice violated the Brown Act is for the ethics commission to determine; we have not seen the City&rsquo;s response and take no position on that question.</p>
+
+  <p>But the underlying facts do not depend on how the complaint is resolved. Public notice requirements are law, not courtesy. Advisory commissions exist because Council created them and assigned them subject-matter jurisdiction. A city that maintains a Parks, Recreation and Waterfront Commission and then routes its largest waterfront project past it has not made a scheduling decision. And the response to being challenged on it &mdash; a letter to the county disputing the account, with a stated intention not to share that letter with the person who raised it &mdash; is itself a fact about how the institution handles scrutiny.</p>
+
+  <p>There is a third route, and it applies to the single most important document in the project.</p>
+
+  <p>The WETA Berkeley Ferry Service Business Plan is where the ridership forecast, the fare assumptions, the operating gap and the capital costs live. Every figure in the sections above is drawn from it. McGrath&rsquo;s account is that it was never presented in public in Berkeley and has never been updated. The City&rsquo;s own documents bear that out.</p>
+
+  <p>The October 2025 project update describes its arrival in one sentence: &ldquo;In April 2022, WETA <strong>published</strong> Version 1.0 of its Berkeley Ferry Business Plan (available on WETA&rsquo;s Berkeley Ferry Project website).&rdquo; Published on another agency&rsquo;s website. The City&rsquo;s project page lists its own milestones from 2019 through 2026 &mdash; focus groups, three community workshops, two Council worksessions, the EIR scoping meeting, seventeen presentations to community groups in 2025 alone. For 2022 it lists one item: a presentation of the preferred concept to the WETA board. The business plan is not in the timeline at all.</p>
+
+  <p>Nor does it appear in nineteen months of Council transcripts. The single occurrence of the phrase is a member of the public in April 2025 asking what &ldquo;creditable business plan would justify such an investment.&rdquo; Someone asking for one, not the City presenting one.</p>
+
+  <p>The Parks, Recreation and Waterfront Commission had been created effective January 2022, two months before the plan was dated. It was new, it existed, and it had jurisdiction. The two presentations the Commission did receive came in 2025, three years later, and concerned parking and transportation demand management in the design phase.</p>
+
+  <p>On the second half of his claim, the City&rsquo;s update calls the plan &ldquo;a &lsquo;living&rsquo; document&rdquo; for which &ldquo;regular updates are expected.&rdquo; It remains Version 1.0, dated March 2022. Four years on, the expectation has not been met &mdash; while the vessel market moved enough to double the cost per seat, the terminal estimate rose, and the project acquired a breakwater and 400,000 cubic yards of dredging.</p>
+
+  <div class="pull">The document carrying every number the project rests on has never been placed before the body that votes the money.</div>
+
+  <p>WETA wrote it, so its publication was WETA&rsquo;s to arrange. But Berkeley relies on it &mdash; the City&rsquo;s own update summarizes it as the basis for the fares and service the public has been told to expect &mdash; and Berkeley never brought it forward. A councilmember voting on a consent item for this project has not been shown the analysis that item depends on, because it was never on any agenda.</p>
+
+  <p>What all of this adds is a pattern rather than an incident. The consent calendar is one way an item reaches a decision without examination. Routing it past the advisory body with subject-matter jurisdiction is another. Leaving the analytical basis on a partner agency&rsquo;s website is a third. All three were used here.</p>
+
+  <h2>The site is not Richmond, and the difference is expensive</h2>
+
+  <p>Richmond and Alameda&rsquo;s Seaplane Lagoon placed their terminals inside protected harbors. Berkeley&rsquo;s chosen site is exposed, and the project documents show what making it work costs.</p>
+
+  <p>The design presented to the Bay Conservation and Development Commission&rsquo;s Design Review Board on November 3, 2025 is a <strong>1,080-foot public pier connected to a 400-foot breakwater</strong>. The Draft EIR states that <strong>&ldquo;a maximum total of 400,000 cubic yards of dredged materials would be generated and would require disposal&rdquo;</strong> &mdash; dredging along the federal navigation channel and for a turning basin that lets ferries turn and dock, to a depth of minus 12.51 feet. Dredged material and demolition debris would move by barge in loads of 3,000 to 6,000 cubic yards.</p>
+
+  <p>A breakwater is not an amenity. It is the structure that makes an exposed berth usable, and it is in the project because the site does not offer that protection on its own. The same is true of a turning basin dredged into a channel that, per comment in the BCDC record, has not been dredged in decades.</p>
+
+  <p>The Design Review Board also asked a question the record does not resolve. One member asked why a project of this cost is designed for only 1.6 feet of sea level rise, noting that lower deck and structural elements would be exposed to waves, and said that at this level of investment 1.6 feet &ldquo;doesn&rsquo;t seem adequate.&rdquo; The response was that the elevation was set by matching the grades of the plaza and existing roadway, and that going higher would require significant work to meet accessibility codes.</p>
+
+  <div class="pull">The breakwater, the dredging and the turning basin are not embellishments on a public pier. They are the price of putting a ferry terminal here rather than somewhere protected.</div>
+
+  <h2>Berkeley builds it; WETA decides what docks there</h2>
+
+  <p>The division of responsibility is the part least visible in the public account. WETA operates regional ferry service and controls fleet deployment, schedules and vessel assignment. Berkeley can build and finance the site.</p>
+
+  <p>So Berkeley would fund the pier, the breakwater, the dredged channel and turning basin, the charging infrastructure, the parking and the connecting transportation &mdash; and would carry the maintenance obligation on all of it, including the recurring dredging an exposed, siltation-prone berth implies. What Berkeley would not hold is any control over which vessels are assigned, how often they run, or whether the route continues.</p>
+
+  <p>That is the asymmetry: <a href="framework.html#cat2">Category 2</a> in this site&rsquo;s terms. The City takes on the fixed, immovable, expensive assets. The operating decisions that determine whether those assets are worth anything belong to another agency.</p>
+
+  <h2>The subsidy, in the best year the plan models</h2>
+
+  <p>Ferry service does not pay for itself anywhere, and nobody claims it should. The question is how large the gap is and who fills it. WETA&rsquo;s plan answers the first part precisely, for 2035 &mdash; the tenth year of service, after a decade of ridership growth, and the year on which the project&rsquo;s feasibility rests.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Berkeley&ndash;San Francisco, 2035</th><th>Per boarding</th></tr></thead>
+      <tbody>
+        <tr><td>Fare the passenger pays</td><td class="amt">$7.28</td></tr>
+        <tr><td>Public subsidy, all Berkeley services</td><td class="amt">$7.62</td></tr>
+        <tr><td>Weekend Larkspur service</td><td class="amt">$22.55</td></tr>
+        <tr><td><strong>Annual operating gap, 2035</strong></td><td class="amt"><strong>$5,589,288</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>In the year the project is judged feasible, <strong>the public pays slightly more per ride than the rider does.</strong> That is the good scenario. It assumes ridership reaches 100% of forecast and fares rise 3% every year for a decade.</p>
+
+  <h2>A second estimate, and what it assumes</h2>
+
+  <p>The figures above are WETA&rsquo;s, for operating cost alone. McGrath&rsquo;s published analysis adds capital and reaches a larger number. His method:</p>
+
+  <div class="tw">
+    <table>
+      <tbody>
+        <tr><td>Annual operating subsidy, Berkeley route<br><span style="font-size:.9em;color:var(--ink-3)">from the SF Bay Ferry 2050 Business Plan</span></td><td class="amt">$9&ndash;12M</td></tr>
+        <tr><td>Capital amortized<br><span style="font-size:.9em;color:var(--ink-3)">$175M over 30 years at 5% &mdash; his assumption</span></td><td class="amt">$11.28M</td></tr>
+        <tr><td><strong>Annualized total</strong></td><td class="amt"><strong>~$20M</strong></td></tr>
+        <tr><td>Per projected daily commuter (955, 250 days)</td><td class="amt">~$80,000/yr</td></tr>
+        <tr><td>Per departure</td><td class="amt">~$84</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Roughly $84 in public money for every departure. The first line of that table is WETA&rsquo;s own figure, not his: a Berkeley route carries a projected operating subsidy of $9 to $12 million a year before any capital cost is counted, and the record still does not name who pays it.</p>
+
+  <p>Two comparisons from the same analysis bear on who benefits and what a terminal delivers.</p>
+
+  <p>On who pays and who rides: state policy sets a goal that fares cover 40 percent of transit operating cost. On the Richmond route, McGrath reports farebox recovery of about 12 percent, with more than 90 percent of riders earning over $100,000 a year and 40 percent over $200,000. They pay $5.70 each way. He notes this is not accidental &mdash; fares are set to compete with BART, and the difference is carried by taxpayers and Bay Bridge tolls.</p>
+
+  <p>On whether a ferry terminal revives a waterfront, he points to Jack London Square: roughly the size of Berkeley Marina, with an established ferry averaging over 2,000 daily boardings and hundreds of new residential units nearby. More than half the ground-floor retail is vacant and the Waterfront Hotel has closed. His conclusion is the one that matters for Berkeley&rsquo;s revenue case: a successful ferry does not make a successful commercial area.</p>
+
+  <p>Keyser Marston studies commissioned before the pandemic found that a terminal and marina redevelopment would not generate enough revenue to cover the City&rsquo;s share of the project &mdash; at most a market for one more hotel and a restaurant over twenty years, worth under $600,000 in lease revenue on land already producing income, against debt service on tens of millions.</p>
+
+  <h2>Whether anyone will ride it</h2>
+
+  <p>The City&rsquo;s public engagement produced one survey, in 2021. It drew 377 responses, was open to anyone including non-residents, and was not a representative sample &mdash; the report says so. It therefore cannot establish resident demand for the ferry, and its actual responses are considerably more ambiguous than the project&rsquo;s public rationale suggests.</p>
+
+  <ul>
+    <li><strong>59% said they would rarely or never</strong> use the ferry to commute.</li>
+    <li><strong>68% said they would drive</strong> to the terminal &mdash; independently matching the business plan&rsquo;s modeled 68%.</li>
+    <li>Enthusiasm concentrated on the <em>recreation pier</em>: benches, viewing spots, fishing, food, a kid-friendly environment.</li>
+  </ul>
+
+  <p>No representative survey has ever asked Berkeley residents whether they would ride a ferry at the modeled fare and frequency, or what they would give up to pay for it.</p>
+
+  <p>Two further questions are simply absent from the record. The business plan never compares ferry travel time or cost against BART, despite &ldquo;travel times and costs that are competitive with other Transbay modes&rdquo; being a stated project objective. And in 2,897 lines, <strong>the word &ldquo;divert&rdquo; does not appear once</strong> &mdash; nobody estimated how many riders would come from BART, AC Transit or the Richmond ferry rather than from cars. That matters, because the entire environmental case assumes riders are new to transit.</p>
+
+  <div class="notclaim">
+    <h3>The equity argument, tested against its own table</h3>
+    <p>The business plan devotes a chapter to equity, and states that residents within a mile of the Marina have &ldquo;lower median household incomes, higher unemployment rates, and a higher non-white population relative to the other geographies.&rdquo;</p>
+    <p>Its own Table 11 says otherwise on two of three counts. Median household income within one mile is <strong>$81,575</strong> against <strong>$85,530</strong> citywide &mdash; 4.6% lower, essentially the Berkeley median. Unemployment is <strong>5.0%</strong> against <strong>5.3%</strong> citywide &mdash; <em>lower</em>, directly contradicting the sentence that cites the table. The non-white share, 56.7% against 46.7%, does hold.</p>
+    <p>The access-to-jobs case rests on a 21% salary premium for San Francisco and Peninsula employment, concentrated in Management, Legal and Computer occupations. Whatever its merits, the benefit identified here is disproportionately a case for access to higher-paying professional employment.</p>
+  </div>
+
+  <h2>What it competes with</h2>
+
+  <p>Berkeley&rsquo;s waterfront is not short of things that need money. The City&rsquo;s own September 2025 committee packet totals <strong>$153,480,000 in unfunded waterfront needs</strong> &mdash; dock replacement, seawall repair, shoreline resilience, dredging, restrooms. The single largest line is <strong>Berkeley Pier Renovation, $55&nbsp;million</strong>, listed on its own.</p>
+
+  <p>The fund that is supposed to pay for this was described by the City Manager five years ago in these terms:</p>
+
+  <blockquote>
+    <p>&ldquo;Due to significant decreases in revenue and rising expenses, <strong>the Marina Fund is on the brink of insolvency</strong> and requires additional resources to meet current obligations&hellip; There is $350,000/year planned for capital in the Marina Fund, which is insufficient to address the unfunded needs at the Waterfront&hellip; the Marina Fund is projected to need $650,000 in the next budget year just to maintain baseline Waterfront operations.&rdquo;</p>
+    <p class="attrib">Unfunded Liability Obligations and Unfunded Infrastructure Needs, Council worksession, 16 March 2021</p>
+  </blockquote>
+
+  <p>$350,000 a year, against $153&nbsp;million in needs and a $104&nbsp;million project.</p>
+
+  <h2>The part that is hardest to reconcile</h2>
+
+  <p>In July 2026 this Council fixed a bicycle lane alignment on Hopkins Street over the Fire Department&rsquo;s stated objection, on the reasoning that making driving harder is how a city changes behavior. That decision is documented <a href="hopkins-fire-review.html">elsewhere on this site</a>.</p>
+
+  <p>The same Council is advancing a transit project whose own model says <strong>68% of its riders will drive to it</strong>, which adds 1,127 daily vehicle trips to the waterfront, and which requires between 425 and 475 parking spaces to function.</p>
+
+  <p>Both positions can be argued. Holding both at once, without ever putting them in the same room, is what an absent process looks like.</p>
+
+  <h2>What the framework would have required</h2>
+
+  <p>The framework used by this site sets <a href="framework.html">six admission tests</a> before a project earns public priority. Applied to the ferry project, one is arguable and five are not met.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Test</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Legal or essential responsibility</td><td>Not met &mdash; ferry service is not a municipal obligation. Pier stewardship arguably is.</td></tr>
+        <tr><td>Material resident benefit</td><td>Not established &mdash; no representative measure of demand exists.</td></tr>
+        <tr><td>Institutional fit</td><td>Not met &mdash; no ferry expertise; the owning fund is near insolvency.</td></tr>
+        <tr><td>Executable evidence</td><td>Not met &mdash; no baseline, no diversion analysis, operating costs modeled on the wrong vessel.</td></tr>
+        <tr><td>Capacity</td><td>Not met &mdash; nothing was ever named that Berkeley would stop doing.</td></tr>
+        <tr><td>Durability</td><td>Not met &mdash; construction funding unidentified; the operating gap has no named payer.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The framework also classifies work of this kind as <strong><a href="framework.html#cat2">Category 2 &mdash; act with necessary partners</a></strong>, and attaches a condition to it: <em>&ldquo;Collaboration must be binding, not aspirational&hellip; Berkeley should not capitalize a regional undertaking alone while other jurisdictions remain potential beneficiaries.&rdquo;</em></p>
+
+  <p>Berkeley owns the pier, the breakwater, the dredging, the electrification and the maintenance in perpetuity. WETA owns the vessels and collects the fares. San Francisco receives a terminal it does not pay for. <strong>No exit condition appears anywhere in the record.</strong></p>
+
+  <p>Applied to the actual decision record, that would have changed four things. The 2019 gate should have paused design when construction funding failed to appear. The six consent items should have been action items. The recreation pier should have been costed and decided separately from the ferry terminal &mdash; the City&rsquo;s own tables price a dual-purpose pier anywhere from $5&nbsp;million to $69.5&nbsp;million depending on scope, and the Draft EIR&rsquo;s environmentally superior alternative is the one that keeps the pier and drops the landside build-out. And the grants should not have settled the question: the framework is explicit that <em>&ldquo;the grant does not determine priority.&rdquo;</em></p>
+
+  <p>There is still a gate available, and it is a document rather than a slogan. Before Berkeley commits construction money, the Council should require a revised, integrated business case stating the actual vessel class and count, capital cost, cost per seat, service speed, charging requirements and turnaround time; the dredging obligation including recurring maintenance; which party holds the maintenance responsibility for each asset; and an enforceable WETA service commitment. These are ordinary things to know about a project at design stage. If they cannot be stated, the project is not ready for construction authorization &mdash; and saying so is not opposition to a ferry. It is the difference between authorizing a project and authorizing a hope.</p>
+
+  <div class="notclaim">
+    <h3>What this page does not claim</h3>
+    <p><strong>That the ferry would fail.</strong> It might succeed. Ridership models are uncertain in both directions, and the plan is candid that early years will underperform.</p>
+    <p><strong>That the pier should stay closed.</strong> The opposite. The pier is the popular part, the separable part, and the part with a documented constituency.</p>
+    <p><strong>That anyone acted in bad faith.</strong> Every document quoted here was published by the City or WETA. The problem is not concealment. It is that a $104&nbsp;million commitment with a $5.6&nbsp;million annual gap was assembled from decisions each of which looked small enough for the consent calendar.</p>
+    <p><strong>That every expert claim above is independently verified.</strong> The pier and breakwater dimensions, the dredging volume, the sea-level-rise exchange, the $38.2 million and $121.7 million figures, the $16 million per vessel, the undetermined cost shares, Kamen&rsquo;s quoted scoping comments and the City&rsquo;s CEQA responses all come from primary documents and can be checked against them. Three things cannot: McGrath&rsquo;s $200 million estimate, his account of a diesel-plus-half-share breakdown behind the $38.2 million, and Kamen&rsquo;s cost-per-seat calculation. Those are stated as the judgments of two qualified people and labeled as such.</p>
+    <p><strong>That the record confirms the vessel-allowance account.</strong> It does not. We went looking, and the two published documents describe two dedicated electric vessels, not one diesel boat and a shared allocation. That is set out above rather than omitted, because a correction that cuts against our own argument is worth more than one that flatters it.</p>
+  </div>
+
+  <p>The Use Permit still requires findings from the Planning Commission, the Zoning Adjustments Board and the City Council. Construction funding does not exist. There is still a decision to be made, and it has not been made yet.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p>City&ndash;WETA Memorandum of Understanding, Item 9, 12 March 2019. Large Scale Ferry Feasibility Study &mdash; A Preferred Concept, worksession, 7 December 2021. Online Questionnaire #1 Results Report, 21 October 2021. WETA Berkeley Ferry Service Business Plan v1.0, prepared by Economic &amp; Planning Systems and CDM Smith, 17 March 2022 &mdash; ridership, fares, farebox recovery, operating gap, mode of access, equity chapter, and the funding suggestions at pp.&nbsp;47&ndash;48. Alameda CTC grant acceptance, 11 July 2023. Nancy Skinner Municipal Pier Resolution, 5 December 2023. MOU Amendment #1 and the COWI contract, 14 May 2024. Rincon contract and annotated agenda, 9 July 2024. Parking and Transportation Demand Management Plan, March 2025. Berkeley Pier-Ferry Project Update, 24 October 2025 &mdash; including the statement that WETA &ldquo;published&rdquo; the Business Plan in April 2022, its description as a &ldquo;living&rdquo; document for which &ldquo;regular updates are expected,&rdquo; and the 2025 community-process list recording two presentations to the Parks, Recreation &amp; Waterfront Commission. City of Berkeley Pier with Ferry Access Project page, project milestone timeline 2019&ndash;2026. Facilities, Infrastructure, Transportation, Environment &amp; Sustainability Committee packet, 3 September 2025. Draft Environmental Impact Report, February 2026 &mdash; including the dredging volume (&ldquo;a maximum total of 400,000 cubic yards of dredged materials would be generated and would require disposal&rdquo;), the dredge depth of minus 12.51 feet, and the two 250-passenger vessel assumption. Bay Conservation and Development Commission, Berkeley Waterfront and Ferry Pier Design Review Board draft meeting summary, 3 November 2025 &mdash; the 1,080-foot pier, the 400-foot breakwater, and the Board exchange on 1.6 feet of sea level rise. Draft EIR Chapter 1, scoping-comment summary table &mdash; the McGrath and Kamen comment topics and the City&rsquo;s responses, including &ldquo;Economic factors, including costs, are not an environmental impact of CEQA.&rdquo; Paul Kamen, addendum to EIR scoping comments, 19 May 2025, as published in the project document library at berkeleypierferryproject.com. Large Scale Ferry Feasibility Study &mdash; A Preferred Concept, 7 December 2021, for the $69.5M / $14M / $38.2M / $121.7M breakdown. WETA Berkeley Ferry Service Business Plan, 17 March 2022, pp.&nbsp;6 and 44&ndash;45, for the $16 million per-vessel estimate and the statement that cost shares between WETA and the City &ldquo;will be determined at a future date.&rdquo; Unfunded Liability Obligations and Unfunded Infrastructure Needs, Council worksession, 16 March 2021. WETA&rsquo;s Rapid Electric Emission Free Ferry program and zero-emission transition pages.</p>
+    <h3>Method</h3>
+    <p>Figures drawn from City and WETA documents were read from the primary source rather than from a summary of it. Paul Kamen&rsquo;s cost-per-seat comparison was supplied with permission to publish and has been independently reproduced: both underlying sources were retrieved and every figure in it checks out. Figures attributed by name to Jim McGrath come from his published analysis, supplied with permission &mdash; including the June 17 2026 City estimate, the Keyser Marston findings and the Richmond and Jack London Square comparisons, which we have not separately retrieved and which are his. His account of the Alameda CTC grant noticing and the resulting ethics complaint is his first-hand testimony; the City has not been asked for its account of it. Credentials are drawn from City of Berkeley commission records, the San Francisco Estuary Institute, and the National Academy of Forensic Engineers. Where an advocacy group&rsquo;s figure could not be reproduced from the source it cites, it was left out &mdash; including a widely repeated &ldquo;$36 per rider&rdquo; operating cost, which the business plan&rsquo;s own arithmetic puts nearer $9&ndash;11 per boarding. Documents are archived with the project record.</p>
+    <h3>Related</h3>
+    <p><a href="crayon-box.html">The crayon box</a> &middot;
+    <a href="bond-alibi.html">Bonds win elections; budget discipline does not</a> &middot;
+    <a href="hopkins-fire-review.html">The Hopkins Street fire review</a> &middot;
+    <a href="framework.html">The Berkeley Budget Framework</a> &middot;
+    <a href="index.html">Berkeley Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

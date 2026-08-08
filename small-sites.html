@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buy Once, Maintain Forever — What Berkeley Buys When It Buys Housing</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* The year column is load-bearing on this page: the argument is about elapsed time between
+   a one-time appropriation and the recurring obligation it created, so dates are set in
+   tabular numerals and given their own emphasis rather than being buried in prose. */
+.yr { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+      color: var(--accent); white-space: nowrap; }
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Analysis</div>
+  <h1>Buy Once, Maintain Forever</h1>
+  <p class="standfirst">On June 23, 2026, Berkeley split 3&ndash;5&ndash;1 over $3.8 million for housing acquisition &mdash; the first divided budget vote in nineteen months of record. Both sides argued the same number: what a unit costs to buy. Neither asked what it costs to keep. In sixty-one transcripts, one councilmember asks that question once, about a different program.</p>
+  <div class="byline">An argument about how the money is structured, not a scorecard &middot; August 2026</div>
+
+  <p>Acquisition is a transaction. A building is a permanent obligation. Berkeley funds the first through one-time appropriations and meets the second, when it arrives, through further one-time appropriations. The gap between those two facts is where this page lives.</p>
+
+  <p>In the terms of this site&rsquo;s framework, this is one reason housing belongs in <a href="framework.html#cat2">Category 2</a>: Berkeley can help create and preserve affordable housing without treating acquisition as though it were the end of the public obligation. What the record shows instead is a durable commitment entered through a non-recurring instrument, with the recurring cost never scored. The June 23 vote is the occasion. The pattern is older, and the City has already written it down.</p>
+
+  <p>A companion page, <a href="consent-drip.html">Two Calendars</a>, sets out the procedural mechanism this case runs on &mdash; how Berkeley sorts items into the pile that gets debated and the pile that gets adopted in one motion, and why costs that accumulate never land in the first pile. That page is the general argument. This one is a single program followed from the first appropriation to the fourth, to show what the mechanism produces when it runs for thirty-four years.</p>
+
+  <h2><span class="when">June 23, 2026</span>The comparison that was run</h2>
+
+  <p>The FY2027&ndash;28 biennial budget produced something this council almost never produces: a contested roll call. Of 307 linked votes in the archive, 86.3 percent were unanimous, and the Council votes as a block on 92.5 percent of vote events. This one was different.</p>
+
+  <p>One motion would have fenced the $3.8 million into two pots &mdash; $2,500,000 retained for the Small Sites Program, $1,300,000 held in the Housing Trust Fund for affordable housing. It failed 3&ndash;5&ndash;1. A substitute motion keeping the $3.8 million whole carried, and became Resolution No. 72,340&ndash;N.S.</p>
+
+  <p>Who moved what, and who voted which way, is recorded in the annotated agenda and belongs on the scorecards rather than here. What matters for this argument is the axis of disagreement. From the transcript, the choice as the council itself framed it:</p>
+
+  <blockquote>
+    <p>&ldquo;We can preserve a smaller number of existing units &hellip; or creating, adding, and developing a larger number of new units. <strong>With the same money.</strong> That&rsquo;s the choice that&rsquo;s being presented.&rdquo;</p>
+    <p class="attrib">Berkeley City Council, June 23, 2026 &mdash; captioned transcript</p>
+  </blockquote>
+
+  <p>That is a real question, honestly put, and the council did run the numbers on it. Someone cited cost per unit, noting that the figure &ldquo;for homes that are preserved is lower.&rdquo; Preserve versus produce, priced by acquisition cost per door.</p>
+
+  <p>Across roughly eighty mentions of the program that evening, the debate did not extend past that number. Nothing in the transcript addresses operating costs, maintenance, capital or replacement reserves, or the tax status of property once acquired. The single occurrence of the word &ldquo;upkeep&rdquo; is a captioning artifact inside an unrelated passage about firefighter positions.</p>
+
+  <div class="pull">Preserve and produce were compared on what they cost to buy. They were not compared on what they cost to own.</div>
+
+  <h2>What the City already knew</h2>
+
+  <p>This is not a question nobody could have anticipated. Twelve months before the vote, the City Manager put the answer on the council&rsquo;s own consent calendar:</p>
+
+  <blockquote>
+    <p>&ldquo;The City&rsquo;s portfolio of HTF-funded projects is aging, and while projects with limited cash flow can typically address regular maintenance and unit turnovers, <strong>they may not be able to build sufficient reserves to address major capital projects.</strong>&rdquo;</p>
+    <p class="attrib">2024 Housing Trust Fund Request for Proposals &mdash; Funding Reservations, consent calendar, June 24, 2025</p>
+  </blockquote>
+
+  <p>That is not a forecast. It describes the existing portfolio, and the same report shows the bill arriving. Two buildings requested nearly $6 million in rehabilitation:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Project</th><th>Request</th><th>Condition as described by staff</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Adeline Street Apartments</strong><br>Resources for Community Development &middot; 18 units</td><td class="amt">$2,990,000</td><td>&ldquo;serious structural and deferred maintenance issues, including failing balconies and stairways, water damage, deteriorating roofing and mechanical systems&rdquo;</td></tr>
+        <tr><td><strong>Ashby Lofts</strong><br>Satellite Affordable Housing Associates &middot; 54 units &middot; developed 2007</td><td class="amt">$2,924,829</td><td>renovation of a complex serving low- and very-low-income households</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The detail that carries the argument: Adeline&rsquo;s own replacement reserves covered only &ldquo;a small contribution.&rdquo; The rehabilitation was &ldquo;funded primarily with the HTF funds requested through this RFP.&rdquo; The reserve mechanism that is supposed to absorb a roof or a boiler did not absorb it. The City did.</p>
+
+  <h2>House poor, at institutional scale</h2>
+
+  <p>There is an ordinary phrase for this condition. A household is <em>house poor</em> when it owns a valuable property but has too little disposable income to comfortably carry the cost of owning it &mdash; the asset appreciates while the owner cannot replace the roof.</p>
+
+  <p>A similar financial structure can confront a nonprofit holding permanently affordable housing, and it is worth being precise about why. The organization&rsquo;s revenue is <strong>deliberately capped</strong>: rents are restricted, by design, for the length of a 55-year regulatory agreement. Its costs are not capped by anything. Roofing, plumbing, electrical work, insurance, elevator service, labor and construction inflation are all bought at market price.</p>
+
+  <p>An organization can therefore own buildings worth many millions of dollars and still be unable to accumulate reserves against a major capital event. That is not mismanagement. It is arithmetic, and it is the arithmetic the City described in its own words when it wrote that projects &ldquo;may not be able to build sufficient reserves to address major capital projects.&rdquo;</p>
+
+  <div class="pull">Restricted revenue meets unrestricted costs. The gap does not close on its own &mdash; it accumulates until something needs replacing.</div>
+
+  <p>When the gap comes due, the owner returns to the City, the county, the state or philanthropy. In Berkeley&rsquo;s case, the record shows it returning to the City. This is the question the acquisition price does not answer:</p>
+
+  <div class="beat">
+    <div class="beat-h">The lifecycle question</div>
+    <p>If a public agency funds the acquisition of a property, places it with a nonprofit under permanently restricted rents, and the resulting economics cannot support long-term capital maintenance &mdash; has the agency also accepted an implicit obligation to subsidize that property for decades?</p>
+    <p>That is not an argument against land trusts. It is a lifecycle cost question, and it has an answer. The answer simply has to be estimated in advance rather than discovered one rehabilitation request at a time.</p>
+  </div>
+
+  <h2>How the money actually flows</h2>
+
+  <p>Berkeley&rsquo;s affordable housing properties do not carry a routine annual City maintenance allowance attached to each parcel. No such line exists. Instead the City subsidizes them in layers, and the layers are recorded in different places under different names:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Layer</th><th>Form</th><th>Where it appears</th></tr></thead>
+      <tbody>
+        <tr><td>Acquisition</td><td>Housing Trust Fund loan or reservation</td><td>A named capital item</td></tr>
+        <tr><td>Rehabilitation</td><td>A further HTF loan, often years later</td><td>A separate named capital item</td></tr>
+        <tr><td>Financing terms</td><td>Low- or zero-interest, 55-year regulatory agreements, later loan modifications</td><td>Amendments, rarely quantified as cost</td></tr>
+        <tr><td>Organizational support</td><td>Capacity building grants; CHDO operating grants</td><td>General Fund, by organization &mdash; not by property</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>None of these is a maintenance allowance. Three of the four are capital. The fourth funds the organization rather than the building. When restricted rents do not generate reserves sufficient for major repairs, the cost returns to the City as a new rehabilitation request &mdash; a fresh appropriation, scored as a new decision rather than as the continuing cost of an old one.</p>
+
+  <h2>Where the follow-on money is decided</h2>
+
+  <p>There is a second asymmetry, and it is procedural. In the record traced here, acquisition produced an action item. The follow-on costs did not.</p>
+
+  <p>Every follow-on item traced for this page reached the Council on the <strong><a href="consent-drip.html">consent calendar</a></strong>, and every one was adopted in a single undifferentiated motion:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Date</th><th>Item</th><th>Amount</th><th>Speakers</th></tr></thead>
+      <tbody>
+        <tr><td class="yr">2025-01-21</td><td>2207 Haste Street rehabilitation</td><td class="amt">$500,000</td><td class="amt">0</td></tr>
+        <tr><td class="yr">2025-06-24</td><td>2024 HTF RFP &mdash; Adeline Street and Ashby Lofts rehabilitation</td><td class="amt">$5,914,829</td><td class="amt">0</td></tr>
+        <tr><td class="yr">2025-06-24</td><td>Maudelle Miller Shirek reservation, from unspent Small Sites funds</td><td class="amt">$500,000</td><td class="amt">0</td></tr>
+        <tr><td class="yr">2025-12-02</td><td>Loan modifications, three HTF projects</td><td class="amt">terms revised</td><td class="amt">0</td></tr>
+        <tr><td class="yr">2026-01-20</td><td>Capacity building contract</td><td class="amt">per year</td><td class="amt">0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The annotated agendas record the same formula each time: <em>&ldquo;to adopt the Consent Calendar in one motion except as indicated. Vote: All Ayes.&rdquo;</em> None of these items was among those indicated. None was pulled for discussion. The speaker count on each is zero.</p>
+
+  <div class="pull">Buying a building took a contested roll call, ninety-two public speakers, and a substitute motion. Keeping the buildings took one unanimous motion with the item numbers unread.</div>
+
+  <p>Nothing about this is irregular. Consent calendars exist precisely so that routine business does not consume floor time, and every one of these items was properly noticed and publicly posted. The point is what the mechanism does to visibility: roughly $6.9 million in follow-on obligation across these five items, arriving as administrative housekeeping, years after and procedurally disconnected from the acquisitions that produced it.</p>
+
+  <p>A member who wanted to see the lifecycle cost of the housing portfolio would have to assemble it from consent items across four separate meetings spanning thirteen months. No document in the City&rsquo;s budget process assembles it for them.</p>
+
+  <h2><span class="when">1991&ndash;2025</span>2207 Haste Street</h2>
+
+  <p>One property shows the full cycle. It is eight bedrooms in a three-story building with a communal kitchen and three bathrooms, owned by the Northern California Land Trust.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Year</th><th>Event</th><th>Amount</th></tr></thead>
+      <tbody>
+        <tr><td class="yr">1991</td><td>NCLT acquires the property</td><td class="amt">&mdash;</td></tr>
+        <tr><td class="yr">2000</td><td>Housing Trust Fund loan &ldquo;to support property renovation&rdquo;</td><td class="amt">$154,000</td></tr>
+        <tr><td class="yr">2021</td><td>NCLT applies for an <strong>operating subsidy</strong> through the HTF RFP. Not funded &mdash; &ldquo;insufficient funds available&rdquo;</td><td class="amt">&mdash;</td></tr>
+        <tr><td class="yr">Dec 2021</td><td>By Resolution 70,135&ndash;N.S., Council <strong>invites</strong> NCLT to return with a request of up to $500,000 for renovation, because the property &ldquo;also had known capital needs&rdquo;</td><td class="amt">&mdash;</td></tr>
+        <tr><td class="yr">May 2022</td><td>NCLT leases to Alameda County Homeless Action Center, which operates the project</td><td class="amt">&mdash;</td></tr>
+        <tr><td class="yr">Oct 2024</td><td>NCLT submits the rehabilitation request</td><td class="amt">$500,000</td></tr>
+        <tr><td class="yr">Jan 2025</td><td>Council reserves the funds &mdash; consent calendar</td><td class="amt">$500,000</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Read the 2021 step carefully, because it is the hinge. The owner asked for help with <em>operations</em>. The City did not have operating money to give. Council&rsquo;s response was to invite the same organization to come back asking for <em>capital</em> instead &mdash; which it did, three years later, successfully.</p>
+
+  <p>The operating need was not met and was not refused. It was reclassified into the one category the City had a mechanism to fund. That is the structural move this page is about, and here it is documented in a single resolution.</p>
+
+  <div class="beat">
+    <div class="beat-h">Thirty-four years, three infusions</div>
+    <p>Acquisition in 1991. Renovation money in 2000. Rehabilitation money in 2025. Between them, an operating request that was never answered on its own terms. No step was improper and every step was approved in public. The pattern is only visible if you line them up, and nothing in the City&rsquo;s budget process lines them up.</p>
+    <p>It is also the house-poor sequence in documentary form: an owner holding a real asset, asking for operating help, being told the money available was capital, and returning years later with a capital request the City could say yes to.</p>
+  </div>
+
+  <h2>The organizational layer</h2>
+
+  <p>Alongside per-property capital, Berkeley funds the nonprofits themselves. The City describes this plainly: it has &ldquo;a history of providing <strong>operational support</strong> to local nonprofit developers&rdquo; through Community Housing Development Organization grants, currently to Resources for Community Development and Satellite Affordable Housing Associates.</p>
+
+  <p>For the Bay Area Community Land Trust, the sequence runs:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Year</th><th>Purpose</th><th>Amount</th></tr></thead>
+      <tbody>
+        <tr><td class="yr">2018</td><td>Capacity building RFP, for organizations pursuing Small Sites projects</td><td class="amt">$50,000</td></tr>
+        <tr><td class="yr">through FY2025</td><td>&ldquo;Subsequent annual allocations&rdquo;</td><td class="amt">$100,000&ndash;$200,000 per year</td></tr>
+        <tr><td class="yr">FY2027&ndash;28</td><td>Capacity building contract, General Fund</td><td class="amt">$200,000 per year</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The FY2027 allocation was approved as part of the same budget adopted on June 23. Separately, the 2025 RFP contemplated CHDO operating support of up to $30,000 per year per certified organization, from HOME and General Funds, budgeted through FY2030.</p>
+
+  <p>These grants are not booked against a roof at a named address, and they are not pretending to be. They fund the organizations that acquire, manage and rehabilitate the portfolio. They are nonetheless recurring General Fund money flowing to the ownership structure &mdash; and they appear in the record as capacity building, which is not a line any reader comparing preserve against produce would think to add.</p>
+
+  <h2>The revenue side</h2>
+
+  <p>There is one more asymmetry, and it did not come up either.</p>
+
+  <p>Property owned by a qualifying nonprofit and used exclusively for charitable purposes &mdash; which affordable housing held by a land trust is designed to be &mdash; is eligible for the welfare exemption under California Revenue &amp; Taxation Code section 214. Section 214(g) extends eligibility to limited partnerships using government financing or low-income housing tax credits. The assessor cannot grant the exemption unless the organization holds a valid Organizational Clearance Certificate from the Board of Equalization.</p>
+
+  <p>Acquisition and new construction therefore differ on the revenue side, not only on cost per unit. The residents consume police, fire, emergency medical response, streets and sanitation at full cost, and those costs rise with labor contracts and inflation. To the extent the welfare exemption applies, the parcel&rsquo;s property-tax contribution is reduced relative to otherwise taxable ownership, while the cost of municipal services continues.</p>
+
+  <p>Whether that difference is large enough to change the preserve-versus-produce answer is genuinely unknown &mdash; it depends on assessed values, exemption scope, and what the alternative use would have yielded. The point is narrower and harder to escape.</p>
+
+  <div class="pull">The Council compared two options with different revenue consequences using a metric that captured none of them.</div>
+
+  <p>The limiting case makes the fiscal principle legible. If an increasing share of otherwise taxable property receives substantial exemption while continuing to require municipal services, the remaining tax base must carry a greater share of those costs. Taken far enough, that structure necessarily encounters a limit. Berkeley is nowhere near the limiting case, and nothing here predicts that it will approach it &mdash; the program is small and the city is large.</p>
+
+  <p>The practical question is where that limit lies, how much of Berkeley&rsquo;s tax base is affected today, and whether the fiscal effect is material enough to belong in a preserve-versus-produce comparison. The record examined here does not ask those questions.</p>
+
+  <h2>What this argument does not claim</h2>
+  <div class="notclaim">
+    <h3>Not that Small Sites is a bad program</h3>
+    <p>Preserving occupied buildings keeps existing residents in place, which new construction cannot do. The June 23 record includes an account of a church housing conversion where, in the speaker&rsquo;s words, &ldquo;people were gonna be gone, had nowhere to go, now they&rsquo;re here.&rdquo; That is a real benefit and it does not show up in a cost-per-unit figure either. The criticism here is that the accounting is incomplete in both directions.</p>
+    <h3>Not that acquisition costs more over a lifetime</h3>
+    <p>It may well cost less. Rehabilitating an existing building can be cheaper than building new even after reserves and forgone revenue. Nobody has run that comparison, which is precisely the complaint. This page does not assert the answer, only that the question was not put.</p>
+    <h3>Not that anyone concealed anything</h3>
+    <p>Every figure above comes from a public staff report, most of them from consent calendars. The layers are disclosed. They are simply disclosed separately, years apart, under different headings, in a form that makes the cumulative obligation invisible at the moment of decision.</p>
+    <h3>Not that the tax exemption is quantified here</h3>
+    <p>We have not established whether the welfare exemption is full or partial for properties financed with low-income housing tax credits, and no property has yet been acquired with the June 2026 funds. The claim is about a consideration absent from the debate, not about a dollar figure.</p>
+    <h3>Not that Berkeley is approaching the limiting case</h3>
+    <p>The point about every parcel following this model is a thought experiment used to show that a threshold exists. It is not a prediction, and no claim is made that the city is near one. The program is small relative to the tax base. What the record lacks is not reassurance &mdash; it is any attempt to identify where the threshold is or to measure the distance to it.</p>
+    <h3>Not a finding against any member</h3>
+    <p>Both sides of the June 23 split argued acquisition cost alone. The three Small Sites staff reports in the record contain no operating pro forma, no capital reserve figure and no tax analysis. A silence shared by all nine members and by the staff work underlying the program is an institutional finding, not an individual one.</p>
+    <p>This is not confined to one program. Across sixty-one meeting transcripts and roughly 1.4 million words, language about lifecycle cost, operating cost, total cost of ownership or replacement reserves appears sixteen times, and the instances that actually reason about the distinction come from a commissioner and from staff. One councilmember asks the operating-cost question once, at a budget committee in April 2026, about a different program. The capital-versus-operating distinction is not something this council applies unevenly. It is very nearly absent from the spending deliberations examined here.</p>
+  </div>
+
+  <h2>The through-line</h2>
+
+  <p>Berkeley has a clear mechanism for buying buildings, but no comparable mechanism for recognizing what they cost to own over time. The Housing Trust Fund can reserve acquisition money, and can reserve rehabilitation money when a building deteriorates far enough to justify a new item. What the record does not show is a mechanism that carries each property&rsquo;s lifecycle cost forward as a recognized obligation attached to the original acquisition decision &mdash; which helps explain how an operating request in 2021 ultimately reappeared as a successful capital request.</p>
+
+  <p>The consequence is that every recurring obligation reappears as a fresh capital decision, years later, disconnected from the vote that created it. By then the council has changed, the original appropriation is not in the room, and the item is on consent.</p>
+
+  <p>On June 23 the council argued about how to divide $3.8 million between two pots. It was a real disagreement and both positions were defensible. The question neither pot answers is what the buildings cost in year five, year fifteen, and year thirty-four &mdash; and the City has a building at 2207 Haste Street that has now been answering it, one appropriation at a time, since 1991.</p>
+
+  <p>It would be convenient to report that some members see this and others do not. The record does not support that. The distinction between what a thing costs to buy and what it costs to own is not applied unevenly across the nine; it is very nearly absent from the body&rsquo;s deliberations, and the two occasions it surfaces with any rigor come from a commissioner and from staff. That is a harder problem than a divided council, because a division can be resolved by a vote. This cannot.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p>City of Berkeley, annotated agenda and captioned transcript, City Council regular meeting, June 23, 2026 (FY2027 &amp; FY2028 biennial budget adoption; Resolution No. 72,340&ndash;N.S.; roll call on the failed and substitute motions). City Manager, <em>2024 Housing Trust Fund Request for Proposals &mdash; Funding Reservations</em>, consent calendar, June 24, 2025 (portfolio aging and reserve adequacy; Adeline Street Apartments; Ashby Lofts; CHDO operating support). City Manager, <em>Housing Trust Fund Recommendations for the Martin Luther King Jr. House Predevelopment Funds and Haste Street Rehabilitation Funds</em>, consent calendar, January 21, 2025 (2207 Haste Street chronology; Resolution 70,135&ndash;N.S.; 2021 operating subsidy application). City Manager, <em>2026 Capacity Building Request for Proposals Funding Recommendations</em>, July 14, 2026 (BACLT allocations; &ldquo;operational support&rdquo;). City Manager, <em>Housing Trust Fund and Small Sites Program Fees</em>, June 17, 2025. City Manager, <em>Loan Modification Requests for Housing Trust Fund Projects at 1139 Hearst Avenue, 3253 Adeline Street, and 1471 Addison Street</em>, December 2, 2025. California State Board of Equalization, Welfare and Veterans&rsquo; Organization Exemption FAQs, on Revenue &amp; Taxation Code section 214 and section 214(g).</p>
+    <h3>A note on the transcript</h3>
+    <p>Berkeley&rsquo;s captioned transcripts label most in-room council speech &ldquo;Boardroom&rdquo; rather than by name. Quotations above are therefore given without attribution to individual members. The roll calls are taken from the annotated agenda, which records names.</p>
+    <h3>Related</h3>
+    <p><a href="crayon-box.html">The crayon box</a> &middot;
+    <a href="bond-alibi.html">Bonds win elections; budget discipline does not</a> &middot;
+    <a href="framework.html">The Berkeley Budget Framework</a> &middot;
+    <a href="index.html">Berkeley Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

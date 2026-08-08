@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two Calendars — What Berkeley Debates and What It Merely Approves</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Calendar placement is the whole argument on this page, so it gets a visual token rather
+   than being buried in a sentence. Consent and action are colored differently for the same
+   reason the bond page colors instrument type: the reader should be able to scan a column
+   and see the pattern before reading a word of it. */
+.cal { font-family: var(--sans); font-size: .7rem; font-weight: 700; white-space: nowrap;
+       letter-spacing: .06em; text-transform: uppercase; }
+.cal-c { color: var(--accent); }
+.cal-a { color: var(--quote); }
+.yr { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+      color: var(--ink-2); white-space: nowrap; }
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Analysis</div>
+  <h1>Two Calendars</h1>
+  <p class="standfirst">Berkeley&rsquo;s council has two ways to handle an item. One gets a debate, a public comment period, and a recorded vote. The other gets adopted in a single motion with the item numbers unread. The choice between them is not made by how much money is at stake &mdash; and moving an item from the second pile to the first takes one member, no second, and no majority.</p>
+  <div class="byline">An argument about where deliberation goes &middot; August 2026</div>
+
+  <p>This page is not about any one decision. It is about a sorting mechanism, and about what happens to money that is sorted into the second pile over and over for years.</p>
+
+  <p>It is the general case. For a single program followed all the way through &mdash; one building, four appropriations, thirty-four years, and an operating question that was never once answered &mdash; see the companion page, <a href="small-sites.html">Buy once, maintain forever</a>.</p>
+
+  <p>Every city council uses a consent calendar. It exists so that routine business &mdash; minutes, proclamations, contract extensions nobody disputes &mdash; does not consume floor time that substantive matters need. Used properly it is good government. The question this page asks is narrower: <strong>what has Berkeley actually put in each pile, and does the sorting track the size of the commitment?</strong></p>
+
+  <h2><span class="when">April 28, 2025</span>What a real debate looks like</h2>
+
+  <p>Berkeley knows how to deliberate. The record contains a clear demonstration.</p>
+
+  <p>On April 28, 2025, the Council convened a <em>special meeting</em> whose entire agenda was a resolution on a ceasefire in Gaza. The annotated agenda records what the body was willing to spend on it:</p>
+
+  <div class="tw">
+    <table>
+      <tbody>
+        <tr><td><strong>Roll call</strong></td><td>5:04 p.m.</td></tr>
+        <tr><td><strong>Public comment</strong></td><td>Rules suspended to establish a <strong>three-hour</strong> comment period, in person and online</td></tr>
+        <tr><td><strong>Then extended</strong></td><td>Rules suspended again for an additional hour</td></tr>
+        <tr><td><strong>Meeting extended to</strong></td><td>12:00 a.m.</td></tr>
+        <tr><td><strong>Speakers</strong></td><td><strong>197</strong></td></tr>
+        <tr><td><strong>Competing resolutions</strong></td><td>Two. One failed 4&ndash;1&ndash;4; a substitute carried 7&ndash;1&ndash;1 as Resolution No. 71,726&ndash;N.S.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Seven hours. Four hours of public comment. Two competing resolutions, both requiring members to vote on the record, with abstentions and dissents recorded by name. Every procedural tool the Council possesses was deployed.</p>
+
+  <p>Whatever a reader thinks of the merits, this is the machinery of deliberation working exactly as designed. Members took positions. The public was heard at length. The disagreement was visible, and it was resolved by a vote that cost each member something to cast.</p>
+
+  <p>The resolution committed no money and bound no party. It was addressed, in part, to the President of the United States.</p>
+
+  <h2>What went on the other calendar</h2>
+
+  <p>Now consider the same council handling items that commit substantial money or contribute to obligations lasting decades.</p>
+
+  <p>Every follow-on cost in Berkeley&rsquo;s affordable housing portfolio traced for these pages arrived on consent:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Date</th><th>Item</th><th>Amount</th><th>Calendar</th><th>Speakers</th></tr></thead>
+      <tbody>
+        <tr><td class="yr">2025-01-21</td><td>2207 Haste Street rehabilitation</td><td class="amt">$500,000</td><td class="cal cal-c">Consent</td><td class="amt">0</td></tr>
+        <tr><td class="yr">2025-06-24</td><td>HTF RFP &mdash; Adeline Street and Ashby Lofts</td><td class="amt">$5,914,829</td><td class="cal cal-c">Consent</td><td class="amt">0</td></tr>
+        <tr><td class="yr">2025-06-24</td><td>Maudelle Miller Shirek reservation</td><td class="amt">$500,000</td><td class="cal cal-c">Consent</td><td class="amt">0</td></tr>
+        <tr><td class="yr">2025-12-02</td><td>Loan modifications, three HTF projects</td><td class="amt">terms revised</td><td class="cal cal-c">Consent</td><td class="amt">0</td></tr>
+        <tr><td class="yr">2026-01-20</td><td>Capacity building contract</td><td class="amt">per year</td><td class="cal cal-c">Consent</td><td class="amt">0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Roughly <strong>$6.9 million</strong>, adopted under the same formula each time: <em>&ldquo;to adopt the Consent Calendar in one motion except as indicated. Vote: All Ayes.&rdquo;</em> None of these items was among those indicated. None was pulled. Zero speakers on each.</p>
+
+  <div class="pull">Four hours of public comment for a resolution that binds nobody and spends nothing. Zero minutes for $6.9 million.</div>
+
+  <h2>The pier-ferry project, one consent item at a time</h2>
+
+  <p>Housing is not the only place this happens. The Berkeley pier-ferry project has been assembled almost entirely on the consent calendar over five years.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Date</th><th>Step</th><th>Amount</th><th>Calendar</th></tr></thead>
+      <tbody>
+        <tr><td class="yr">2019-03-12</td><td>City&ndash;WETA Memorandum of Understanding, planning phase</td><td class="amt">&mdash;</td><td class="cal cal-c">Consent</td></tr>
+        <tr><td class="yr">2023-07-11</td><td>Accepting Alameda CTC grant</td><td class="amt">$5,138,685</td><td class="cal cal-c">Consent</td></tr>
+        <tr><td class="yr">2023-12-05</td><td>Resolution renaming the pier on reopening</td><td class="amt">&mdash;</td><td class="cal cal-c">Consent</td></tr>
+        <tr><td class="yr">2024-05-14</td><td>MOU Amendment #1, accessing WETA funding</td><td class="amt">up to $3,000,000</td><td class="cal cal-c">Consent</td></tr>
+        <tr><td class="yr">2024-05-14</td><td>COWI North America, engineering and design</td><td class="amt">up to $6,500,000</td><td class="cal cal-c">Consent</td></tr>
+        <tr><td class="yr">2024-07-09</td><td>Rincon Consultants, environmental services</td><td class="amt">up to $3,080,000</td><td class="cal cal-c">Consent</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The 2021 preferred-concept discussion was a worksession, which takes no vote. The 2025 project update was a City Manager report, which takes no vote either. <strong>Across the project&rsquo;s documented history, the archive records no action-calendar vote at all.</strong></p>
+
+  <p>What that sequence has produced, per the City&rsquo;s own October 2025 project update: a preliminary construction cost estimate of <strong>$103,639,467</strong>, excluding ferry vessels, and the sentence &ldquo;construction funding has not been identified.&rdquo;</p>
+
+  <div class="beat">
+    <div class="beat-h">The gate that was written and not used</div>
+    <p>The original 2019 MOU set an explicit staged gate: subsequent phases &ldquo;shall be subject to approval by the City Council and the WETA Board, contingent upon the availability of regional transportation funding and City funding.&rdquo;</p>
+    <p>That is a well-drafted exit provision. Each phase was to be a fresh decision. In practice each of those approvals arrived on consent, in one motion, alongside unrelated business &mdash; which satisfies the letter of the gate while removing the fresh deliberation that a staged approval process makes possible.</p>
+  </div>
+
+  <h2>Why the drip is the mechanism, not a side effect</h2>
+
+  <p>None of the individual amounts above would justify a special meeting. That is precisely what makes the pattern durable. A $3,080,000 environmental services contract is a routine professional services agreement. A $500,000 building rehabilitation is a normal housing item. Each is defensible in isolation, and each was properly noticed and lawfully adopted.</p>
+
+  <p>The aggregate is never presented. There is no document in Berkeley&rsquo;s budget process that assembles a project&rsquo;s consent-calendar history into a single number, and no point in the annual cycle at which a member is shown what the accumulated commitments now total. A councilmember wanting that figure for the housing portfolio would have to reconstruct it from consent items across four meetings spanning thirteen months. For the ferry, across five years.</p>
+
+  <p>The result is a commitment that grows without ever being decided. Not one large vote anyone can be held to, but a long series of small ones nobody remembers casting.</p>
+
+  <h2>What the framework asks, and consent cannot answer</h2>
+
+  <p>This site&rsquo;s <a href="framework.html">budget framework</a> sets out what should be true before a public function continues. It is explicit that continuation is not automatic:</p>
+
+  <blockquote>
+    <p>&ldquo;<a href="framework.html#continue">Continue is not the default.</a> It means the function meets a defined service level, its outcomes are visible, its total cost remains defensible, its delivery model compares favorably with alternatives, and it still fits the City&rsquo;s priorities.&rdquo;</p>
+    <p class="attrib">Berkeley Budget Framework &mdash; A Strategy for Strategy</p>
+  </blockquote>
+
+  <p>And that stopping has to remain genuinely available:</p>
+
+  <blockquote>
+    <p>&ldquo;<a href="framework.html#stop">STOP must be a real management option.</a> Organizations often preserve programs because employees, contracts, facilities, commissions, grants, or constituencies have grown around them. That makes STOP politically painful, but not optional.&rdquo;</p>
+    <p class="attrib">Berkeley Budget Framework &mdash; A Strategy for Strategy</p>
+  </blockquote>
+
+  <p>A consent calendar cannot deliver either test, and it is not built to. An en-bloc motion has no mechanism for asking whether total cost remains defensible, because it does not surface a total. It has no mechanism for comparing delivery models, because it presents one option. And it cannot make stopping a real choice, because nothing in the motion frames continuation as a choice at all.</p>
+
+  <p>Each successive approval can also make stopping harder. Once $6,500,000 of engineering and $3,080,000 of environmental work are complete, declining the next phase means accepting that some prior spending may not lead to construction. That is the ordinary logic of sunk cost, and the consent calendar is an efficient machine for accumulating it out of view.</p>
+
+  <div class="pull">&ldquo;Can we afford to own this?&rdquo; has no place on a consent calendar. There is no agenda item where it belongs.</div>
+
+  <h2>The tool that was available the whole time</h2>
+
+  <p>There is an obvious objection to everything above: the consent calendar is set by staff, so this is an administrative artifact rather than a council choice.</p>
+
+  <p>It is not, and the record is unambiguous. <strong>Any single member can move an item from consent to action.</strong> It takes no second, no majority, and no permission &mdash; one member saying so is sufficient. It is the most accessible procedural power on the dais.</p>
+
+  <p>And Berkeley&rsquo;s councilmembers use it. The annotated agendas record it at least ten times in this period:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Date</th><th>Item moved to Action</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td class="yr">2024-12-10</td><td>Restaurant Inspection Audit Status Report</td><td>Discussion held</td></tr>
+        <tr><td class="yr">2025-04-15</td><td>Resolution on state arrest-quota legislation</td><td>Discussion held</td></tr>
+        <tr><td class="yr">2025-04-29</td><td>Adding ADA expertise to the Safe Streets oversight committee</td><td>7 speakers; resolution amended and adopted</td></tr>
+        <tr><td class="yr">2025-07-22</td><td>Surveillance technology ordinance, city jail</td><td>2 speakers; resolution adopted</td></tr>
+        <tr><td class="yr">2025-10-28</td><td>Authorization to encrypt police radio channels</td><td><strong>31 speakers</strong>; resolution amended and adopted</td></tr>
+        <tr><td class="yr">2026-02-24</td><td>A Guide to Measuring Performance in the City of Berkeley</td><td>Presentation and discussion; 2 speakers</td></tr>
+        <tr><td class="yr">2026-03-24</td><td>Mills Act contract, 2845 Woolsey Street</td><td>3 speakers; item continued</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>So the pull is not a theoretical power. It is a live, exercised practice, applied to a single-address historic preservation contract and to a committee&rsquo;s membership criteria.</p>
+
+  <p>Which means leaving the items in this page&rsquo;s first two tables on consent was not something Councilmembers were powerless to change. At every meeting, each member individually had the ability to require discussion. Nobody had to persuade a colleague. Nobody needed a majority. On $6.9 million of housing obligation and $17.7 million of ferry authorizations, no member said the words.</p>
+
+  <p>The traffic also runs the other way, and the most recent example is the clearest. On July 7, 2026, Item 9 &mdash; <em>Waterfront Specific Plan Environmental Review Authorization</em> &mdash; reached the Council on the action calendar. It would authorize environmental review of the Waterfront plan, refer <strong>$310,000</strong> to the November 2026 appropriations process to conduct the EIR, and defer a standing Council direction issued on November 18, 2024. The annotated agenda records its disposition in six words:</p>
+
+  <blockquote>
+    <p>&ldquo;Moved to Consent Calendar. Approved the recommendation.&rdquo;</p>
+    <p class="attrib">Annotated agenda, July 7, 2026, Item 9 &mdash; recorded speakers: 0</p>
+  </blockquote>
+
+  <p>An item that had been placed where it would be discussed was moved to where it would not, and adopted. The same procedural lever that can create scrutiny can remove it.</p>
+
+  <p>What went unremarked is worth stating precisely, because it is not the ferry. The authorization commissions a <em>Program</em> EIR on the Waterfront Specific Plan, scoped to a maximum development alternative of roughly 1,215,000 gross square feet &mdash; a land-use review for the whole waterfront, separate from the project-level environmental work contracted for the pier and ferry in 2024. Its second recommendation also defers a standing Council direction from November 18, 2024 to prepare a nature-and-recreation conceptual plan for C&eacute;sar E. Ch&aacute;vez Park, folding those priorities into zoning provisions instead. Both are consequential decisions; both were disposed of in six words.</p>
+
+  <div class="beat">
+    <div class="beat-h">What the pattern in the pulls shows</div>
+    <p>Every item in the table above shares a trait: it was <em>already contested</em>, or visibly touched a constituency, at the moment it appeared. Police radio encryption drew 31 speakers. Surveillance technology, arrest quotas and ADA representation are live disputes in Berkeley.</p>
+    <p>The examples reveal a pattern: pulls tend to occur where an item is already contested or visibly touches an organized constituency. They are not being used to create scrutiny where none exists yet &mdash; which is precisely the case an accumulating cost presents. A ninth engineering contract on a five-year-old project divides nobody in the room on the night it appears.</p>
+  </div>
+
+  <h2>What this argument does not claim</h2>
+  <div class="notclaim">
+    <h3>Not that consent calendars are improper</h3>
+    <p>They are standard practice in every California city and they are necessary. A council that debated every contract extension would never reach substantive business. Every item described here was lawfully noticed, publicly posted, and properly adopted. Any member could have pulled any of them; that option exists and is used for other items.</p>
+    <h3>Not that the Gaza resolution should not have been debated</h3>
+    <p>Members are entitled to bring resolutions on any subject their constituents care about, and 197 speakers is evidence that Berkeley residents wanted to be heard. The comparison is not an argument that the Council should have cared less about that. It is an argument about what an equivalent share of attention would look like applied to a $103 million project.</p>
+    <h3>Not that the ferry or the housing acquisitions are bad projects</h3>
+    <p>The ferry may succeed. Preserving occupied buildings keeps existing residents in place in a way new construction cannot. This page takes no position on the merits of either, and a project can be worth doing and still be committed to without deliberation.</p>
+    <h3>Not that any member acted in bad faith or hid anything</h3>
+    <p>No concealment is alleged and none is evident. Consent placement is generally recommended by staff, following the City&rsquo;s own agenda practices, and the items were public.</p>
+    <p>But this is not a process that happened to the Council either, and it would be too generous to leave it there. See below.</p>
+    <h3>Not that the aggregate figures here are complete</h3>
+    <p>The housing total covers five items traced for a related inquiry; the ferry total covers what the project archive records. Neither is a comprehensive audit of every consent item touching either project, and both may understate. That incompleteness is itself part of the finding &mdash; these numbers had to be assembled by hand because the City does not publish them.</p>
+  </div>
+
+  <h2>The through-line</h2>
+
+  <p>Berkeley&rsquo;s council is capable of sustained, difficult, public deliberation. April 28, 2025 proves it: seven hours, four of them public comment, competing motions, recorded dissent. The capacity is there.</p>
+
+  <p>On this record, the strongest predictor of whether that capacity gets used is not the size of the commitment. It is whether an item is contested when it appears. A resolution about a war divides the room, so it goes to action and gets the full apparatus. A $3,080,000 environmental services contract divides nobody, so it goes to consent and gets a shared motion.</p>
+
+  <p>Over five years that sorting rule produces a $103 million project with no construction funding identified and no action-calendar vote in its record, and a housing portfolio whose recurring costs return every few years as fresh capital requests nobody connects to each other.</p>
+
+  <p>The fix is not to abolish the consent calendar. It is to notice that Berkeley has no procedural moment for the question the framework says should govern everything: <em>is this still worth continuing, and can we afford to own it?</em> That question does not divide the room on the night it should be asked, which is exactly why it never gets asked.</p>
+
+  <p>And the absence of that moment is not an excuse, because the remedy required no reform. Nine members each held, at every one of these meetings, the unilateral power to stand the item up and make the body look at it. They have used that power for a historic-preservation contract on one address and for the membership rules of an oversight committee. They did not use it once for $17.7 million of ferry authorizations or $6.9 million of accumulating housing obligation.</p>
+
+  <p>What that suggests is not indifference to cost. It is that the deliberative instinct fires on <em>contention</em> and not on <em>magnitude</em>.</p>
+
+  <div class="pull">The question being asked at each item is &ldquo;is anyone upset about this tonight,&rdquo; rather than &ldquo;what will this have committed us to in ten years.&rdquo;</div>
+
+  <p>The first question has an answer available in the room. The second requires someone to have thought past the decision in front of them, and on this record, across five years and two projects, no member did.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p>City of Berkeley annotated agendas: April 28, 2025 special meeting (three-hour public comment period, extension, 197 speakers, competing resolutions, Resolution No. 71,726&ndash;N.S.); January 21, 2025 item 12; June 24, 2025 items 9 and 10; December 2, 2025 item 26; January 20, 2026 item 13; July 7, 2026 item 9, <em>Waterfront Specific Plan Environmental Review Authorization and Near-Term Priority Adjustments</em> (Program EIR at Scenario 1, approximately 1,215,000 gross square feet; deferral of the November 18, 2024 direction on a C&eacute;sar E. Ch&aacute;vez Park conceptual plan; $310,000 referred to the November 2026 appropriations process), moved to the consent calendar. Consent-adoption language quoted from the annotated agendas of June 24 2025, December 2 2025 and January 20 2026. Items moved from consent to action are drawn from the annotated agendas of December 10 2024, April 15 2025, April 29 2025, July 22 2025, October 28 2025, February 24 2026 and March 24 2026. Pier-ferry project documents as archived in this project&rsquo;s source registry: City&ndash;WETA MOU (March 12, 2019); Alameda CTC grant acceptance (July 11, 2023); pier renaming resolution (December 5, 2023); MOU Amendment #1 and COWI North America contract (May 14, 2024); Rincon Consultants contract (July 9, 2024); Berkeley Pier-Ferry Project Update (City Manager, October 24, 2025). Framework language quoted from the Berkeley Budget Framework, sections STOP and CONTINUE.</p>
+    <h3>A note on method</h3>
+    <p>Calendar placement was taken from the staff report headers and confirmed against the annotated agenda for each item. Speaker counts are those recorded in the annotated agendas. Dollar figures are the not-to-exceed or reserved amounts as stated in the authorizing documents, not amounts spent.</p>
+    <h3>Related</h3>
+    <p><a href="small-sites.html">Buy once, maintain forever</a> &middot;
+    <a href="pier-ferry.html">Funding a ferry with more questions than answers</a> &middot;
+    <a href="crayon-box.html">The crayon box</a> &middot;
+    <a href="bond-alibi.html">Bonds win elections; budget discipline does not</a> &middot;
+    <a href="framework.html">The Berkeley Budget Framework</a> &middot;
+    <a href="index.html">Berkeley Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

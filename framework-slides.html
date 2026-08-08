@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berkeley Budget Framework — Presentation</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+body { background: #0f1526; color: #2c3e50; }
+a { color: #2980b9; }
+
+/* ── Pinned nav: brand + document actions in one bar ── */
+.navbar { position: sticky; top: 0; z-index: 100; background: #1a1a2e;
+          border-bottom: 1px solid #2f3d5c; box-shadow: 0 2px 14px rgba(0,0,0,.32); }
+.nav-inner { display: flex; align-items: center; gap: 12px; padding: 9px 30px; }
+.nav-brand { text-decoration: none; flex-shrink: 0; }
+.nav-brand .brand-title { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; white-space: nowrap; }
+.nav-brand .brand-sub { font-size: 11px; color: #8899bb; margin-top: 3px; white-space: nowrap; }
+.nav-brand:hover .brand-title { color: #4e8ecb; }
+.nav-acts { display: flex; gap: 8px; align-items: center; margin-left: auto; flex-wrap: wrap;
+            justify-content: flex-end; }
+.dl-btn { display: inline-block; background: #4e8ecb; color: #fff; text-decoration: none;
+          font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: 4px; white-space: nowrap; }
+.dl-btn:hover { background: #6ba3d9; }
+.dl-btn.alt { background: transparent; border: 1px solid #3d5680; color: #8fbde8; }
+.dl-btn.alt:hover { background: #1e2a47; border-color: #4e8ecb; }
+.lbl-full { display: inline; }
+.lbl-short { display: none; }
+@media (max-width: 900px) {
+  .nav-inner { padding: 8px 16px; gap: 8px; flex-wrap: wrap; }
+  .nav-brand .brand-sub { display: none; }
+  .dl-btn { font-size: 11px; padding: 6px 10px; }
+  .lbl-full { display: none; }
+  .lbl-short { display: inline; }
+}
+@media (max-width: 620px) {
+  .nav-brand .brand-title { font-size: 0; letter-spacing: 0; }
+  .nav-brand .brand-title::before { content: "\2302 DECISION PROJECT"; font-size: 11.5px; letter-spacing: .4px; }
+  /* Give the actions their own full-width row rather than squeezing one line. */
+  .nav-brand { flex: 1 1 100%; }
+  .nav-acts { flex: 1 1 100%; margin-left: 0; justify-content: flex-start;
+              gap: 6px; padding-top: 2px; }
+  .dl-btn { font-size: 10.5px; padding: 6px 9px; }
+}
+
+/* deck */
+.deck { max-width: 1000px; margin: 0 auto; padding: 26px 20px 50px; }
+.slide-wrap { margin-bottom: 26px; }
+.slide-num { font-size: 10px; font-weight: 700; letter-spacing: 1.6px; color: #5a6a8a;
+             text-transform: uppercase; margin-bottom: 7px; padding-left: 2px; }
+.slide { position: relative; background: #fff; border-radius: 8px; box-shadow: 0 6px 26px rgba(0,0,0,.35);
+         aspect-ratio: 16 / 9; padding: 44px 52px; display: flex; flex-direction: column; overflow: hidden; }
+.slide.dark { background: #1a1a2e; }
+.slide.dark .s-title, .slide.dark .s-big { color: #fff; }
+.slide.dark .s-sub { color: #aab4cc; }
+.slide-rule { position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: #4e8ecb; }
+
+.s-eyebrow { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+             color: #4e8ecb; margin-bottom: 12px; flex-shrink: 0; }
+.s-title { font-size: 30px; font-weight: 900; color: #1a1a2e; line-height: 1.15; letter-spacing: -.4px; }
+.s-sub { font-size: 15px; color: #5d6d7e; margin-top: 9px; line-height: 1.5; flex-shrink: 0; }
+.s-body { margin-top: 22px; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-start; }
+.s-foot { font-size: 11px; color: #95a5a6; margin-top: auto; padding-top: 14px; flex-shrink: 0; }
+
+/* numbered claim list (slide 2) */
+.claims { display: flex; flex-direction: column; gap: 14px; }
+.claim { display: flex; align-items: center; gap: 18px; }
+.claim-n { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: #eaf2fa;
+           color: #2471a3; font-size: 17px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+.claim-t { font-size: 19px; font-weight: 700; color: #1a1a2e; line-height: 1.35; }
+
+/* label / description rows */
+.rows { display: flex; flex-direction: column; gap: 11px; }
+.row { display: flex; gap: 18px; align-items: baseline; }
+.row-k { flex: 0 0 150px; font-size: 11px; font-weight: 800; text-transform: uppercase;
+         letter-spacing: 1.1px; color: #4e8ecb; padding-top: 2px; }
+.row-v { flex: 1; font-size: 14.5px; line-height: 1.6; color: #34495e; }
+.row-v strong { color: #1a1a2e; }
+
+/* two-col warning grid */
+.quad { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 22px; }
+.quad-item { border-left: 3px solid #e0e4e8; padding-left: 14px; }
+.quad-k { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1px; color: #1a1a2e; }
+.quad-v { font-size: 13px; line-height: 1.55; color: #566573; margin-top: 5px; }
+.quad-fix { font-size: 12.5px; line-height: 1.5; color: #1e8449; margin-top: 7px; font-weight: 600; }
+
+/* flow */
+.flow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.flow-box { background: #f0f4f9; border: 1px solid #d6e0ea; border-radius: 6px; padding: 12px 14px;
+            font-size: 12.5px; font-weight: 700; color: #2c3e50; text-align: center; flex: 1; min-width: 0; line-height: 1.35; }
+.flow-arr { color: #4e8ecb; font-size: 18px; font-weight: 900; flex-shrink: 0; }
+.flow-end { background: #fdf0ee; border-color: #f1c7bf; color: #c0392b; }
+
+/* categories */
+.cats3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.c3 { border-top: 4px solid; border-radius: 6px; padding: 16px 16px 18px; }
+.c3.a { background: #eafaf1; border-color: #1e8449; }
+.c3.b { background: #fef9e7; border-color: #b7950b; }
+.c3.c { background: #fdf0ee; border-color: #c0392b; }
+.c3-n { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.4px; }
+.c3.a .c3-n { color: #1e8449; } .c3.b .c3-n { color: #9a7d0a; } .c3.c .c3-n { color: #c0392b; }
+.c3-h { font-size: 19px; font-weight: 900; color: #1a1a2e; margin: 5px 0 9px; }
+.c3-p { font-size: 12.5px; line-height: 1.55; color: #4a5c6a; }
+
+/* checklist */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center;
+         width: 100%; flex: 0 0 auto; }
+.check-h { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.6px; color: #7f8c8d; margin-bottom: 12px; }
+.check { display: flex; flex-direction: column; gap: 9px; }
+.check-i { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; color: #34495e; line-height: 1.45; }
+.tick { color: #1e8449; font-weight: 900; flex-shrink: 0; }
+.big-q { font-size: 34px; font-weight: 900; color: #1a1a2e; line-height: 1.12; letter-spacing: -.5px; }
+
+/* evidence grid */
+.ev { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.ev-i { background: #f4f7fa; border-radius: 6px; padding: 13px 12px; text-align: center;
+        font-size: 12.5px; font-weight: 700; color: #2c3e50; line-height: 1.4; }
+
+/* pull quote */
+.pull { border-left: 4px solid #4e8ecb; padding: 12px 0 12px 22px; }
+.pull-t { font-size: 21px; font-weight: 800; color: #1a1a2e; line-height: 1.45; }
+.dark .pull-t { color: #fff; }
+
+/* ssc rows */
+.ssc3 { display: flex; flex-direction: column; gap: 13px; }
+.ssc3-i { display: flex; gap: 18px; align-items: flex-start; }
+.ssc3-k { flex: 0 0 110px; font-size: 13px; font-weight: 900; text-transform: uppercase;
+          letter-spacing: 1.2px; padding-top: 1px; }
+.ssc3-i.st .ssc3-k { color: #1e8449; } .ssc3-i.sp .ssc3-k { color: #c0392b; } .ssc3-i.co .ssc3-k { color: #2471a3; }
+.ssc3-v { flex: 1; font-size: 14px; line-height: 1.6; color: #34495e; }
+
+/* phases */
+.phases { display: flex; flex-direction: column; gap: 10px; }
+.ph { display: flex; gap: 16px; align-items: flex-start; }
+.ph-n { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: #1a1a2e; color: #fff;
+        font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.ph-k { flex: 0 0 130px; font-size: 13.5px; font-weight: 800; color: #1a1a2e; padding-top: 3px; }
+.ph-v { flex: 1; font-size: 13px; line-height: 1.55; color: #566573; padding-top: 4px; }
+
+.closing { text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.closing .s-eyebrow { color: #6f9fd0; }
+
+@media (max-width: 820px) {
+  .slide { padding: 26px 24px; aspect-ratio: auto; min-height: 340px; }
+  .s-title { font-size: 21px; }
+  .big-q { font-size: 24px; }
+  .cats3, .quad, .ev, .split { grid-template-columns: 1fr; }
+  .flow { flex-direction: column; }
+  .flow-arr { transform: rotate(90deg); }
+  .row { flex-direction: column; gap: 3px; }
+  .row-k { flex: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <div class="brand-title">&#8962; BERKELEY DECISION PROJECT</div>
+      <div class="brand-sub">Better questions. Better evidence. Better choices.</div>
+    </a>
+    <div class="nav-acts">
+      <a class="dl-btn alt" href="framework.html"><span class="lbl-full">Read the white paper</span><span class="lbl-short">White paper</span></a>
+      <a class="dl-btn" href="documents/Berkeley_Budget_Framework_Slides.pdf" target="_blank" rel="noopener noreferrer"><span class="lbl-full">Slides (PDF)</span><span class="lbl-short">PDF</span></a>
+      <a class="dl-btn alt" href="documents/Berkeley_Budget_Framework_Whitepaper.pdf" target="_blank" rel="noopener noreferrer"><span class="lbl-full">White paper (PDF)</span><span class="lbl-short">WP PDF</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="deck">
+
+  <!-- 1 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 1 of 14</div>
+    <div class="slide dark">
+      <div class="s-eyebrow">Berkeley Budget Framework</div>
+      <div class="s-body" style="justify-content:center;">
+        <div class="s-title" style="font-size:44px;">A Strategy for Strategy</div>
+        <div class="s-sub" style="font-size:17px;max-width:640px;">How Berkeley should decide what earns money, staff capacity, Council attention, and public trust</div>
+        <div class="pull" style="margin-top:26px;">
+          <div class="pull-t">The goal is not less government. It is government capable of doing important things well.</div>
+        </div>
+      </div>
+      <div class="s-foot" style="color:#7d8aa5;">Eric Friedman &middot; August 2026</div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 2 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">The problem is not a shortage of ideas</div>
+      <div class="s-sub">First diagnose the failure. Then introduce the method.</div>
+      <div class="s-body" style="justify-content:space-evenly;">
+        <div class="claims">
+          <div class="claim"><div class="claim-n">1</div><div class="claim-t">The problem is not a shortage of ideas.</div></div>
+          <div class="claim"><div class="claim-n">2</div><div class="claim-t">It is how we choose among them.</div></div>
+          <div class="claim"><div class="claim-n">3</div><div class="claim-t">Berkeley needs a durable, consistent method for making choices.</div></div>
+        </div>
+      </div>
+      <div class="s-foot">Without that method, every new idea competes with every existing obligation &mdash; and the contest is usually political, not strategic.</div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 3 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">Why this matters</div>
+      <div class="s-sub">The warning signs show up in services residents use and taxes residents are asked to pay.</div>
+      <div class="s-body">
+        <div class="rows">
+          <div class="row"><div class="row-k">Core work</div><div class="row-v">Streets, public safety, inspections, recreation, and emergency access are already hard to execute well.</div></div>
+          <div class="row"><div class="row-k">New load</div><div class="row-v">New facilities, grants, regional schemes, pilots, and referrals keep adding durable obligations.</div></div>
+          <div class="row"><div class="row-k">No tradeoff</div><div class="row-v">Across-the-board cuts and last-minute agenda items hide rather than disclose what will be displaced.</div></div>
+          <div class="row"><div class="row-k">Low trust</div><div class="row-v">Audits, reports, and campaign promises do not build confidence when outcomes do not improve.</div></div>
+        </div>
+      </div>
+      <div class="s-foot">The case for a framework begins with the consequences of not having one.</div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 4 of 14</div>
+    <div class="slide">
+      <div class="slide-rule" style="background:#c0392b;"></div>
+      <div class="s-eyebrow" style="color:#c0392b;">Warning</div>
+      <div class="s-title">Core responsibilities are slipping</div>
+      <div class="s-sub">The remedy is not another slogan. It is an ordering system for essential performance.</div>
+      <div class="s-body">
+        <div class="quad">
+          <div class="quad-item">
+            <div class="quad-k">Streets</div>
+            <div class="quad-v">PCI target 70; repeated plans and audits; no credible route to the metric.</div>
+            <div class="quad-fix">&rarr; Prioritize funding, sequencing, and leadership stability around the metric.</div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-k">Fire / Wildfire</div>
+            <div class="quad-v">Station closure presented as a tax contingency while hillside risk remains a core vulnerability.</div>
+            <div class="quad-fix">&rarr; Protect essential safety capacity first; resolve access and evacuation.</div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-k">Hopkins</div>
+            <div class="quad-v">Approved politically before emergency access and evacuation dependencies were resolved.</div>
+            <div class="quad-fix">&rarr; Make safety dependencies gates to approval, not reconciliation tasks after.</div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-k">Pools</div>
+            <div class="quad-v">Schedules can own facilities without organizing service around residents' lives.</div>
+            <div class="quad-fix">&rarr; Measure resident utility, not facility existence; adjust hours to actual use.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 5 of 14</div>
+    <div class="slide">
+      <div class="slide-rule" style="background:#c0392b;"></div>
+      <div class="s-eyebrow" style="color:#c0392b;">Warning</div>
+      <div class="s-title">Tactical wins can become strategic losses</div>
+      <div class="s-sub">University Avenue shows why project-by-project decisions are not enough.</div>
+      <div class="s-body" style="justify-content:space-evenly;">
+        <div class="flow">
+          <div class="flow-box">Outside funding deadline</div>
+          <div class="flow-arr">&rarr;</div>
+          <div class="flow-box">Emergency conversion</div>
+          <div class="flow-arr">&rarr;</div>
+          <div class="flow-box">Low-cost lease</div>
+          <div class="flow-arr">&rarr;</div>
+          <div class="flow-box">One-off property use</div>
+          <div class="flow-arr">&rarr;</div>
+          <div class="flow-box flow-end">Strategic loss</div>
+        </div>
+        <p style="font-size:13.5px;line-height:1.65;color:#566573;margin-top:22px;text-align:center;max-width:760px;margin-left:auto;margin-right:auto;">Each action can be defended as urgent, practical, or opportunistic. The aggregate may be a future nobody deliberately chose &mdash; a principal gateway losing commercial activity, housing options, tax revenue, and neighborhood stability without Council ever voting on that corridor strategy.</p>
+      </div>
+      <div class="s-foot">The question is not only whether each decision had a reason. It is whether the accumulated direction has earned a place in Berkeley's strategy.</div>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 6 of 14</div>
+    <div class="slide">
+      <div class="slide-rule" style="background:#c0392b;"></div>
+      <div class="s-eyebrow" style="color:#c0392b;">Warning</div>
+      <div class="s-title">Commitments outlive their assumptions</div>
+      <div class="s-sub">Representation breaks down when Council cannot absorb what it is asked to decide.</div>
+      <div class="s-body">
+        <div class="rows" style="gap:9px;">
+          <div class="row"><div class="row-k" style="flex:0 0 175px;">AAHRC</div><div class="row-v" style="font-size:13px;">Capital construction proceeds while the operating model and recurring costs remain unresolved. <strong>No capital approval without lifecycle cost, operator, staffing, and funding source.</strong></div></div>
+          <div class="row"><div class="row-k" style="flex:0 0 175px;">Public Bank</div><div class="row-v" style="font-size:13px;">Designed as a regional undertaking; regional participation collapsed. <strong>When required partners withdraw, reclassify before money is committed.</strong></div></div>
+          <div class="row"><div class="row-k" style="flex:0 0 175px;">Homekey+ / Motels</div><div class="row-v" style="font-size:13px;">Outside funding creates pressure to act before long-lived local impacts are tested. <strong>A grant deadline cannot replace an evidence package and exit conditions.</strong></div></div>
+          <div class="row"><div class="row-k" style="flex:0 0 175px;">Premier Cru</div><div class="row-v" style="font-size:13px;">Staggered forward despite staff-described blockers for its original public-office use. <strong>Known blockers must trigger reassessment, not a zombie lease.</strong></div></div>
+          <div class="row"><div class="row-k" style="flex:0 0 175px;">Pathways / STAIR</div><div class="row-v" style="font-size:13px;">A pilot was renewed without the evaluation it was supposed to produce. <strong>A pilot expires unless the predeclared evaluation is complete before renewal.</strong></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 7 of 14</div>
+    <div class="slide">
+      <div class="slide-rule" style="background:#c0392b;"></div>
+      <div class="s-eyebrow" style="color:#c0392b;">Warning</div>
+      <div class="s-title">Speed is not success</div>
+      <div class="s-sub">Fast decisions are sometimes necessary. Doing the work well still matters.</div>
+      <div class="s-body" style="justify-content:center;">
+        <div class="split">
+          <div>
+            <div class="big-q">Can Berkeley do this well?</div>
+            <p style="font-size:13px;line-height:1.65;color:#566573;margin-top:14px;">A deadline does not turn an unready proposal into a sound one. Urgency can justify a faster process &mdash; not a lower standard for durable obligations.</p>
+          </div>
+          <div>
+            <div class="check-h">The exception must be bounded</div>
+            <div class="check">
+              <div class="check-i"><span class="tick">&#10003;</span> Real deadline or hazard</div>
+              <div class="check-i"><span class="tick">&#10003;</span> Minimum evidence stated</div>
+              <div class="check-i"><span class="tick">&#10003;</span> Exposure capped</div>
+              <div class="check-i"><span class="tick">&#10003;</span> Operating owner named</div>
+              <div class="check-i"><span class="tick">&#10003;</span> Review date set</div>
+              <div class="check-i"><span class="tick">&#10003;</span> Retrospective evaluation required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="s-foot">When the standard cannot be met in time, narrowing, delaying, or passing can be the responsible choice.</div>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 8 of 14</div>
+    <div class="slide">
+      <div class="slide-rule" style="background:#c0392b;"></div>
+      <div class="s-eyebrow" style="color:#c0392b;">Warning</div>
+      <div class="s-title">Attention is being spent without a budget</div>
+      <div class="s-sub">Referrals, late items, and agenda overload consume the government's capacity to govern.</div>
+      <div class="s-body" style="justify-content:center;">
+        <p style="font-size:14.5px;line-height:1.7;color:#34495e;">Referrals look cheap because they do not always arrive with an appropriation. They are not cheap: they consume staff work, legal review, management attention, agenda capacity, and public trust.</p>
+        <div class="pull" style="margin-top:22px;">
+          <div class="pull-t" style="font-size:19px;">No major referral should proceed without a displaced-work statement. If we do this, what will we delay, reduce, transfer, or stop?</div>
+        </div>
+      </div>
+      <div class="s-foot">A government that cannot say &ldquo;not now&rdquo; eventually says &ldquo;yes&rdquo; to more work than it can perform.</div>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 9 of 14</div>
+    <div class="slide dark">
+      <div class="closing">
+        <div class="s-title" style="font-size:40px;max-width:780px;margin:0 auto;">A better framework for decision making</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 10 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">First decide what the City should own, share, or decline.</div>
+      <div class="s-sub">The Category 1 / 2 / 3 test gives that decision a common language.</div>
+      <div class="s-body" style="justify-content:center;">
+        <div class="cats3">
+          <div class="c3 a"><div class="c3-n">Category 1</div><div class="c3-h">Must do</div><div class="c3-p">Core municipal outcomes: safety, streets, infrastructure, inspections, recreation, fiscal management.</div></div>
+          <div class="c3 b"><div class="c3-n">Category 2</div><div class="c3-h">Do with partners</div><div class="c3-p">Regional or shared undertakings where cost, governance, risk, and benefit are credibly distributed.</div></div>
+          <div class="c3 c"><div class="c3-n">Category 3</div><div class="c3-h">Must not do</div><div class="c3-p">Wrong scale, missing expertise, failed partners, duplicative structure, or open-ended costs.</div></div>
+        </div>
+      </div>
+      <div class="s-foot">Category assignments are not permanent. They move when facts, partners, costs, and performance change.</div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 11 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">Every priority should keep earning its place.</div>
+      <div class="s-sub">Start / Stop / Continue keeps the portfolio current as needs, evidence, costs, and performance change.</div>
+      <div class="s-body" style="justify-content:space-evenly;">
+        <div class="ssc3">
+          <div class="ssc3-i st"><div class="ssc3-k">Start</div><div class="ssc3-v">Adopt or repair only what earns a place within finite capacity; every start needs a tradeoff.</div></div>
+          <div class="ssc3-i sp"><div class="ssc3-k">Stop</div><div class="ssc3-v">End, transfer, consolidate, outsource, sunset, or redesign work that cannot justify its claim.</div></div>
+          <div class="ssc3-i co"><div class="ssc3-k">Continue</div><div class="ssc3-v">Protect what performs, measure it, and fund it at a viable level.</div></div>
+        </div>
+      </div>
+      <div class="s-foot">A STOP decision must remain possible even outside a budget crisis. Contracts, leases, and labor agreements should not make necessary exit impossible.</div>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 12 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">Define what success &mdash; and failure &mdash; look like.</div>
+      <div class="s-sub">The evidence package turns expectations into things Council can actually test.</div>
+      <div class="s-body">
+        <div class="ev" style="margin-bottom:12px;">
+          <div class="ev-i">Outcome target</div>
+          <div class="ev-i">Minimum service level</div>
+          <div class="ev-i">Full lifecycle cost</div>
+          <div class="ev-i">Operating owner</div>
+        </div>
+        <div class="ev">
+          <div class="ev-i">Performance metric</div>
+          <div class="ev-i">Dependency gate</div>
+          <div class="ev-i">Adverse effects</div>
+          <div class="ev-i">Review or sunset date</div>
+        </div>
+        <div class="pull" style="margin-top:20px;">
+          <div class="pull-t" style="font-size:16px;">Financial audits ask whether money was handled properly. Performance audits ask whether the program actually worked.</div>
+        </div>
+      </div>
+      <div class="s-foot">Pilots and urgent exceptions need minimum evidence and an evaluation plan before launch. No evaluation means expiration, not automatic continuation.</div>
+    </div>
+  </div>
+
+  <!-- 13 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 13 of 14</div>
+    <div class="slide">
+      <div class="slide-rule"></div>
+      <div class="s-title">Once the what, who, and why are clear, find the best solution.</div>
+      <div class="s-sub">The undertaking has earned a place in the portfolio.</div>
+      <div class="s-body" style="justify-content:space-evenly;">
+        <div class="split" style="gap:26px;">
+          <div>
+            <div class="check-h">We know</div>
+            <div class="rows" style="gap:7px;">
+              <div class="row"><div class="row-k" style="flex:0 0 62px;">What</div><div class="row-v" style="font-size:13.5px;">result Berkeley is trying to achieve.</div></div>
+              <div class="row"><div class="row-k" style="flex:0 0 62px;">Who</div><div class="row-v" style="font-size:13.5px;">should be responsible for achieving it.</div></div>
+              <div class="row"><div class="row-k" style="flex:0 0 62px;">Why</div><div class="row-v" style="font-size:13.5px;">it deserves priority.</div></div>
+            </div>
+          </div>
+          <div>
+            <div class="check-h">Now optimize</div>
+            <div class="rows" style="gap:7px;">
+              <div class="row"><div class="row-k" style="flex:0 0 74px;">How</div><div class="row-v" style="font-size:13.5px;">should we achieve the result?</div></div>
+              <div class="row"><div class="row-k" style="flex:0 0 74px;">When</div><div class="row-v" style="font-size:13.5px;">should we act &mdash; and what should change, shrink, stop, or wait?</div></div>
+              <div class="row"><div class="row-k" style="flex:0 0 74px;">How much</div><div class="row-v" style="font-size:13.5px;">should the solution consume?</div></div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:13.5px;line-height:1.65;color:#566573;margin-top:20px;">The answer may require more money. It may require reallocating existing money. It may cost less than what we do today.</p>
+        <div class="pull" style="margin-top:16px;">
+          <div class="pull-t" style="font-size:20px;">Find the best solution.</div>
+          <div style="font-size:11.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#4e8ecb;margin-top:8px;">How &middot; When &middot; How much</div>
+          <div style="font-size:12.5px;margin-top:10px;">
+            <a href="show-your-work.html" style="color:#2471a3;font-weight:700;text-decoration:underline;text-underline-offset:2px;">The companion paper on funding decisions &rarr;</a>
+            <span style="color:#95a5a6;">&nbsp;&middot;&nbsp;</span>
+            <a href="show-your-work-slides.html" style="color:#2471a3;font-weight:700;text-decoration:underline;text-underline-offset:2px;">Its slide version &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 14 -->
+  <div class="slide-wrap">
+    <div class="slide-num">Slide 14 of 14</div>
+    <div class="slide dark">
+      <div class="closing">
+        <div class="s-eyebrow">The governing question</div>
+        <div class="s-title" style="font-size:36px;max-width:780px;margin:0 auto;">What earns its place in Berkeley's priority portfolio?</div>
+        <div class="s-sub" style="font-size:17px;margin-top:16px;">Must do? &middot; Do with partners? &middot; Must stop?</div>
+        <p style="font-size:14px;color:#8fa0bd;line-height:1.7;margin-top:22px;max-width:700px;margin-left:auto;margin-right:auto;">What result will be measured, what capacity will it consume, and what will Berkeley decline so the priority can be real?</p>
+        <div style="margin-top:26px;padding:16px 22px;background:#243352;border-radius:6px;max-width:700px;margin-left:auto;margin-right:auto;">
+          <div style="font-size:15px;font-weight:700;color:#fff;line-height:1.6;">Priorities are not what Berkeley praises. They are what Berkeley protects, measures, funds, and is willing to choose over something else.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:14px 0 0;">
+    <a href="framework.html" style="color:#8fbde8;font-size:13px;font-weight:700;text-decoration:none;">Read the full white paper &rarr;</a>
+    <div style="font-size:11px;color:#5a6a8a;margin-top:10px;">Eric Friedman &middot; Draft, August 2026 &middot; Prepared for civic discussion</div>
+  </div>
+
+</div>
+</body>
+</html>

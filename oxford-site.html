@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Oxford Site — A Public Parcel Sold While the City Looked for Land</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#4a6b8a; --accent-soft:#eef2f7;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#8fb0d0; --accent-soft:#1a222c;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#8fb0d0; --accent-soft:#1a222c;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#4a6b8a; --accent-soft:#eef2f7;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.clock { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+         color: var(--accent); font-size: .8rem; letter-spacing: .04em; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Explainer</div>
+  <h1>The Site Nobody Bid On</h1>
+  <p class="standfirst">For five years Berkeley argued about where to put shelters and RV parking. For five of those years a 1.26-acre public site with a paved yard, restrooms and a commercial kitchen sat empty. In October 2025 it sold to a private developer for $3 million, with only one bidder appearing at auction. The City never raised its hand.</p>
+  <div class="byline">Written for readers with no prior knowledge of the site &middot; August 2026</div>
+
+  <p>This is an account of one property and one decision that never happened. Every date and figure below is from the school district&rsquo;s own sale documents, the City&rsquo;s own statements, or the Council&rsquo;s meeting record.</p>
+
+  <h2>What the property is</h2>
+  <p>The former Oxford Elementary School sits at 1130 Oxford Street, in north Berkeley at the base of the hills. The school moved out in <strong>August 2020</strong> after a geotechnical study found the campus sits on an active landslide zone &mdash; ground that could shift up to 20 feet in a major earthquake. Children were relocated. The buildings stayed.</p>
+  <p>Here is how the school district described what it was selling, in its own Notice of Sale:</p>
+  <blockquote>
+    <p>&ldquo;approximately 1.26 acres of land (approximately 54,847 square feet)&hellip; A large portion of the Property is <strong>paved and fenced as a playground</strong>. The existing school building&hellip; is divided into 16 classrooms, a library, offices, <strong>restrooms</strong> and a multi-purpose room with an elevated stage and a <strong>commercial kitchen</strong>&hellip; The Property has existing <strong>utility service connections (water, electrical, sewage)</strong>. The building is currently vacant and secured.&rdquo;</p>
+    <div class="attrib">Berkeley Unified School District, Notice of Sale and Bidding Instructions, August 5 2025</div>
+  </blockquote>
+  <p>A paved, fenced acre with power, water, sewer, toilets and a kitchen. Whatever else that is, it is not a blank lot requiring construction.</p>
+
+  <h2>What the City was doing at the same time</h2>
+  <p>Over the same period, Berkeley repeatedly sited homeless facilities and programs &mdash; motel conversions, transitional housing, a safe RV parking lot, tiny homes &mdash; in the Flats and West Berkeley. None of the sites identified in this review was in the hills.</p>
+  <p>The RV question in particular went unresolved for years. The City opened its first safe-parking site in 2021 on a Grayson Street lot, and when that arrangement lapsed the search for a replacement continued. City officials have said publicly they could not find a suitable location.</p>
+  <p>In our record of Council meetings from December 2024 through July 2026, members discussed homeless services and where to put them in <strong>106 separate passages across 22 meetings</strong>.</p>
+  <div class="pull">In those same 19 months, the Oxford site was mentioned once &mdash; by a member of the public.</div>
+
+  <h2><span class="when">Summer 2024</span>Public agencies get first opportunity</h2>
+  <p>When a California school district sells surplus property, state law requires it to offer the land to other public agencies first. The district did that.</p>
+  <p>The City&rsquo;s own administration later confirmed what happened, in writing:</p>
+  <blockquote>
+    <p>&ldquo;From what I have been able to gather, the school district in adhering to state law <strong>did make the property available to public agencies for consideration</strong>. This occurred in summer 2024. <strong>It does not appear that the city or any public agency at that time showed any interest</strong> in the property&hellip; Given our financial constraints, we do not have the resources to bid on this property and <strong>the best time to have pursued this opportunity would have been in 2024</strong>.&rdquo;</p>
+    <div class="attrib">City of Berkeley administration, relayed to a constituent by Councilmember Igor Tregub, October 10 2025</div>
+  </blockquote>
+  <p>Independent reporting confirms it: <em>&ldquo;BUSD gave priority notice, as required by law, to certain public agencies and nonprofits about the site&rsquo;s availability in June 2024, but did not receive any letters of interest to purchase the land.&rdquo;</em></p>
+
+  <h2><span class="when">March 18, 2025</span>The Council is told, in open session</h2>
+  <p>A member of the public used the public comment period to raise it directly:</p>
+  <blockquote>
+    <p>&ldquo;Berkeley Unified School District potentially has the solution to the Civic Center Park encampment, because it is sitting on the old Oxford school site, which has been vacant for years&hellip; I think the city and Berkeley Unified School District need to partner together and turn it into a shelter&hellip; It wouldn&rsquo;t take that much change in the structure&hellip; There&rsquo;s a building sitting empty and Berkeley Unified School District would like the encampment cleared and they could also use some money. It seems like an easy solution.&rdquo;</p>
+    <div class="attrib">Public comment, Berkeley City Council, March 18 2025</div>
+  </blockquote>
+  <p>Eight of the nine councilmembers were present. The response, in full, was: <em>&ldquo;Thank you, Aimee. Are there other?&rdquo;</em></p>
+  <p>The auction was still seven months away.</p>
+
+  <h2><span class="when">August &ndash; October 2025</span>The sale</h2>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Date</th><th>What happened</th></tr></thead>
+      <tbody>
+        <tr><td class="d">Aug 5 2025</td><td>Notice of Sale issued. Minimum bid $3,000,000. Ten weeks to respond.</td></tr>
+        <tr><td class="d">Oct 10 2025</td><td>Sealed bid deadline. <strong>Zero sealed bids received.</strong></td></tr>
+        <tr><td class="d">Oct 15 2025</td><td>Public auction. <strong>One verbal bid</strong>, at the $3M minimum, from developer Patrick Kennedy of Panoramic Interests. The buyer plans to demolish the buildings and construct housing.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The school superintendent&rsquo;s reported comment after the auction: <em>&ldquo;That was not exciting.&rdquo;</em></p>
+  <p>No competing bidder appeared at the auction; the sole bid was the $3 million minimum.</p>
+
+  <h2>The comparison</h2>
+  <p>In the same period, Council committed money to housing and homeless-service facilities elsewhere. These dollars were not necessarily interchangeable; the comparison establishes scale, not that the total could simply have been redirected to Oxford.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Item</th><th class="d">Amount</th></tr></thead>
+      <tbody>
+        <tr><td>Prop 47 grant acceptance for transitional housing (Sept 30 2025, consent calendar)</td><td class="d">$8,000,000</td></tr>
+        <tr><td>Operator contract including a 30-room hotel master lease (Nov 18 2025, consent calendar)</td><td class="d">$7,920,000</td></tr>
+        <tr><td><strong>Total committed to siting in that window</strong></td><td class="d"><strong>$15,920,000</strong></td></tr>
+        <tr><td><strong>Price of the Oxford site</strong></td><td class="d"><strong>$3,000,000</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>What this does and does not establish</h2>
+  <div class="notclaim">
+    <h3>It does not establish that the site was suitable</h3>
+    <p>The campus was vacated because it sits on an active landslide zone. That is a serious constraint for a school full of children; whether it disqualifies a paved yard used for vehicle parking is a question the City never asked, because it never studied the site.</p>
+    <h3>It does not establish that the City could afford it</h3>
+    <p>The administration said it could not. That is a real constraint in a year with a $29M deficit &mdash; and it sits alongside $15.92M committed to siting the same services elsewhere. Whether that reflects an absolute absence of available resources, restrictions on particular funding sources, or an ordering of priorities is a fair question, and this page does not resolve it.</p>
+    <h3>It does not establish why nobody acted</h3>
+    <p>No motive is asserted. The record shows notice, opportunity, and inaction. It does not show what was in anyone&rsquo;s mind.</p>
+  </div>
+
+  <h2>What it does establish</h2>
+  <p>The City received the public-agency opportunity to pursue a large public parcel and did not express interest. Nine months later it was told again, in public session, by a resident proposing exactly the use the Council was struggling to site. Seven months after that the property sold to the only bidder who showed up.</p>
+  <div class="pull">From the City&rsquo;s 2024 opportunity through the property&rsquo;s 2025 sale, no councilmember placed the Oxford site on an agenda.</div>
+  <p>The buildings are to be demolished. A public parcel, once sold, is not reacquired on comparable terms.</p>
+  <p>The failure was not that Berkeley declined to buy Oxford. It was that a potentially relevant public asset passed through two opportunities for consideration without the City ever determining whether it could solve a problem Council was simultaneously struggling to solve.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p><strong>Sale documents.</strong> Berkeley Unified School District, Notice of Sale and Bidding Instructions, &ldquo;Oxford Site,&rdquo; 1130 Oxford Street, issued August 5 2025 (Board Resolution 25-053). <strong>City statements.</strong> City of Berkeley administration, relayed in writing to a constituent by Councilmember Igor Tregub, October 10 2025. <strong>Council record.</strong> Berkeley City Council transcript and annotated agenda, March 18 2025 (public comment and attendance); Council agendas of September 30 2025 (consent item 3) and November 18 2025 (consent item 7). <strong>Reporting.</strong> Berkeleyside, October 21 2025, on the auction, the June 2024 priority notice, and the buyer&rsquo;s plans; and earlier reporting on the 2019 geotechnical findings and the school&rsquo;s relocation.</p>
+    <h3>Related</h3>
+    <p><a href="district4-siting.html">Consultation after the fact &mdash; two District 4 siting decisions</a> &middot; <a href="framework.html">The Berkeley Budget Framework</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

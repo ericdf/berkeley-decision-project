@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Crayon Box — Seven Ways to Close a Deficit, and the Four Berkeley Uses</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --used:#b4453a; --unused:#8b93a5;
+  --carton:#f2c230; --carton-edge:#c99a17; --carton-ink:#7a5c05;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; --used:#e0776b; --unused:#5c6474;
+    --carton:#8a6a12; --carton-edge:#b08a1e; --carton-ink:#e8cf82; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331; --used:#e0776b; --unused:#5c6474;
+  --carton:#8a6a12; --carton-edge:#b08a1e; --carton-ink:#e8cf82;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa; --used:#b4453a; --unused:#8b93a5;
+  --carton:#f2c230; --carton-edge:#c99a17; --carton-ink:#7a5c05;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+h3 { font-family: var(--sans); font-size: 1.02rem; font-weight: 700; margin: 1.8rem 0 .6rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+td.pick { font-weight: 700; color: var(--used); white-space: nowrap; }
+td.held { color: var(--ink-2); white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+/* Tool callout. The Budget Lab is the interactive form of this page's argument — it makes a
+   reader use the crayons the Council leaves in the box — so it gets an accent-filled panel
+   rather than a link buried in a paragraph. */
+.tool { background: var(--accent-soft); border: 1px solid var(--accent);
+        border-left: 5px solid var(--accent); border-radius: 0 4px 4px 0;
+        padding: 1.2rem 1.35rem; margin: 1.8rem 0; }
+.tool-h { font-family: var(--sans); font-size: .69rem; font-weight: 800; letter-spacing: .13em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.tool p { font-size: .96rem; margin-bottom: .8rem; }
+.tool-btn { display: inline-block; font-family: var(--sans); font-size: .82rem; font-weight: 700;
+            background: var(--accent); color: #fff; text-decoration: none;
+            padding: .55rem 1rem; border-radius: 4px; }
+.tool-btn:hover { filter: brightness(1.12); }
+
+.clock { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+         color: var(--accent); font-size: .8rem; letter-spacing: .04em; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin: 0 0 .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+/* ── The crayon set ────────────────────────────────────────────────────────
+   The graphic states the finding before any of the prose does: the four
+   crayons the council reaches for are worn to stubs, the three it leaves
+   alone still have their points. */
+.set { margin: 2rem 0 1.4rem; }
+.set img { display: block; width: 100%; height: auto; border-radius: 4px; }
+@media (prefers-color-scheme: dark) { .set img { filter: brightness(.93) saturate(.96); } }
+:root[data-theme="dark"] .set img { filter: brightness(.93) saturate(.96); }
+:root[data-theme="light"] .set img { filter: none; }
+.set figcaption { display: flex; gap: 1.6rem; justify-content: center; flex-wrap: wrap;
+                  font-family: var(--sans); font-size: .74rem; color: var(--ink-2);
+                  margin-top: .5rem; padding: 0 .2rem; }
+.set figcaption b { color: var(--ink); }
+.set-cap { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+           text-align: center; margin: 0 0 1.6rem; padding: 0 .6rem; line-height: 1.55; }
+
+/* The box: list form, retained beneath the graphic for detail and for screen readers. */
+.box { margin: 1.8rem 0; border: 1px solid var(--rule); border-radius: 4px;
+       background: var(--panel); overflow: hidden; }
+.box-band { font-family: var(--sans); font-size: .66rem; font-weight: 700; letter-spacing: .13em;
+            text-transform: uppercase; padding: .55rem .95rem; color: var(--ink-2);
+            background: var(--rule-soft); border-bottom: 1px solid var(--rule); }
+.crayon { display: flex; gap: .85rem; align-items: baseline;
+          padding: .78rem .95rem; border-bottom: 1px solid var(--rule-soft); }
+.crayon:last-child { border-bottom: 0; }
+.stick { flex: 0 0 2.6rem; height: .62rem; border-radius: 1px; align-self: center; }
+.crayon.on .stick { background: var(--used); }
+.crayon.off .stick { background: repeating-linear-gradient(90deg,
+                     var(--unused) 0 3px, transparent 3px 6px); }
+.cname { font-family: var(--sans); font-size: .88rem; font-weight: 700; flex: 0 0 9.5rem; }
+.crayon.off .cname { color: var(--ink-2); }
+.cdesc { font-family: var(--sans); font-size: .8rem; color: var(--ink-2); line-height: 1.5; }
+
+.finding { border-left: 4px solid var(--quote); padding: .1rem 0 .1rem 1.15rem; margin: 1.6rem 0; }
+.finding h3 { margin-top: 0; }
+.finding .n { font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+              text-transform: uppercase; color: var(--quote); display: block; margin-bottom: .25rem; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700;
+            font-family: var(--sans); margin-top: 1.4rem; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+  .crayon { flex-wrap: wrap; gap: .5rem .8rem; }
+  .cname { flex: 1 1 auto; }
+  .cdesc { flex: 1 1 100%; }
+  .set figcaption { gap: .7rem; font-size: .68rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div>
+<div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+<div class="kicker">How the council decides</div>
+<h1>The Crayon Box</h1>
+<p class="standfirst">There are at least seven ways to close a structural deficit. Berkeley's
+council reaches for four &mdash; and every one of them raises money from somebody. The three
+that would change what the city spends money on stay in the box.</p>
+<p class="byline">Berkeley Decision Project &middot; August 2026</p>
+
+<p>Every budget problem admits more than one kind of answer. You can raise more money, or you
+can change what you do with the money you have. Those are different crayons. A council that
+repeatedly reaches for only one family will produce a particular kind of city &mdash; not
+because anyone chose that outcome explicitly, but because the other options stopped being
+considered.</p>
+
+<p>This page asks which options Berkeley's council actually considers, how we can tell, and what
+happens when the palette narrows. It is <strong>not</strong> a claim that new revenue is always
+the wrong answer. It is a claim about the range of answers considered before choosing it:
+Berkeley's four well-used crayons all sit on one side of the box.</p>
+
+<figure class="set">
+  <img src="images/crayons.png" width="1264" height="843"
+       alt="A yellow crayon box labeled Berkeley Budgeting Palette. Four crayons are pulled forward and worn down to stubs: sales tax, property taxes, bonds, and higher fees. Three sit behind them with their points still sharp and unused: reprioritize, efficiency, and explore alternatives.">
+  <figcaption>
+    <span><b>Worn down</b> &mdash; ways to collect more</span>
+    <span><b>Still sharp</b> &mdash; ways to spend differently</span>
+  </figcaption>
+</figure>
+<p class="set-cap">Every worn crayon raises money from someone. Every sharp one would change what
+the city does with the money it already has.</p>
+
+<div class="box">
+  <div class="box-band">Pulled out and worn down</div>
+  <div class="crayon on"><span class="stick"></span><span class="cname">Sales tax</span>
+    <span class="cdesc">A half-cent sales tax was polled and directed toward the 2026 ballot. Falls
+    hardest on renters and low-income households, who spend more of what they earn.</span></div>
+  <div class="crayon on"><span class="stick"></span><span class="cname">Property taxes</span>
+    <span class="cdesc">Parcel taxes, transfer taxes, and the property-tax measures already on the
+    books. Flat per parcel, or triggered only when a property changes hands.</span></div>
+  <div class="crayon on"><span class="stick"></span><span class="cname">Bonds</span>
+    <span class="cdesc">Borrow now against future tax capacity. A $300M general obligation bond was
+    directed to the ballot in 2026; the auditor puts the debt-service impact at roughly
+    twenty years.</span></div>
+  <div class="crayon on"><span class="stick"></span><span class="cname">Higher fees</span>
+    <span class="cdesc">Charge the user rather than the general fund &mdash; permits, licenses,
+    service charges, cost recovery.</span></div>
+  <div class="box-band">Still in the box</div>
+  <div class="crayon off"><span class="stick"></span><span class="cname">Reprioritize</span>
+    <span class="cdesc">Move existing money between existing purposes. Requires naming what stops,
+    which is why it is rarely proposed.</span></div>
+  <div class="crayon off"><span class="stick"></span><span class="cname">Efficiency</span>
+    <span class="cdesc">Same service, less input. Cost per unit, per client, per mile &mdash; then
+    act on what the numbers say.</span></div>
+  <div class="crayon off"><span class="stick"></span><span class="cname">Explore alternatives</span>
+    <span class="cdesc">Who delivers this, and could someone deliver it better &mdash; city staff,
+    county, nonprofit, private, partnership &mdash; tested on equal criteria.</span></div>
+</div>
+
+<div class="tool">
+  <div class="tool-h">&#9881; Interactive &mdash; use the sharp crayons yourself</div>
+  <p>The argument on this page is easier to feel than to read. <strong>The Berkeley Budget
+  Lab</strong> hands you the City Manager&rsquo;s own scenarios and asks you to close the gap:
+  protect a department, accept its baseline cut, or make it absorb more. Every service you
+  protect pushes the savings onto one you did not.</p>
+  <p>That constraint is the whole point. Reprioritizing means naming what stops, and the tool
+  will not let you avoid naming it &mdash; which is exactly why the crayon stays in the box.</p>
+  <a class="tool-btn" href="https://ericdf.github.io/budget_lab/" target="_blank" rel="noopener noreferrer">Open the Budget Lab &rarr;</a>
+</div>
+
+<p>The city's own auditor has said the same thing in the city's own language. The April 2026
+report on Berkeley's financial condition found that the Council's adopted fiscal policies
+<strong>do not require anyone to check whether recurring revenue covers recurring
+expenditure</strong> &mdash; a foundational standard the Government Finance Officers
+Association has published for decades. The structural deficit runs $32 million in FY2027 and
+$33 million in FY2028. Recent budgets were balanced with one-time measures: $4.7 million out
+of the workers' compensation reserve, $3 million withdrawn from the pension pre-funding trust.</p>
+
+<p>A deficit that recurs cannot be closed with money that does not. That is the case for reaching
+into the other side of the box. And the underlying fiscal problem is the auditor's finding, not
+ours.</p>
+
+<h2>The rule that permits it</h2>
+
+<p>Berkeley has a written rule about this, and the council wrote it. Among the fiscal policies
+stated in the city's audited financial statements, restated in FY2023 and again in FY2025:</p>
+
+<blockquote>
+  <p>&ldquo;Any new expenditure requires new revenue <strong>or</strong> expenditure
+  reductions.&rdquo;</p>
+  <div class="attrib">City of Berkeley, Annual Comprehensive Financial Report, transmittal letter</div>
+</blockquote>
+
+<p>Read as policy, that sentence puts both sides of the box on the same footing. Either branch
+covers a new commitment. The council may raise the money or find it.</p>
+
+<p>Now read it as a test. A council that has never once taken the reduction branch satisfies this
+rule on every vote it casts. New revenue covers the expenditure; the rule is met; the file closes.
+<strong>Perfect compliance and a four-crayon habit are the same record.</strong></p>
+
+<div class="pull">The rule is not being broken. It is being satisfied, every time, from one side.</div>
+
+<p>So the finding here is not that Berkeley violates its own fiscal policy. It does not, and a
+claim that it did would be wrong. The finding is that a rule written as a choice does not function
+as one when only a single branch is ever available in practice &mdash; and that nothing in the
+policy requires anyone to notice.</p>
+
+<p>The companion guideline has the same shape. It requires &ldquo;new programs to pay for
+themselves,&rdquo; without defining over what period, against which revenue, or who checks. A
+capital appropriation can satisfy that sentence completely and still leave the cost of operating
+the thing unexamined, which is the subject of <a href="build-once.html">a separate page</a>.</p>
+
+<p>One more thing is worth saying plainly, because it is the obvious objection. The City Auditor
+recorded these guidelines in 2022 and stated that testing compliance with them was outside the
+scope of that audit. That is a stated boundary, not an oversight &mdash; and a compliance test
+would not reach this anyway. It would come back clean.</p>
+
+<h2>How you can tell which crayon someone picked</h2>
+
+<p>Not by counting who says the word "efficiency." Talk is a poor guide here: a member can
+name an option without proposing it, or read a staff report that mentions it, and neither is
+the same as putting it on the table.</p>
+
+<p>We use votes between competing motions. When someone moves a substitute, every member has
+to pick, on the same item, in the same minute, on the record. The motions are known
+quantities, so there is no ambiguity about what was chosen, and one vote is one fact, so
+repeated discussion cannot inflate it. Where the record shows an alternative was genuinely
+available and nobody moved it, that counts too.</p>
+
+<p>That test reveals four different kinds of conduct, and they are not equally serious.</p>
+
+<div class="finding">
+<h3><span class="n">Finding one</span>Nobody mentions the other colors</h3>
+<p>No member raises any alternative. There is no substitute motion, no question about what
+could be cut, no request for a cost-per-unit figure. The item passes as presented.</p>
+<p>This is blindness, whether or not anyone intends it, and it is a <strong>condition of the
+council rather than a failing of any one member</strong>. This is a council-wide condition rather
+than an individual finding, so we do not score it against members. A failure everyone shares
+differentiates nobody. <strong>Individual credit begins when someone puts a missing option back
+on the table.</strong></p>
+</div>
+
+<div class="finding">
+<h3><span class="n">Finding two</span>Someone offers a different color and loses</h3>
+<p>An alternative reaches the floor and is voted down. Now the record shows exactly who
+reached for it. This is the most informative case, because it separates members who were
+absent from the argument from members who were present and chose otherwise.</p>
+<p>Losing counts as engagement. A member who moves the motion and is outvoted has done the
+job; the scorecard's Ownership of Outcome dimension credits them for it. What it does not
+credit is declining to have the argument at all.</p>
+<p>The instrument is finer than a simple split, because a member can reach for the alternative
+and then let go of it. Voting for a substitute and then for the item it was meant to replace
+is a distinct position &mdash; not the same as never reaching, and not the same as holding.
+Successive roll calls on one item make that visible, which no measure of speech can.</p>
+</div>
+
+<div class="finding">
+<h3><span class="n">Finding three</span>Declaring one color, then drawing with another</h3>
+<p>A member states a principle and then votes against it on the same item. This is the
+sharpest of the four, because the standard is the member's own. There is no external
+benchmark to dispute and no way to answer it with "you simply disagree with them" &mdash; the
+disagreement is with what they themselves said an hour earlier.</p>
+</div>
+
+<div class="finding">
+<h3><span class="n">Finding four</span>Telling the council the blue crayon is green</h3>
+<p>The first three concern <em>which</em> option gets chosen. This one is a false claim about
+<em>what an option is</em>.</p>
+<p>Telling the council that a design carries Fire Department support when the Fire Chief has
+said on the record that it was never reviewed is not a narrow palette. It corrupts the record
+every other member is choosing from. This is the only one of the four that meets the test for
+a <a href="https://ericdf.github.io/council-scorecards/methodology.html">Material Governance Failure</a>, and it is why the scorecard
+treats it as categorically different. <strong>A narrow palette can be argued about on the merits.
+A materially false description of an option cannot.</strong></p>
+</div>
+
+<h2><span class="when">The worked example</span>Hopkins Street, 28 July 2026</h2>
+
+<p>One item shows all four findings at once, which is why it anchors this page.</p>
+
+<p>Item 27 made a Fire Department finding the stated basis for a binding referral. The item's
+own footnoted source scoped that finding to two named alternatives; the design actually adopted
+was a third configuration. At <span class="clock">01:31:48</span> into the meeting, Fire Chief
+Sprague told the council the Department had <strong>not reviewed</strong> that configuration
+and would need two to four weeks with a complete design set.</p>
+
+<p>Two substitute motions followed, four hours later. Councilmember O'Keefe moved to adopt a
+different version and remove the disputed language; it failed 3&ndash;6. Councilmember
+Blackaby then offered his own item as a substitute, preferring Class 2 or Class 4 bike lanes
+and a higher tolerance for retained parking; it failed 4&ndash;5. At
+<span class="clock">06:15:05</span> the council adopted the original plan 7&ndash;2 with the
+recommendation unchanged.</p>
+
+<p>Three roll calls on one item, minutes apart. Because each member had to answer by name each
+time, the record shows not just who agreed with the outcome but who was willing to pick up a
+different crayon when it was offered &mdash; and who put it back down.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Member</th><th>O'Keefe sub.<br>3&ndash;6</th><th>Blackaby sub.<br>4&ndash;5</th><th>Main motion<br>7&ndash;2</th><th>What that shows</th></tr></thead>
+<tbody>
+<tr><td>O'Keefe</td><td class="held">Aye</td><td class="held">Aye</td><td class="held">No</td><td>Moved the substitute removing the unreviewed alignment. Backed the alternative twice and voted no when it failed.</td></tr>
+<tr><td>Blackaby</td><td class="held">Aye</td><td class="held">Aye</td><td class="held">No</td><td>Moved the second substitute. Same posture: reached for analysis first, then declined to ratify.</td></tr>
+<tr><td>Bartlett</td><td class="held">Aye</td><td class="held">Aye</td><td class="pick">Aye</td><td>Voted for <em>both</em> alternatives, then for the main motion when they failed. Engaged with the alternative; did not hold the line.</td></tr>
+<tr><td>Tregub</td><td class="pick">No</td><td class="held">Aye</td><td class="pick">Aye</td><td>Backed one alternative, then voted for the item it was meant to fix &mdash; minutes apart, same item. See below.</td></tr>
+<tr><td>Kesarwani</td><td class="pick">No</td><td class="pick">No</td><td class="pick">Aye</td><td>Authored the item and led it through the meeting. After the correction, did not amend the recommendation, qualify the claim, or seek a continuance.</td></tr>
+<tr><td>Ishii</td><td class="pick">No</td><td class="pick">No</td><td class="pick">Aye</td><td>Presided over the session in which the contradiction was stated; co-sponsored the item.</td></tr>
+<tr><td>Humbert</td><td class="pick">No</td><td class="pick">No</td><td class="pick">Aye</td><td>Put the direct question to the Fire Chief that produced the correction &mdash; then voted against both alternatives and for the item.</td></tr>
+<tr><td>Taplin</td><td class="pick">No</td><td class="pick">No</td><td class="pick">Aye</td><td>Voted against both alternatives and for the main motion, without seeking a cure.</td></tr>
+<tr><td>Lunaparra</td><td class="pick">No</td><td class="pick">No</td><td class="pick">Aye</td><td>Voted against both alternatives and for the main motion, without seeking a cure.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Read across the rows. This is what the concept is for: not an inference about what members
+believe, but a record of what each one chose when a genuine alternative was in front of them
+and the only cost of choosing it was delay.</p>
+
+<p>The middle of that table is the interesting part. Two members reached for the alternative
+and held it. Five never picked it up. Two &mdash; Bartlett and Tregub &mdash; reached for it
+and then let go, which is a different thing from never having reached at all, and the record
+distinguishes them because the roll calls do.</p>
+
+<div class="beat">
+  <div class="beat-h">Finding three, in one member</div>
+  <p>Councilmember Tregub voted <em>aye</em> on the Blackaby substitute at
+  <span class="clock">06:13:34</span> and <em>aye</em> on the main motion at
+  <span class="clock">06:15:30</span> &mdash; for the alternative, then for the thing the
+  alternative was offered to replace, under two minutes apart. His role in the scorecard is
+  recorded as <em>attempted cure, then ratified</em>.</p>
+  <p>The pattern is not isolated. On automated license plate readers he acknowledged the
+  investigative value on the record and then voted against the contract. On priority-based
+  budgeting he told a constituent he would look at a proposal, and the record shows no
+  subsequent action. <strong>Three instances raise the same question: when Tregub expresses
+  support for a principle or alternative, what happens when acting on it requires a consequential
+  choice?</strong></p>
+</div>
+
+<div class="pull">A narrow palette is a disposition you can argue about. Mislabeling a crayon
+is not.</div>
+
+<h2>Where this does and does not go</h2>
+
+<p>The distinction above is load-bearing, so it is worth being explicit about the limits.</p>
+
+<div class="notclaim">
+  <h3>What we do not claim</h3>
+  <p><strong>That new revenue is always wrong.</strong> A city can have a genuine revenue
+  problem. The claim here is about the range of options considered before reaching for it,
+  and about the auditor's finding that no policy requires the recurring-balance question to be
+  asked at all.</p>
+  <p><strong>That a narrow palette is itself a governance failure.</strong> It is not. Of the
+  incidents screened for this project, the clearest example of a consistently narrow palette
+  &mdash; a sustained preference for bond finance over structural reform &mdash; was tested
+  against the Material Governance Failure standard in August 2026 and <strong>rejected</strong>,
+  because the authoritative finding that named the problem was published months after the
+  conduct it describes. Notice has to come before the act it indicts. That rejection is
+  recorded in full alongside the findings that passed.</p>
+  <p><strong>That inconsistency proves bad faith.</strong> A member who applies efficiency
+  review to one program and reaches for new revenue on a structurally similar one may be
+  applying no consistent principle &mdash; or may have a reason that does not appear in the
+  record. We treat it as a question worth asking, not a finding. It is logged and
+  investigated; it is never scored on its own.</p>
+</div>
+
+<p>What remains is a standing test, applied by hand to every item that proposes new revenue:
+which alternatives were available, which were raised, by whom, and if none were raised,
+whether that was recorded. It is slow, and it is the only version of this that survives
+scrutiny.</p>
+
+<footer>
+  <h3>Sources</h3>
+  <p>City Auditor, <em>Berkeley's Financial Condition (FY2016&ndash;FY2025): Structural Deficit
+  Poses Risk to Financial Sustainability</em>, released 8 April 2026 &mdash; structural deficit
+  figures, one-time balancing measures, and the finding that Council fiscal policies do not
+  require a recurring revenue/expenditure assessment. Berkeley City Council meeting of 28 July
+  2026, Item 27, including Fire Chief Sprague's testimony at 01:31:48 elapsed and the
+  7&ndash;2 adoption at 06:15:05. The three roll calls in the table were counted name by name
+  from the meeting transcript at 06:10:22 (O'Keefe substitute, 3&ndash;6), 06:13:28 (Blackaby
+  substitute, 4&ndash;5) and 06:15:05 (main motion, 7&ndash;2); the transcript is generated by
+  Zoom and expressly uncertified by the City, and names appear in it with recognition errors
+  that have been resolved against the annotated agenda. Council agenda of 17 March 2026 on the
+  potential $300 million general obligation bond.</p>
+  <h3>Method</h3>
+  <p>The competing-motion test and the limits described above are documented in full in the
+  <a href="https://ericdf.github.io/council-scorecards/methodology.html">methodology</a>, along with the approaches we tried and
+  abandoned. Findings that were screened and rejected are listed there alongside those
+  that passed.</p>
+  <h3>Related</h3>
+  <p><a href="hopkins-fire-review.html">The Hopkins Street fire review</a> &middot;
+  <a href="bond-alibi.html">Bonds win elections; budget discipline does not</a> &middot;
+  <a href="framework.html">The Berkeley Budget Framework</a> &middot;
+  <a href="index.html">Berkeley Decision Project home</a></p>
+</footer>
+
+</div>
+</body>
+</html>

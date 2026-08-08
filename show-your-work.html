@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Show Your Work — Before Berkeley Asks for More Money</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Instrument type is load-bearing on this page: a GO bond is borrowed capital repaid
+   through property tax over decades, a parcel tax is recurring revenue collected annually.
+   The table distinguishes them so the reader can see that the pattern is not "bonds" but
+   "any new money except reprioritization". */
+.inst { font-family: var(--sans); font-size: .74rem; font-weight: 700; white-space: nowrap;
+        letter-spacing: .02em; }
+.inst-bond { color: var(--accent); }
+.inst-tax  { color: var(--quote); }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.clock { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+         color: var(--accent); font-size: .8rem; letter-spacing: .04em; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+
+/* Fixed-pie vs expanded-option-set. The graphic carries the thesis. */
+.pie { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 1.8rem 0;
+       border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+.pie-half { padding: 1.1rem 1.2rem; background: var(--panel); }
+.pie-half + .pie-half { border-left: 1px solid var(--rule); }
+.pie-lbl { font-family: var(--sans); font-size: .62rem; font-weight: 800; letter-spacing: .13em;
+           text-transform: uppercase; margin-bottom: .7rem; }
+.pie-fixed .pie-lbl { color: var(--used, #b4453a); }
+.pie-open  .pie-lbl { color: #2f7d5c; }
+.pie-half ul { margin: 0; padding-left: 1.1rem; }
+.pie-half li { font-family: var(--sans); font-size: .84rem; line-height: 1.65;
+               color: var(--ink-2); margin-bottom: .35rem; }
+.pie-half li.on { color: var(--ink); font-weight: 600; }
+@media (max-width: 640px) { .pie { grid-template-columns: 1fr; }
+  .pie-half + .pie-half { border-left: 0; border-top: 1px solid var(--rule); } }
+
+/* Coverage bands. Who can actually use each answer, as nested shares of the
+   same population. Deliberately unscaled — no mode-share data supports exact
+   proportions, and the argument is about relative reach, not percentages. */
+.cov { margin: 1.7rem 0; border: 1px solid var(--rule); border-radius: 4px;
+       background: var(--panel); padding: 1.1rem 1.2rem .9rem; }
+.cov-row { display: grid; grid-template-columns: 8.5rem 1fr; gap: .8rem;
+           align-items: center; margin-bottom: .7rem; }
+.cov-lbl { font-family: var(--sans); font-size: .78rem; font-weight: 700;
+           text-align: right; line-height: 1.3; }
+.cov-lbl small { display: block; font-weight: 400; font-size: .68rem; color: var(--ink-3); }
+.cov-bar { height: 1.5rem; border-radius: 2px; position: relative; background: var(--rule-soft); }
+.cov-fill { height: 100%; border-radius: 2px; display: flex; align-items: center;
+            padding-left: .6rem; font-family: var(--sans); font-size: .7rem;
+            font-weight: 700; color: #fff; white-space: nowrap; }
+.cov-bike  .cov-fill { width: 30%; background: #2c6e8f; }
+.cov-park  .cov-fill { width: 45%; background: #b4453a; }
+.cov-must  .cov-fill { width: 16%; background: #6b4c8f; font-size: .66rem; }
+.cov-cond  .cov-fill { width: 55%; background: #2c8f8f; }
+.cov-conn  .cov-fill { width: 78%; background: #2f7d5c; }
+.cov-note { font-family: var(--sans); font-size: .74rem; color: var(--ink-3);
+            line-height: 1.55; border-top: 1px solid var(--rule-soft);
+            padding-top: .7rem; margin-top: .3rem; }
+@media (max-width: 640px) {
+  .cov-row { grid-template-columns: 1fr; gap: .25rem; }
+  .cov-lbl { text-align: left; }
+}
+
+/* Worked applications. */
+.app { border-left: 3px solid var(--quote); padding: .2rem 0 .2rem 1.1rem; margin: 1.5rem 0; }
+.app h3 { font-family: var(--sans); font-size: 1rem; font-weight: 800; margin: 0 0 .45rem; }
+.app p { font-size: .97rem; }
+.app .app-src { font-family: var(--sans); font-size: .74rem; color: var(--ink-3);
+                margin-top: .5rem; }
+
+.syw { margin: 1.1rem 0 1.1rem 1.35rem; padding: 0; }
+.syw li { margin-bottom: .55rem; line-height: 1.7; }
+.beat .syw li { font-size: .96rem; }
+.set { margin: 1.6rem 0 1.4rem; }
+.set img { display: block; width: 100%; height: auto; border-radius: 4px; }
+.set figcaption { display: flex; gap: 1.6rem; justify-content: center; flex-wrap: wrap;
+                  font-family: var(--sans); font-size: .74rem; color: var(--ink-3);
+                  margin-top: .6rem; }
+.set figcaption b { color: var(--ink); }
+@media (prefers-color-scheme: dark) { .set img { filter: brightness(.93) saturate(.96); } }
+:root[data-theme="dark"] .set img { filter: brightness(.93) saturate(.96); }
+:root[data-theme="light"] .set img { filter: none; }
+@media (max-width: 640px) { .set figcaption { gap: .7rem; font-size: .68rem; } }
+/* The hero supplies the separation; the wrap opens on a heading. */
+.wrap > h2:first-child { margin-top: 0; }
+/* Hero + slide-summary card, styled as on the white paper. The hero is a dark band on a
+   light page; in dark mode it must separate from the body rather than merge into it, so it
+   lightens as the page darkens and keeps a visible edge either way. */
+.fw-hero { background: #1a1a2e; padding: 46px 40px 40px; border-bottom: 1px solid #2f3d5c; }
+@media (prefers-color-scheme: dark) { .fw-hero { background: #212739; border-bottom-color: #3a4463; } }
+:root[data-theme="dark"] .fw-hero { background: #212739; border-bottom-color: #3a4463; }
+:root[data-theme="light"] .fw-hero { background: #1a1a2e; border-bottom-color: #2f3d5c; }
+.fw-hero-inner { max-width: 40rem; margin: 0 auto; }
+.fw-kicker { font-family: var(--sans); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #4e8ecb; margin-bottom: 14px; }
+.fw-hero h1 { font-family: var(--sans); font-size: 42px; font-weight: 900; color: #fff; line-height: 1.1; letter-spacing: -.5px; }
+.fw-hero .sub { font-size: 17px; color: #aab4cc; margin-top: 14px; line-height: 1.6; margin-bottom: 0; }
+.fw-hero .byline { font-family: var(--sans); font-size: 12px; color: #7d8aa5; margin-top: 20px;
+                   padding-bottom: 0; border-bottom: 0; margin-bottom: 0; }
+.fw-pull { border-left: 3px solid #4e8ecb; padding: 10px 0 10px 18px; margin-top: 24px;
+           font-size: 18px; font-weight: 700; color: #fff; line-height: 1.5; }
+
+.short-ver { display: inline-flex; align-items: center; gap: 14px; margin-top: 22px;
+             font-family: var(--sans); background: #223052; border: 1px solid #35486f; border-radius: 7px;
+             padding: 13px 20px 13px 16px; text-decoration: none; transition: background .15s, border-color .15s; }
+.short-ver:hover { background: #2a3a61; border-color: #4e8ecb; }
+@media (prefers-color-scheme: dark) { .short-ver { background: #2a3145; border-color: #3f4a68; } }
+:root[data-theme="dark"] .short-ver { background: #2a3145; border-color: #3f4a68; }
+:root[data-theme="light"] .short-ver { background: #223052; border-color: #35486f; }
+.short-ver-ico { font-size: 20px; color: #4e8ecb; line-height: 1; flex-shrink: 0; }
+.short-ver-h { font-size: 14px; font-weight: 800; color: #cfe0f2; line-height: 1.35; }
+.short-ver:hover .short-ver-h { color: #fff; }
+.short-ver-p { font-size: 12px; color: #8fa0bd; margin-top: 4px; line-height: 1.5; }
+@media (max-width: 640px) {
+  .fw-hero { padding: 32px 20px 28px; }
+  .fw-hero h1 { font-size: 30px; }
+  .short-ver { display: flex; padding: 12px 14px; gap: 12px; }
+  .short-ver-h { font-size: 13px; }
+  .short-ver-p { font-size: 11.5px; }
+}
+</style></head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="fw-hero">
+  <div class="fw-hero-inner">
+    <div class="fw-kicker">The counterexample</div>
+    <h1>Show Your Work Before Asking for More</h1>
+    <p class="sub">Berkeley's own fiscal policy says any new expenditure requires new revenue <em>or</em> expenditure reductions. Only one of those branches is ever taken. This page proposes what Council would have to publish before asking voters for more money &mdash; and shows two California cities that already build that sequence into their budgeting.</p>
+    <div class="byline">Eric Friedman &middot; August 2026 &middot; Prepared for civic discussion</div>
+
+    <a class="short-ver" href="show-your-work-slides.html">
+      <div class="short-ver-ico">&#9636;</div>
+      <div class="short-ver-txt">
+        <div class="short-ver-h">In a hurry? Read the slide summary &rarr;</div>
+        <div class="short-ver-p">The whole argument in slide form &mdash; readable in a few minutes.</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <h2>&ldquo;Show your work&rdquo; should be a familiar idea</h2>
+
+  <p>Berkeley is a university town. A student&rsquo;s answer is more convincing when the professor can see how they got there.</p>
+
+  <p>City budgeting should work the same way.</p>
+
+  <p>Before Berkeley asks voters for more money, Council should show the reasoning that led to that conclusion: Is this our problem to solve? Is it clearly defined? Is the proposed intervention justified? Could efficiency, alternatives, or reprioritization do the job? And if not, what funding gap remains?</p>
+
+  <div class="pull"><strong>Before Berkeley asks voters for more money, Council should have to show why it cannot meet the need with the money it already has.</strong></div>
+
+  <p>That does not mean taxes, bonds, fees, or assessments are never justified. It means they should come at the end of a decision process, not substitute for one.</p>
+
+  <p>Before Council asks residents for more money, it should have to answer a short sequence of questions:</p>
+
+  <ol class="syw"><li><strong>Is this actually Berkeley's problem to solve?</strong></li><li><strong>Have we defined the problem well enough to know what success means?</strong></li><li><strong>Does the proposed intervention logically address that problem?</strong></li><li><strong>Could we get the result through efficiency, reprioritization, or a different delivery model?</strong></li><li><strong>If not, how much additional money is actually required?</strong></li></ol>
+
+  <p>Then show the work.</p>
+
+  <p>If the answers support a tax or bond, put it before the voters. But voters should see the analysis that got Council there.</p>
+
+  <div class="pull"><strong>The proposal is not “cut first.” It is “compare first.”</strong></div>
+
+  <h2>The City also understands &ldquo;show your work&rdquo;</h2>
+
+  <p>There is something slightly odd about having to propose this principle in Berkeley.</p>
+
+  <p>If a property owner wants to build a substantial project, the City does not ordinarily let the applicant announce that the project itself is beyond discussion and invite the public to choose among decorative details. Plans describe what is actually proposed. The City reviews them. Notice is provided where required. Neighbors can see what the applicant intends to build.</p>
+
+  <p>The process does not begin with:</p>
+
+  <p><strong>“We are building a mansion. Would you prefer a brick driveway or stone?”</strong></p>
+
+  <p>Yet public fiscal choices can take something close to that form. By the time residents are asked to participate, City Hall may already have defined the problem, selected the intervention, established its scope, and decided that additional revenue is the answer. Public choice begins downstream.</p>
+
+  <p><strong>Would you like to pay for it this way or that way?</strong></p>
+
+  <p>That is the same problem described in <a href="constrained-choice.html"><em>Constrained Choice Architecture</em></a>: public participation is not genuinely open-ended when government defines the question so narrowly that challenges to the premise or solution are excluded.</p>
+
+  <div class="pull"><strong>Public participation should begin before the choice architecture hardens—not after officials have selected the problem, solution, and funding mechanism.</strong></div>
+
+  <p>The fiscal version should be simple: expose the upstream choices too.</p>
+
+  <h2>The crayon box</h2>
+
+  <figure class="set">
+    <img src="images/crayons.png" width="1264" height="843"
+         alt="A yellow crayon box labeled Berkeley Budgeting Palette. Four crayons are pulled forward and worn down to stubs: sales tax, property taxes, bonds, and higher fees. Three sit behind them with their points still sharp and unused: reprioritize, efficiency, and explore alternatives.">
+    <figcaption>
+      <span><b>Worn down</b> &mdash; ways to collect more</span>
+      <span><b>Still sharp</b> &mdash; ways to spend differently</span>
+    </figcaption>
+  </figure>
+
+  <p>Berkeley has more than one way to respond when a priority costs money. Think of them as crayons in <a href="crayon-box.html">a fiscal box</a>.</p>
+
+  <p>Several crayons produce more money: taxes, bonds, assessments, fees, grants, and other outside funding.</p>
+
+  <p>Three important crayons work on the other side of the equation:</p>
+
+  <p><strong>Efficiency. Reprioritization. Alternatives.</strong></p>
+
+  <p><strong>Efficiency</strong> asks whether the same outcome can be achieved with fewer resources.</p>
+
+  <p><strong>Reprioritization</strong> asks whether the new objective matters more than something already being funded.</p>
+
+  <p><strong>Alternatives</strong> asks whether City government needs to provide the service in the proposed way—or provide it directly at all. Partnerships, regional cooperation, contracting, nonprofit delivery, cost sharing, redesign, or a different solution to the underlying problem may work better.</p>
+
+  <p>These choices are <a href="bond-alibi.html">not politically equivalent</a>.</p>
+
+  <p>New funding is additive. It lets elected officials point to a visible accomplishment: <em>I helped fund this. I helped pass that.</em> Reprioritization creates losers. Efficiency can disrupt established practices, positions, contracts, and institutional arrangements. Alternative delivery can threaten organizational turf. Existing constituencies—including organized labor, contractors, program beneficiaries, and advocacy groups—have every reason to defend what they already have.</p>
+
+  <div class="pull"><strong>Nobody holds a ribbon cutting for an expenditure that disappeared from next year's spreadsheet.</strong></div>
+
+  <p>Political incentives therefore favor the revenue crayons.</p>
+
+  <p>Berkeley's own fiscal policy does little to counteract that incentive.</p>
+
+  <h2>Berkeley's rule permits either path</h2>
+
+  <p>Berkeley's longstanding Council Budget Development Policies include a sensible requirement that new programs pay for themselves. Another policy states:</p>
+
+  <blockquote><p><strong>“Any new expenditure requires either additional revenue or expenditure reductions.”</strong><sup>[1]</sup></p></blockquote>
+
+  <p>That is sound fiscal arithmetic.</p>
+
+  <p>But it is not a decision rule.</p>
+
+  <p>It does not require Council to look for efficiencies <em>before</em> seeking revenue. It does not require alternative service-delivery models to be examined. It does not require Council to decide whether the new priority is more important than existing expenditures. And it does not require Council to explain publicly why additional revenue is preferable.</p>
+
+  <p>The policy says:</p>
+
+  <p><strong>new expenditure → additional revenue OR expenditure reductions</strong></p>
+
+  <p>There is no order of operations.</p>
+
+  <div class="beat"><div class="beat-h">THE MISSING RULE</div><p>Berkeley requires Council to pay for new spending. It does <strong>not</strong> require Council to explain why taxpayers should provide the money instead of City government finding it within the resources it already controls.</p></div>
+
+  <p>The result is predictable. The policy treats two formally equivalent choices as though they faced equivalent political incentives. They do not.</p>
+
+  <h2>Before the crayons: is this even our problem?</h2>
+
+  <p>There is an earlier question that the existing policy does not ask.</p>
+
+  <p>Before Berkeley decides <em>how to pay</em> for something, it should establish that the City should be doing it.</p>
+
+  <p>The <a href="framework.html">decision framework used here</a> divides municipal activity into three broad categories.</p>
+
+  <p><strong>Category 1:</strong> things Berkeley municipal government must do well itself—core municipal responsibilities.</p>
+
+  <p><strong>Category 2:</strong> problems in which Berkeley has a legitimate role but should often enable, coordinate, partner, or measure rather than build a permanent City operation.</p>
+
+  <p><strong>Category 3:</strong> activities Berkeley municipal government should not undertake because another level of government, institution, market participant, or organization is better positioned to do them.</p>
+
+  <p>A proposal that cannot make a credible Category 1 or Category 2 case should not proceed to the funding question.</p>
+
+  <div class="pull"><strong>A financing plan cannot turn an out-of-scope activity into a municipal responsibility.</strong></div>
+
+  <p>This matters because otherwise the budget process begins too late. Once a program, facility, or initiative has been accepted as something Berkeley <em>will</em> do, debate naturally shifts to finding money for it. The threshold question—<em>should the City be doing this at all?</em>—has disappeared.</p>
+
+  <h2>Define the problem before building the solution</h2>
+
+  <p>Passing the scope test is not enough. Council should also have to define the problem in terms that can be tested.</p>
+
+  <p>What condition exists now?</p>
+
+  <p>Who is affected?</p>
+
+  <p>How large is the problem?</p>
+
+  <p>What evidence establishes it?</p>
+
+  <p>What outcome would count as improvement?</p>
+
+  <p>How will we know whether the intervention worked?</p>
+
+  <p>The African American Holistic Resource Center illustrates the danger of skipping this step. Broad concepts such as “displacement” supplied a rationale, but the critical causal questions were not adequately interrogated: What specific displacement problem is the City intervention intended to change? What are its causes? Which services are missing? And why does a problem described substantially in service-delivery terms require a building as its solution?</p>
+
+  <p>Even if one accepts the underlying concern, the progression</p>
+
+  <p><strong>problem → municipal responsibility → intervention → building</strong></p>
+
+  <p>needs evidence at every arrow.</p>
+
+  <p>Otherwise the physical project itself becomes the objective.</p>
+
+  <div class="pull"><strong>A building is not an outcome. It is an intervention. The City should have to explain why that intervention solves the problem it says it is solving.</strong></div>
+
+  <p>This is another connection to <a href="constrained-choice.html">constrained-choice public engagement</a>. Residents must be able to challenge not only the details of a proposed solution but the City's framing of the problem and its selection of the solution.</p>
+
+  <p>The mansion cannot be treated as inevitable while the public chooses the driveway.</p>
+
+  <h2>Berkeley already believes other cities can teach it things</h2>
+
+  <p>None of this requires Berkeley to adopt somebody else's political philosophy.</p>
+
+  <p>Berkeley already reaches for other cities when they have practices worth borrowing.</p>
+
+  <p>When Berkeley examined improvements to accessory-dwelling-unit permitting, a Council referral explicitly presented <strong>“Three Best Practices From Other Jurisdictions Recommended for Berkeley”</strong> and pointed to San José's universal ADU checklist as a model for reducing review time and simplifying requirements across departments.<sup>[2]</sup></p>
+
+  <p>Berkeley Public Works has presented <strong>“Best Practices: Palo Alto”</strong> in examining traffic circles and bicycle-boulevard design.<sup>[3]</sup></p>
+
+  <p>More importantly for this discussion, Berkeley's own City Auditor selected <strong>Palo Alto as a financial peer</strong> when benchmarking Berkeley's financial condition.<sup>[4]</sup></p>
+
+  <p>So Berkeley has already established the premise.</p>
+
+  <p>What can they teach us here?</p>
+
+  <div class="pull"><strong>We already ask what San José and Palo Alto can teach Berkeley when it suits us. Why should fiscal decision-making be exempt from the comparison?</strong></div>
+
+  <h2>San José: savings without losing the thing taxpayers value</h2>
+
+  <p>San José offers an unusually useful example.</p>
+
+  <p>In developing its FY2024–25 budget, Council directed the City Manager to address the General Fund shortfall beginning with:</p>
+
+  <blockquote><p><strong>“Identifying cost savings and efficiencies that do not result in service impacts.”</strong><sup>[5]</sup></p></blockquote>
+
+  <p>That last phrase does enormous work.</p>
+
+  <p><strong>“Do not result in service impacts”</strong> means the objective is not simply to spend less. The objective is to preserve the value residents receive while finding a less expensive way to produce it.</p>
+
+  <p>To make that distinction intelligently, a government needs to know what the service is supposed to accomplish and have meaningful ways to assess its performance.</p>
+
+  <p>San José's direction then moved to eliminating vacant positions with minimal service impacts and reducing or eliminating existing services where necessary. Only after those steps did it direct staff to identify revenue sources that could offset reductions.<sup>[5]</sup></p>
+
+  <p>That is a sequence:</p>
+
+  <ol class="syw"><li>find savings that preserve service;</li><li>remove unnecessary capacity where service can still be maintained;</li><li>confront lower-priority services;</li><li>then examine additional revenue.</li></ol>
+
+  <div class="pull"><strong>San José does not remove the revenue crayon from the box. It does require proof that the others do not work.</strong></div>
+
+  <p>There is an important prerequisite embedded in that approach: <strong>measurement</strong>.</p>
+
+  <p>Berkeley has <a href="measuring-nothing.html">repeatedly struggled to establish meaningful outcome measures</a>, often substituting activity counts for evidence that a program is producing the result taxpayers are buying. Without those measures, “efficiency” becomes difficult to distinguish from an arbitrary cut.</p>
+
+  <p>That problem became concrete when Berkeley required departments to prepare 10 percent and 12.5 percent reduction scenarios as part of its recent budget balancing.<sup>[6]</sup> Across-the-board percentage cuts have the virtue of arithmetic simplicity. But they are not prioritization. A 10 percent reduction to an ineffective activity may have almost no public consequence; the same reduction to a high-performing core service may be disastrous.</p>
+
+  <p>Without outcome measures, Council cannot reliably tell which is which.</p>
+
+  <div class="beat"><div class="beat-h">METRICS ARE NOT BUREAUCRATIC DECORATION</div><p><strong>San José asks for savings that do not reduce service. Berkeley asks departments for percentage reductions without consistently measuring the value the spending produces. You cannot optimize what you do not measure.</strong></p></div>
+
+  <p>A principled alternative to across-the-board cuts is therefore not simply “cut something else.” It is to compare the <strong>marginal public value</strong> produced by competing expenditures and protect the activities that deliver the most important outcomes.</p>
+
+  <h2>Palo Alto: redesign, alternatives, savings—then revenue</h2>
+
+  <p>Palo Alto's formal Budget Development Guidelines reinforce the point.</p>
+
+  <p>They direct staff to pursue business-process redesign, including opportunities to:</p>
+
+  <blockquote><p><strong>“streamline, simplify, reorganize, and reallocate resources.”</strong><sup>[7]</sup></p></blockquote>
+
+  <p>The next guideline calls for alternative service-delivery models, including nonprofit and public/private partnerships. Another calls for analysis of costs for savings opportunities. Only then does the list turn to expanded or new revenue sources.<sup>[7]</sup></p>
+
+  <p>The following guideline says resource augmentations should be offset with reductions elsewhere for a net-zero budget impact whenever possible.<sup>[7]</sup></p>
+
+  <p>The ordering is revealing:</p>
+
+  <ol class="syw"><li>redesign and reallocate;</li><li>consider alternative delivery;</li><li>look for savings;</li><li>explore additional revenue;</li><li>seek offsets for new spending whenever possible.</li></ol>
+
+  <p>Palo Alto has not abolished taxes. It has formalized a broader set of questions before treating new revenue as the natural response to a new need.</p>
+
+  <p>That is the discipline Berkeley lacks.</p>
+
+  <h2>Borrowing capacity is not a reason to borrow</h2>
+
+  <p>The crayon problem can influence not only the answer but the way the question itself is framed.</p>
+
+  <p>A June 2025 referral by Councilmember Terry Taplin proposes a standing schedule for general-obligation bond issuance, on the grounds that Berkeley&rsquo;s investment-grade ratings <strong>&ldquo;position it favorably to issue debt at competitive rates, yet the absence of a formalized bond issuance framework prevents the City from fully leveraging its credit capacity.&rdquo;</strong><sup>[8]</sup></p>
+
+  <p>There is nothing wrong with knowing how much debt a city can prudently carry. But borrowing capacity is a financing fact, not a policy objective.</p>
+
+  <p>A consumer with a $50,000 credit-card limit has substantial borrowing capacity. That does not mean the household is &ldquo;underspent,&rdquo; or that unused credit justifies purchases that have not been evaluated for necessity, value, or alternatives.</p>
+
+  <p>Municipal debt is no different in principle. The fact that Berkeley residents could support additional bonds answers &ldquo;Can we borrow?&rdquo; It does not answer &ldquo;What should we buy?&rdquo;</p>
+
+  <p>The disciplined sequence runs the other way: identify the problem, establish that it is Berkeley's responsibility, evaluate the intervention and alternatives, prioritize it against other needs, determine the remaining funding gap&mdash;and only then decide whether borrowing is the right tool.</p>
+
+  <p>The referral itself supplies the reason this matters. It records why the $650 million Measure L failed at the ballot in 2022 and lists the post-election critiques. The first one is <strong>&ldquo;insufficient project prioritization and lack of transparency.&rdquo;</strong> The remedy it proposes is a standing schedule for issuing bonds. Prioritization is named as the diagnosed failure; borrowing is what gets systematized.</p>
+
+  <div class="pull"><strong>A high credit limit is not a shopping list. Neither is municipal bond capacity.</strong></div>
+
+  <p>Framing the question as unused credit capacity risks letting the financing tool define the need. Bonds should follow justified public investments, not create an invitation to find them.</p>
+
+  <h2>Enterprise funds cannot become an escape hatch</h2>
+
+  <p>Any “show your work” rule also has to anticipate accounting boundaries.</p>
+
+  <p>Enterprise and special funds often have legitimate legal restrictions. Money collected for a particular purpose cannot simply be moved wherever Council wants it.</p>
+
+  <p>But that does not mean the City's choices surrounding those funds are economically irrelevant to the General Fund.</p>
+
+  <p>Imagine Berkeley operates its <strong>tennis courts through an enterprise fund</strong> while pickleball courts are supported by the General Fund. Enterprise revenues collected for tennis may be legally unavailable for pickleball. So Council cannot simply take money from tennis and spend it on pickleball.</p>
+
+  <p>But suppose the General Fund also subsidizes the tennis enterprise. That changes the picture. Reducing that subsidy could free unrestricted dollars for pickleball or another priority.</p>
+
+  <p>The enterprise boundary therefore creates an asymmetry: <strong>pickleball can be cut to protect tennis, while tennis may appear unavailable for reconsideration to protect pickleball.</strong></p>
+
+  <p>A serious rule should therefore require disclosure of:</p>
+
+  <ul class="syw"><li>General Fund subsidies and transfers into enterprise and special funds;</li><li>discretionary City services provided to those funds without full reimbursement;</li><li>interfund loans and transfers;</li><li>cost-recovery assumptions;</li><li>discretionary commitments that could be resized; and</li><li>General Fund capacity that would be released by changing those commitments.</li></ul>
+
+  <div class="beat"><div class="beat-h">ANTI-EVASION PRINCIPLE</div><p><strong>Accounting restrictions should be respected. They should not turn discretionary City commitments into untouchable sacred cows.</strong></p></div>
+
+  <p>Otherwise the City can gradually place politically protected activities outside the apparent field of competition while leaving less protected General Fund services to absorb every future tradeoff.</p>
+
+  <h2>Labor agreements are fiscal decisions too</h2>
+
+  <p>There is another place where future flexibility can be lost long before a budget crisis arrives: labor agreements.</p>
+
+  <p>Berkeley's agreements preserve important management rights, and California labor law leaves cities meaningful authority over fundamental managerial decisions while requiring bargaining over many effects and working conditions.<sup>[9]</sup> The point is not that collective bargaining prevents optimization, nor that worker protections should be stripped away.</p>
+
+  <p>The relevant question is simpler:</p>
+
+  <p><strong>When Council approves a contract, does it understand which future options it is giving up?</strong></p>
+
+  <p>A labor agreement may affect the City's ability to change staffing models, assignments, schedules, classifications, technology, contracting arrangements, or service-delivery methods. Some restrictions may be entirely worthwhile. Employees reasonably bargain for predictability, compensation, security, and fair working conditions.</p>
+
+  <p>But those provisions can have fiscal and operational consequences.</p>
+
+  <p>A “show your work” government should disclose them when the agreement is approved—not discover them years later when Council claims its hands are tied.</p>
+
+  <p>Where reasonably possible, staff should identify provisions that materially constrain future service redesign or efficiency measures and describe their expected fiscal or operational consequences.</p>
+
+  <div class="pull"><strong>Council should not manufacture fiscal inevitability one decision at a time and later present the accumulated result to voters as an unavoidable need for more revenue.</strong></div>
+
+  <p>The same principle applies to permanent staffing, long-term contracts, facilities with operating-cost tails, enterprise subsidies, and new programs. Fiscal discipline belongs at the moment commitments are created, not merely when the resulting budget no longer balances.</p>
+
+  <h2>The Berkeley rule: show your work</h2>
+
+  <p>A serious reform would therefore go beyond merely inserting “efficiency before taxes” into the budget policy.</p>
+
+  <p>Before Council places a measure for new City revenue before voters—or makes another substantial long-term fiscal commitment—it should publish a <strong>Show Your Work statement</strong>.</p>
+
+  <div class="beat"><div class="beat-h">FEATURE BOX</div><p>Before seeking new voter-approved revenue for a City expenditure or program, Council shall publicly establish that:</p><ol class="syw"><li><strong>1. Municipal scope:</strong> The problem falls within a core City responsibility or an appropriate City partnership/enabling role.</li><li><strong>2. Problem definition:</strong> The condition to be addressed, affected population, baseline, desired outcome, and means of measuring success are reasonably defined.</li><li><strong>3. Intervention:</strong> The proposed expenditure has a reasonable evidentiary or causal connection to the desired outcome.</li><li><strong>4. Efficiency:</strong> The City has evaluated whether the outcome can be achieved at lower cost without materially reducing service.</li><li><strong>5. Alternatives:</strong> The City has evaluated materially different methods of delivering the outcome, including partnerships or non-City delivery where appropriate.</li><li><strong>6. Reprioritization:</strong> The City has identified existing discretionary expenditures that could reasonably be reduced, deferred, or discontinued and explained why the proposed new expenditure should or should not take priority.</li><li><strong>7. Restricted funds and subsidies:</strong> The analysis distinguishes genuinely restricted resources from discretionary General Fund subsidies, transfers, and commitments.</li><li><strong>8. Remaining gap:</strong> After those alternatives are quantified, the City identifies the amount of additional revenue actually required and explains why the proposed financing mechanism is appropriate.</li></ol></div>
+
+  <p>The analysis should be published early enough for residents to challenge it <strong>before</strong> Council commits to the solution or ballot measure.</p>
+
+  <p>That last requirement matters.</p>
+
+  <p>A 40-page justification published after Council has settled on the project is disclosure, but it is not deliberation. Residents need a meaningful opportunity to say:</p>
+
+  <p><strong>That isn't the problem.</strong></p>
+
+  <p><strong>That isn't Berkeley's job.</strong></p>
+
+  <p><strong>That intervention doesn't follow from the evidence.</strong></p>
+
+  <p><strong>You missed an alternative.</strong></p>
+
+  <p><strong>This existing expenditure is less important.</strong></p>
+
+  <p><strong>Your claimed savings are not savings because they destroy the service.</strong></p>
+
+  <p>Or:</p>
+
+  <p><strong>You've made the case. Put the tax on the ballot.</strong></p>
+
+  <p>That is meaningful public choice.</p>
+
+  <h2>Use every crayon in the box</h2>
+
+  <p>This proposal does not tell Council what Berkeley's priorities must be.</p>
+
+  <p>It does not prohibit taxes.</p>
+
+  <p>It does not prohibit bonds.</p>
+
+  <p>It does not require layoffs.</p>
+
+  <p>It does not require privatization.</p>
+
+  <p>It does not require Council to choose the cheapest possible service.</p>
+
+  <p>It does not turn every budget decision into a referendum.</p>
+
+  <p>It gives Council a way to show the reasoning behind a request for more money.</p>
+
+  <p>If $20 million is needed and a serious review finds $2 million in reasonable efficiencies and reprioritization, show that. Explain why the remaining programs should be preserved. Explain why the alternatives fail. Show voters the $18 million remaining gap.</p>
+
+  <p>Then make the case for the tax.</p>
+
+  <div class="pull"><strong>Voters should not merely be told what additional money could accomplish. They should be told why the City could not accomplish it with the money it already has.</strong></div>
+
+  <p>Berkeley already requires private applicants to expose consequential proposals to scrutiny. It already borrows municipal practices from San José and Palo Alto when those cities have something useful to teach. Its own fiscal policy already acknowledges that new expenditures ultimately require either new money or less spending elsewhere.</p>
+
+  <p>The missing piece is the reasoning between those facts.</p>
+
+  <p>Use every crayon in the box.</p>
+
+  <div class="pull"><strong>The three non-revenue crayons do not have to win. Council just has to show us that it honestly and carefully considered them.</strong></div>
+
+  <footer>
+    <h3>Notes and sources</h3>
+    <p>[1] City of Berkeley, <em>FY 2014 & FY 2015 Adopted Biennial Budget</em>, “Council Budget Development Policies.” The policies include “Requiring enterprise and grant funds to balance and new programs to pay for themselves” and state that any new expenditure requires either additional revenue or expenditure reductions.   <a href="https://berkeleyca.gov/sites/default/files/2022-01/FY-2014-2015-Adopted-Biennial-Budget-Book.pdf">https://berkeleyca.gov/sites/default/files/2022-01/FY-2014-2015-Adopted-Biennial-Budget-Book.pdf</a></p>
+    <p>See also City of Berkeley, <em>Annual Comprehensive Financial Report for FY2022</em>.   <a href="https://berkeleyca.gov/sites/default/files/documents/annual-comprehensive-financial-report-fy2022.pdf">https://berkeleyca.gov/sites/default/files/documents/annual-comprehensive-financial-report-fy2022.pdf</a></p>
+    <p>[2] City of Berkeley, Office of the City Manager, <em>Process Improvements and Resources for Customers Considering ADU Projects</em>, November 7, 2025. The report discusses “Three Best Practices From Other Jurisdictions Recommended for Berkeley” and San José's ADU Universal Checklist.   <a href="https://berkeleyca.gov/sites/default/files/documents/2025-11-07%20%20%20%20%20Referral%20Response%20-%20Process%20Improvements%20and%20Resources%20for%20Customers%20Considering%20ADU%20Projects.pdf">https://berkeleyca.gov/sites/default/files/documents/2025-11-07%20%20%20%20%20Referral%20Response%20-%20Process%20Improvements%20and%20Resources%20for%20Customers%20Considering%20ADU%20Projects.pdf</a></p>
+    <p>[3] City of Berkeley, Public Works presentation, “Best Practices: Palo Alto,” discussing Palo Alto's use of traffic circles.   <a href="https://berkeleyca.gov/sites/default/files/documents/Item%201a%20Pres%20PW_Part2.pdf">https://berkeleyca.gov/sites/default/files/documents/Item%201a%20Pres%20PW_Part2.pdf</a></p>
+    <p>[4] City of Berkeley, City Auditor, <em>Berkeley's Financial Condition (FY 2016–FY 2025): Structural Deficit Poses Risk to Financial Sustainability</em>, 2026. The audit benchmarks Berkeley against Palo Alto and other California peer cities.   <a href="https://berkeleyca.gov/sites/default/files/2026-03/Berkeleys_Financial_Condition_%28FY_2016-FY_2025%29_-_Structural_Deficit_Poses_Risk_to_Financial_Sustainability.pdf">https://berkeleyca.gov/sites/default/files/2026-03/Berkeleys_Financial_Condition_%28FY_2016-FY_2025%29_-_Structural_Deficit_Poses_Risk_to_Financial_Sustainability.pdf</a></p>
+    <p>[5] City of San José, FY2024–25 budget-development direction, summarized in the May 2, 2024 Housing & Community Development Commission memorandum. Council's sequence included identifying cost savings and efficiencies without service impacts, eliminating vacant positions with minimal service impacts, reducing or eliminating current services where necessary, and identifying revenue sources that could offset reductions.   <a href="https://www.sanjoseca.gov/home/showpublisheddocument/111551/638506863503270000">https://www.sanjoseca.gov/home/showpublisheddocument/111551/638506863503270000</a></p>
+    <p>[6] City of Berkeley, “Proposed budget looks to stabilize City finances,” describing the FY2026 process in which departments submitted scenarios for 10 percent and 12.5 percent General Fund reductions. See also Berkeley Council Scorecards analysis of the across-the-board reduction approach.   <a href="https://berkeleyca.gov/community-recreation/news/proposed-budget-looks-stabilize-city-finances">https://berkeleyca.gov/community-recreation/news/proposed-budget-looks-stabilize-city-finances</a></p>
+    <p>[7] City of Palo Alto, <em>FY 2023 Budget Development Guidelines</em>, Attachment B to the Long Range Financial Forecast. Guidelines 4–8 address business-process redesign and reallocation, alternative service delivery, cost savings, new revenue, and offsetting resource augmentations with reductions elsewhere whenever possible.   <a href="https://www.cityofpaloalto.org/files/assets/public/administrative-services/city-budgets/fy-2022-city-budget/new-folder/2022-lrff-cmr-13800-13502.pdf">https://www.cityofpaloalto.org/files/assets/public/administrative-services/city-budgets/fy-2022-city-budget/new-folder/2022-lrff-cmr-13800-13502.pdf</a></p>
+    <p>[8] Councilmember Terry Taplin (author) and Councilmember Bartlett (co-sponsor), <em>Recommendations for the Formulation of Advanced Fiscal Policies to Institutionalize Strategic Bond Issuance, Optimize Municipal Investment Returns, and Leverage Intergovernmental and Philanthropic Capital Funding</em>, referral to the Budget and Finance Committee, June 17 2025. The referral asks the City Manager to develop a policy establishing &ldquo;a regular, predictive schedule for general obligation bond issuance,&rdquo; informed by analysis of the City&rsquo;s bonding capacity, and concludes that issuing $250&ndash;$300 million in general obligation bonds over 25&ndash;30 years is fiscally viable &ldquo;based on peer practices and Berkeley&rsquo;s current assessed valuation growth.&rdquo;</p>
+    <p>[9] Berkeley labor agreements preserve specified management rights subject to the terms of the applicable MOU. California's Meyers-Milias-Brown Act and Public Employment Relations Board decisions distinguish fundamental managerial decisions from bargainable effects and working conditions. Any claim that Berkeley's agreements are unusually restrictive would require a separate comparison with peer-city agreements and is not made here.   City of Berkeley labor agreement materials:   <a href="https://berkeleyca.gov/sites/default/files/documents/2024-12-03%20Item%2006%20Memorandum%20of%20Understanding%20%20Public%20Employees%20Union%20%E2%80%93%20Supp%20%28Supp%201%29.pdf">https://berkeleyca.gov/sites/default/files/documents/2024-12-03%20Item%2006%20Memorandum%20of%20Understanding%20%20Public%20Employees%20Union%20%E2%80%93%20Supp%20%28Supp%201%29.pdf</a></p>
+    <p>California Government Code, Meyers-Milias-Brown Act:   <a href="https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?chapter=10.&part=&lawCode=GOV&title=1.&article=">https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?chapter=10.&part=&lawCode=GOV&title=1.&article=</a></p>
+    <p>California Public Employment Relations Board, management-rights precedent:   <a href="https://perb.ca.gov/decision-headnote/headnote-for-2298m-608-06000-management-rights-clause-management-prerogative/">https://perb.ca.gov/decision-headnote/headnote-for-2298m-608-06000-management-rights-clause-management-prerogative/</a></p>
+    <h3>Related</h3>
+    <p><a href="crayon-box.html">The Crayon Box</a> &middot; <a href="bond-alibi.html">Bonds Win Elections</a> &middot; <a href="constrained-choice.html">Which Version, Never Whether</a> &middot; <a href="measuring-nothing.html">You Can&rsquo;t Prioritize What You Can&rsquo;t Measure</a> &middot; <a href="framework.html">The Berkeley Budget Framework</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

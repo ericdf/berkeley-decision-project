@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berkeley Decision Project — Better questions. Better evidence. Better choices.</title>
+<meta name="description" content="Frameworks, methods and worked examples for improving how Berkeley makes public decisions.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-hover:#255A54; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --hero-bg:#1a2e2b; --hero-rule:#2f5c56; --hero-ink:#fff; --hero-ink-2:#a8c5c0;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-hover:#91C9C0; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331;
+    --hero-bg:#16211f; --hero-rule:#33524d; --hero-ink:#eef5f3; --hero-ink-2:#93b3ad; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-hover:#91C9C0; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+  --hero-bg:#16211f; --hero-rule:#33524d; --hero-ink:#eef5f3; --hero-ink-2:#93b3ad;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-hover:#255A54; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --hero-bg:#1a2e2b; --hero-rule:#2f5c56; --hero-ink:#fff; --hero-ink-2:#a8c5c0;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif);
+       line-height: 1.62; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); }
+a:hover { color: var(--accent-hover); }
+
+.nav { position: sticky; top: 0; z-index: 50; background: var(--hero-bg); border-bottom: 1px solid var(--hero-rule); }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: var(--hero-ink); letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: var(--hero-ink-2); margin-top: 3px; font-family: var(--sans); }
+
+.hero { background: var(--hero-bg); padding: 54px 26px 46px; border-bottom: 1px solid var(--hero-rule); }
+.hero-in { max-width: 46rem; margin: 0 auto; }
+.hero h1 { font-family: var(--sans); font-size: 40px; font-weight: 900; color: var(--hero-ink);
+           line-height: 1.08; letter-spacing: -.6px; }
+.hero .tag { font-family: var(--sans); font-size: 17px; font-weight: 600; color: var(--accent);
+             margin-top: 12px; letter-spacing: .2px; }
+.hero .lede { font-size: 17px; color: var(--hero-ink-2); margin-top: 18px; max-width: 38rem; }
+.cta { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
+.cta a { font-family: var(--sans); font-size: 14px; font-weight: 700; text-decoration: none;
+         padding: 11px 18px; border-radius: 6px; border: 1px solid var(--hero-rule);
+         color: var(--hero-ink); transition: background .15s, border-color .15s; }
+.cta a:hover { background: rgba(255,255,255,.07); border-color: var(--accent); color: var(--hero-ink); }
+.cta a.primary { background: var(--accent); border-color: var(--accent); color: #08201d; }
+:root[data-theme="dark"] .cta a.primary, .cta a.primary { color: #08201d; }
+.cta a.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+/* Decision workflow. Conceptual, not accusatory: no people, districts, grades or
+   warning badges. Six stages with a feedback edge from Measure back to Define, so the
+   reading order stays obvious while showing the process is iterative. */
+.flow { margin: 34px 0 4px; }
+.flow-track { display: flex; align-items: stretch; gap: 0; flex-wrap: wrap; }
+.stage { flex: 1 1 0; min-width: 108px; padding: 13px 10px 12px; background: rgba(255,255,255,.04);
+         border: 1px solid var(--hero-rule); border-right: 0; position: relative; }
+.stage:last-child { border-right: 1px solid var(--hero-rule); }
+.stage:first-child { border-radius: 6px 0 0 6px; }
+.stage:last-child { border-radius: 0 6px 6px 0; }
+.stage .n { font-family: var(--sans); font-size: 9.5px; font-weight: 700; letter-spacing: 1.4px;
+            text-transform: uppercase; color: var(--accent); }
+.stage .l { font-family: var(--sans); font-size: 14.5px; font-weight: 800; color: var(--hero-ink); margin-top: 5px; }
+.stage .q { font-family: var(--sans); font-size: 11.5px; color: var(--hero-ink-2); margin-top: 4px; line-height: 1.4; }
+.flow-loop { font-family: var(--sans); font-size: 11px; color: var(--hero-ink-2); margin-top: 10px;
+             display: flex; align-items: center; gap: 7px; }
+.flow-loop .arc { color: var(--accent); font-size: 13px; }
+@media (max-width: 720px) {
+  .stage { flex: 1 1 45%; border-right: 1px solid var(--hero-rule); border-radius: 6px; margin-bottom: -1px; }
+  .stage:first-child, .stage:last-child { border-radius: 6px; }
+  .hero h1 { font-size: 31px; }
+}
+
+.wrap { max-width: 46rem; margin: 0 auto; padding: 40px 26px 20px; }
+h2 { font-family: var(--sans); font-size: 13px; font-weight: 800; letter-spacing: 1.6px;
+     text-transform: uppercase; color: var(--accent); margin: 38px 0 4px; }
+h2:first-child { margin-top: 0; }
+.sec-sub { font-family: var(--sans); font-size: 13px; color: var(--ink-3); margin-bottom: 18px; }
+p { margin: .85rem 0; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); gap: 14px; margin-top: 16px; }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 7px; padding: 17px 18px; }
+.card h3 { font-family: var(--sans); font-size: 15.5px; font-weight: 800; margin-bottom: 5px; line-height: 1.3; }
+.card h3 a { text-decoration: none; }
+.card p { font-size: 14.5px; color: var(--ink-2); margin: 0; }
+.lead-card { background: var(--accent-soft); border-color: var(--accent); }
+.disclosure { margin-top: 44px; padding: 15px 17px; background: var(--panel);
+              border: 1px solid var(--rule); border-radius: 7px; font-size: 14px; color: var(--ink-2); }
+footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid var(--rule);
+         margin-top: 34px; font-family: var(--sans); font-size: 12.5px; color: var(--ink-3); }
+</style>
+</head>
+<body>
+
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="hero">
+  <div class="hero-in">
+    <h1>Berkeley Decision Project</h1>
+    <div class="tag">Better questions. Better evidence. Better choices.</div>
+    <p class="lede">Public decisions improve when we define the problem before choosing the solution,
+    consider the full range of alternatives, compare costs and consequences over the whole life of a
+    commitment, and measure what actually happens afterward.</p>
+
+    <div class="flow">
+      <div class="flow-track">
+        <div class="stage"><div class="n">01</div><div class="l">Define</div><div class="q">What problem are we solving?</div></div>
+        <div class="stage"><div class="n">02</div><div class="l">Classify</div><div class="q">What role should the City have?</div></div>
+        <div class="stage"><div class="n">03</div><div class="l">Explore</div><div class="q">What could solve it?</div></div>
+        <div class="stage"><div class="n">04</div><div class="l">Compare</div><div class="q">What are the tradeoffs?</div></div>
+        <div class="stage"><div class="n">05</div><div class="l">Decide</div><div class="q">Which choice performs best?</div></div>
+        <div class="stage"><div class="n">06</div><div class="l">Measure</div><div class="q">Did it work?</div></div>
+      </div>
+      <div class="flow-loop"><span class="arc">&#8630;</span> What you measure returns to how you define the next problem.</div>
+    </div>
+
+    <div class="cta">
+      <a class="primary" href="framework.html">See the framework</a>
+      <a href="wrong-question.html">See it applied</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <h2>Start with the role of government</h2>
+  <div class="sec-sub">A framework for deciding what government should do</div>
+  <p>Before asking how to pay for something, ask whether the City must ensure it happens, should
+  pursue it with partners, or should decline, transfer, repair or stop it. That question comes
+  first, and it is answerable.</p>
+  <p><strong>The goal is not less government. It is government capable of doing important things
+  well.</strong></p>
+  <div class="cards">
+    <div class="card lead-card">
+      <h3><a href="framework.html">A Strategy for Strategy</a></h3>
+      <p>The full framework: the Category 1 / 2 / 3 taxonomy, the decision sequence, and how to
+      budget by priority rather than by uniform percentage.</p>
+    </div>
+    <div class="card">
+      <h3><a href="framework-slides.html">The framework in 15 slides</a></h3>
+      <p>The whole argument in about five minutes, versus roughly forty-five for the paper.</p>
+    </div>
+    <div class="card">
+      <h3><a href="show-your-work.html">Show Your Work</a></h3>
+      <p>What a recommendation should expose before it is voted on: assumptions, alternatives,
+      costs, evidence, tradeoffs, expected results. It applies equally when the answer is to
+      increase, reallocate, maintain or discontinue.</p>
+    </div>
+  </div>
+
+  <h2>Recurring decision problems</h2>
+  <div class="sec-sub">Institutional habits visible in Berkeley's own record</div>
+  <p>These are patterns, not episodes. Each is documented from primary sources — budgets, audits,
+  staff reports, agendas and meeting transcripts — and each would survive a complete change of
+  personnel, because the habit lives in the process rather than in the people currently running it.</p>
+  <div class="cards">
+    <div class="card lead-card">
+      <h3><a href="crayon-box.html">The Crayon Box</a></h3>
+      <p>There are at least seven ways to close a structural deficit. Berkeley reaches for four, and
+      every one of them raises money from somebody. Includes how to tell which option a council
+      actually considered — competing motions, not who says the word &ldquo;efficiency.&rdquo;</p>
+    </div>
+    <div class="card">
+      <h3><a href="build-once.html">Build Once</a></h3>
+      <p>A facility funded for fifteen years with no operating budget. Capital committed before
+      sustainable operations were established.</p>
+    </div>
+    <div class="card">
+      <h3><a href="consent-drip.html">Two Calendars</a></h3>
+      <p>What Berkeley debates, and what it merely approves. The consent calendar as a decision
+      surface nobody examines.</p>
+    </div>
+    <div class="card">
+      <h3><a href="constrained-choice.html">Which Version, Never Whether</a></h3>
+      <p>Asking the public to choose among variants of a decision that has already been made.</p>
+    </div>
+    <div class="card">
+      <h3><a href="measuring-nothing.html">Measuring Nothing</a></h3>
+      <p>Why Berkeley cannot rank its own programs — and what that costs when everything must be
+      cut by the same percentage.</p>
+    </div>
+    <div class="card">
+      <h3><a href="bond-alibi.html">Bonds Win Elections</a></h3>
+      <p>Borrowing capacity is a financing fact, not a policy objective. Why bond financing
+      displaces budget discipline.</p>
+    </div>
+  </div>
+
+  <h2>Worked examples</h2>
+  <div class="sec-sub">The framework applied to decisions Berkeley actually made</div>
+  <p>Each of these asks the same question: what would a better decision process have required, and
+  what would it have surfaced before the vote rather than after?</p>
+  <div class="cards">
+    <div class="card">
+      <h3><a href="wrong-question.html">What If Hopkins Was the Wrong Question?</a></h3>
+      <p>Expanding the choice set on a street-safety decision that was framed as a binary.</p>
+    </div>
+    <div class="card">
+      <h3><a href="pier-ferry.html">Funding a Ferry With More Questions Than Answers</a></h3>
+      <p>A capital commitment whose operating cost was never established. Includes the figure this
+      project dropped because the business plan's own arithmetic contradicted it.</p>
+    </div>
+    <div class="card">
+      <h3><a href="small-sites.html">Buy Once, Maintain Forever</a></h3>
+      <p>What Berkeley takes on when it buys housing, and the difference between what a thing costs
+      to acquire and what it costs to own.</p>
+    </div>
+    <div class="card">
+      <h3><a href="oxford-site.html">The Site Nobody Bid On</a></h3>
+      <p>A ready-made public parcel sold while the City was searching for land.</p>
+    </div>
+    <div class="card">
+      <h3><a href="hopkins-fire-review.html">The Hopkins Street Fire Review</a></h3>
+      <p>A recommendation whose stated premise was contradicted on the record by the department that
+      owned it, four hours before the vote — and nothing in the process required anyone to reconcile
+      it before proceeding.</p>
+    </div>
+    <div class="card">
+      <h3><a href="public-safety-budget.html">One Motion, Two Answers</a></h3>
+      <p>Every department asked for the same percentage reduction, and nobody challenged the method.
+      What a uniform cut does when programs are not ranked.</p>
+    </div>
+  </div>
+
+  <div class="disclosure">
+    <p style="margin-top:0"><strong>About this project.</strong> Berkeley Decision Project is built
+    from the primary record: meeting transcripts, annotated agendas, linked votes, audits, budgets
+    and the City's audited financial statements. Every figure is traceable to a document, and where
+    a figure could not be reproduced from the source it is attributed to, it has been dropped and
+    the omission stated on the page. The project is maintained by a Berkeley resident, not a
+    journalist or an officeholder.</p>
+    <p style="margin-bottom:0">Berkeley Decision Project and
+    <a href="https://ericdf.github.io/council-scorecards/">Council Scorecards</a> are related civic
+    projects. They share research and a commitment to documented evidence, but serve different
+    purposes: this project develops better approaches to public decisions; Council Scorecards
+    evaluates elected officials.</p>
+  </div>
+
+</div>
+
+<footer>
+  Berkeley Decision Project &middot; Better questions. Better evidence. Better choices.<br>
+  Built from primary sources. Corrections are welcome and are published when received.
+</footer>
+
+</body>
+</html>
