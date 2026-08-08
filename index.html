@@ -11,6 +11,7 @@
   --accent:#2F6F68; --accent-hover:#255A54; --accent-soft:#E5F0ED;
   --quote:#2c4a7c; --quote-soft:#eef3fa;
   --hero-bg:#1a2e2b; --hero-rule:#2f5c56; --hero-ink:#fff; --hero-ink-2:#a8c5c0;
+  --on-dark-accent:#91C9C0;
   --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
   --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -18,22 +19,28 @@
   :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
     --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-hover:#91C9C0; --accent-soft:#203330;
     --quote:#8fb3e0; --quote-soft:#1a2331;
-    --hero-bg:#16211f; --hero-rule:#33524d; --hero-ink:#eef5f3; --hero-ink-2:#93b3ad; }
+    --hero-bg:#16211f; --hero-rule:#33524d; --hero-ink:#eef5f3; --hero-ink-2:#93b3ad;
+    --on-dark-accent:#91C9C0; }
 }
 :root[data-theme="dark"] {
   --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
   --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-hover:#91C9C0; --accent-soft:#203330;
   --quote:#8fb3e0; --quote-soft:#1a2331;
   --hero-bg:#16211f; --hero-rule:#33524d; --hero-ink:#eef5f3; --hero-ink-2:#93b3ad;
+  --on-dark-accent:#91C9C0;
 }
 :root[data-theme="light"] {
   --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
   --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-hover:#255A54; --accent-soft:#E5F0ED;
   --quote:#2c4a7c; --quote-soft:#eef3fa;
   --hero-bg:#1a2e2b; --hero-rule:#2f5c56; --hero-ink:#fff; --hero-ink-2:#a8c5c0;
+  --on-dark-accent:#91C9C0;
 }
 body { background: var(--ground); color: var(--ink); font-family: var(--serif);
-       line-height: 1.62; -webkit-font-smoothing: antialiased; }
+       line-height: 1.62; -webkit-font-smoothing: antialiased;
+       /* .turn breaks the measure with 100vw, which exceeds the content width when a
+          scrollbar is present. Without this the page scrolls sideways by its width. */
+       overflow-x: hidden; }
 a { color: var(--accent); }
 a:hover { color: var(--accent-hover); }
 
@@ -115,6 +122,31 @@ p { margin: .85rem 0; }
   .tool { flex-direction: column; gap: 4px; }
   .tool-cta { padding-top: 4px; }
 }
+/* The turn in the argument. Everything above establishes what reasonable decision-making
+   looks like; everything below documents the gap. It is deliberately not styled as an
+   informational callout — it breaks the measure, inverts the ground, and interrupts the
+   page rhythm, because a reader who skims should still hit it. Full-bleed via the
+   100vw/50% technique so it escapes the 46rem column without restructuring the document. */
+.turn { width: 100vw; position: relative; left: 50%; right: 50%;
+        margin-left: -50vw; margin-right: -50vw;
+        margin-top: 72px; margin-bottom: 72px;
+        background: var(--hero-bg); border-top: 1px solid var(--hero-rule);
+        border-bottom: 1px solid var(--hero-rule); padding: 64px 26px; }
+.turn-in { max-width: 46rem; margin: 0 auto; }
+.turn h2 { font-family: var(--sans); font-size: 40px; font-weight: 900; line-height: 1.1;
+           letter-spacing: -.7px; text-transform: none; color: var(--hero-ink);
+           margin: 0 0 20px; }
+.turn p { font-size: 18px; line-height: 1.6; color: var(--hero-ink-2); margin: 0 0 20px;
+          max-width: 40rem; }
+.turn p strong { color: var(--hero-ink); font-weight: 600; }
+.turn .yet { font-family: var(--sans); font-size: 23px; font-weight: 800; line-height: 1.4;
+             color: var(--on-dark-accent); margin-bottom: 0; letter-spacing: -.2px; }
+@media (max-width: 640px) {
+  .turn { padding: 44px 22px; margin-top: 52px; margin-bottom: 52px; }
+  .turn h2 { font-size: 29px; }
+  .turn p { font-size: 16.5px; }
+  .turn .yet { font-size: 19px; }
+}
 .disclosure { margin-top: 44px; padding: 15px 17px; background: var(--panel);
               border: 1px solid var(--rule); border-radius: 7px; font-size: 14px; color: var(--ink-2); }
 footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid var(--rule);
@@ -182,6 +214,15 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
       <h3><a href="show-your-work-slides.html">Show Your Work, presented</a></h3>
       <p>The same argument built for a room, including the case on grant money: available funding
       does not make a project a priority, and even a four-to-one match is not a free pass.</p>
+    </div>
+  </div>
+
+  <div class="turn">
+    <div class="turn-in">
+      <h2>None of this is radical.</h2>
+      <p>It is ordinary decision discipline: <strong>define the problem, consider the choices,
+      understand their consequences, and find out whether the choice worked.</strong></p>
+      <p class="yet">And yet Berkeley repeatedly makes consequential decisions without doing it.</p>
     </div>
   </div>
 
