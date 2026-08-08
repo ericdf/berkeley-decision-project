@@ -93,6 +93,28 @@ p { margin: .85rem 0; }
 .card h3 a { text-decoration: none; }
 .card p { font-size: 14.5px; color: var(--ink-2); margin: 0; }
 .lead-card { background: var(--accent-soft); border-color: var(--accent); }
+/* Interactive tools get their own treatment rather than a plain card: they are the only
+   things on the page a reader can act on immediately, and the open button should read as
+   a destination rather than another link in a list. */
+.tool { display: flex; gap: 20px; align-items: flex-start; margin-top: 16px;
+        background: var(--accent-soft); border: 1px solid var(--rule);
+        border-left: 4px solid var(--accent); border-radius: 7px; padding: 18px 20px; }
+.tool-body { flex: 1 1 auto; }
+.tool-body p { font-size: 14.5px; color: var(--ink-2); margin: 0 0 .7rem; }
+.tool-body p:last-child { margin-bottom: 0; }
+.tool-body strong { color: var(--ink); }
+.tool-k { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 1.3px;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 9px; }
+.tool-k a { color: inherit; }
+.tool-cta { flex: 0 0 auto; padding-top: 26px; }
+.tool-cta a { display: inline-block; font-family: var(--sans); font-size: 13.5px; font-weight: 700;
+              text-decoration: none; white-space: nowrap; padding: 11px 17px; border-radius: 6px;
+              background: var(--accent); color: var(--accent-soft); transition: background .15s; }
+.tool-cta a:hover { background: var(--accent-hover); color: var(--accent-soft); }
+@media (max-width: 640px) {
+  .tool { flex-direction: column; gap: 4px; }
+  .tool-cta { padding-top: 4px; }
+}
 .disclosure { margin-top: 44px; padding: 15px 17px; background: var(--panel);
               border: 1px solid var(--rule); border-radius: 7px; font-size: 14px; color: var(--ink-2); }
 footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid var(--rule);
@@ -176,33 +198,97 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
   <div class="cards">
     <div class="card lead-card">
       <h3><a href="crayon-box.html">The Crayon Box</a></h3>
-      <p>There are at least seven ways to close a structural deficit. Berkeley reaches for four, and
-      every one of them raises money from somebody. Includes how to tell which option a council
-      actually considered — competing motions, not who says the word &ldquo;efficiency.&rdquo;</p>
+      <p>There are at least seven ways to close a deficit. Berkeley reaches for four, and every one
+      of them raises money from somebody. The three that would change what the city spends stay in
+      the box.</p>
     </div>
     <div class="card">
-      <h3><a href="build-once.html">Build Once</a></h3>
-      <p>A facility funded for fifteen years with no operating budget. Capital committed before
-      sustainable operations were established.</p>
+      <h3><a href="pier-ferry.html">Checkpoints That Don&rsquo;t Check</a></h3>
+      <p>A condition written to stop a project unless funding appears does not stop it. Reviews get
+      routed past the body with jurisdiction. The document holding the decisive numbers is never
+      presented to the people voting the money. Years and millions later, nobody has decided whether
+      the city can — or should — proceed.</p>
     </div>
     <div class="card">
-      <h3><a href="consent-drip.html">Two Calendars</a></h3>
-      <p>What Berkeley debates, and what it merely approves. The consent calendar as a decision
-      surface nobody examines.</p>
+      <h3><a href="bond-alibi.html">Bonds Win Elections; Budget Discipline Does Not</a></h3>
+      <p>A chronically underfunded service has two fixes: raise new money, or move money from
+      something else. Only one produces a highly visible political accomplishment. The other leaves
+      no trace a voter could ever be shown.</p>
+    </div>
+    <div class="card">
+      <h3><a href="consent-drip.html">Scrutiny Follows Controversy</a></h3>
+      <p>One calendar gets debated; the other is adopted in a single motion. Which pile an item
+      lands in has little relationship to what it commits the city to. The record suggests scrutiny
+      follows present controversy instead: contested items get discussion; accumulating obligations
+      often do not.</p>
     </div>
     <div class="card">
       <h3><a href="constrained-choice.html">Which Version, Never Whether</a></h3>
-      <p>Asking the public to choose among variants of a decision that has already been made.</p>
+      <p>A survey can only measure the choices it offers. Berkeley asks residents which design,
+      which location, which of these priorities — rarely whether to proceed at all. The result is a
+      percentage that measures agreement with a prepared list, and then travels as though it
+      measured public support for the decision.</p>
     </div>
     <div class="card">
-      <h3><a href="measuring-nothing.html">Measuring Nothing</a></h3>
-      <p>Why Berkeley cannot rank its own programs — and what that costs when everything must be
-      cut by the same percentage.</p>
+      <h3><a href="measuring-nothing.html">You Can&rsquo;t Prioritize What You Can&rsquo;t Measure</a></h3>
+      <p>Berkeley mostly counts activity rather than outcomes. Without knowing what programs
+      accomplish for what they cost, Council cannot reliably rank them — making across-the-board
+      cuts less a priority decision than a substitute for one.</p>
     </div>
     <div class="card">
-      <h3><a href="bond-alibi.html">Bonds Win Elections</a></h3>
-      <p>Borrowing capacity is a financing fact, not a policy objective. Why bond financing
-      displaces budget discipline.</p>
+      <h3><a href="build-once.html">Nobody Has Priced the Building</a></h3>
+      <p>A capital project gets appropriated, designed and built. What it costs to run is decided
+      later, by different people, out of a different budget. Nothing in the sequence requires that
+      number before the doors open — so the question arrives when the building does, and by then the
+      answer changes nothing.</p>
+    </div>
+    <div class="card">
+      <h3><a href="small-sites.html">Buy Once, Pay Forever</a></h3>
+      <p>Berkeley compares what commitments cost to start, but rarely what they cost to carry.
+      Maintenance, reserves, follow-on subsidies and revenue effects sit outside the comparison that
+      decides the purchase. The City&rsquo;s own records show those costs arriving later, one
+      appropriation at a time.</p>
+    </div>
+  </div>
+
+  <h2>Decision tools</h2>
+  <div class="sec-sub">Make the tradeoffs visible for yourself</div>
+
+  <div class="tool">
+    <div class="tool-body">
+      <div class="tool-k">&#9881; Interactive &mdash; try <a href="crayon-box.html">the Crayon Box</a> yourself</div>
+      <p><a href="crayon-box.html">The Crayon Box</a> argues that Berkeley reaches for the four
+      options that raise money and doesn&rsquo;t touch the three that would change what it spends.
+      <strong>The Berkeley Budget Lab</strong> puts you in the chair with the City Manager&rsquo;s
+      own scenarios: protect a department, accept its cut, or make it absorb more. Every service you
+      protect pushes the savings onto one you did not &mdash; which is the choice reprioritizing
+      forces, and the reason it is rarely proposed.</p>
+    </div>
+    <div class="tool-cta">
+      <a href="https://ericdf.github.io/budget_lab/">Open the Budget Lab &rarr;</a>
+    </div>
+  </div>
+
+  <div class="tool">
+    <div class="tool-body">
+      <div class="tool-k">&#9881; Interactive &mdash; what the habits cost a household</div>
+      <p>These habits arrive as a bill. <strong>The Berkeley Tax Explorer</strong> lets you do that
+      calculation comprehensively &mdash; every <strong>2026 measure</strong> together with what you
+      already pay, modeled against your own household rather than a typical one, and projected out
+      thirty years. It runs entirely in your browser: no account, no cookies, no server, nothing
+      collected, nothing shared.</p>
+      <p>Measure FF reached voters as a <em>rate</em> &mdash; 17 cents per square foot of
+      residential improvements &mdash; next to the aggregate it would raise, about $15 million a
+      year. Both true; neither is what a household pays. <strong>The voter had to do the
+      multiplication:</strong> 17 cents is $255 a year on a 1,500-square-foot home, $340 on 2,000,
+      $425 on 2,500. A rate looks small, an aggregate looks like someone else&rsquo;s money, and the
+      number in between is the one nobody prints.</p>
+      <p><strong>And nobody rolls them up.</strong> Each measure seemed modest in isolation. The
+      butcher&rsquo;s bill is the cumulative tax burden &mdash; and assembling it is left to you,
+      which is why new revenue is <a href="crayon-box.html">the easy crayon</a>.</p>
+    </div>
+    <div class="tool-cta">
+      <a href="https://ericdf.github.io/berkeley-tax-explorer/">Open the Tax Explorer &rarr;</a>
     </div>
   </div>
 
@@ -214,16 +300,6 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
     <div class="card">
       <h3><a href="wrong-question.html">What If Hopkins Was the Wrong Question?</a></h3>
       <p>Expanding the choice set on a street-safety decision that was framed as a binary.</p>
-    </div>
-    <div class="card">
-      <h3><a href="pier-ferry.html">Funding a Ferry With More Questions Than Answers</a></h3>
-      <p>A capital commitment whose operating cost was never established. Includes the figure this
-      project dropped because the business plan's own arithmetic contradicted it.</p>
-    </div>
-    <div class="card">
-      <h3><a href="small-sites.html">Buy Once, Maintain Forever</a></h3>
-      <p>What Berkeley takes on when it buys housing, and the difference between what a thing costs
-      to acquire and what it costs to own.</p>
     </div>
     <div class="card">
       <h3><a href="oxford-site.html">The Site Nobody Bid On</a></h3>
