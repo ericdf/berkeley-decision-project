@@ -100,6 +100,38 @@ p { margin: .85rem 0; }
 .card h3 a { text-decoration: none; }
 .card p { font-size: 14.5px; color: var(--ink-2); margin: 0; }
 .lead-card { background: var(--accent-soft); border-color: var(--accent); }
+/* Wayfinding. The homepage should read as one argument — thesis, method, failure
+   modes, proof, exploration — so each stage opens with the question a visitor is
+   actually asking. Deliberately unnumbered: this orients, it is not a wizard. */
+.way { font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--ink);
+       margin: 40px 0 -2px; letter-spacing: -.1px; }
+.way + h2 { margin-top: 6px; }
+/* A slide deck is another presentation of its essay, not a peer destination. */
+.alt { font-family: var(--sans); font-size: 12.5px; color: var(--ink-3);
+       margin-top: 10px !important; padding-top: 9px; border-top: 1px solid var(--rule); }
+.alt a { font-weight: 600; }
+/* One obvious action closing the framework section. */
+.step { margin-top: 18px; }
+.step-cta { display: inline-block; font-family: var(--sans); font-size: 14px; font-weight: 700;
+            text-decoration: none; padding: 11px 19px; border-radius: 6px;
+            background: var(--accent); color: var(--accent-soft); transition: background .15s; }
+.step-cta:hover { background: var(--accent-hover); color: var(--accent-soft); }
+/* The lead worked example carries more weight than the ones that follow it. */
+.feature { background: var(--panel); border: 1px solid var(--accent); border-left: 4px solid var(--accent);
+           border-radius: 7px; padding: 20px 22px; margin-top: 16px; }
+.feature h3 { font-family: var(--sans); font-size: 20px; font-weight: 800; line-height: 1.25;
+              margin-bottom: 7px; letter-spacing: -.2px; }
+.feature h3 a { text-decoration: none; }
+.feature p { font-size: 15px; color: var(--ink-2); margin: 0 0 14px; }
+.feature-cta { display: inline-block; font-family: var(--sans); font-size: 13.5px; font-weight: 700;
+               text-decoration: none; padding: 10px 17px; border-radius: 6px;
+               background: var(--accent); color: var(--accent-soft); transition: background .15s; }
+.feature-cta:hover { background: var(--accent-hover); color: var(--accent-soft); }
+.more-ex { margin-top: 22px; }
+/* The hero proposition: what the project is, before its component resources. */
+.hero .prop { font-family: var(--sans); font-size: 16.5px; color: var(--hero-ink); margin-top: 18px;
+              max-width: 40rem; line-height: 1.55; }
+.hero .prop strong { color: var(--on-dark-accent); font-weight: 800; }
 /* Interactive tools get their own treatment rather than a plain card: they are the only
    things on the page a reader can act on immediately, and the open button should read as
    a destination rather than another link in a list. */
@@ -161,6 +193,9 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
   <div class="hero-in">
     <h1>Berkeley Decision Project</h1>
     <div class="tag">Better questions. Better evidence. Better choices.</div>
+    <p class="prop">Berkeley makes consequential public decisions without a consistent method for
+    defining problems, comparing alternatives, understanding costs, and measuring results.
+    <strong>This project proposes one.</strong></p>
     <p class="lede">Public decisions improve when we define the problem before choosing the solution,
     consider the full range of alternatives, compare costs and consequences over the whole life of a
     commitment, and measure what actually happens afterward.</p>
@@ -186,6 +221,7 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
 
 <div class="wrap">
 
+  <div class="way">How should we make decisions?</div>
   <h2>Start with the role of government</h2>
   <div class="sec-sub">A framework for deciding what government should do</div>
   <p>Before asking how to pay for something, ask whether the City must ensure it happens, should
@@ -198,24 +234,18 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
       <h3><a href="framework.html">A Strategy for Strategy</a></h3>
       <p>The full framework: the Category 1 / 2 / 3 taxonomy, the decision sequence, and how to
       budget by priority rather than by uniform percentage.</p>
-    </div>
-    <div class="card">
-      <h3><a href="framework-slides.html">The framework, presented</a></h3>
-      <p>The same argument built for a room: why core responsibilities slip, how tactical wins
-      become strategic losses, and what earns a place in Berkeley&rsquo;s priority portfolio.</p>
+      <p class="alt">Prefer slides? <a href="framework-slides.html">View the short version.</a></p>
     </div>
     <div class="card lead-card">
       <h3><a href="show-your-work.html">Show Your Work</a></h3>
       <p>What a recommendation should expose before it is voted on: assumptions, alternatives,
       costs, evidence, tradeoffs, expected results. It applies equally when the answer is to
       increase, reallocate, maintain or discontinue.</p>
-    </div>
-    <div class="card">
-      <h3><a href="show-your-work-slides.html">Show Your Work, presented</a></h3>
-      <p>The same argument built for a room, including the case on grant money: available funding
-      does not make a project a priority, and even a four-to-one match is not a free pass.</p>
+      <p class="alt">Prefer slides? <a href="show-your-work-slides.html">View the short version.</a></p>
     </div>
   </div>
+
+  <div class="step"><a class="step-cta" href="framework.html">Explore the decision framework &rarr;</a></div>
 
   <div class="turn">
     <div class="turn-in">
@@ -226,6 +256,7 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
     </div>
   </div>
 
+  <div class="way">What happens when we don&rsquo;t do this?</div>
   <h2>Recurring decision problems</h2>
   <div class="sec-sub">Institutional habits visible in Berkeley's own record</div>
   <p>These are patterns, not episodes. Each is documented from primary sources — budgets, audits,
@@ -295,6 +326,41 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
     </div>
   </div>
 
+  <div class="way">Would this actually change anything?</div>
+  <h2>Put the framework to work</h2>
+  <div class="sec-sub">The framework applied to decisions Berkeley actually made</div>
+  <p>Each of these asks the same question: what would a better decision process have required, and
+  what would it have surfaced before the vote rather than after?</p>
+
+  <div class="feature">
+    <h3><a href="wrong-question.html">What If Hopkins Was the Wrong Question?</a></h3>
+    <p>A street-safety decision arrived framed as a binary. Reopening the problem definition
+    changes which alternatives are on the table &mdash; and shows that applying the framework can
+    change the decision itself, not merely dress up the same answer in more analysis.</p>
+    <a class="feature-cta" href="wrong-question.html">See the analysis &rarr;</a>
+  </div>
+
+  <div class="sec-sub more-ex">More worked examples</div>
+  <div class="cards">
+    <div class="card">
+      <h3><a href="oxford-site.html">Oxford: The Option Not Taken</a></h3>
+      <p>A ready-made public parcel sold while the City was searching for land.</p>
+    </div>
+    <div class="card">
+      <h3><a href="hopkins-fire-review.html">The Hopkins Street Fire Review</a></h3>
+      <p>A recommendation whose stated premise was contradicted on the record by the department that
+      owned it, four hours before the vote — and nothing in the process required anyone to reconcile
+      it before proceeding.</p>
+    </div>
+    <div class="card">
+      <h3><a href="public-safety-budget.html">Cutting Without Prioritizing</a></h3>
+      <p>Every department was asked for the same percentage reduction, even though equal cuts do
+      not have equal consequences. Council never ranked programs by importance, effectiveness, or
+      minimum viable service.</p>
+    </div>
+  </div>
+
+  <div class="way">Can I try it myself?</div>
   <h2>Decision tools</h2>
   <div class="sec-sub">Make the tradeoffs visible for yourself</div>
 
@@ -334,32 +400,6 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
     </div>
     <div class="tool-cta">
       <a href="https://ericdf.github.io/berkeley-tax-explorer/">Open the Tax Explorer &rarr;</a>
-    </div>
-  </div>
-
-  <h2>Worked examples</h2>
-  <div class="sec-sub">The framework applied to decisions Berkeley actually made</div>
-  <p>Each of these asks the same question: what would a better decision process have required, and
-  what would it have surfaced before the vote rather than after?</p>
-  <div class="cards">
-    <div class="card">
-      <h3><a href="wrong-question.html">What If Hopkins Was the Wrong Question?</a></h3>
-      <p>Expanding the choice set on a street-safety decision that was framed as a binary.</p>
-    </div>
-    <div class="card">
-      <h3><a href="oxford-site.html">Oxford: The Option Not Taken</a></h3>
-      <p>A ready-made public parcel sold while the City was searching for land.</p>
-    </div>
-    <div class="card">
-      <h3><a href="hopkins-fire-review.html">The Hopkins Street Fire Review</a></h3>
-      <p>A recommendation whose stated premise was contradicted on the record by the department that
-      owned it, four hours before the vote — and nothing in the process required anyone to reconcile
-      it before proceeding.</p>
-    </div>
-    <div class="card">
-      <h3><a href="public-safety-budget.html">One Motion, Two Answers</a></h3>
-      <p>Every department asked for the same percentage reduction, and nobody challenged the method.
-      What a uniform cut does when programs are not ranked.</p>
     </div>
   </div>
 
