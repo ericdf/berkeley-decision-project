@@ -110,12 +110,6 @@ p { margin: .85rem 0; }
 .alt { font-family: var(--sans); font-size: 12.5px; color: var(--ink-3);
        margin-top: 10px !important; padding-top: 9px; border-top: 1px solid var(--rule); }
 .alt a { font-weight: 600; }
-/* One obvious action closing the framework section. */
-.step { margin-top: 18px; }
-.step-cta { display: inline-block; font-family: var(--sans); font-size: 14px; font-weight: 700;
-            text-decoration: none; padding: 11px 19px; border-radius: 6px;
-            background: var(--accent); color: var(--accent-soft); transition: background .15s; }
-.step-cta:hover { background: var(--accent-hover); color: var(--accent-soft); }
 /* The lead worked example carries more weight than the ones that follow it. */
 .feature { background: var(--panel); border: 1px solid var(--accent); border-left: 4px solid var(--accent);
            border-radius: 7px; padding: 20px 22px; margin-top: 16px; }
@@ -128,6 +122,18 @@ p { margin: .85rem 0; }
                background: var(--accent); color: var(--accent-soft); transition: background .15s; }
 .feature-cta:hover { background: var(--accent-hover); color: var(--accent-soft); }
 .more-ex { margin-top: 22px; }
+/* Show Your Work is the next component of the method, not a peer of the framework:
+   full-width and labeled by sequence, but without the framework's accent border. */
+.next { background: var(--panel); border: 1px solid var(--rule); border-radius: 7px;
+        padding: 18px 20px; margin-top: 14px; }
+.next-k { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 1.3px;
+          text-transform: uppercase; color: var(--ink-3); margin-bottom: 7px; }
+.next h3 { font-family: var(--sans); font-size: 17px; font-weight: 800; line-height: 1.28;
+           margin-bottom: 6px; letter-spacing: -.15px; }
+.next h3 a { text-decoration: none; }
+.next p { font-size: 14.5px; color: var(--ink-2); margin: 0; }
+/* Inside a feature panel the alt line follows the CTA, so it needs its own spacing. */
+.feature .alt { margin-top: 15px !important; }
 /* The hero proposition: what the project is, before its component resources. */
 .hero .prop { font-family: var(--sans); font-size: 16.5px; color: var(--hero-ink); margin-top: 18px;
               max-width: 40rem; line-height: 1.55; }
@@ -229,23 +235,23 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
   first, and it is answerable.</p>
   <p><strong>The goal is not less government. It is government capable of doing important things
   well.</strong></p>
-  <div class="cards">
-    <div class="card lead-card">
-      <h3><a href="framework.html">A Strategy for Strategy</a></h3>
-      <p>The full framework: the Category 1 / 2 / 3 taxonomy, the decision sequence, and how to
-      budget by priority rather than by uniform percentage.</p>
-      <p class="alt">Prefer slides? <a href="framework-slides.html">View the short version.</a></p>
-    </div>
-    <div class="card lead-card">
-      <h3><a href="show-your-work.html">Show Your Work</a></h3>
-      <p>What a recommendation should expose before it is voted on: assumptions, alternatives,
-      costs, evidence, tradeoffs, expected results. It applies equally when the answer is to
-      increase, reallocate, maintain or discontinue.</p>
-      <p class="alt">Prefer slides? <a href="show-your-work-slides.html">View the short version.</a></p>
-    </div>
+  <div class="feature">
+    <h3><a href="framework.html">A Strategy for Strategy</a></h3>
+    <p>The full framework: the Category 1 / 2 / 3 taxonomy, the decision sequence, and how to
+    budget by priority rather than by uniform percentage.</p>
+    <a class="feature-cta" href="framework.html">Explore the decision framework &rarr;</a>
+    <p class="alt">Prefer slides? <a href="framework-slides.html">View the short version.</a></p>
   </div>
 
-  <div class="step"><a class="step-cta" href="framework.html">Explore the decision framework &rarr;</a></div>
+  <div class="next">
+    <div class="next-k">Then: choosing the solution</div>
+    <h3><a href="show-your-work.html">Show Your Work</a></h3>
+    <p>Once the problem is defined and the City&rsquo;s role is settled, this is how to determine
+    the best solution rather than assume one: what a recommendation should expose before it is
+    voted on &mdash; assumptions, alternatives, costs, evidence, tradeoffs, expected results. It
+    applies equally when the answer is to increase, reallocate, maintain or discontinue.</p>
+    <p class="alt">Prefer slides? <a href="show-your-work-slides.html">View the short version.</a></p>
+  </div>
 
   <div class="turn">
     <div class="turn-in">
@@ -256,7 +262,7 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
     </div>
   </div>
 
-  <div class="way">What happens when we don&rsquo;t do this?</div>
+  <div class="way">Where does Berkeley go wrong?</div>
   <h2>Recurring decision problems</h2>
   <div class="sec-sub">Institutional habits visible in Berkeley's own record</div>
   <p>These are patterns, not episodes. Each is documented from primary sources — budgets, audits,
