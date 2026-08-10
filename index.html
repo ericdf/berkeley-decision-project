@@ -106,10 +106,15 @@ p { margin: .85rem 0; }
 .way { font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--ink);
        margin: 40px 0 -2px; letter-spacing: -.1px; }
 .way + h2 { margin-top: 6px; }
-/* A slide deck is another presentation of its essay, not a peer destination. */
-.alt { font-family: var(--sans); font-size: 12.5px; color: var(--ink-3);
-       margin-top: 10px !important; padding-top: 9px; border-top: 1px solid var(--rule); }
-.alt a { font-weight: 600; }
+/* Where a wayfinding question heads its section directly, it needs the space the
+   following h2 would otherwise have supplied. */
+.way-lede { margin-top: 14px !important; }
+/* A slide deck is a peer entry point, not a footnote to its essay: same size and ink as
+   the description above it, so the compact version is an obvious path rather than
+   secondary metadata. The rule above it separates, it does not demote. */
+.alt { font-family: var(--sans); font-size: 14.5px; color: var(--ink-2);
+       margin-top: 11px !important; padding-top: 10px; border-top: 1px solid var(--rule-soft); }
+.alt a { font-weight: 700; }
 /* The lead worked example carries more weight than the ones that follow it. */
 .feature { background: var(--panel); border: 1px solid var(--accent); border-left: 4px solid var(--accent);
            border-radius: 7px; padding: 20px 22px; margin-top: 16px; }
@@ -148,10 +153,11 @@ p { margin: .85rem 0; }
 .tool-body p { font-size: 14.5px; color: var(--ink-2); margin: 0 0 .7rem; }
 .tool-body p:last-child { margin-bottom: 0; }
 .tool-body strong { color: var(--ink); }
-.tool-k { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 1.3px;
-          text-transform: uppercase; color: var(--accent); margin-bottom: 9px; }
-.tool-k a { color: inherit; }
-.tool-cta { flex: 0 0 auto; padding-top: 26px; }
+/* The tool name now heads its own card rather than sitting inside a prose paragraph,
+   so it takes the card-title treatment instead of the old uppercase kicker. */
+.tool-h { font-family: var(--sans); font-size: 15.5px; font-weight: 800; line-height: 1.3;
+          margin-bottom: 5px; }
+.tool-cta { flex: 0 0 auto; padding-top: 4px; }
 .tool-cta a { display: inline-block; font-family: var(--sans); font-size: 13.5px; font-weight: 700;
               text-decoration: none; white-space: nowrap; padding: 11px 17px; border-radius: 6px;
               background: var(--accent); color: var(--accent-soft); transition: background .15s; }
@@ -229,120 +235,84 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
 
   <div class="way">How should we make decisions?</div>
   <h2>Start with the role of government</h2>
-  <div class="sec-sub">A framework for deciding what government should do</div>
   <p>Before asking how to pay for something, ask whether the City must ensure it happens, should
-  pursue it with partners, or should decline, transfer, repair or stop it. That question comes
-  first, and it is answerable.</p>
+  pursue it with partners, or should decline, transfer, repair or stop it.</p>
   <p><strong>The goal is not less government. It is government capable of doing important things
   well.</strong></p>
-  <div class="feature">
-    <h3><a href="framework.html">A Strategy for Strategy</a></h3>
-    <p>The full framework: the Category 1 / 2 / 3 taxonomy, the decision sequence, and how to
-    budget by priority rather than by uniform percentage.</p>
-    <a class="feature-cta" href="framework.html">Explore the decision framework &rarr;</a>
-    <p class="alt">Prefer slides? <a href="framework-slides.html">View the short version.</a></p>
-  </div>
-
-  <div class="next">
-    <div class="next-k">Then: choosing the solution</div>
-    <h3><a href="show-your-work.html">Show Your Work</a></h3>
-    <p>Once the problem is defined and the City&rsquo;s role is settled, this is how to determine
-    the best solution rather than assume one: what a recommendation should expose before it is
-    voted on &mdash; assumptions, alternatives, costs, evidence, tradeoffs, expected results. It
-    applies equally when the answer is to increase, reallocate, maintain or discontinue.</p>
-    <p class="alt">Prefer slides? <a href="show-your-work-slides.html">View the short version.</a></p>
+  <div class="cards">
+    <div class="card">
+      <h3><a href="framework.html">A Strategy for Strategy</a></h3>
+      <p>The framework.</p>
+      <p class="alt">Prefer slides? <a href="framework-slides.html">View the short version.</a></p>
+    </div>
+    <div class="card">
+      <h3><a href="show-your-work.html">Show Your Work</a></h3>
+      <p>What a recommendation should expose before a vote.</p>
+      <p class="alt">Prefer slides? <a href="show-your-work-slides.html">View the short version.</a></p>
+    </div>
   </div>
 
   <div class="turn">
     <div class="turn-in">
       <h2>None of this is radical.</h2>
-      <p>It is ordinary decision discipline: <strong>define the problem, consider the choices,
-      understand their consequences, and find out whether the choice worked.</strong></p>
+      <p>Define the problem. Consider the choices. Understand their consequences. Find out whether
+      the choice worked.</p>
       <p class="yet">And yet Berkeley repeatedly makes consequential decisions without doing it.</p>
     </div>
   </div>
 
   <div class="way">Where does Berkeley go wrong?</div>
-  <h2>Recurring decision problems</h2>
-  <div class="sec-sub">Institutional habits visible in Berkeley's own record</div>
-  <p>These are patterns, not episodes. Each is documented from primary sources — budgets, audits,
-  staff reports, agendas and meeting transcripts — and each would survive a complete change of
-  personnel.</p>
-  <p>Not only because the rules permit them. Most of these habits persist in the presence of an
-  available alternative that nobody reaches for: a recommendation that could have been amended and
-  was not, an item that could have been pulled and was not, a question that could have been asked
-  first and was asked afterward. <strong>What makes a habit durable is partly procedural and partly
-  cultural</strong> — what a body treats as normal, what it considers worth the friction of
-  objecting, and what it has come to expect of itself. Rules can be rewritten in an afternoon.
-  Expectations are what survive an election.</p>
+  <p class="way-lede">These are recurring patterns in Berkeley's own record &mdash; not isolated episodes, and not
+  problems that disappear when the officeholders change.</p>
   <div class="cards">
     <div class="card lead-card">
       <h3><a href="crayon-box.html">The Crayon Box</a></h3>
-      <p>There are at least seven ways to pay for something worth doing. Berkeley reaches for four,
-      and every one of them raises money from somebody. The three that would change what the city
-      spends stay in the box.</p>
+      <p>Berkeley routinely considers ways to raise more money while leaving ways to change what it
+      spends in the box.</p>
     </div>
     <div class="card">
       <h3><a href="pier-ferry.html">Checkpoints That Don&rsquo;t Check</a></h3>
-      <p>A condition written to stop a project unless funding appears does not stop it. Reviews get
-      routed past the body with jurisdiction. The document holding the decisive numbers is never
-      presented to the people voting the money. Years and millions later, nobody has decided whether
-      the city can — or should — proceed.</p>
+      <p>Conditions meant to stop or reconsider projects fail to trigger when the conditions
+      arrive.</p>
     </div>
     <div class="card">
       <h3><a href="bond-alibi.html">Bonds Win Elections; Budget Discipline Does Not</a></h3>
-      <p>A chronically underfunded service has two fixes: raise new money, or move money from
-      something else. Only one produces a highly visible political accomplishment. The other leaves
-      no trace a voter could ever be shown.</p>
+      <p>Raising new money creates a visible accomplishment; reallocating existing money does
+      not.</p>
     </div>
     <div class="card">
       <h3><a href="consent-drip.html">Scrutiny Follows Controversy</a></h3>
-      <p>Council meeting time is the scarcest thing the city has, and it has two ways to spend it:
-      real debate, or a single motion adopting dozens of items with the numbers unread. What decides
-      which an item gets is how contested it is today, not what it commits Berkeley to. One
-      resolution that spends nothing drew four hours of public comment; $6.9 million of housing
-      commitments passed across four meetings with zero speakers and no discussion at all.</p>
+      <p>Council scrutiny tracks present controversy better than the size or duration of the
+      commitment.</p>
     </div>
     <div class="card">
       <h3><a href="constrained-choice.html">Which Version, Never Whether</a></h3>
-      <p>A survey can only measure the choices it offers. Berkeley asks residents which design,
-      which location, which of these priorities — rarely whether to proceed at all. The result is a
-      percentage that measures agreement with a prepared list, and then travels as though it
-      measured public support for the decision.</p>
+      <p>Public engagement often asks residents which option they prefer without offering
+      &ldquo;don&rsquo;t do it&rdquo; as an option.</p>
     </div>
     <div class="card">
       <h3><a href="measuring-nothing.html">You Can&rsquo;t Prioritize What You Can&rsquo;t Measure</a></h3>
-      <p>Berkeley mostly counts activity rather than outcomes. Without knowing what programs
-      accomplish for what they cost, Council cannot reliably rank them — making across-the-board
-      cuts less a priority decision than a substitute for one.</p>
+      <p>Berkeley measures activity better than outcomes, leaving Council little basis for ranking
+      programs.</p>
     </div>
     <div class="card">
       <h3><a href="build-once.html">If You Build It, a Plan Will Come</a></h3>
-      <p>A capital project gets appropriated, designed and built. What it costs to run is decided
-      later, by different people, out of a different budget. Nothing in the sequence requires that
-      number before the doors open — so the question arrives when the building does, and by then the
-      answer changes nothing.</p>
+      <p>Capital projects can advance without first establishing how their ongoing operations will
+      be funded.</p>
     </div>
     <div class="card">
       <h3><a href="small-sites.html">Buy Once, Pay Forever</a></h3>
-      <p>Berkeley compares what commitments cost to start, but rarely what they cost to carry.
-      Maintenance, reserves, follow-on subsidies and revenue effects sit outside the comparison that
-      decides the purchase. The City&rsquo;s own records show those costs arriving later, one
-      appropriation at a time.</p>
+      <p>Decisions emphasize acquisition cost while pushing maintenance, subsidies and other
+      lifecycle costs into the future.</p>
     </div>
   </div>
 
   <div class="way">Would this actually change anything?</div>
-  <h2>Put the framework to work</h2>
-  <div class="sec-sub">The framework applied to decisions Berkeley actually made</div>
-  <p>Each of these asks the same question: what would a better decision process have required, and
-  what would it have surfaced before the vote rather than after?</p>
+  <h2>See it applied</h2>
 
   <div class="feature">
     <h3><a href="wrong-question.html">What If Hopkins Was the Wrong Question?</a></h3>
-    <p>A street-safety decision arrived framed as a binary. Reopening the problem definition
-    changes which alternatives are on the table &mdash; and shows that applying the framework can
-    change the decision itself, not merely dress up the same answer in more analysis.</p>
+    <p>Expanding the choice set on a street-safety decision framed as a binary.</p>
     <a class="feature-cta" href="wrong-question.html">See the analysis &rarr;</a>
   </div>
 
@@ -355,30 +325,23 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
     <div class="card">
       <h3><a href="hopkins-fire-review.html">The Hopkins Street Fire Review</a></h3>
       <p>A recommendation whose stated premise was contradicted on the record by the department that
-      owned it, four hours before the vote — and nothing in the process required anyone to reconcile
-      it before proceeding.</p>
+      owned it, four hours before the vote.</p>
     </div>
     <div class="card">
       <h3><a href="public-safety-budget.html">Cutting Without Prioritizing</a></h3>
       <p>Every department was asked for the same percentage reduction, even though equal cuts do
-      not have equal consequences. Council never ranked programs by importance, effectiveness, or
-      minimum viable service.</p>
+      not have equal consequences.</p>
     </div>
   </div>
 
   <div class="way">Can I try it myself?</div>
-  <h2>Decision tools</h2>
-  <div class="sec-sub">Make the tradeoffs visible for yourself</div>
+  <h2>Try the decisions yourself</h2>
 
   <div class="tool">
     <div class="tool-body">
-      <div class="tool-k">&#9881; Interactive &mdash; try <a href="crayon-box.html">the Crayon Box</a> yourself</div>
-      <p><a href="crayon-box.html">The Crayon Box</a> argues that Berkeley reaches for the four
-      options that raise money and doesn&rsquo;t touch the three that would change what it spends.
-      <strong>The Berkeley Budget Lab</strong> puts you in the chair with the City Manager&rsquo;s
-      own scenarios: protect a department, accept its cut, or make it absorb more. Every service you
-      protect pushes the savings onto one you did not &mdash; which is the choice reprioritizing
-      forces, and the reason it is rarely proposed.</p>
+      <h3 class="tool-h">Berkeley Budget Lab</h3>
+      <p>Protect one service and the savings have to come from another. See what reprioritizing
+      actually requires.</p>
     </div>
     <div class="tool-cta">
       <a href="https://ericdf.github.io/budget_lab/">Open the Budget Lab &rarr;</a>
@@ -387,22 +350,9 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
 
   <div class="tool">
     <div class="tool-body">
-      <div class="tool-k">&#9881; Interactive &mdash; what the habits cost a household</div>
-      <p>These habits arrive as a bill. <strong>The Berkeley Tax Explorer</strong> lets you do that
-      calculation comprehensively &mdash; every <strong>2026 measure</strong> together with what you
-      already pay, modeled against your own household rather than a typical one, and projected out
-      thirty years. It runs entirely in your browser: no account, no cookies, no server, nothing
-      collected, nothing shared.</p>
-      <p>Measure FF reached voters as a <em>rate</em> &mdash; 17 cents per square foot of
-      residential improvements &mdash; next to the aggregate it would raise, about $15 million a
-      year. Both true; neither is what a household pays. <strong>The voter had to do the
-      multiplication:</strong> 17 cents is $255 a year on a 1,500-square-foot home, $340 on 2,000,
-      $425 on 2,500. A rate looks small, an aggregate looks like someone else&rsquo;s money, and the
-      number in between is the one nobody prints.</p>
-      <p><strong>And nobody rolls them up.</strong> Each measure seemed modest in isolation. The
-      butcher&rsquo;s bill is the cumulative tax burden &mdash; and assembling it is left to you,
-      which is one reason new revenue is <a href="crayon-box.html">the easy crayon</a>. Another is
-      that <a href="bond-alibi.html">only one of the two fixes can be campaigned on</a>.</p>
+      <h3 class="tool-h">Berkeley Tax Explorer</h3>
+      <p>See what Berkeley&rsquo;s upcoming tax measures mean for your own household &mdash;
+      individually and cumulatively over time.</p>
     </div>
     <div class="tool-cta">
       <a href="https://ericdf.github.io/berkeley-tax-explorer/">Open the Tax Explorer &rarr;</a>
@@ -410,12 +360,9 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
   </div>
 
   <div class="disclosure">
-    <p style="margin-top:0"><strong>About this project.</strong> Berkeley Decision Project is built
-    from the primary record: meeting transcripts, annotated agendas, linked votes, audits, budgets
-    and the City's audited financial statements. Every figure is traceable to a document, and where
-    a figure could not be reproduced from the source it is attributed to, it has been dropped and
-    the omission stated on the page. The project is maintained by a Berkeley resident, not a
-    journalist or an officeholder.</p>
+    <p style="margin-top:0"><strong>About this project.</strong> Built from Berkeley's primary
+    record: meeting transcripts, agendas, votes, audits, budgets and audited financial statements.
+    Figures are traceable to their sources; unsupported ones are removed.</p>
     <p style="margin-bottom:0">Berkeley Decision Project and
     <a href="https://ericdf.github.io/council-scorecards/">Council Scorecards</a> are related civic
     projects. They share research and a commitment to documented evidence, but serve different
