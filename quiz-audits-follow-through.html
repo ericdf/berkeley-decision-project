@@ -204,26 +204,31 @@ a:hover { color: var(--accent-hover); }
         font-variant-numeric: tabular-nums; }
 .hh-note { font-size: 13px; color: var(--ink-3); margin-top: 12px; font-style: italic; }
 
-/* Tax stack. A stacked horizontal bar per household, revealed one layer at a
-   time. The sequence is the argument, so it must be legible without motion:
-   under prefers-reduced-motion every stage appears without transition. */
+/* Ballot additions, one row per measure. A stacked bar against the existing bill
+   made every measure a sliver; measured against each other they are legible and
+   the comparison is the one a voter is making. */
 .stack { margin-top: 20px; }
 .stack-h { font-family: var(--sans); font-size: 19px; font-weight: 800; letter-spacing: -.2px; }
 .stack-sub { font-size: 15.5px; color: var(--ink-2); margin-top: 6px; }
-.st-hh { margin-top: 20px; }
-.st-n { font-family: var(--sans); font-size: 14.5px; font-weight: 800; }
+.st-hh { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--rule); }
+.st-hh:first-of-type { border-top: 0; }
+.st-n { font-family: var(--sans); font-size: 15px; font-weight: 800; }
 .st-v { font-family: var(--sans); font-size: 12.5px; color: var(--ink-3); font-weight: 600; }
-.st-bar { display: flex; height: 34px; margin-top: 7px; border-radius: 5px; overflow: hidden;
-          background: var(--rule-soft); border: 1px solid var(--rule); }
-.st-seg { height: 100%; }
-.st-total { font-family: var(--sans); font-size: 14.5px; font-weight: 800; margin-top: 7px;
+.st-ctx { font-size: 14px; color: var(--ink-2); margin-top: 4px; }
+.st-rows { display: grid; gap: 9px; margin-top: 13px; }
+.st-row { display: grid; grid-template-columns: 15rem 1fr; gap: 12px; align-items: center; }
+.st-rl { font-family: var(--sans); font-size: 13.5px; line-height: 1.35; }
+.st-rt { display: flex; align-items: center; gap: 9px; }
+.st-rb { height: 22px; border-radius: 3px; min-width: 3px; }
+.st-ra { font-family: var(--sans); font-size: 13.5px; font-weight: 800;
+         font-variant-numeric: tabular-nums; white-space: nowrap; }
+.st-total { font-family: var(--sans); font-size: 16px; font-weight: 800; margin-top: 14px;
             font-variant-numeric: tabular-nums; }
-.st-arrow { color: var(--ink-3); margin: 0 2px; }
-.st-delta { color: var(--accent); }
-/* The share of the Berkeley taxes it adds to. Against the whole bill this reads
-   as ~3-4%, which understates what is being decided — the Prop 13 base levy and
-   the school and county charges are not on this ballot. */
-.st-pct { display: block; font-size: 13.5px; font-weight: 700; color: var(--accent); margin-top: 2px; }
+.st-pct { display: block; font-size: 13.5px; font-weight: 700; color: var(--accent); margin-top: 3px; }
+@media (max-width: 620px) {
+  .st-row { grid-template-columns: 1fr; gap: 3px; }
+  .st-rl { font-size: 13px; }
+}
 .st-basis { font-family: var(--sans); font-size: 11px; font-weight: 800; letter-spacing: 1.4px;
             text-transform: uppercase; color: var(--ink-3); margin-top: 26px;
             padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
