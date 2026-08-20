@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berkeley&rsquo;s Hidden Budget Cycle</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Calendar placement is the whole argument on this page, so it gets a visual token rather
+   than being buried in a sentence. Consent and action are colored differently for the same
+   reason the bond page colors instrument type: the reader should be able to scan a column
+   and see the pattern before reading a word of it. */
+.cal { font-family: var(--sans); font-size: .7rem; font-weight: 700; white-space: nowrap;
+       letter-spacing: .06em; text-transform: uppercase; }
+.cal-c { color: var(--accent); }
+.cal-a { color: var(--quote); }
+.yr { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+      color: var(--ink-2); white-space: nowrap; }
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head><body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Analysis</div>
+  <h1>Berkeley&rsquo;s Hidden Budget Cycle</h1>
+  <p class="standfirst">Months after Berkeley adopts the budget residents recognize as <em>the</em> budget, a second appropriations cycle begins. It moves hundreds of millions of dollars, it runs twice a year, and nobody has to account for it. That is not a failure of the process. That is the process working normally.</p>
+  <div class="byline">An argument about where money gets decided &middot; August 2026</div>
+
+  <p>On December 2, 2025, the Berkeley City Council enacted an amendment appropriating <strong>$358,073,496</strong> across all city funds.</p>
+
+  <p>At that meeting the Mayor asked whether council members had comments on the consent calendar. They did. Over the following minutes several members spoke &mdash; about the Berkeley Community Media contract, about a referral to notify residents ahead of infrastructure work, and at length about three charitable items, pledging contributions of <strong>$250</strong> and <strong>$100</strong> from their office accounts to the Berkeley Holiday Fund, the Urban Compassion Project, and a Kwanzaa toy drive.</p>
+
+  <p>Item 2, the appropriation, drew no comment at all.</p>
+
+  <div class="pull">Contributions of $250 and $100 were named, itemized and thanked. The $358 million was not mentioned.</div>
+
+  <p>Nothing improper happened that night. No rule was broken, no procedure skipped, no one misled. The item was properly noticed, lawfully adopted, and passed by the required vote. It was the second of two readings, and the first had passed the same way two weeks earlier.</p>
+
+  <p>That is the finding. Berkeley has a second budget cycle that appropriates at this scale, and there is no point in it at which anyone is obliged to explain what the money is for. The absence is structural. It recurs twice a year, it has never behaved otherwise in the period examined here, and it does not depend on who holds the seats.</p>
+
+  <h2>The governance problem, stated plainly</h2>
+
+  <p>The problem is not that carryovers exist. Projects cross fiscal years, contracts run past June 30, grants stay tied to their purposes, and money has to follow unfinished work. A city that could not carry funds forward would be a worse-run city.</p>
+
+  <p>Nor is the problem that the contents are bad. Nothing here argues that any particular appropriation should have been rejected. This page takes no position on the merits of any of them.</p>
+
+  <p>The problem is that <strong>material fiscal decisions move through a recurring process that receives no examination, and no rule requires that they receive any.</strong></p>
+
+  <p>That would be a governance problem in a city with money to spare. Berkeley does not have money to spare. In the same period, it was reducing wildfire fuel clearing, emergency preparedness and shelter capacity, and asking departments for percentage cuts. Those trade-offs were debated in public, at length, on the action calendar.</p>
+
+  <p>The appropriations that ran through the second cycle were not debated at all. That does not prove any of them should have lost a comparison. It means <a href="public-safety-budget.html">no comparison occurred</a> &mdash; and comparison is the entire job.</p>
+
+  <h2>Where the second cycle comes from</h2>
+
+  <p>The mechanism is the <strong>Annual Appropriations Ordinance</strong>, or AAO. The budget adopted in June is enacted as an AAO; the AAO is then <em>amended</em> during the year to adjust spending authority. Those amendments are the second cycle.</p>
+
+  <p>There is no need to characterize this from outside. The Budget &amp; Finance Policy Committee presentation of November 6, 2025 sets out the structure in one line:</p>
+
+  <blockquote>
+    <p>&ldquo;<strong>AAO #1 (Nov/Dec):</strong> Increases the FY26 appropriation beyond the adopted budget.<br>
+    <strong>AAO #2 (May):</strong> A second adjustment typically made later in the fiscal year.&rdquo;</p>
+    <p class="attrib">First Amendment to the FY 2026 Annual Appropriations Ordinance (AAO#1), Budget &amp; Finance Policy Committee, November 6, 2025, slide 5</p>
+  </blockquote>
+
+  <p>Two amendment cycles per fiscal year, each separate from the June adoption, each a first and second reading about two weeks apart. The same presentation gives the calendar for this one: committee on November 6, committee again on November 13 if needed, first reading November 18, second reading December 2. Four meetings, four weeks, start to finish.</p>
+
+  <p>The annotated agendas record where each AAO action landed:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Fiscal year</th><th>Action</th><th>First reading</th><th>Second reading</th></tr></thead>
+      <tbody>
+        <tr><td class="yr">FY2025</td><td>Amendment &mdash; Ord. 7,961</td><td class="yr">2025-05-20 <span class="cal cal-c">Consent</span></td><td class="yr">2025-06-03 <span class="cal cal-c">Consent</span></td></tr>
+        <tr><td class="yr">FY2026</td><td><strong>Adoption</strong> &mdash; Ord. 7,977</td><td class="yr">2025-06-24 <span class="cal cal-a">Action</span></td><td class="yr">2025-07-08 <span class="cal cal-c">Consent</span></td></tr>
+        <tr><td class="yr">FY2026</td><td>Amendment &mdash; Ord. 7,993</td><td class="yr">2025-11-18 <span class="cal cal-c">Consent</span></td><td class="yr">2025-12-02 <span class="cal cal-c">Consent</span></td></tr>
+        <tr><td class="yr">FY2026</td><td>Amendment &mdash; Ord. 8,010</td><td class="yr">2026-05-19 <span class="cal cal-c">Consent</span></td><td class="yr">2026-06-09 <span class="cal cal-c">Consent</span></td></tr>
+        <tr><td class="yr">FY2027</td><td><strong>Adoption</strong> &mdash; Ord. 8,029</td><td class="yr">2026-06-23 <span class="cal cal-a">Action</span></td><td class="yr">2026-07-07 <span class="cal cal-c">Consent</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Adopting the budget gets the action calendar. <strong>Every amendment to it, at both readings, goes to consent.</strong> The FY2025 amendment moved $78,091,135 gross. The May 2026 amendment moved $17,362,804 gross. The November 2025 amendment moved $358,073,496 gross.</p>
+
+  <p>The visible process decides the budget. The second one decides what the budget turns into.</p>
+
+  <h2>This is the tradition, not a lapse in it</h2>
+
+  <p>It would be easy to read the December 2 meeting as an oversight &mdash; a busy night, a long agenda, an item that slipped past. The record does not support that reading, and the weaker version of this argument is not worth making.</p>
+
+  <p>Five separate readings of mid-year AAO amendments fall inside this project&rsquo;s transcript corpus. Across all of them, in nineteen months, the phrase &ldquo;appropriations ordinance&rdquo; is spoken by a councilmember exactly once. The May 20 and June 3, 2025 meetings, and the May 19 and June 9, 2026 meetings, contain no occurrence of it whatsoever.</p>
+
+  <p>A practice that operates identically every time it runs is not an oversight. It is the settled way the institution does this work, and the people inside it describe it that way.</p>
+
+  <p>On the same evening as the AAO first reading, the Police Accountability Board presented its annual report to the same Council on an unrelated matter. Presenting it, the speaker said this about how Berkeley reviews money:</p>
+
+  <blockquote>
+    <p>&ldquo;every budget cycle, only the additions to BPD&rsquo;s budget are actively reviewed by Council. And so we really, looking forward, ask Council to allow the PAB to review not just the additional requests, but also <strong>the other 99.5% of BPD&rsquo;s budget, that isn&rsquo;t normally reviewed year to year</strong>.&rdquo;</p>
+    <p class="attrib">Police Accountability Board annual report presentation, Council meeting of November 18, 2025 (item 1, special meeting). The captioning does not identify individual speakers; the item was submitted jointly by the Board and the Office of the Director of Police Accountability.</p>
+  </blockquote>
+
+  <p>Note the vocabulary: <em>every budget cycle</em>, <em>normally</em>, <em>year to year</em>. That is not the language of a mistake. It is a description of standing practice, offered by someone asking Council to change it.</p>
+
+  <p>This distinction decides what the remedy has to be. A lapse calls for a reminder &mdash; be more careful next time, watch the agenda. A tradition does not respond to reminders, because nobody involved is doing anything they consider wrong. It responds only to a rule that makes the examination someone&rsquo;s job.</p>
+
+  <h2><span class="when">November 6, 2025</span>What was actually in it</h2>
+
+  <p>The AAO#1 presentation is a twenty-slide document, and it is not obscure. It says what the money is and where it goes.</p>
+
+  <p>Across all funds, the amendment totaled <strong>$358,073,496</strong>, taking the FY2026 appropriation from $829,213,359 to $1,187,286,855. The General Fund share was <strong>$32,934,126</strong>.</p>
+
+  <p>Much of that is exactly what it appears to be. Of the General Fund total, $22,721,191 is FY2025 encumbrances &mdash; contractual obligations signed but unpaid at June 30 &mdash; rolling forward. That is bookkeeping, and it has to happen. The presentation is careful about this, stating that unencumbered carryover is &ldquo;not available for new discretionary spending or to increase the baseline budget.&rdquo;</p>
+
+  <p>The remainder is $5,446,108 of unencumbered carryover and $4,766,827 of other adjustments and new funding requests &mdash; about $10.2 million. Other funds carried items of real consequence: $20,000,000 for the North Berkeley BART Phase 1 development loan, $8,176,509 and $3,878,850 for St. Paul Terrace, $28,934,852 in Measure T1 capital, $4,500,000 for a Fire administration training building.</p>
+
+  <p>None of that is evidence of waste. It is evidence of <em>significance</em> &mdash; the ordinary test for whether something warrants a Council conversation.</p>
+
+  <h2>The slide that shows a choice being made</h2>
+
+  <p>One page of the presentation does more than report. Slide 13 sets out the unassigned General Fund balance calculation:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>General Fund unassigned balance calculation</th><th>Amount</th></tr></thead>
+      <tbody>
+        <tr><td>Balance After Policy Consideration</td><td class="amt">$33,236,639</td></tr>
+        <tr><td>Less: FY2025 encumbrances rolling to FY2026 (AAO#1)</td><td class="amt">($22,721,191)</td></tr>
+        <tr><td>Less: unencumbered carryover request</td><td class="amt">($5,446,108)</td></tr>
+        <tr><td>Less: adjustment / new appropriation request</td><td class="amt">($4,766,827)</td></tr>
+        <tr><td><strong>Total AAO#1 and other requests</strong></td><td class="amt"><strong>($32,934,126)</strong></td></tr>
+        <tr><td>Balance After AAO#1 Items</td><td class="amt">$302,513</td></tr>
+        <tr><td>Allocation to reserves</td><td class="amt">($302,513)</td></tr>
+        <tr><td><strong>General Fund Balance (Unassigned) Before Tapping Into Reserves</strong></td><td class="amt"><strong>&mdash;</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The last line is not a summary written for this page. It is the City&rsquo;s own slide, and the figure printed there is a dash.</p>
+
+  <p>Then slide 14 runs the identical calculation a second way. Omit the excess property-transfer-tax allocation, and the balance after policy consideration is $40,289,208 rather than $33,236,639 &mdash; leaving <strong>$4,177,541</strong> unassigned instead of nothing.</p>
+
+  <p>Two versions of the same decision, side by side. That is staff doing its job: presenting an option rather than a fait accompli. And slide 16 makes the stakes explicit, modeling that $4,177,541 as a new operating reserve against a projected FY2027 General Fund deficit of <strong>$28,773,565</strong>, which it would reduce to $24,596,024.</p>
+
+  <p>Whatever one thinks about carryovers generally, slides 13 and 14 are a decision with two documented branches and a named consequence. That is what an agenda item exists to surface.</p>
+
+  <h2><span class="when">November 18, 2025</span>Two warnings, from the dais</h2>
+
+  <p>The AAO arrived at Council as consent item 8, one of twenty-seven consent items that night. It was flagged twice.</p>
+
+  <p>First, the <strong>City Auditor</strong> asked to speak on it before her other business:</p>
+
+  <blockquote>
+    <p>&ldquo;Before I do that, I just wanted to make quick comments on Item 8, the Annual Appropriations Ordinance. As you know, the city has a very large <strong>$28 million deficit</strong>...&rdquo;</p>
+    <p class="attrib">City Auditor, Council meeting of November 18, 2025</p>
+  </blockquote>
+
+  <p>Her point was that her office was returning about $30,000 in additional salary savings to the General Fund. The number she used to frame it is the same order as the amount the AAO was appropriating that night, and matches the $28,773,565 FY2027 projection on the committee&rsquo;s own slide.</p>
+
+  <p>Second, <strong>Councilmember Brent Blackaby</strong> spoke to the item. He sits on the three-member Budget &amp; Finance Policy Committee that had reviewed it and recommended it unanimously twelve days earlier. His full remark:</p>
+
+  <blockquote>
+    <p>&ldquo;On item 8, which is the annual appropriations ordinance, the Budget Committee spent a couple of meetings reviewing this proposal. I just want to thank the City Manager and his team, the Budget Manager, Mari Carr, my colleagues on the Budget Committee for a pretty thorough review of what&rsquo;s been proposed here.</p>
+    <p>And also look forward to future budget processes where some of the carryover and some of the <strong>big items</strong> that end up here in this AAO will be considered as part of the regular budget process, and I think will just help streamline it and <strong>give us all visibility</strong> into the next year in a more comprehensive way, so I really appreciate that, the budget team is already thinking about that, and I look forward to working with them on that process.&rdquo;</p>
+    <p class="attrib">Councilmember Brent Blackaby, Council meeting of November 18, 2025</p>
+  </blockquote>
+
+  <p>The full quotation is given deliberately. Blackaby is not complaining. He is thanking staff, crediting the committee&rsquo;s review, and welcoming a fix already underway. Nothing in his tone suggests alarm, and none should be read into it.</p>
+
+  <p>The substance is separable from the tone, and it is what matters here. A member of the committee responsible for fiscal oversight told the Council two things:</p>
+
+  <p>There are <strong>&ldquo;big items&rdquo;</strong> in this AAO.</p>
+
+  <p>And routing them through the regular budget process would <strong>&ldquo;give us all visibility.&rdquo;</strong></p>
+
+  <p>Visibility that would be <em>gained</em> elsewhere is visibility that is <em>absent</em> here. The assessment did not come from a critic. It came from inside the body that had just reviewed the document &mdash; and it is the second time in one evening that someone told this Council a large share of its money goes unexamined.</p>
+
+  <h2><span class="when">December 2, 2025</span>The question nobody asked</h2>
+
+  <p>Fourteen days later the ordinance returned for its second reading, as consent item 2 among thirty-five consent items.</p>
+
+  <p>In between, any councilmember could have asked the obvious question. <em>Which big items?</em> The person who used the phrase was on the dais and on the committee. He could have been asked in public, in one sentence, at either meeting.</p>
+
+  <p>Any member could also have moved the item to the action calendar. That takes one member &mdash; no second, no majority, no permission. Berkeley&rsquo;s councilmembers use this power routinely, for matters as small as a single-address historic preservation contract.</p>
+
+  <p>The December 2 transcript contains no discussion of the item at all. The words &ldquo;carryover&rdquo; and &ldquo;unassigned&rdquo; do not appear in it; the single occurrence of &ldquo;appropriations&rdquo; is a member referring an unrelated matter forward to the next AAO. Item 2 was not pulled. It passed in the consent motion, and the meeting moved on to the Holiday Fund.</p>
+
+  <h2>What a rule would have to do</h2>
+
+  <p>Treat the AAO as the consequential budget event it is. The remedy needs no charter change and no new committee.</p>
+
+  <p><strong>Separate the mechanical from the discretionary before the vote.</strong> Encumbrance rollovers are not a decision. New appropriations and discretionary carryover are. When they arrive in one ordinance, the second borrows the first&rsquo;s routineness. Splitting the recommendation would let the consent calendar carry what genuinely belongs there.</p>
+
+  <p><strong>Put the discretionary remainder on the action calendar.</strong> Not the whole ordinance. The items a Budget Committee member would call &ldquo;big.&rdquo;</p>
+
+  <p><strong>Require written answers to the ordinary budget questions</strong> for each of them: what the money is for; whether it is legally restricted, contractually committed, previously authorized or discretionary; why it must be appropriated now; what happens if it is reduced, delayed or returned to unassigned balance; what competing General Fund needs were considered; and whether Council has already debated the underlying expenditure or is seeing it for the first time.</p>
+
+  <p>None of these require an outside expert. Slide 13 answers several of them already. What is missing is not information. It is a moment on the agenda where somebody has to ask.</p>
+
+  <p>That last point is why a reminder would not work. The cheapest possible intervention on November 18 was for one colleague to say: <em>which items, and can we look at them on the second reading?</em> That sentence would have cost four seconds. It was available to nine people and none of them said it &mdash; not because they were careless, but because nothing in the evening made saying it the normal thing to do. A rule&rsquo;s job here is to make that sentence ordinary rather than exceptional.</p>
+
+  <div class="notclaim">
+    <h3>What this does not claim</h3>
+    <h3>Not that anything was hidden in the legal sense</h3>
+    <p>Every document discussed here is public. The presentation is on the City&rsquo;s website; the agendas are published; the meetings were noticed and recorded. &ldquo;Hidden&rdquo; describes visibility in practice, not concealment &mdash; a condition a participant in the process named himself.</p>
+    <h3>Not that the AAO&rsquo;s contents are improper</h3>
+    <p>Most of the November 2025 amendment is encumbrance rollover, which is mandatory bookkeeping. The presentation is explicit that unencumbered carryover cannot fund new discretionary spending. Nothing here alleges that any dollar was misspent.</p>
+    <h3>Not that staff obscured anything</h3>
+    <p>The opposite. Staff produced a clear twenty-slide deck, distinguished the three adjustment types, and put two versions of the unassigned-balance decision side by side with the deficit consequence modeled. The information Council would have needed was prepared and delivered. The failure is downstream of it.</p>
+    <h3>Not that the Budget Committee ignored it</h3>
+    <p>Blackaby says the committee spent a couple of meetings on a &ldquo;pretty thorough review,&rdquo; and there is no reason to doubt him. Committee review is real work. It is also three members rather than nine, and it did not produce a public examination of the big items at the Council where the vote was taken.</p>
+    <h3>Not that the December 2 comparison is unfair to the members who made it</h3>
+    <p>These contributions are a real and longstanding Berkeley practice by which council offices support community organizations from their own office budgets. Nothing about them is frivolous, and raising them is not mockery. They appear here only because they establish what the same members, in the same minutes, treated as worth a comment.</p>
+    <h3>Not that anyone acted in bad faith</h3>
+    <p>No concealment is alleged and none is evident. Consent placement follows the City&rsquo;s ordinary agenda practice. Blackaby raised the issue constructively and credited a fix already in progress. The finding is about what the process does, not about anyone&rsquo;s intent.</p>
+  </div>
+
+  <div class="pull">Publishing fiscal decisions is not the same as examining them.</div>
+
+  <p>Berkeley already has a public process for deciding what it can afford. Its second budget should have to answer the same questions as the first.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p><em>First Amendment to the FY 2026 Annual Appropriations Ordinance (AAO#1) and Preliminary FY 2025 Year-end Status</em>, presentation to the Budget &amp; Finance Policy Committee, November 6, 2025, Item 02a, 20 pages &mdash; cycle structure (slide 5), AAO#1 calendar (slide 19), all-funds summary (slide 7), General Fund carryover detail (slides 8&ndash;9), other-funds detail (slides 10&ndash;11), unassigned fund balance calculations (slides 13&ndash;14), operating reserve and FY2027 deficit projection (slide 16), FY2025 year-end status (slide 4). Archived in this project&rsquo;s source registry as <span class="amt">aao1_fy2026</span>.</p>
+    <p>City of Berkeley annotated agendas for calendar placement, ordinance numbers and vote records: May 20 2025 item 2; June 3 2025 item 1; June 24 2025 item 25; July 8 2025 item 4; November 18 2025 item 8; December 2 2025 item 2; May 19 2026 item 1; June 9 2026 item 2; June 23 2026 item 2; July 7 2026 item 1.</p>
+    <p>Quotations and consent-calendar comment detail from the Council meeting captioning of November 18 and December 2, 2025. Transcript searches for mid-year AAO discussion cover the sixty-one meeting transcripts in this project&rsquo;s corpus, December 2024 through July 2026.</p>
+    <h3>A note on method</h3>
+    <p>Dollar figures are quoted as printed in the City&rsquo;s presentation, including preliminary and unaudited FY2025 actuals which that document states are subject to change. Gross amendment figures are used where stated; General Fund figures are identified as such. The claim of Council silence is bounded to the transcript corpus described above and to the phrases searched &mdash; it is not a claim that no member ever considered the AAO privately. Captioning is auto-generated and the City does not certify it; quotations have been checked against context but speaker labels in the raw captioning are frequently generic.</p>
+    <h3>Related</h3>
+    <p><a href="consent-drip.html">Scrutiny follows controversy</a> &middot;
+    <a href="crayon-box.html">The crayon box</a> &middot;
+    <a href="build-once.html">If you build it, a plan will come</a> &middot;
+    <a href="public-safety-budget.html">Cutting without prioritizing</a> &middot;
+    <a href="framework.html">The Berkeley Budget Framework</a> &middot;
+    <a href="index.html">Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
