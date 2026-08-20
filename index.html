@@ -146,6 +146,32 @@ p { margin: .85rem 0; }
 /* Interactive tools get their own treatment rather than a plain card: they are the only
    things on the page a reader can act on immediately, and the open button should read as
    a destination rather than another link in a list. */
+/* Season banner. The quiz is the only thing here tied to a ballot voters mark on
+   a fixed date, and it is the lowest-effort way into the project for someone who
+   has never heard of it — so it sits above the argument rather than after it.
+   Styled as a distinct band, not a third hero: the site's own identity stays the
+   masthead. Remove this block when the season ends. */
+.season { background: var(--accent-soft); border: 1px solid var(--accent);
+          border-radius: 8px; padding: 20px 22px; margin: 0 0 34px;
+          display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.season-b { flex: 1 1 300px; min-width: 0; }
+.season-k { font-family: var(--sans); font-size: 10.5px; font-weight: 800; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--accent); }
+.season-h { font-family: var(--sans); font-size: 22px; font-weight: 800; letter-spacing: -.3px;
+            line-height: 1.2; margin-top: 5px; }
+.season-h a { text-decoration: none; color: var(--ink); }
+.season-h a:hover { color: var(--accent); }
+.season-s { font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--ink-2); margin-top: 3px; }
+.season-p { font-size: 14.5px; color: var(--ink-2); margin: 8px 0 0; }
+.season-cta { flex: 0 0 auto; display: flex; flex-direction: column; gap: 8px; }
+.season-cta a { display: inline-block; font-family: var(--sans); font-size: 13.5px; font-weight: 700;
+                text-decoration: none; padding: 11px 17px; border-radius: 6px; text-align: center;
+                background: var(--accent); color: var(--accent-soft); transition: background .15s; }
+.season-cta a:hover { background: var(--accent-hover); color: var(--accent-soft); }
+.season-cta a.alt { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+.season-cta a.alt:hover { background: var(--panel); }
+@media (max-width: 620px) { .season-cta { flex-direction: row; width: 100%; }
+                            .season-cta a { flex: 1; } }
 .tool { display: flex; gap: 20px; align-items: flex-start; margin-top: 16px;
         background: var(--accent-soft); border: 1px solid var(--rule);
         border-left: 4px solid var(--accent); border-radius: 7px; padding: 18px 20px; }
@@ -232,6 +258,20 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
 </div>
 
 <div class="wrap">
+
+  <div class="season">
+    <div class="season-b">
+      <div class="season-k">New &middot; Season One</div>
+      <div class="season-h"><a href="quiz.html">The Berkeley Voter Quiz</a></div>
+      <div class="season-s">Before You Vote on U &amp; V</div>
+      <p class="season-p">Sixteen short quizzes on the record behind Berkeley&rsquo;s November ballot,
+      with the primary source linked beside every answer.</p>
+    </div>
+    <div class="season-cta">
+      <a href="quiz-ballot-cost.html">Start with Quiz 1 &rarr;</a>
+      <a class="alt" href="quiz.html">See the season</a>
+    </div>
+  </div>
 
   <div class="way">How should we make decisions?</div>
   <h2>Start with the role of government</h2>
@@ -351,6 +391,17 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
 
   <div class="way">Can I try it myself?</div>
   <h2>Try the decisions yourself</h2>
+
+  <div class="tool">
+    <div class="tool-body">
+      <h3 class="tool-h">The Berkeley Voter Quiz</h3>
+      <p>Season One: <em>Before You Vote on U &amp; V</em>. Sixteen short quizzes on the record
+      behind Berkeley&rsquo;s November ballot, with the primary source linked beside every answer.</p>
+    </div>
+    <div class="tool-cta">
+      <a href="quiz.html">See the season &rarr;</a>
+    </div>
+  </div>
 
   <div class="tool">
     <div class="tool-body">

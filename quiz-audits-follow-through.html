@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who Audits the Follow-Through? — The Berkeley Voter Quiz</title>
+<meta name="description" content="Berkeley&#x27;s accountability problem is not primarily that nobody finds problems. It is whether management corrects them and Council enforces follow-through.">
+<link rel="canonical" href="https://ericdf.github.io/berkeley-decision-project/quiz-audits-follow-through.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Who Audits the Follow-Through? — The Berkeley Voter Quiz">
+<meta property="og:description" content="Berkeley&#x27;s accountability problem is not primarily that nobody finds problems. It is whether management corrects them and Council enforces follow-through.">
+<meta property="og:url" content="https://ericdf.github.io/berkeley-decision-project/quiz-audits-follow-through.html">
+<meta name="twitter:card" content="summary">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-hover:#6d4d00; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --hero-bg:#1a2e2b; --hero-rule:#2f5c56; --hero-ink:#fff; --hero-ink-2:#a8c5c0;
+  --ok:#1c6b4a; --ok-soft:#e8f4ee; --no:#9d2f3f; --no-soft:#fbeced;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-hover:#e8c37a; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331;
+    --hero-bg:#16211f; --hero-rule:#33524d; --hero-ink:#eef5f3; --hero-ink-2:#93b3ad;
+    --ok:#5fbf92; --ok-soft:#16281f; --no:#e0808f; --no-soft:#2a1a1d; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-hover:#e8c37a; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+  --hero-bg:#16211f; --hero-rule:#33524d; --hero-ink:#eef5f3; --hero-ink-2:#93b3ad;
+  --ok:#5fbf92; --ok-soft:#16281f; --no:#e0808f; --no-soft:#2a1a1d;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-hover:#6d4d00; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --hero-bg:#1a2e2b; --hero-rule:#2f5c56; --hero-ink:#fff; --hero-ink-2:#a8c5c0;
+  --ok:#1c6b4a; --ok-soft:#e8f4ee; --no:#9d2f3f; --no-soft:#fbeced;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif);
+       line-height: 1.62; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--accent); }
+a:hover { color: var(--accent-hover); }
+.nav { position: sticky; top: 0; z-index: 50; background: var(--hero-bg); border-bottom: 1px solid var(--hero-rule); }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: var(--hero-ink); letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: var(--hero-ink-2); margin-top: 3px; font-family: var(--sans); }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 34px 26px 20px; }
+.foot { max-width: 46rem; margin: 0 auto; padding: 30px 26px 60px; border-top: 1px solid var(--rule);
+        font-family: var(--sans); font-size: 13px; color: var(--ink-3); }
+.foot a { font-weight: 600; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+.qhero { background: var(--hero-bg); padding: 34px 26px 30px; border-bottom: 1px solid var(--hero-rule); }
+.qhero-in { max-width: 46rem; margin: 0 auto; }
+.crumb { font-family: var(--sans); font-size: 12px; color: var(--hero-ink-2); }
+.crumb a { color: var(--hero-ink-2); text-decoration: underline; }
+.crumb a:hover { color: var(--hero-ink); }
+.qhero h1 { font-family: var(--sans); font-size: 32px; font-weight: 900; color: var(--hero-ink);
+            line-height: 1.12; letter-spacing: -.5px; margin-top: 10px; }
+.qhero .deck { font-size: 16px; color: var(--hero-ink-2); margin-top: 12px; max-width: 36rem; }
+.qhero .sig { font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--accent); margin-top: 14px; }
+@media (max-width: 720px) { .qhero h1 { font-size: 25px; } }
+
+/* The score bar sticks under the nav so the reader always knows where they are,
+   but it is one compact line: on a phone it must not eat the reading area. */
+.bar { position: sticky; top: 43px; z-index: 40; background: var(--panel);
+       border-bottom: 1px solid var(--rule); }
+.bar-in { max-width: 46rem; margin: 0 auto; padding: 9px 26px; display: flex;
+          gap: 18px; font-family: var(--sans); font-size: 13px; color: var(--ink-2); flex-wrap: wrap; }
+.bar b { color: var(--ink); font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.q { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px;
+     padding: 22px 22px 20px; margin-top: 18px; }
+.q-n { font-family: var(--sans); font-size: 11px; font-weight: 800; letter-spacing: 1.3px;
+       text-transform: uppercase; color: var(--ink-3); }
+.q-p { font-family: var(--sans); font-size: 19px; font-weight: 700; line-height: 1.34;
+       margin-top: 7px; letter-spacing: -.2px; }
+.q-i { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--accent); margin-top: 9px; }
+.q-quote { border-left: 3px solid var(--quote); background: var(--quote-soft);
+           padding: 13px 16px; border-radius: 0 6px 6px 0; margin-top: 14px;
+           font-size: 16px; color: var(--ink); }
+.q-quote p + p { margin-top: .6rem; }
+
+.choices { list-style: none; margin-top: 15px; display: grid; gap: 9px; }
+.choice { width: 100%; text-align: left; display: flex; gap: 11px; align-items: flex-start;
+          font-family: var(--sans); font-size: 15.5px; line-height: 1.45; color: var(--ink);
+          background: var(--panel); border: 1px solid var(--rule); border-radius: 7px;
+          padding: 13px 15px; min-height: 48px; cursor: pointer; transition: border-color .12s, background .12s; }
+.choice:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+.choice:disabled { cursor: default; }
+.choice .k { font-weight: 800; color: var(--ink-3); min-width: 1.1rem; }
+.choice .lb { flex: 1; }
+/* Correctness never rests on color: every marked choice gets a word in .mk, and
+   the correct/incorrect states differ in border weight as well as hue. */
+.choice .mk { font-size: 12.5px; font-weight: 800; letter-spacing: .4px; text-transform: uppercase;
+              white-space: nowrap; align-self: center; }
+.choice.picked { border-width: 2px; padding: 12px 14px; }
+.choice.right { border-color: var(--ok); background: var(--ok-soft); }
+.choice.right .mk, .choice.right .k { color: var(--ok); }
+.choice.wrong { border-color: var(--no); background: var(--no-soft); }
+.choice.wrong .mk, .choice.wrong .k { color: var(--no); }
+.choice.sel { border-color: var(--accent); background: var(--accent-soft); border-width: 2px; padding: 12px 14px; }
+.choice .box { width: 17px; height: 17px; border: 2px solid var(--ink-3); border-radius: 3px;
+               align-self: center; flex: none; }
+.choice.sel .box { border-color: var(--accent); background: var(--accent); }
+
+.submit { font-family: var(--sans); font-size: 14px; font-weight: 700; margin-top: 13px;
+          padding: 11px 20px; min-height: 44px; border-radius: 7px; border: 1px solid var(--accent);
+          background: var(--accent); color: var(--panel); cursor: pointer; }
+.submit:disabled { opacity: .45; cursor: not-allowed; }
+
+.reveal { margin-top: 17px; padding-top: 16px; border-top: 1px solid var(--rule); }
+.reveal[hidden] { display: none; }
+.rv-h { font-family: var(--sans); font-size: 11px; font-weight: 800; letter-spacing: 1.3px;
+        text-transform: uppercase; color: var(--accent); }
+/* The verdict is a standalone heading above the explanation, the way a news quiz
+   sets it — not a clause at the head of a run-on sentence. */
+.rv-a { font-family: var(--sans); font-size: 17px; font-weight: 800; letter-spacing: -.1px; }
+.rv-a[data-v="right"] { color: var(--ok); }
+.rv-a[data-v="wrong"] { color: var(--no); }
+.rv-sub { font-family: var(--sans); font-size: 14.5px; font-weight: 600; color: var(--ink-2); margin-top: 5px; }
+.rv-sub[hidden] { display: none; }
+.rv-b { font-size: 16px; margin-top: 11px; }
+.rv-b p + p { margin-top: .7rem; }
+.rv-b blockquote { border-left: 3px solid var(--rule); padding-left: 14px; margin: .8rem 0; color: var(--ink-2); }
+.rv-b ul { margin: .6rem 0 .6rem 1.1rem; }
+.rv-b li { margin: .25rem 0; }
+.tp { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 15px;
+      border-radius: 0 6px 6px 0; margin-top: 13px; font-family: var(--sans);
+      font-size: 15.5px; font-weight: 700; line-height: 1.4; }
+/* A fairness note is a qualification the reader is entitled to, so it gets the
+   same type size as the reveal. It is never set smaller than the finding. */
+.fn { margin-top: 13px; padding: 12px 15px; border: 1px solid var(--rule);
+      border-radius: 6px; font-size: 15px; color: var(--ink-2); }
+.fn-h, .su-h { font-family: var(--sans); font-size: 11px; font-weight: 800; letter-spacing: 1.2px;
+               text-transform: uppercase; color: var(--ink-3); display: block; margin-bottom: 4px; }
+.su { margin-top: 13px; font-size: 15px; color: var(--ink-2); }
+.links { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
+.links a { font-family: var(--sans); font-size: 13.5px; font-weight: 700; text-decoration: none;
+           padding: 9px 14px; min-height: 40px; display: inline-flex; align-items: center;
+           border: 1px solid var(--rule); border-radius: 6px; }
+.links a:hover { border-color: var(--accent); background: var(--accent-soft); }
+.links a .ext { font-size: 11px; margin-left: 6px; color: var(--ink-3); }
+
+.done { background: var(--panel); border: 1px solid var(--accent); border-radius: 8px;
+        padding: 24px 22px; margin-top: 22px; }
+.done[hidden] { display: none; }
+.done .sc { font-family: var(--sans); font-size: 40px; font-weight: 900; letter-spacing: -1px;
+            font-variant-numeric: tabular-nums; }
+.done .sl { font-family: var(--sans); font-size: 13px; color: var(--ink-3); margin-top: 2px; }
+.done .msg { font-size: 16px; color: var(--ink-2); margin-top: 12px; }
+/* An installment's own closing argument. It is the quiz's conclusion, not one
+   question's answer, so it is ruled off from the score above it and given its own
+   ground — the reader should see it arrive as a separate thing. */
+.done-close { margin-top: 22px; padding-top: 20px; border-top: 2px solid var(--accent); }
+.done-h2 { font-family: var(--sans); font-size: 23px; font-weight: 800; letter-spacing: -.35px;
+           line-height: 1.22; }
+.done-body { font-size: 16.5px; margin-top: 12px; }
+.done-body p + p { margin-top: .85rem; }
+.done-body strong { color: var(--ink); }
+@media (max-width: 560px) { .done-h2 { font-size: 20px; } }
+.share-h { font-family: var(--sans); font-size: 11px; font-weight: 800; letter-spacing: 1.3px;
+           text-transform: uppercase; color: var(--accent); margin-top: 20px; }
+.share { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 10px; }
+.share button, .share a { font-family: var(--sans); font-size: 13.5px; font-weight: 700;
+        padding: 11px 16px; min-height: 44px; border-radius: 7px; border: 1px solid var(--rule);
+        background: var(--panel); color: var(--ink); cursor: pointer; text-decoration: none;
+        display: inline-flex; align-items: center; }
+.share .pri { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+.share button:hover, .share a:hover { border-color: var(--accent); }
+.share .pri:hover { background: var(--accent-hover); }
+.said { font-family: var(--sans); font-size: 13px; color: var(--ok); margin-top: 9px; min-height: 1.2em; }
+.onward { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 20px; padding-top: 16px;
+          border-top: 1px solid var(--rule); }
+.onward a { font-family: var(--sans); font-size: 13.5px; font-weight: 700; text-decoration: none;
+            padding: 10px 15px; min-height: 42px; display: inline-flex; align-items: center;
+            border: 1px solid var(--rule); border-radius: 6px; }
+.onward a:hover { border-color: var(--accent); background: var(--accent-soft); }
+.restart { font-family: var(--sans); font-size: 13px; color: var(--ink-3); background: none;
+           border: none; text-decoration: underline; cursor: pointer; padding: 8px 0; margin-top: 14px; }
+.calc { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 7px;
+        padding: 15px 17px; margin-top: 18px; font-size: 15px; }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Modeled households. Cases the reader evaluates, not avatars they pick — so
+   this is a plain reference panel, not a selector. */
+.hh { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px;
+      padding: 18px 20px; margin-top: 18px; }
+.hh-h { font-family: var(--sans); font-size: 11px; font-weight: 800; letter-spacing: 1.3px;
+        text-transform: uppercase; color: var(--ink-3); }
+.hh-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 12px; }
+.hh-card { border: 1px solid var(--rule-soft); border-radius: 6px; padding: 12px 14px; background: var(--ground); }
+.hh-n { font-family: var(--sans); font-size: 15px; font-weight: 800; }
+.hh-s { font-size: 13.5px; color: var(--ink-2); margin-top: 3px; line-height: 1.4; }
+.hh-f { font-family: var(--sans); font-size: 12.5px; color: var(--ink-3); margin-top: 7px;
+        font-variant-numeric: tabular-nums; }
+.hh-note { font-size: 13px; color: var(--ink-3); margin-top: 12px; font-style: italic; }
+
+/* Tax stack. A stacked horizontal bar per household, revealed one layer at a
+   time. The sequence is the argument, so it must be legible without motion:
+   under prefers-reduced-motion every stage appears without transition. */
+.stack { margin-top: 20px; }
+.stack-h { font-family: var(--sans); font-size: 19px; font-weight: 800; letter-spacing: -.2px; }
+.stack-sub { font-size: 15.5px; color: var(--ink-2); margin-top: 6px; }
+.st-hh { margin-top: 20px; }
+.st-n { font-family: var(--sans); font-size: 14.5px; font-weight: 800; }
+.st-v { font-family: var(--sans); font-size: 12.5px; color: var(--ink-3); font-weight: 600; }
+.st-bar { display: flex; height: 34px; margin-top: 7px; border-radius: 5px; overflow: hidden;
+          background: var(--rule-soft); border: 1px solid var(--rule); }
+.st-seg { height: 100%; width: 0; transition: width .5s ease; position: relative; }
+.st-seg[data-on="1"] { width: var(--w); }
+.st-total { font-family: var(--sans); font-size: 13.5px; font-weight: 700; margin-top: 6px;
+            font-variant-numeric: tabular-nums; }
+.st-legend { display: grid; gap: 7px; margin-top: 16px; }
+.st-key { display: flex; align-items: flex-start; gap: 9px; font-family: var(--sans); font-size: 13.5px;
+          opacity: .35; transition: opacity .4s ease; }
+.st-key[data-on="1"] { opacity: 1; }
+.st-sw { width: 13px; height: 13px; border-radius: 3px; flex: none; margin-top: 3px; border: 1px solid rgba(0,0,0,.15); }
+.st-kt { flex: 1; }
+.st-kl { font-weight: 700; }
+.st-kn { color: var(--ink-2); font-size: 12.5px; margin-top: 1px; }
+.st-ctl { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 18px; }
+.st-ctl button { font-family: var(--sans); font-size: 13.5px; font-weight: 700; padding: 10px 16px;
+                 min-height: 44px; border-radius: 7px; border: 1px solid var(--rule);
+                 background: var(--panel); color: var(--ink); cursor: pointer; }
+.st-ctl button:hover { border-color: var(--accent); }
+.st-ctl .pri { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+.st-caption { font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--accent);
+              margin-top: 14px; min-height: 1.3em; }
+@media (prefers-reduced-motion: reduce) { .st-seg, .st-key { transition: none !important; } }
+@media (max-width: 560px) { .st-bar { height: 28px; } }
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div>
+<div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+<div class="qhero"><div class="qhero-in"><div class="crumb"><a href="quiz.html">The Berkeley Voter Quiz</a> &middot; Season 1: Before You Vote on U &amp; V &middot; Quiz 10 of 16</div><h1>Who Audits the Follow-Through?</h1><p class="deck">Berkeley's accountability problem is not primarily that nobody finds problems. It is whether management corrects them and Council enforces follow-through.</p><div class="sig">Finding a problem and fixing it are two different systems.</div></div></div><div class="bar"><div class="bar-in" id="bar" role="status" aria-live="polite"><span>Answered <b id="nAns">0</b> of <b>7</b></span><span>Score <b id="nPts">0</b> of <b>7</b> points</span></div></div><div class="wrap"><main id="quiz"><section class="q" id="q-audit-first-formal-warning" data-qid="audit-first-formal-warning" data-type="single"><div class="q-n">Question 1 of 7</div><h2 class="q-p" id="p-audit-first-formal-warning">When did Berkeley officials first receive a formal City Auditor warning that rising recurring benefit costs and unfunded obligations required long-term corrective action?</h2><ul class="choices" role="group" aria-labelledby="p-audit-first-formal-warning"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">When the FY2027–28 deficit was announced</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">During the COVID emergency</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">In the 2022 financial-condition audit</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">At least by the Auditor's 2010 employee-benefits report</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-first-formal-warning" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The Auditor's November 2010 report, <strong>Employee Benefits: Tough Decisions Ahead</strong>, warned that government employee benefits represented a rapidly increasing City cost. It addressed significant underfunded liabilities for pensions, police retiree medical benefits, and leave payouts; projected steep increases in pension contribution rates; and warned that the City's pension funded level would erode without additional set-asides.</p><p>Police retiree medical was reported as only 13% funded and unused-leave liabilities as 2% funded.</p></div><div class="tp">The exact FY2027–28 deficit estimate is new. The fiscal condition producing it is not.</div><div class="links"><a href="https://berkeleyca.gov/sites/default/files/2022-01/2010-11-16_Item_13_Employee_Benefits_Tough_Decisions_Ahead-Auditor%281%29.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-missing-liability-report" data-qid="audit-missing-liability-report" data-type="single"><div class="q-n">Question 2 of 7</div><h2 class="q-p" id="p-audit-missing-liability-report">Council adopted a 2012 requirement for management to report every other year on current and projected unfunded liabilities. What happened to the FY2025 report?</h2><ul class="choices" role="group" aria-labelledby="p-audit-missing-liability-report"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">It showed that every liability was fully funded</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">It was published but never placed on a Council agenda</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Management did not produce it, citing limited staff time and competing priorities</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">Voters repealed the reporting requirement</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-missing-liability-report" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The Auditor's 2026 financial-condition report says management did not release the FY2025 update. The Auditor concluded that Council and the public therefore lacked complete, accessible information about unfunded liabilities before budget deliberations.</p><p>This is central to the “new deficit” framing. Council had required an early-warning instrument and then proceeded without its scheduled reading.</p></div><div class="links"><a href="https://berkeleyca.gov/sites/default/files/2026-04/2026-04-28%20Item%2009%20Berkeley%E2%80%99s%20Financial%20Condition%20%28FY%202016-FY%202025%29.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a><a href="hidden-budget-cycle.html">Why this matters</a></div></div></section><section class="q" id="q-audit-fleet-reporting-interval" data-qid="audit-fleet-reporting-interval" data-type="single"><div class="q-n">Question 3 of 7</div><h2 class="q-p" id="p-audit-fleet-reporting-interval">After the 2021 fleet audit required an initial January 2022 update and reports every six months thereafter, how many status reports had been delivered by October 2025?</h2><ul class="choices" role="group" aria-labelledby="p-audit-fleet-reporting-interval"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">All eight expected reports</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Six</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Four</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">None</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-fleet-reporting-interval" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The City's October 2025 report identifies updates dated November 3, 2022; March 19, 2024; December 10, 2024; and October 28, 2025. The first arrived roughly ten months after its deadline. Subsequent gaps were approximately sixteen, nine, and ten-and-a-half months — not six.</p><p>The October 2025 report then scheduled the next update for fall 2026, openly moving to roughly another annual interval while recommendations remained incomplete.</p></div><div class="links"><a href="https://berkeleyca.gov/sites/default/files/documents/2025-10-28%20Item%2035%20Audit%20Status%20Reports%20Fleet%20Replacement%20Fund%20Short%20Millions.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-dropped-recommendations" data-qid="audit-dropped-recommendations" data-type="single"><div class="q-n">Question 4 of 7</div><h2 class="q-p" id="p-audit-dropped-recommendations">Why did nine outstanding recommendations from the 2019 fire-prevention-inspections audit disappear from active tracking in 2024?</h2><ul class="choices" role="group" aria-labelledby="p-audit-dropped-recommendations"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">Every recommendation was implemented</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Fire risk no longer existed</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">They passed the Auditor's five-year tracking limit</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">The original audit was withdrawn</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-dropped-recommendations" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The recommendations were classified as dropped because the audit was more than five years old — not because the corrective work was complete. Under the Auditor's current terminology, “dropped” can mean management accepts the risk and is unable or unwilling to implement the recommendation; open recommendations also close this way at five years.</p></div><div class="tp">Dashboard closure is not the same as risk resolution.</div><div class="links"><a href="https://berkeleyca.gov/sites/default/files/2026-05/City_Auditor_Fiscal_Year_2027_Audit_Plan.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-lease-risks-sixteen-years" data-qid="audit-lease-risks-sixteen-years" data-type="single"><div class="q-n">Question 5 of 7</div><h2 class="q-p" id="p-audit-lease-risks-sixteen-years">How long after Berkeley's original lease-management audit did the Auditor find that substantially the same risks remained?</h2><ul class="choices" role="group" aria-labelledby="p-audit-lease-risks-sixteen-years"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">Two years</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Five years</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Ten years</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">Sixteen years</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-lease-risks-sixteen-years" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The 2025 follow-up found that Berkeley still lacked a complete central lease-and-license inventory, clear citywide direction, consistent standards for below-market arrangements, and adequate capacity for strategic oversight.</p><p>Eight recommendations were reopened.</p></div><div class="links"><a href="https://berkeleyca.gov/sites/default/files/documents/2009_Leases_Audit_Follow_Up_Berkeley_Faces_the_Same_Risks_16_Years_Later.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-whistleblower-expansion-paused" data-qid="audit-whistleblower-expansion-paused" data-type="single"><div class="q-n">Question 6 of 7</div><h2 class="q-p" id="p-audit-whistleblower-expansion-paused">After Berkeley's new whistleblower program substantiated an unauthorized $286,000 ambulance purchase, what happened to its planned public expansion?</h2><ul class="choices" role="group" aria-labelledby="p-audit-whistleblower-expansion-paused"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">It immediately expanded to every Berkeley resident</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Budget reductions forced the Auditor to pause public expansion</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Council eliminated anonymous reporting</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">The investigation was withdrawn</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-whistleblower-expansion-paused" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>Council formally established the Auditor's whistleblower authority in June 2024. The program's first public investigation later substantiated that a former employee had committed the City to a $286,000 ambulance purchase without authority and outside required controls.</p><p>The FY2027 Audit Plan says baseline reductions then forced the Auditor to pause expansion of the hotline to the broader Berkeley public and limited resources for audit work and staff training.</p></div><div class="tp">The City did not lack an accountability mechanism. It reduced the mechanism it had just watched work.</div><div class="fn"><span class="fn-h">In fairness</span>The confidential employee hotline continues. The program was reduced in reach, not eliminated.</div><div class="links"><a href="https://berkeleyca.gov/sites/default/files/2026-03/2026-03-24%20Item%2018%20Whistleblower%20Investigation%20Report.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-measure-u-what-audit-can-test" data-qid="audit-measure-u-what-audit-can-test" data-type="single"><div class="q-n">Question 7 of 7</div><h2 class="q-p" id="p-audit-measure-u-what-audit-can-test">Measure U requires the City Auditor to examine bond expenditures at least once every three years. What can that audit determine?</h2><ul class="choices" role="group" aria-labelledby="p-audit-measure-u-what-audit-can-test"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">Every advertised project was completed</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Promised pavement and facility outcomes were achieved</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Projects were delivered efficiently and on schedule</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">Bond money was spent within Measure U's broad authorized purposes</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-measure-u-what-audit-can-test" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>An auditor can test delivery only against an authoritative commitment containing a defined outcome, a measurable standard or deadline, and a baseline the audited body cannot simply amend. Measure U provides none of those.</p><p>The measure authorizes broad categories such as emergency-response facilities, parks and recreation facilities, accessibility, seismic and climate resilience, modernization, and “other City infrastructure.” It says improvements will be completed “as needed,” final costs will be determined later, outside funding remains unsecured, and Council cannot guarantee that the bonds will complete all needed improvements.</p><p>The Auditor is therefore empowered to ask whether an expenditure was legally consistent with Measure U's broad infrastructure purposes. The Auditor is not given a binding voter-approved baseline against which to ask whether taxpayers received the particular projects, quantities, pavement conditions, facilities, schedules, or service outcomes used to build support for the bond.</p></div><div class="tp">You cannot audit delivery against a promise the measure carefully avoids making.</div><div class="fn"><span class="fn-h">In fairness</span>This does not establish that Measure U's projects will go undelivered, or that anyone intends them to. It establishes that the audit requirement is not the instrument that would tell you.</div><div class="links"><a href="https://berkeleyca.gov/sites/default/files/2026-06/2026-06-16%20Item%2038%20Placing%20a%20General%20Obligation%20Bond%20Measure.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a><a href="measuring-nothing.html">Why this matters</a></div></div></section><section class="done" id="done" hidden tabindex="-1" aria-labelledby="done-h"><h2 class="sr" id="done-h">Quiz complete</h2><div class="sc"><span id="fPts">0</span> / 7</div><div class="sl">points &middot; 7 of 7 questions answered</div><p class="msg">That is the whole installment. Every answer above stays open — the reveals are the point of the quiz, and they are worth more than the score.</p><div class="share-h">Share your score</div><div class="share"><button type="button" class="pri" data-share="native">Share your score</button><button type="button" data-share="copylink">Copy link</button><button type="button" data-share="copytext">Copy score text</button><a data-share="sms" href="#">Messages</a><a data-share="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a><a data-share="email" href="#">Email</a></div><div class="said" id="said" role="status" aria-live="polite"></div><div class="onward"><a href="quiz.html">All 16 quizzes in Season 1</a></div><button type="button" class="restart" data-restart>Clear my answers and start over</button></section></main></div><div class="foot">
+<p>Every answer links to the primary record it comes from — a City audit, staff report, ballot filing or Council transcript. Questions are drawn from the project's canonical question bank and are not published until the quotes, dates and amounts in them have been checked against those records.</p>
+<p style="margin-top:10px"><a href="quiz.html">&larr; The Berkeley Voter Quiz</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
+</div>
+</body>
+</html>
+<script>
+(function () {
+  "use strict";
+  var Q = {"season": 1, "quiz": "audits-follow-through", "version": 1, "series": "The Berkeley Voter Quiz", "title": "Who Audits the Follow-Through?", "url": "https://ericdf.github.io/berkeley-decision-project/quiz-audits-follow-through.html", "totalPoints": 7, "questions": [{"id": "audit-first-formal-warning", "type": "single", "choices": [{"id": "a", "label": "When the FY2027–28 deficit was announced", "correct": false}, {"id": "b", "label": "During the COVID emergency", "correct": false}, {"id": "c", "label": "In the 2022 financial-condition audit", "correct": false}, {"id": "d", "label": "At least by the Auditor's 2010 employee-benefits report", "correct": true}]}, {"id": "audit-missing-liability-report", "type": "single", "choices": [{"id": "a", "label": "It showed that every liability was fully funded", "correct": false}, {"id": "b", "label": "It was published but never placed on a Council agenda", "correct": false}, {"id": "c", "label": "Management did not produce it, citing limited staff time and competing priorities", "correct": true}, {"id": "d", "label": "Voters repealed the reporting requirement", "correct": false}]}, {"id": "audit-fleet-reporting-interval", "type": "single", "choices": [{"id": "a", "label": "All eight expected reports", "correct": false}, {"id": "b", "label": "Six", "correct": false}, {"id": "c", "label": "Four", "correct": true}, {"id": "d", "label": "None", "correct": false}]}, {"id": "audit-dropped-recommendations", "type": "single", "choices": [{"id": "a", "label": "Every recommendation was implemented", "correct": false}, {"id": "b", "label": "Fire risk no longer existed", "correct": false}, {"id": "c", "label": "They passed the Auditor's five-year tracking limit", "correct": true}, {"id": "d", "label": "The original audit was withdrawn", "correct": false}]}, {"id": "audit-lease-risks-sixteen-years", "type": "single", "choices": [{"id": "a", "label": "Two years", "correct": false}, {"id": "b", "label": "Five years", "correct": false}, {"id": "c", "label": "Ten years", "correct": false}, {"id": "d", "label": "Sixteen years", "correct": true}]}, {"id": "audit-whistleblower-expansion-paused", "type": "single", "choices": [{"id": "a", "label": "It immediately expanded to every Berkeley resident", "correct": false}, {"id": "b", "label": "Budget reductions forced the Auditor to pause public expansion", "correct": true}, {"id": "c", "label": "Council eliminated anonymous reporting", "correct": false}, {"id": "d", "label": "The investigation was withdrawn", "correct": false}]}, {"id": "audit-measure-u-what-audit-can-test", "type": "single", "choices": [{"id": "a", "label": "Every advertised project was completed", "correct": false}, {"id": "b", "label": "Promised pavement and facility outcomes were achieved", "correct": false}, {"id": "c", "label": "Projects were delivered efficiently and on schedule", "correct": false}, {"id": "d", "label": "Bond money was spent within Measure U's broad authorized purposes", "correct": true}]}]};
+  var STORE = "bvq:" + Q.season + ":" + Q.quiz + ":v" + Q.version;
+  var state = load();
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(STORE);
+      if (!raw) return {};
+      var v = JSON.parse(raw);
+      return v && typeof v === "object" ? v : {};
+    } catch (e) { return {}; }
+  }
+  function save() {
+    try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {}
+  }
+
+  function q(id) { for (var i = 0; i < Q.questions.length; i++) if (Q.questions[i].id === id) return Q.questions[i]; }
+  function correctIds(qq) {
+    var r = []; qq.choices.forEach(function (c) { if (c.correct) r.push(c.id); }); return r;
+  }
+  function label(qq, id) {
+    for (var i = 0; i < qq.choices.length; i++) if (qq.choices[i].id === id) return qq.choices[i].label;
+    return "";
+  }
+
+  // Points: one per correct choice actually selected. No penalty for a wrong
+  // choice, and no credit for a correct choice left unselected.
+  //
+  // A question may instead declare scoring "exact_set": the whole question is
+  // worth one point, awarded only for selecting every correct choice and no
+  // incorrect one. Quiz 1 Q2 uses this — the spec asks the reader to identify a
+  // complete set, so partial credit would not test what the question asks.
+  function scoreOf(qq, picked) {
+    var right = correctIds(qq);
+    if (qq.scoring === "exact_set") {
+      if (picked.length !== right.length) return 0;
+      for (var i = 0; i < right.length; i++) if (picked.indexOf(right[i]) < 0) return 0;
+      return 1;
+    }
+    var n = 0;
+    picked.forEach(function (id) { if (right.indexOf(id) >= 0) n++; });
+    return n;
+  }
+  function maxOf(qq) {
+    return qq.scoring === "exact_set" ? 1 : correctIds(qq).length;
+  }
+
+  function tally() {
+    var answered = 0, pts = 0;
+    Q.questions.forEach(function (qq) {
+      var s = state[qq.id];
+      if (s) { answered++; pts += scoreOf(qq, s.picked); }
+    });
+    return { answered: answered, points: pts };
+  }
+
+  function refresh() {
+    var t = tally();
+    document.getElementById("nAns").textContent = t.answered;
+    document.getElementById("nPts").textContent = t.points;
+    var done = document.getElementById("done");
+    if (t.answered === Q.questions.length) {
+      document.getElementById("fPts").textContent = t.points;
+      // Reveal completion in place. Never focus or scroll it: the reader may be
+      // mid-reveal several questions up, and moving them would lose their place.
+      done.hidden = false;
+    } else {
+      done.hidden = true;
+    }
+  }
+
+  function commit(qq, picked) {
+    if (state[qq.id]) return;
+    state[qq.id] = { picked: picked };
+    save();
+    paint(qq);
+    refresh();
+  }
+
+  function paint(qq) {
+    var s = state[qq.id];
+    var sec = document.getElementById("q-" + qq.id);
+    if (!s || !sec) return;
+    var right = correctIds(qq);
+    var multi = qq.type === "multi";
+
+    sec.querySelectorAll(".choice").forEach(function (el) {
+      var cid = el.getAttribute("data-cid");
+      var chosen = s.picked.indexOf(cid) >= 0;
+      var isRight = right.indexOf(cid) >= 0;
+      var mk = el.querySelector(".mk");
+      el.classList.remove("sel");
+      if (chosen) el.classList.add("picked");
+      // The word in .mk is what carries correctness for a reader who cannot use
+      // the color; every marked state sets one.
+      if (chosen && isRight) { el.classList.add("right"); mk.textContent = "Correct"; }
+      else if (chosen) { el.classList.add("wrong"); mk.textContent = "Incorrect"; }
+      else if (isRight) { el.classList.add("right"); mk.textContent = multi ? "Correct — not selected" : "Correct answer"; }
+      else { mk.textContent = ""; }
+
+      if (el.tagName === "BUTTON") { el.disabled = true; }
+      else {
+        var box = el.querySelector("input");
+        if (box) { box.disabled = true; box.checked = chosen; }
+      }
+    });
+
+    var sub = sec.querySelector("[data-submit]");
+    if (sub) sub.remove();
+
+    var rv = document.getElementById("r-" + qq.id);
+    var got = scoreOf(qq, s.picked), max = maxOf(qq);
+    var head = rv.querySelector("[data-answer]");
+    var sub = rv.querySelector("[data-answer-sub]");
+    var names = right.map(function (id) { return label(qq, id); }).join("; ");
+
+    // The verdict is a standalone one-word heading, the way a news quiz does it.
+    // No running point tally: the score bar already carries that, and repeating
+    // it per question makes the reveal read like a scorecard rather than an
+    // explanation.
+    var verdict = got === max ? "Correct." : got > 0 ? "Partly correct." : "Incorrect.";
+    if (qq.scoring === "exact_set" && got === 0) {
+      // Distinguish an incomplete set from a plain wrong answer, or an
+      // all-but-one response reads as a scoring bug rather than the
+      // all-or-nothing rule.
+      verdict = "Not the complete set.";
+    }
+    head.textContent = verdict;
+    head.setAttribute("data-v", got === max ? "right" : "wrong");
+
+    // Name the correct answer only when the reader did not already pick it.
+    // Telling someone who got it right what the right answer was is noise.
+    var pickedAll = right.every(function (id) { return s.picked.indexOf(id) >= 0; });
+    if (pickedAll && got === max) {
+      sub.textContent = "";
+      sub.hidden = true;
+    } else {
+      sub.textContent = (right.length > 1 ? "The correct choices were: " : "The correct answer was: ")
+                      + names + ".";
+      sub.hidden = false;
+    }
+    rv.hidden = false;
+  }
+
+  // ── Wiring ────────────────────────────────────────────────────────────────
+  Q.questions.forEach(function (qq) {
+    var sec = document.getElementById("q-" + qq.id);
+    if (!sec) return;
+
+    if (qq.type === "single") {
+      sec.querySelectorAll(".choice").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          if (state[qq.id]) return;
+          commit(qq, [btn.getAttribute("data-cid")]);
+        });
+      });
+    } else {
+      var sub = sec.querySelector("[data-submit]");
+      var boxes = sec.querySelectorAll('input[type="checkbox"]');
+      function sync() {
+        var any = false;
+        boxes.forEach(function (b) {
+          var lab = b.closest(".choice");
+          if (b.checked) { any = true; lab.classList.add("sel"); } else { lab.classList.remove("sel"); }
+        });
+        sub.disabled = !any;
+      }
+      boxes.forEach(function (b) { b.addEventListener("change", sync); });
+      sub.addEventListener("click", function () {
+        if (state[qq.id]) return;
+        var picked = [];
+        boxes.forEach(function (b) { if (b.checked) picked.push(b.getAttribute("data-cid")); });
+        if (!picked.length) return;
+        commit(qq, picked);
+      });
+      sync();
+    }
+
+    if (state[qq.id]) paint(qq);
+  });
+
+  refresh();
+
+  // ── Sharing ───────────────────────────────────────────────────────────────
+  // The payload is score + quiz title + series + invitation + canonical URL.
+  // It never contains answers, per-question results, or any inference about the
+  // reader. The URL is the plain canonical page, not a stateful one.
+  // Every variant must name Q.series and carry the score. A share that reports a
+  // result without saying what it is from tells the recipient nothing about
+  // where to go, which is the whole point of sharing. Both asserted in tests.
+  //
+  // Variants are selected by how the reader actually did, not by score % 3.
+  // Choosing arithmetically once put "I thought I knew this issue" on a perfect
+  // score, which reads as false modesty and is a reaction the reader did not
+  // choose. These stay factual: the score and an invitation, nothing about how
+  // anyone felt.
+  var VARIANTS = {
+    high: [
+      function (s, t) { return "I got " + s + " on “" + t + "” — " + Q.series + ". Try it."; },
+      function (s, t) { return "I scored " + s + " on “" + t + "” — " + Q.series + ". Can you beat it?"; }
+    ],
+    mid: [
+      function (s, t) { return "I got " + s + " on “" + t + "” — " + Q.series + ". Try it."; },
+      function (s, t) { return "I scored " + s + " on “" + t + "” — " + Q.series + ". How well do you know the story behind Berkeley's ballot measures?"; }
+    ],
+    low: [
+      function (s, t) { return "I got " + s + " on “" + t + "” — " + Q.series + ". Harder than it looks."; },
+      function (s, t) { return "I scored " + s + " on “" + t + "” — " + Q.series + ". See how you do."; }
+    ]
+  };
+
+  function shareText() {
+    var t = tally();
+    var s = t.points + "/" + Q.totalPoints;
+    var share = Q.totalPoints ? t.points / Q.totalPoints : 0;
+    var band = share >= 0.8 ? "high" : share >= 0.5 ? "mid" : "low";
+    var pool = VARIANTS[band];
+    // Vary within the band so repeated shares of the same result are not
+    // identical, without letting the copy claim a reaction.
+    var v = pool[t.points % pool.length];
+    return v(s, Q.title);
+  }
+  function shareAll() { return shareText() + " " + Q.url; }
+
+  function say(msg) {
+    var el = document.getElementById("said");
+    el.textContent = msg;
+    setTimeout(function () { if (el.textContent === msg) el.textContent = ""; }, 4000);
+  }
+  function copy(text, msg) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { say(msg); }, function () { fallback(text, msg); });
+    } else { fallback(text, msg); }
+  }
+  function fallback(text, msg) {
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "absolute"; ta.style.left = "-9999px";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); say(msg); } catch (e) { say("Press ⌘C or Ctrl+C to copy."); }
+    document.body.removeChild(ta);
+  }
+
+  var nativeBtn = document.querySelector('[data-share="native"]');
+  if (!navigator.share) {
+    // No native sheet: the primary action becomes the copy that always works,
+    // rather than a button that silently does nothing.
+    nativeBtn.textContent = "Copy score text";
+    nativeBtn.setAttribute("data-share", "copytext");
+  }
+
+  document.querySelectorAll("[data-share]").forEach(function (el) {
+    el.addEventListener("click", function (ev) {
+      var kind = el.getAttribute("data-share");
+      if (kind === "native") {
+        ev.preventDefault();
+        navigator.share({ title: Q.title, text: shareText(), url: Q.url }).catch(function () {});
+      } else if (kind === "copylink") {
+        ev.preventDefault(); copy(Q.url, "Link copied.");
+      } else if (kind === "copytext") {
+        ev.preventDefault(); copy(shareAll(), "Score text copied.");
+      }
+    });
+  });
+
+  // The href-based targets are set at click time so they always carry the
+  // current score. Assembling them earlier would freeze a stale number.
+  function hrefTarget(kind) {
+    var body = encodeURIComponent(shareAll());
+    if (kind === "sms") {
+      // iOS wants &body after a ?, Android accepts ?body. "?&body=" works on both.
+      return "sms:?&body=" + body;
+    }
+    if (kind === "whatsapp") return "https://wa.me/?text=" + body;
+    if (kind === "email") {
+      return "mailto:?subject=" + encodeURIComponent(Q.series + " — " + Q.title)
+           + "&body=" + encodeURIComponent(shareAll());
+    }
+    return "#";
+  }
+  ["sms", "whatsapp", "email"].forEach(function (kind) {
+    var el = document.querySelector('[data-share="' + kind + '"]');
+    if (!el) return;
+    el.addEventListener("click", function () { el.href = hrefTarget(kind); });
+  });
+
+  // ── Choice order ──────────────────────────────────────────────────────────
+  // Spec §11.5-6: randomize multi-select choice order on load, but keep stable
+  // ids so analytics and stored answers survive. The DOM is reordered; nothing
+  // about a choice's identity changes.
+  Q.questions.forEach(function (qq) {
+    if (!qq.shuffle) return;
+    if (state[qq.id]) return;              // never reorder an answered question
+    var sec = document.getElementById("q-" + qq.id);
+    if (!sec) return;
+    var list = sec.querySelector(".choices");
+    if (!list) return;
+    var items = [];
+    list.querySelectorAll("li").forEach(function (li) { items.push(li); });
+    for (var i = items.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = items[i]; items[i] = items[j]; items[j] = t;
+    }
+    items.forEach(function (li) { list.appendChild(li); });
+  });
+
+  // ── Tax stack ─────────────────────────────────────────────────────────────
+  var stack = (function () {
+    var segs = document.querySelectorAll("[data-seg]");
+    var keys = document.querySelectorAll("[data-key]");
+    var totals = document.querySelectorAll("[data-total]");
+    var cap = document.getElementById("st-cap");
+    if (!segs.length) return null;
+
+    var ORDER = ["baseline", "t1", "measure_u", "public_bank", "measure_v", "regional"];
+    var CAPTION = {
+      baseline: "What these households already pay in City of Berkeley property taxes.",
+      t1: "October: the final Measure T1 tranche, approved in 2016 and issued in June 2026, reaches the bill. No November vote required.",
+      measure_u: "Add the $300 million infrastructure bond.",
+      public_bank: "Add the public-bank parcel tax.",
+      measure_v: "Add Berkeley's half-cent sales tax.",
+      regional: "Add the regional transit sales tax. This is the modeled total if every measure passes."
+    };
+    var at = -1;
+
+    function money(n) {
+      return "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function show(upto, announce) {
+      at = upto;
+      segs.forEach(function (el) {
+        el.setAttribute("data-on", ORDER.indexOf(el.getAttribute("data-seg")) <= upto ? "1" : "0");
+      });
+      keys.forEach(function (el) {
+        el.setAttribute("data-on", ORDER.indexOf(el.getAttribute("data-key")) <= upto ? "1" : "0");
+      });
+      totals.forEach(function (el) {
+        var steps = JSON.parse(el.getAttribute("data-steps"));
+        var i = Math.max(0, Math.min(upto, steps.length - 1));
+        el.textContent = money(steps[i]) + " a year";
+      });
+      if (announce) cap.textContent = CAPTION[ORDER[upto]] || "";
+    }
+
+    // prefers-reduced-motion: no timed sequence at all. The reader steps through
+    // it, or takes the whole thing at once. Spec §11.9.
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var timer = null;
+
+    function play() {
+      if (timer) { clearInterval(timer); timer = null; }
+      show(0, true);
+      if (reduced) { return; }
+      var i = 0;
+      timer = setInterval(function () {
+        i++;
+        if (i >= ORDER.length) { clearInterval(timer); timer = null; return; }
+        show(i, true);
+      }, 1400);
+    }
+    function all() {
+      if (timer) { clearInterval(timer); timer = null; }
+      show(ORDER.length - 1, true);
+    }
+
+    document.querySelectorAll("[data-stack]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var kind = btn.getAttribute("data-stack");
+        if (kind === "play") { btn.textContent = "Replay"; play(); }
+        else { all(); }
+      });
+    });
+
+    show(0, false);
+    return { play: play, all: all };
+  })();
+
+  var restart = document.querySelector("[data-restart]");
+  if (restart) {
+    restart.addEventListener("click", function () {
+      state = {};
+      try { localStorage.removeItem(STORE); } catch (e) {}
+      location.reload();
+    });
+  }
+})();
+</script>
