@@ -146,32 +146,41 @@ p { margin: .85rem 0; }
 /* Interactive tools get their own treatment rather than a plain card: they are the only
    things on the page a reader can act on immediately, and the open button should read as
    a destination rather than another link in a list. */
-/* Season banner. The quiz is the only thing here tied to a ballot voters mark on
-   a fixed date, and it is the lowest-effort way into the project for someone who
-   has never heard of it — so it sits above the argument rather than after it.
-   Styled as a distinct band, not a third hero: the site's own identity stays the
-   masthead. Remove this block when the season ends. */
-.season { background: var(--accent-soft); border: 1px solid var(--accent);
-          border-radius: 8px; padding: 20px 22px; margin: 0 0 34px;
-          display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-.season-b { flex: 1 1 300px; min-width: 0; }
-.season-k { font-family: var(--sans); font-size: 10.5px; font-weight: 800; letter-spacing: 1.5px;
-            text-transform: uppercase; color: var(--accent); }
-.season-h { font-family: var(--sans); font-size: 22px; font-weight: 800; letter-spacing: -.3px;
-            line-height: 1.2; margin-top: 5px; }
-.season-h a { text-decoration: none; color: var(--ink); }
-.season-h a:hover { color: var(--accent); }
-.season-s { font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--ink-2); margin-top: 3px; }
-.season-p { font-size: 14.5px; color: var(--ink-2); margin: 8px 0 0; }
-.season-cta { flex: 0 0 auto; display: flex; flex-direction: column; gap: 8px; }
-.season-cta a { display: inline-block; font-family: var(--sans); font-size: 13.5px; font-weight: 700;
-                text-decoration: none; padding: 11px 17px; border-radius: 6px; text-align: center;
-                background: var(--accent); color: var(--accent-soft); transition: background .15s; }
-.season-cta a:hover { background: var(--accent-hover); color: var(--accent-soft); }
-.season-cta a.alt { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-.season-cta a.alt:hover { background: var(--panel); }
-@media (max-width: 620px) { .season-cta { flex-direction: row; width: 100%; }
-                            .season-cta a { flex: 1; } }
+/* Season rail. The quiz is not a third tool — it is the evidence for the
+   argument this page makes, so on wide screens it runs alongside the whole
+   argument rather than being announced once at the top. Sticky, so it stays
+   with the reader through the failure modes and the worked examples.
+
+   Below 1180px there is no room outside the 46rem measure, so it collapses to a
+   normal block at the top of the flow. Nothing is hidden at any width.
+
+   Remove this block when the season ends. */
+.page { position: relative; }
+.rail { margin: 0 0 30px; }
+.rail-in { background: var(--panel); border: 1px solid var(--accent);
+           border-left: 4px solid var(--accent); border-radius: 8px; padding: 18px 20px; }
+.rail-k { font-family: var(--sans); font-size: 10.5px; font-weight: 800; letter-spacing: 1.5px;
+          text-transform: uppercase; color: var(--accent); }
+.rail-q { font-family: var(--sans); font-size: 16.5px; font-weight: 800; line-height: 1.28;
+          letter-spacing: -.2px; margin-top: 7px; }
+.rail-p { font-size: 14.5px; color: var(--ink-2); margin: 9px 0 0; line-height: 1.5; }
+.rail-h { font-family: var(--sans); font-size: 14.5px; font-weight: 800; margin-top: 13px; }
+.rail-h a { text-decoration: none; }
+.rail-s { font-family: var(--sans); font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+.rail-cta { display: inline-block; font-family: var(--sans); font-size: 13.5px; font-weight: 700;
+            text-decoration: none; padding: 10px 15px; border-radius: 6px; margin-top: 13px;
+            background: var(--accent); color: var(--accent-soft); transition: background .15s; }
+.rail-cta:hover { background: var(--accent-hover); color: var(--accent-soft); }
+.rail-all { display: block; font-family: var(--sans); font-size: 12.5px; font-weight: 600;
+            margin-top: 9px; }
+
+@media (min-width: 1180px) {
+  /* 46rem measure + 20rem rail + gutters. The rail sits in the margin the
+     centered column already leaves, so the argument's own line length is
+     unchanged — the reader's measure must not shift because of promotion. */
+  .rail { position: absolute; top: 0; left: calc(50% + 24rem); width: 19rem; margin: 0; }
+  .rail-in { position: sticky; top: 60px; }
+}
 .tool { display: flex; gap: 20px; align-items: flex-start; margin-top: 16px;
         background: var(--accent-soft); border: 1px solid var(--rule);
         border-left: 4px solid var(--accent); border-radius: 7px; padding: 18px 20px; }
@@ -257,19 +266,19 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
   </div>
 </div>
 
-<div class="wrap">
+<div class="wrap page">
 
-  <div class="season">
-    <div class="season-b">
-      <div class="season-k">New &middot; Season One</div>
-      <div class="season-h"><a href="quiz.html">The Berkeley Voter Quiz</a></div>
-      <div class="season-s">Before You Vote on U &amp; V</div>
-      <p class="season-p">Sixteen short quizzes on the record behind Berkeley&rsquo;s November ballot,
-      with the primary source linked beside every answer.</p>
-    </div>
-    <div class="season-cta">
-      <a href="quiz-ballot-cost.html">Start with Quiz 1 &rarr;</a>
-      <a class="alt" href="quiz.html">See the season</a>
+  <div class="rail">
+    <div class="rail-in">
+      <div class="rail-k">Why this is needed</div>
+      <div class="rail-q">Look at the decisions being made right now.</div>
+      <p class="rail-p">Berkeley&rsquo;s November ballot asks residents for more money. The
+      quizzes below walk through what the City did &mdash; and did not do &mdash; before
+      asking, using its own audits, staff reports and Council transcripts.</p>
+      <div class="rail-h"><a href="quiz.html">The Berkeley Voter Quiz</a></div>
+      <div class="rail-s">Season One: Before You Vote on U &amp; V</div>
+      <a class="rail-cta" href="quiz-why-another-sales-tax.html">Why another sales tax? &rarr;</a>
+      <a class="rail-all" href="quiz.html">All 16 quizzes &rarr;</a>
     </div>
   </div>
 
