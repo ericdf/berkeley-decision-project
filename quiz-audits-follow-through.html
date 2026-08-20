@@ -215,27 +215,28 @@ a:hover { color: var(--accent-hover); }
 .st-v { font-family: var(--sans); font-size: 12.5px; color: var(--ink-3); font-weight: 600; }
 .st-bar { display: flex; height: 34px; margin-top: 7px; border-radius: 5px; overflow: hidden;
           background: var(--rule-soft); border: 1px solid var(--rule); }
-.st-seg { height: 100%; width: 0; transition: width .5s ease; position: relative; }
-.st-seg[data-on="1"] { width: var(--w); }
-.st-total { font-family: var(--sans); font-size: 13.5px; font-weight: 700; margin-top: 6px;
+.st-seg { height: 100%; }
+.st-total { font-family: var(--sans); font-size: 14.5px; font-weight: 800; margin-top: 7px;
             font-variant-numeric: tabular-nums; }
+.st-arrow { color: var(--ink-3); margin: 0 2px; }
+.st-delta { color: var(--accent); }
+/* The share of the Berkeley taxes it adds to. Against the whole bill this reads
+   as ~3-4%, which understates what is being decided — the Prop 13 base levy and
+   the school and county charges are not on this ballot. */
+.st-pct { display: block; font-size: 13.5px; font-weight: 700; color: var(--accent); margin-top: 2px; }
+.st-basis { font-family: var(--sans); font-size: 11px; font-weight: 800; letter-spacing: 1.4px;
+            text-transform: uppercase; color: var(--ink-3); margin-top: 26px;
+            padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
+.st-sales { margin-top: 14px; }
+.st-sp { font-size: 15px; color: var(--ink-2); margin: 0; }
+.st-sl { list-style: none; margin: 11px 0 0; display: grid; gap: 6px; }
+.st-sl li { font-family: var(--sans); font-size: 14.5px; }
 .st-legend { display: grid; gap: 7px; margin-top: 16px; }
-.st-key { display: flex; align-items: flex-start; gap: 9px; font-family: var(--sans); font-size: 13.5px;
-          opacity: .35; transition: opacity .4s ease; }
-.st-key[data-on="1"] { opacity: 1; }
+.st-key { display: flex; align-items: flex-start; gap: 9px; font-family: var(--sans); font-size: 13.5px; }
 .st-sw { width: 13px; height: 13px; border-radius: 3px; flex: none; margin-top: 3px; border: 1px solid rgba(0,0,0,.15); }
 .st-kt { flex: 1; }
 .st-kl { font-weight: 700; }
 .st-kn { color: var(--ink-2); font-size: 12.5px; margin-top: 1px; }
-.st-ctl { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 18px; }
-.st-ctl button { font-family: var(--sans); font-size: 13.5px; font-weight: 700; padding: 10px 16px;
-                 min-height: 44px; border-radius: 7px; border: 1px solid var(--rule);
-                 background: var(--panel); color: var(--ink); cursor: pointer; }
-.st-ctl button:hover { border-color: var(--accent); }
-.st-ctl .pri { background: var(--accent); border-color: var(--accent); color: var(--panel); }
-.st-caption { font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--accent);
-              margin-top: 14px; min-height: 1.3em; }
-@media (prefers-reduced-motion: reduce) { .st-seg, .st-key { transition: none !important; } }
 @media (max-width: 560px) { .st-bar { height: 28px; } }
 </style>
 </head>
@@ -555,77 +556,6 @@ a:hover { color: var(--accent-hover); }
     }
     items.forEach(function (li) { list.appendChild(li); });
   });
-
-  // ── Tax stack ─────────────────────────────────────────────────────────────
-  var stack = (function () {
-    var segs = document.querySelectorAll("[data-seg]");
-    var keys = document.querySelectorAll("[data-key]");
-    var totals = document.querySelectorAll("[data-total]");
-    var cap = document.getElementById("st-cap");
-    if (!segs.length) return null;
-
-    var ORDER = ["baseline", "t1", "measure_u", "public_bank", "measure_v", "regional"];
-    var CAPTION = {
-      baseline: "What these households already pay in City of Berkeley property taxes.",
-      t1: "October: the final Measure T1 tranche, approved in 2016 and issued in June 2026, reaches the bill. No November vote required.",
-      measure_u: "Add the $300 million infrastructure bond.",
-      public_bank: "Add the public-bank parcel tax.",
-      measure_v: "Add Berkeley's half-cent sales tax.",
-      regional: "Add the regional transit sales tax. This is the modeled total if every measure passes."
-    };
-    var at = -1;
-
-    function money(n) {
-      return "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
-    function show(upto, announce) {
-      at = upto;
-      segs.forEach(function (el) {
-        el.setAttribute("data-on", ORDER.indexOf(el.getAttribute("data-seg")) <= upto ? "1" : "0");
-      });
-      keys.forEach(function (el) {
-        el.setAttribute("data-on", ORDER.indexOf(el.getAttribute("data-key")) <= upto ? "1" : "0");
-      });
-      totals.forEach(function (el) {
-        var steps = JSON.parse(el.getAttribute("data-steps"));
-        var i = Math.max(0, Math.min(upto, steps.length - 1));
-        el.textContent = money(steps[i]) + " a year";
-      });
-      if (announce) cap.textContent = CAPTION[ORDER[upto]] || "";
-    }
-
-    // prefers-reduced-motion: no timed sequence at all. The reader steps through
-    // it, or takes the whole thing at once. Spec §11.9.
-    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var timer = null;
-
-    function play() {
-      if (timer) { clearInterval(timer); timer = null; }
-      show(0, true);
-      if (reduced) { return; }
-      var i = 0;
-      timer = setInterval(function () {
-        i++;
-        if (i >= ORDER.length) { clearInterval(timer); timer = null; return; }
-        show(i, true);
-      }, 1400);
-    }
-    function all() {
-      if (timer) { clearInterval(timer); timer = null; }
-      show(ORDER.length - 1, true);
-    }
-
-    document.querySelectorAll("[data-stack]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var kind = btn.getAttribute("data-stack");
-        if (kind === "play") { btn.textContent = "Replay"; play(); }
-        else { all(); }
-      });
-    });
-
-    show(0, false);
-    return { play: play, all: all };
-  })();
 
   var restart = document.querySelector("[data-restart]");
   if (restart) {
