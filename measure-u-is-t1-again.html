@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Measure U Is T1 Again: What Berkeley Learned &mdash; and Did Not Learn &mdash; from the $100 Million Measure T1 Bond</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Instrument type is load-bearing on this page: a GO bond is borrowed capital repaid
+   through property tax over decades, a parcel tax is recurring revenue collected annually.
+   The table distinguishes them so the reader can see that the pattern is not "bonds" but
+   "any new money except reprioritization". */
+.inst { font-family: var(--sans); font-size: .74rem; font-weight: 700; white-space: nowrap;
+        letter-spacing: .02em; }
+.inst-bond { color: var(--accent); }
+.inst-tax  { color: var(--quote); }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+.clock { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+         color: var(--accent); font-size: .8rem; letter-spacing: .04em; }
+
+.notclaim { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+            padding: 1.2rem 1.3rem; margin: 1.6rem 0; }
+.notclaim h3 { font-family: var(--sans); font-size: .95rem; font-weight: 700; margin-bottom: .7rem; }
+.notclaim p { font-size: .93rem; margin-bottom: .75rem; }
+.notclaim p:last-child { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+
+h3 { font-family: var(--sans); font-size: 1.02rem; font-weight: 700; line-height: 1.35;
+     margin: 1.8rem 0 .6rem; letter-spacing: -.005em; }
+ol, ul { margin: 0 0 1.05rem 1.35rem; }
+li { margin-bottom: .45rem; line-height: 1.66; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88em;
+       background: var(--rule-soft); padding: .08em .35em; border-radius: 3px; }
+sup a { text-decoration: none; color: var(--quote); font-size: .72em; font-weight: 700;
+        padding: 0 .06em; }
+:target { scroll-margin-top: 4rem; }
+h2:target, h3:target { background: var(--accent-soft); border-radius: 3px;
+                       box-shadow: -.5rem 0 0 var(--accent-soft), .5rem 0 0 var(--accent-soft); }
+ol.notes { font-family: var(--sans); font-size: .82rem; color: var(--ink-2); line-height: 1.6;
+           margin-left: 1.5rem; }
+ol.notes li { margin-bottom: .7rem; }
+ol.notes a { color: var(--quote); word-break: break-word; }
+.backref { text-decoration: none; font-weight: 700; }
+
+.quizbreak { margin: 2.6rem 0; padding: 1.3rem 1.4rem; background: var(--accent-soft);
+             border: 1px solid var(--accent); border-radius: 5px; }
+.quizbreak-h { font-family: var(--sans); font-size: 1.02rem; font-weight: 700;
+               color: var(--ink); margin-bottom: .45rem; }
+.quizbreak p { font-size: .98rem; color: var(--ink-2); margin-bottom: .85rem; }
+.quizbreak-cta { font-family: var(--sans); font-size: .86rem; font-weight: 700;
+                 color: var(--accent); text-decoration: none; }
+.quizbreak-cta:hover { text-decoration: underline; }
+.quiztail { margin-bottom: 1.1rem; }
+</style>
+
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Case study</div>
+  <h1>Measure U Is T1 Again: What Berkeley Learned &mdash; and Did Not Learn &mdash; from the $100 Million Measure T1 Bond</h1>
+  <p class="standfirst">What the 2016 voter got for $100 million &mdash; and why Measure U repeats the design.</p>
+  <div class="byline">Policy analysis &middot; Prepared August 21, 2026</div>
+
+  <h2 id="core-finding">Core finding</h2>
+  <p><strong>Measure U is essentially a scaled-up redo of Measure T1, with no retrospective governance improvement addressing T1&rsquo;s central accountability failure.</strong></p>
+  <p>In 2016, Berkeley voters authorized $100 million to repair, renovate, replace, or reconstruct aging City infrastructure. After the vote, the City promised that each phase would include a <strong>&ldquo;robust public project selection process.&rdquo;</strong><sup><a href="#n4" id="r4">[4]</a></sup> The process was extensive. It was also nonbinding. Projects selected through it were later removed, reduced to design-only, materially changed, or displaced by projects added after the prioritization process. The independent audits verified lawful spending against the <strong>Council-approved project list as that list changed</strong>; they did not test whether voters received the physical outcomes that had justified the borrowing.</p>
+  <p>Measure U repeats that architecture at three times the principal amount. Its development record again invokes a <strong>&ldquo;robust community engagement and survey process.&rdquo;</strong><sup><a href="#n14" id="r14">[14]</a></sup> But the legal measure says its public-input project list is <strong>&ldquo;non-exhaustive&rdquo;</strong> and expressly permits projects that were not identified through that process to receive bond funding if they fit the measure&rsquo;s broad infrastructure purposes.<sup><a href="#n15" id="r15">[15]</a></sup> It provides no voter-level rule for when a selected project may be killed, reduced from construction to design, materially substituted, or displaced by a new project. Its audits test consistency with the measure&rsquo;s broad intent, not fidelity to a fixed set of measurable voter-facing outcomes.<sup><a href="#n15" id="r15-2">[15]</a></sup></p>
+  <p>That is not a minor drafting omission. It is the exact governance weakness T1 exposed over the previous decade.</p>
+  <p>The City had an opportunity to perform a retrospective T1 analysis and improve the next bond accordingly. The public record reviewed for this report does not show that it did so. There is no published T1 <strong>voter-promise audit</strong> asking which 2016 expectations were delivered, which were abandoned, how much money moved, why material substitutions occurred, or whether the rules for changing course were adequate. Instead, Measure U repeats the same assurance&mdash;process&mdash;without adding a meaningful mechanism that binds later implementation to measurable outcomes.</p>
+  <p>This report therefore asks two connected questions:</p>
+  <ol><li><strong>What did the November 2016 voter actually get for the $100 million Measure T1 authorization?</strong></li><li><strong>Given that record, should voters authorize another $300 million under substantially the same accountability structure?</strong></li></ol>
+  <p>The conclusion is narrower than opposition to infrastructure investment. Berkeley has large and genuine infrastructure needs, and T1 delivered substantial useful work. The problem is the design of the voter bargain. For a voter who believes that capital decisions require measurable outcomes and explicit <strong>start / stop / continue</strong> discipline, Measure U is not supportable in its present form. The measure is already headed to the November ballot; the ordinary policy-design window for adding those voter-level protections has closed.<sup><a href="#n14" id="r14-2">[14]</a></sup><sup><a href="#n15" id="r15-3">[15]</a></sup></p>
+
+  <h2 id="robust">&ldquo;Robust&rdquo;: We&rsquo;ve Been Down This Bumpy Road Before</h2>
+  <p>T1&rsquo;s own policies manual says that each phase would include a <strong>&ldquo;robust public project selection process&rdquo;</strong> and describes a <strong>&ldquo;robust community engagement process.&rdquo;</strong><sup><a href="#n4" id="r4-2">[4]</a></sup> Measure U&rsquo;s development materials use the same adjective again.<sup><a href="#n14" id="r14-3">[14]</a></sup></p>
+  <p>The T1 record makes the weakness of that language concrete.</p>
+  <p><strong>&ldquo;Robust&rdquo; is unquantifiable. It creates no outcome, metric, threshold, decision rule, or audit test.</strong> It can describe the number of meetings, the intensity of outreach, or the amount of effort expended. None of those facts establishes that the resulting priorities will control what gets built.</p>
+  <p>A process could be made physically arduous&mdash;one could require every vote to occur in a room at two times normal gravity&mdash;and thereby make it more strenuous. It would not become more accountable. <strong>Effort can masquerade as rigor.</strong></p>
+  <p>Accountability requires more:</p>
+  <p class="pull"><strong>Defined outcomes and metrics, operating within rules that discipline material changes in course.</strong></p>
+  <p>For a capital bond, that means at minimum knowing what physical result is expected, how progress and cost will be measured, and what procedural threshold applies when government proposes to <strong>start</strong> a new project, <strong>stop</strong> an existing one, or materially change what it will <strong>continue</strong> to deliver.</p>
+  <p>T1 had extensive process. It did not have that discipline. Measure U repeats the word &ldquo;robust&rdquo; without repairing the defect.</p>
+
+  <div class="quizbreak">
+    <div class="quizbreak-h">Think you&rsquo;ve got the pattern?</div>
+    <p>Take the Measure U quizzes and see how well the promises, safeguards, and T1 record line up.</p>
+    <a class="quizbreak-cta" href="quiz.html#act-measure-u">Take the quizzes &rarr;</a>
+  </div>
+
+  <h2 id="baseline">1. The correct baseline is November 2016</h2>
+  <p>The City&rsquo;s current Measure T1 page reproduces the original ballot question. Voters were asked whether Berkeley should issue up to $100 million in bonds to &ldquo;repair, renovate, replace, or reconstruct&rdquo; aging infrastructure and facilities, including sidewalks, storm drains, parks, streets, senior and recreation centers, and other City facilities and buildings.<sup><a href="#n1" id="r1">[1]</a></sup></p>
+  <p>That language matters. It does not read like a blank-check economic-development, social-program, or facilities-expansion measure. It presents a deferred-maintenance proposition: Berkeley owns aging physical assets; those assets need fixing; voters should authorize borrowing to fix them.</p>
+  <p>The post-election implementation record confirms that interpretation. In June 2017, staff described Measure T1 as addressing existing infrastructure and documented a strong public expectation that significant T1 resources would go to streets. The Phase 1 allocation approved by Council was $37.365 million, divided as follows:<sup><a href="#n2" id="r2">[2]</a></sup></p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Phase 1 category, June 2017</th><th>Allocation</th></tr></thead>
+      <tbody>
+        <tr><td>Facilities</td><td>$14.400M</td></tr>
+        <tr><td>Complete Streets</td><td>$8.500M</td></tr>
+        <tr><td>Green Infrastructure</td><td>$1.200M</td></tr>
+        <tr><td>Parks Projects</td><td>$6.965M</td></tr>
+        <tr><td>Citywide Safety</td><td>$0.900M</td></tr>
+        <tr><td>Staff / project management</td><td>$4.600M</td></tr>
+        <tr><td>Bond transaction costs</td><td>$0.800M</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>$37.365M</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>A reasonable voter therefore had grounds to expect visible physical output, not merely lawful expenditure. The relevant accountability question is not &ldquo;Was the expenditure eligible under a broad bond authorization?&rdquo; It is &ldquo;Did the $100 million materially produce the sort of repaired or replaced infrastructure that the ballot invited the voter to imagine?&rdquo;</p>
+  <p>This report uses that voter-facing standard. It does <strong>not</strong> assert that every later change was unlawful, wasteful, or substantively bad policy. A project can be worthwhile and still represent a departure from the expectations that secured the original borrowing authority.</p>
+
+  <h2 id="delivered">2. What Berkeley unquestionably delivered</h2>
+  <p>Any serious analysis must begin by crediting the substantial portion of T1 that did what voters would naturally have expected.</p>
+  <p>Berkeley&rsquo;s current Measure T1 page says Phase 1 completed 39 projects. With grants and special funds, the City says Phase 1 supported $65.7 million in infrastructure improvements.<sup><a href="#n1" id="r1-2">[1]</a></sup> The City identifies completed or substantially completed work including Live Oak Community Center, North Berkeley Senior Center, street paving and green infrastructure, park improvements, storm-drain work, playgrounds, pool repairs, waterfront infrastructure, sidewalks, and other facility work.<sup><a href="#n1" id="r1-3">[1]</a></sup></p>
+  <p>The February 2026 T1 fact sheet lists, among other completed Phase 1 outputs, Live Oak and North Berkeley Senior Center renovations, Strawberry Creek Park work, Aquatic Park tide-tube work, park improvements, multiple street projects, and green infrastructure. It also lists completed Phase 2 work including Willard Clubhouse, King Pool repairs, Ohlone Park work, John Hinkel Park improvements, Grove Park play structures, storm-drain repairs, and waterfront piling work.<sup><a href="#n3" id="r3">[3]</a></sup></p>
+  <p>This matters because the policy critique is <strong>not</strong> that T1 produced nothing or that voters were simply deceived. The stronger finding is institutional: Berkeley built a governance structure in which the portfolio could change substantially after voters authorized the debt, while the formal accountability system continued to certify the revised portfolio as compliant.</p>
+  <p>That distinction is central to understanding both T1 and Measure U.</p>
+
+  <h2 id="portfolio-not-fixed">3. The portfolio was not fixed after the vote &mdash; or even after public prioritization</h2>
+  <p>Berkeley established extensive Phase 1 and Phase 2 public processes. The City&rsquo;s 2026 fact sheet says there were roughly 70 public-process meetings to help select projects, and the T1 policies manual describes a process involving lead commissions, participating commissions, staff, and public meetings.<sup><a href="#n3" id="r3-2">[3]</a></sup><sup><a href="#n4" id="r4-3">[4]</a></sup></p>
+  <p>That process had democratic value. But it did not create a binding delivery baseline.</p>
+  <p>The Phase 1 list began changing almost immediately. In January 2018, Council added <strong>$2 million for the Adult Mental Health Services Center</strong> after the June 2017 Phase 1 list had already been adopted.<sup><a href="#n5" id="r5">[5]</a></sup> In 2019, the City removed and substituted projects and authorized $5.3 million of Phase 2 funds to help finish Phase 1 after escalation and other costs produced a funding gap.<sup><a href="#n6" id="r6">[6]</a></sup> In later years, additional Phase 1 projects were added and removed.<sup><a href="#n1" id="r1-4">[1]</a></sup></p>
+  <p>Phase 2 followed the same basic pattern. The December 2020 adopted project list allocated $53.25 million to projects, including <strong>$6.75 million for a T1 contribution to annual street paving</strong>, $1.85 million for sidewalks, $1.8 million for seismic/HVAC/electrical/control work at 1947 Center Street, $2.85 million for Corporation Yard work, public restrooms, parks, waterfront work, fire-station improvements, and the AAHRC.<sup><a href="#n7" id="r7">[7]</a></sup> The overall Phase 2 budget later shown by staff was $61 million, including $7.1 million for Staffing/FESS and $650,000 for art.<sup><a href="#n8" id="r8">[8]</a></sup></p>
+  <p>By September 2025, staff proposed a major reshuffling. The staff report stated that:<sup><a href="#n9" id="r9">[9]</a></sup></p>
+  <ul><li>five existing T1 projects would be limited to design;</li><li>three existing T1 projects would be removed;</li><li>three new projects would be added; and</li><li>six existing projects would receive additional T1 funding.</li></ul>
+  <p>The changes freed <strong>$6.283 million</strong> for reallocation. Of that, about $650,000 was directed to three newly added projects: F &amp; G dock re-decking, Adeline-area dog park and landscaping, and Santa Fe Trackbed park conversion. The remaining money was directed toward shortfalls in existing projects.<sup><a href="#n9" id="r9-2">[9]</a></sup></p>
+  <p>The governance details are as important as the dollars. The Parks, Recreation and Waterfront Commission expressed concern about reducing restroom funding. The Transportation and Infrastructure Commission expressed concern about reducing both street and restroom funding. <strong>Neither commission took action on the changes.</strong> Staff nevertheless recommended the revised list because it would align the final Phase 2 portfolio with <strong>&ldquo;Council priorities.&rdquo;</strong> The item was approved on the Council <strong>consent calendar</strong>, and the report stated <strong>&ldquo;Alternative Actions Considered: None.&rdquo;</strong><sup><a href="#n9" id="r9-3">[9]</a></sup></p>
+  <p>Thus the &ldquo;robust process&rdquo; did not operate as a commitment mechanism. It generated input and recommendations, but it did not prevent later staff and Council decisions from substituting a different portfolio when fiscal and political conditions changed.</p>
+
+  <h2 id="streets">4. Streets are the clearest voter-expectation test</h2>
+  <p>Street repair was not a peripheral interpretation invented after the fact. Streets were named in the ballot question, and staff documented during Phase 1 that the public expected a significant portion of T1 money to address street surfaces.<sup><a href="#n2" id="r2-2">[2]</a></sup></p>
+  <p>The original Phase 1 package devoted <strong>$8.5 million</strong> to Complete Streets.<sup><a href="#n2" id="r2-3">[2]</a></sup> Real street projects were subsequently completed, and the City can fairly point to them as T1 successes.<sup><a href="#n1" id="r1-5">[1]</a></sup></p>
+  <p>But the Phase 2 history is more revealing. The 2020 list devoted another <strong>$6.75 million</strong> to a T1 contribution for annual street paving, described as accelerating citywide paving and supporting arterial/collector reconstruction and Vision Zero, bus-network, bicycle and pedestrian improvements.<sup><a href="#n7" id="r7-2">[7]</a></sup></p>
+  <p>That allocation did not survive.</p>
+  <p>In 2023, $2.8 million was removed from the Phase 2 paving contribution. In September 2025, the remaining <strong>$3.95 million</strong> was removed and reallocated. Staff said other funding had been identified.<sup><a href="#n9" id="r9-4">[9]</a></sup></p>
+  <p>That qualification matters: the City did not necessarily abandon paving itself. But from the standpoint of the 2016 voter, the relevant fact is that <strong>$6.75 million of T1 borrowing that had been assigned to accelerated paving was ultimately used for something else</strong>.</p>
+  <p>The distinction is important. Replacing T1 paving money with another tax, grant, General Fund allocation, or special fund may preserve the paving project, but it does not mean the T1 dollars delivered what the T1 prioritization process said they would deliver. The taxpayer may receive the street repair through another financing source while the bond capacity is consumed elsewhere.</p>
+  <p>That is precisely why a voter-promise audit must track the source of funds as well as the physical project.</p>
+
+  <h2 id="design-only">5. &ldquo;Completed &mdash; design only&rdquo; is not physical delivery</h2>
+  <p>The City&rsquo;s February 2026 T1 fact sheet uses a status formulation that is administratively understandable but misleading for voter-output analysis: <strong>&ldquo;Completed &ndash; Design Phase only.&rdquo;</strong><sup><a href="#n3" id="r3-3">[3]</a></sup></p>
+  <p>Projects in that category included:</p>
+  <ul><li>the Adeline/Alcatraz right-of-way restroom;</li><li>the University/San Pablo right-of-way restroom;</li><li>Harrison Park restroom renovation;</li><li>the César Chávez Park restroom; and</li><li>bollard conversion to landscaping.<sup><a href="#n3" id="r3-4">[3]</a></sup></li></ul>
+  <p>The September 2025 staff report makes clear that the intent was to stop T1 participation at design and reallocate remaining construction money. The report identified $115,000 reallocated from the bollard project, $1.116 million from right-of-way restrooms, $492,000 from Harrison Park restroom, and $310,000 from César Chávez Park restroom.<sup><a href="#n9" id="r9-5">[9]</a></sup></p>
+  <p>For internal project accounting, completing a design phase may close a funded phase. For a voter asking &ldquo;What did my bond build?&rdquo;, however, a design for a restroom is not a restroom. A plan for physical landscaping is not physical landscaping.</p>
+  <p>This report therefore treats design-only outcomes as <strong>not delivered</strong> when the publicly described project contemplated construction. That does not imply the design has zero value. It means the voter-output ledger should distinguish a study or design artifact from the physical asset that justified the project&rsquo;s inclusion in an infrastructure bond program.</p>
+
+  <h2 id="two-kinds-of-drift">6. The Adult Mental Health building and AAHRC reveal two different kinds of drift</h2>
+  <p>The Adult Mental Health Services Center and the African American Holistic Resource Center should not be treated as identical examples.</p>
+  <h3>Adult Mental Health Services Center: portfolio drift, but still conventional infrastructure</h3>
+  <p>Council added <strong>$2 million</strong> for the Adult Mental Health Services Center in January 2018, after adoption of the original Phase 1 list. A 2019 funding-gap report later identified about $500,000 in savings from the project because the contract amount was below budget.<sup><a href="#n5" id="r5-2">[5]</a></sup><sup><a href="#n6" id="r6-2">[6]</a></sup></p>
+  <p>The current City fact sheet reports a much larger total project budget because the facility also used other resources, but the key T1 fact is straightforward: this was a post-list addition.<sup><a href="#n3" id="r3-5">[3]</a></sup></p>
+  <p>Substantively, the project was still a seismic and programmatic renovation of an existing City building. It therefore fits naturally within &ldquo;repair, renovate, replace, or reconstruct&rdquo; aging facilities. Its significance is procedural: even the first citizen/commission-derived list was not the final answer. Council could later decide that another existing facility deserved T1 capital.</p>
+  <h3>AAHRC: a new programmatic purpose financed through the infrastructure authorization</h3>
+  <p>AAHRC is a more consequential example because it combines infrastructure spending with creation of a new programmatic facility.</p>
+  <p>The City currently identifies <strong>$7 million of Measure T1 Phase 2 funding</strong> for AAHRC, plus $6.85 million of General Fund money, $1 million in federal/HUD funds, and $250,000 of earlier General Fund funding.<sup><a href="#n10" id="r10">[10]</a></sup> The City says the original concept was to renovate the existing City building at 1890 Alcatraz. Structural and soils analysis then led Berkeley to choose demolition and construction of a new roughly 6,000-square-foot community building.<sup><a href="#n10" id="r10-2">[10]</a></sup></p>
+  <p>The facility itself is new in purpose. Berkeley describes it as housing culturally relevant services involving education, employment, health, mental health, housing advocacy, community programming, and related supports.<sup><a href="#n10" id="r10-3">[10]</a></sup></p>
+  <p>This distinction should be framed carefully. Because the property was City-owned and the project evolved from renovation to replacement, the word <strong>&ldquo;replace&rdquo;</strong> in the 2016 ballot language gives the City a plausible legal argument that T1 funds may be used for the building. This report does not conclude that the expenditure violated Measure T1.</p>
+  <p>The policy question is one of voter authorization and fiscal priority:</p>
+  <p class="pull"><strong>Was the November 2016 voter who authorized $100 million to fix Berkeley&rsquo;s aging infrastructure meaningfully asked whether part of that borrowing capacity should become $7 million of seed capital for a new, purpose-built AAHRC?</strong></p>
+  <p>The answer is no. The AAHRC policy and siting direction emerged years after the bond vote. The later Phase 2 public process could endorse or support the project, but by then voters had already authorized the debt. A later participatory process can determine how broad authority is used; it cannot retroactively tell us what the voter thought they were authorizing when they incurred the obligation.</p>
+  <p>This is exactly why &ldquo;broad authorization now, robust process later&rdquo; is a weaker accountability structure than a bond tied to defined deliverables.</p>
+
+  <h2 id="staff-share">7. How much of the $100 million was available for staff and implementation?</h2>
+  <p>The $100 million ballot number was never equivalent to $100 million of visible construction.</p>
+  <p>The original 2017 Phase 1 allocation set aside <strong>$4.6 million for staff/project management</strong>.<sup><a href="#n2" id="r2-4">[2]</a></sup> A 2020 Phase 1 cash-flow projection showed projected staffing of about $4.283 million and FESS of about $390,000 through the projected completion period, broadly consistent with that original allocation.<sup><a href="#n11" id="r11">[11]</a></sup></p>
+  <p>The Phase 2 budget later included <strong>$7.1 million for &ldquo;Staffing / FESS.&rdquo;</strong><sup><a href="#n8" id="r8-2">[8]</a></sup> FESS means <strong>Facility, Equipment, Services, and Supplies</strong> relating to T1 management and administration.<sup><a href="#n4" id="r4-4">[4]</a></sup></p>
+  <p>The two planned staffing/management allocations therefore total roughly <strong>$11.7 million</strong>, or 11.7% of the $100 million principal authorization. That figure should be described as a budget allocation, not automatically as final actual expenditure. Berkeley&rsquo;s current T1 webpage says actual Phase 1 staff costs represented 11.8% of Phase 1 expenditures.<sup><a href="#n1" id="r1-6">[1]</a></sup></p>
+  <p>In addition, one percent of bond proceeds &mdash; <strong>$1 million</strong> &mdash; is reserved for functional civic art.<sup><a href="#n3" id="r3-6">[3]</a></sup> The original Phase 1 plan also included $800,000 for bond transaction costs, but a 2019 report says those transaction costs were <strong>not incurred</strong>, so they should not be counted as money actually consumed.<sup><a href="#n6" id="r6-3">[6]</a></sup></p>
+  <p>Project-specific architectural, engineering, construction-management, and other consultant costs are another category. The T1 manual says concept and design work is typically performed using on-call consultants and explicitly permits bond proceeds to pay administrative staff time directly related to bond-funded projects.<sup><a href="#n4" id="r4-5">[4]</a></sup> Those professional costs may sit inside individual project budgets rather than the central Staffing/FESS line.</p>
+  <p>None of this is inherently improper. Capital projects require engineers, project managers, procurement, inspection, contract administration, and compliance work. The question is whether the amount represents <strong>incremental cost caused by delivering the bond program</strong> or whether bond and special-fund accounting can also absorb staff costs that the General Fund would otherwise have borne.</p>
+  <p>That distinction matters because Berkeley&rsquo;s broader budget record shows that fund-shifting is an actual fiscal-management technique.</p>
+
+  <h2 id="cost-shifting">8. The staff-cost-shifting concern is supported as a City practice &mdash; but not yet proved for T1</h2>
+  <p>The FY2027&ndash;28 budget-balancing record provides direct evidence that Berkeley uses reallocation of existing staff costs across funds to reduce General Fund pressure.</p>
+  <p>For Planning and Development, the April 23, 2026 Budget &amp; Finance Committee packet states that the department achieved personnel savings by <strong>&ldquo;shifting existing staff costs from the General Fund to special funds,&rdquo;</strong> specifically the PSC and CUPA funds. The same section says the department reallocated internal-service charges from the General Fund to enterprise funds. The plan generated about $458,000 in General Fund savings in FY2027 without reducing total FTE.<sup><a href="#n12" id="r12">[12]</a></sup></p>
+  <p>Public Works described an even larger exercise. Its budget-balancing plan included <strong>&ldquo;cost shifting 51 positions from distressed funds to healthier funds that still align with the work the positions are doing,&rdquo;</strong> while identifying millions of dollars of personnel savings across enterprise and special-revenue funds.<sup><a href="#n12" id="r12-2">[12]</a></sup></p>
+  <p>This establishes an important institutional fact:</p>
+  <p class="pull"><strong>Berkeley regards allocation of existing personnel costs to non-General-Fund sources as a legitimate tool for balancing the General Fund when the work can be associated with those funds.</strong></p>
+  <p>That makes scrutiny of T1 staffing charges reasonable, particularly because T1 financed internal City staff over many years and because the proposed Measure U framework contemplates even larger implementation resources.</p>
+  <p>But the evidence does <strong>not</strong> establish that T1 was overcharged or improperly used as a General Fund relief mechanism. The City&rsquo;s February 2026 fact sheet states that five FTE of project-manager capacity are funded by T1 across ten existing City project managers, that staffing is adjusted as projects are completed, and that T1 is charged only for actual staff time worked on T1 projects. It also says general citywide administrative costs such as executive management, IT, HR, and Finance are not charged to T1.<sup><a href="#n3" id="r3-7">[3]</a></sup></p>
+  <p>Those controls directly answer part of the concern. The unresolved issue is <strong>marginality</strong>: would the employee and the underlying salary cost have existed in substantially the same form without T1, and if so, did T1 replace a General Fund or other-fund obligation rather than add delivery capacity?</p>
+  <p>The public audit record does not answer that question.</p>
+  <p>A proper staffing analysis would need, by employee and fiscal year:</p>
+  <ol><li>home department and position;</li><li>salary and benefit cost;</li><li>FTE fraction charged to T1;</li><li>the employee&rsquo;s funding source before T1 work;</li><li>whether the position was newly created, expanded, backfilled, or simply reallocated;</li><li>timesheet/project-charge records;</li><li>the specific T1 deliverable supported; and</li><li>the counterfactual funding source if T1 had not existed.</li></ol>
+  <p>Without that ledger, the defensible conclusion is <strong>not</strong> &ldquo;T1 was used to hide General Fund staff.&rdquo; It is:</p>
+  <p class="pull"><strong>Berkeley&rsquo;s documented budget practice makes that a material audit question, and the existing T1 audits were not designed to answer it.</strong></p>
+
+  <h2 id="staffing-unwind">8A. The T1 staffing unwind is a live budget question, not a hypothetical</h2>
+  <p>The most useful counterfactual is not simply, &ldquo;Will T1-funded employees be fired when T1 ends?&rdquo; The public record suggests that the answer may often be <strong>no</strong>. The more important question is <strong>where their salaries and responsibilities go next</strong>.</p>
+  <p>The February 2026 T1 fact sheet says Measure T1 funds <strong>five FTE-equivalents of project-management capacity</strong>, distributed across ten existing City project managers, while a T1-funded Associate Management Analyst supports program administration.<sup><a href="#n3" id="r3-8">[3]</a></sup> The updated T1 manual similarly describes five FTE spread across existing Public Works and Parks staff.<sup><a href="#n4" id="r4-6">[4]</a></sup> T1 projects are expected to continue through FY2028, so there is no immediate November 2026 layoff cliff simply because the final bond tranche has been issued.</p>
+  <p>But Berkeley has already demonstrated the transition mechanism. In July 2025, Public Works asked Council to staff Measure FF partly by <strong>repurposing two roles then funded by Measure T1 because T1 was &ldquo;sunsetting.&rdquo;</strong> The two existing staff allocations carried approximately <strong>$468,824 in annual salary and benefit cost</strong>. The report states that the T1-funded Associate Management Analyst would transition to Measure FF as T1 projects were completed.<sup><a href="#n17" id="r17">[17]</a></sup></p>
+  <p>That is legitimate workforce planning. It also proves why the funding question matters.</p>
+  <p>If Measure U fails, Berkeley should be able to state now, employee by employee or FTE allocation by FTE allocation:</p>
+  <ul><li>which T1-funded positions or fractions of positions terminate when T1 work ends;</li><li>which employees return to work previously supported by the General Fund;</li><li>which costs migrate to Measure FF or another restricted fund;</li><li>which costs become new General Fund obligations;</li><li>which positions are left vacant or eliminated;</li><li>what work those employees will perform after T1; and</li><li>whether the receiving fund is paying for genuinely fund-eligible work or merely becoming the next available salary source.</li></ul>
+  <p>This is particularly important because Berkeley is already managing a structural General Fund deficit and, as documented above, explicitly uses fund reassignment of personnel costs as a budget-balancing technique.<sup><a href="#n12" id="r12-3">[12]</a></sup></p>
+  <p>The Measure U staffing counterfactual is therefore central to the bond&rsquo;s fiscal analysis:</p>
+  <p class="pull"><strong>Of the roughly $40.5 million proposed for Measure U staffing and implementation, how much would purchase genuinely incremental bond-delivery capacity, and how much would provide a new funding home for employees whose salaries Berkeley would otherwise need to absorb in the General Fund or another fund?</strong></p>
+  <p>The public record reviewed here does not answer that question. That does not prove an improper cost shift. It establishes that the counterfactual funding source is material and should be disclosed before another long-lived bond program is authorized.</p>
+
+  <h2 id="audits">9. The audits verify compliance with the amended list, not fidelity to the 2016 promise</h2>
+  <p>The latest independent accountant&rsquo;s report for July 2023 through June 2025 is revealing precisely because it appears to have found the T1 accounting in good order.</p>
+  <p>Among other procedures, the accountant:</p>
+  <ul><li>verified separate accounting for T1 transactions;</li><li>verified deposit of bond proceeds and interest into dedicated accounts;</li><li>sampled 25 expenditures to determine whether they related to projects on the T1 project list;</li><li>sampled procurements for compliance;</li><li>evaluated financial reporting; and</li><li>verified that project-list changes were properly approved by Council.<sup><a href="#n13" id="r13">[13]</a></sup></li></ul>
+  <p>No exceptions were found on those procedures. The report did note that the City no longer prepared the program-level six-month schedule contemplated in the manual; reporting had moved to an as-needed basis.<sup><a href="#n13" id="r13-2">[13]</a></sup></p>
+  <p>These are useful controls. They reduce risks of unauthorized spending, commingling, procurement irregularity, or staff changing the formal list without Council approval.</p>
+  <p>But notice what the audit does <strong>not</strong> ask:</p>
+  <ul><li>Did the final physical portfolio correspond to what voters were told in 2016?</li><li>Did a project selected for construction end as construction, rather than design only?</li><li>How much of the original paving expectation survived?</li><li>Were newly added projects subjected to a public prioritization process equivalent to the one used to build the original lists?</li><li>Did internal staffing charges represent incremental bond-delivery capacity or a shift of existing staff expense from another fund?</li><li>Did the City achieve the promised quantity, condition, or service outcome per dollar?</li></ul>
+  <p>The accountant&rsquo;s procedure effectively asks whether a sampled expenditure was on the authorized T1 project list <strong>as the City had amended it</strong>. It also explicitly validates that the amendments were properly approved.</p>
+  <p>That produces a structural accountability gap:</p>
+  <p class="pull"><strong>If Council may legally change the project list, and the audit tests expenditures against the changed list, then a clean audit can coexist with substantial divergence from the package that voters or earlier public processes expected.</strong></p>
+  <p>This is not an auditor failure. It is a design limitation. An auditor cannot enforce a promise that the legal measure and implementing rules never made binding.</p>
+
+  <h2 id="ledger">10. A 2016-voter ledger: what can be said confidently now</h2>
+  <p>A dollar-perfect reconciliation of all $100 million requires the City&rsquo;s project-level T1 general ledger, because current public summaries often display <strong>total project budgets including grants, General Fund, Parks Tax, CIP, and other sources</strong>, rather than the exact T1 share of every final project. False precision would weaken the analysis.</p>
+  <p>Still, the public record supports the following high-confidence ledger.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Category</th><th>What the record establishes</th><th>T1 amount or implication</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Real repair/renovation delivered</strong></td><td>Streets, community centers, parks, storm drains, pool work, sidewalks, waterfront and other existing assets received substantial physical improvements</td><td>Large but not exactly isolatable from current public summaries</td></tr>
+        <tr><td><strong>Phase 1 staff/project management</strong></td><td>Explicit 2017 allocation</td><td><strong>$4.6M budgeted</strong></td></tr>
+        <tr><td><strong>Phase 2 Staffing/FESS</strong></td><td>Explicit Phase 2 budget line</td><td><strong>$7.1M budgeted</strong></td></tr>
+        <tr><td><strong>Functional civic art</strong></td><td>1% of bond proceeds reserved</td><td><strong>$1.0M</strong></td></tr>
+        <tr><td><strong>Adult Mental Health Services Center</strong></td><td>Added after original Phase 1 list; renovation of existing City facility</td><td><strong>$2.0M initially added; later about $0.5M reported as savings</strong></td></tr>
+        <tr><td><strong>AAHRC</strong></td><td>Phase 2 T1 allocation for new programmatic facility; project evolved from renovation to demolition/new construction</td><td><strong>$7.0M</strong></td></tr>
+        <tr><td><strong>Phase 2 annual paving contribution</strong></td><td>Original 2020 T1 allocation ultimately removed from T1 portfolio</td><td><strong>$6.75M redirected</strong></td></tr>
+        <tr><td><strong>2025 new projects</strong></td><td>F&amp;G dock re-decking, Adeline dog park/landscaping, Santa Fe Trackbed park conversion</td><td><strong>$650K newly added</strong></td></tr>
+        <tr><td><strong>2025 design-only / removed projects</strong></td><td>Five projects limited to design and three removed; freed funds redirected</td><td><strong>$6.283M total reallocated</strong>, including amounts from streets and design-only projects</td></tr>
+        <tr><td><strong>Phase 1 planning-only outputs</strong></td><td>City fact sheet reports several &ldquo;Completed &ndash; Planning Study only&rdquo; projects</td><td>Roughly <strong>$1.95M in reported project budgets</strong>, but current summary does not prove every dollar was T1-only</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Several points follow.</p>
+  <h3>10.1 At least 11.7% was planned for central staffing/management rather than direct physical construction</h3>
+  <p>The combined Phase 1 and Phase 2 central staffing/project-management/FESS allocations were about $11.7 million. That is not a finding of waste: implementation capacity is necessary. It is a disclosure issue. A voter seeing &ldquo;$100 million for infrastructure&rdquo; should understand how much program capacity is expected to be consumed by internal delivery and administration.</p>
+  <h3>10.2 A further $1 million was reserved for art</h3>
+  <p>Again, this was an authorized City policy choice. It nonetheless means the $100 million principal was not equivalent to $100 million of repair/reconstruction.</p>
+  <h3>10.3 The $7 million AAHRC allocation is the clearest &ldquo;new purpose&rdquo; case</h3>
+  <p>The building ultimately replaces an existing structure, so it can fit the legal category of replacement. But the function and programmatic rationale are new. For a 2016-voter analysis, this is categorically different from replacing a worn roof on an existing senior center or repaving a deteriorated street.</p>
+  <h3>10.4 The $6.75 million Phase 2 paving allocation demonstrates opportunity cost</h3>
+  <p>Those dollars were ultimately redirected. Even if other funds replaced them, T1 capacity that had been assigned to a quintessential 2016 ballot purpose was consumed by other needs. That is the clearest answer to the hypothetical voter who thought &ldquo;my street will be fixed.&rdquo;</p>
+  <h3>10.5 Design-only projects expose the difference between administrative completion and voter delivery</h3>
+  <p>The City can legitimately say the funded design phase is complete. The voter cannot use the design as a restroom, pathway improvement, or landscaping installation. A voter-facing scorecard should therefore use a physical-delivery definition.</p>
+
+  <h2 id="flexibility">11. Flexibility does not require locking every decision in amber</h2>
+  <p>Many T1 changes have facially reasonable explanations:</p>
+  <ul><li>construction inflation;</li><li>bids exceeding estimates;</li><li>unforeseen site conditions;</li><li>contaminated soil;</li><li>utility conflicts;</li><li>negative public feedback at specific sites;</li><li>outside funding becoming available for work previously assigned to T1;</li><li>grants being delayed or lost; and</li><li>the desire to finish large projects already well into design or construction.<sup><a href="#n9" id="r9-6">[9]</a></sup></li></ul>
+  <p>Those are genuine capital-program problems. A rigid project list can itself create waste if government is forced to build a bad project merely because it was once named.</p>
+  <p>That is why the relevant alternative to T1-style discretion is <strong>not</strong> to freeze every project in amber. It is to impose a principled <strong>start / stop / continue</strong> discipline that distinguishes ordinary implementation from decisions that materially rewrite the voter-facing bargain.</p>
+  <h3 id="rule-continue">Continue: ordinary implementation can remain streamlined</h3>
+  <p>Routine execution changes need not become major political events. If two blocks of paving in Area X are replaced by two comparable blocks in Area Y because pavement condition, utility coordination, grant timing, or construction sequencing makes the substitution sensible, that may reasonably remain a consent-calendar or administrative decision&mdash;provided the measurable output is materially preserved.</p>
+  <p>The accountability question is whether the original outcome remains intact: roughly the same lane-miles, facility function, safety result, geographic equity, or other defined output for roughly the same class of investment.</p>
+  <h3 id="rule-stop">Stop: killing an outcome should require an affirmative public decision</h3>
+  <p>If a publicly prioritized construction project is cancelled, stripped of construction funding, reduced from construction to design-only, or otherwise prevented from producing the physical result used to justify the bond, that is not routine implementation.</p>
+  <p>At minimum it should require:</p>
+  <ul><li>an action-calendar item rather than consent;</li><li>written findings explaining why the project is being stopped;</li><li>the amount already spent;</li><li>the amount being freed;</li><li>the measurable outcome no longer being delivered;</li><li>alternatives considered;</li><li>the proposed destination of the money; and</li><li>a recorded Council vote.</li></ul>
+  <p>T1&rsquo;s 2025 handling demonstrates why this matters. Eliminating the remaining T1 paving contribution and reducing physical restroom projects to design-only were material decisions, yet the package was approved on consent.<sup><a href="#n9" id="r9-7">[9]</a></sup></p>
+  <h3 id="rule-start">Start: adding a new project should face a comparable burden</h3>
+  <p>A project that was not part of the process used to build public support for the bond should not enter merely because staff can identify it as legally eligible under broad bond language.</p>
+  <p>A genuinely new project&mdash;particularly one involving a new facility, new programmatic purpose, or significant allocation&mdash;should require an action-calendar decision that explains:</p>
+  <ul><li>why it is more important than the displaced voter-facing output;</li><li>why it was not part of the original prioritization;</li><li>what objective and metric it will satisfy;</li><li>lifecycle and operating implications;</li><li>what project or outcome is being sacrificed to fund it; and</li><li>what public-input standard applies.</li></ul>
+  <h3>Material substitution should be treated as both a stop and a start</h3>
+  <p>Changing a project from seismic/HVAC work to windows, from construction to design-only, or from accelerated paving to a different facility is not merely a technical adjustment. It simultaneously ends one promised output and initiates another.</p>
+  <p>The point is not that such a substitution can never be justified. The point is that it should be <strong>visible, measurable, and affirmatively decided</strong>.</p>
+  <h3>Objective thresholds can keep the rule administrable</h3>
+  <p>A redesigned bond could automatically require heightened review when any of the following occurs:</p>
+  <ul><li>a named project is removed;</li><li>construction is reduced to planning or design;</li><li>a new project enters above a specified dollar threshold;</li><li>more than a specified percentage or dollar amount is moved from an approved project;</li><li>the project&rsquo;s function materially changes;</li><li>a geographic or service-level commitment materially changes; or</li><li>the measurable output falls below a specified tolerance.</li></ul>
+  <p>Everything below those thresholds can remain streamlined.</p>
+  <p>This defeats the common objection that voter accountability would make a long-lived capital program unmanageable. <strong>The alternative to unlimited discretion is not zero discretion. It is disciplined discretion.</strong></p>
+  <p>And discipline alone is still not enough. A rule against changing course is useful only if the original course is itself stated in measurable terms.</p>
+  <p class="pull"><strong>Accountability requires defined outcomes and metrics, operating within rules that discipline material changes in course.</strong></p>
+  <p>T1 had extensive process but did not create that combination. Measure U does not create it either.</p>
+
+  <h2 id="measure-u">12. Measure U is essentially T1 again, at three times the principal</h2>
+  <p>Berkeley&rsquo;s 2026 bond development materials say Council directed staff to conduct a <strong>&ldquo;robust community engagement and survey process.&rdquo;</strong> Staff used voter surveys, commission briefings, focus groups, district meetings, and other engagement to develop a project framework.<sup><a href="#n14" id="r14-4">[14]</a></sup></p>
+  <p>That language should now trigger retrospective scrutiny, not reassurance. T1&rsquo;s manual used the same word and the City now cites roughly 70 T1 public-process meetings.<sup><a href="#n3" id="r3-9">[3]</a></sup><sup><a href="#n4" id="r4-7">[4]</a></sup> The historical question is settled: extensive engagement did <strong>not</strong> make the resulting T1 project priorities durable.</p>
+  <p>Measure U does not correct that problem. It reproduces it in legal form.</p>
+  <p>The June 16, 2026 resolution authorizes broad categories including fire and emergency facilities, parks and recreation, accessibility, seismic and climate resilience, modernization and reliability, and construction or improvement of other City infrastructure. Critically, it says bond funding should be <strong>&ldquo;guided&rdquo;</strong> by the City&rsquo;s <strong>&ldquo;non-exhaustive list&rdquo;</strong> of projects identified through the 2026 public-input process and then expressly provides that <strong>projects not identified in that process shall also be eligible</strong> if they satisfy the measure&rsquo;s broad infrastructure criteria.<sup><a href="#n15" id="r15-4">[15]</a></sup></p>
+  <p>The same resolution says final project costs will be determined as plans are finalized and bids are awarded, anticipates non-bond funding that has not yet been secured, and states that Council <strong>cannot guarantee</strong> that the bond proceeds will be sufficient to complete all needed improvements.<sup><a href="#n15" id="r15-5">[15]</a></sup></p>
+  <p>The accountability provisions require annual reporting and commission oversight, and the City Auditor must audit expenditures at least once every three years to confirm consistency with the measure&rsquo;s intent.<sup><a href="#n15" id="r15-6">[15]</a></sup> Those provisions may protect against ineligible spending. They do not establish a voter-facing delivery contract.</p>
+  <p>The result is the same structural accountability model T1 used:</p>
+  <ol><li>secure broad borrowing authority;</li><li>conduct a substantial public process;</li><li>identify an attractive project portfolio;</li><li>retain legal authority to change that portfolio later;</li><li>have commissions and Council approve later expenditures and changes; and</li><li>audit spending against the legally permissible program rather than against the measurable outcomes that induced the voter to authorize the debt.</li></ol>
+  <p>Measure U is therefore not merely similar to T1 because both are infrastructure bonds. It is similar in the precise feature that matters here: <strong>the public process informs priorities without binding later implementation to them.</strong></p>
+  <h3>There is no retrospective improvement</h3>
+  <p>A successor measure need not preserve every technical feature of its predecessor, but when the predecessor exposes a repeatable governance weakness, the next measure should show what was learned.</p>
+  <p>The public record reviewed for this report does not identify a T1 retrospective that asked:</p>
+  <ul><li>which 2016 voter expectations were actually delivered;</li><li>which public-prioritized construction projects ended as design-only;</li><li>how much original T1 capacity moved away from streets and other selected work;</li><li>how many projects entered after the public prioritization process;</li><li>whether material changes received proportionate Council scrutiny;</li><li>whether staff and professional-service charging reflected genuinely incremental delivery capacity;</li><li>what happened to T1-funded staff as the program wound down; or</li><li>what measurable change-control rules should govern the next bond.</li></ul>
+  <p>Measure U contains no evident reform responsive to those questions.</p>
+  <p>That is the core policy failure: <strong>Berkeley is repeating the T1 governance structure without first evaluating the T1 governance structure.</strong></p>
+  <h3>Measure U also institutionalizes a large implementation-cost allowance</h3>
+  <p>The current working framework assumes $300 million of bond sales plus roughly $13 million of interest earnings, for approximately $313 million of program capacity. Of that, staff identifies about <strong>$272.5 million in project costs and $40.5 million in staffing and implementation resources</strong>, including planning, procurement, project management, construction management, compliance, reporting, auditing, and oversight.<sup><a href="#n16" id="r16">[16]</a></sup></p>
+  <p>That means implementation resources equal approximately:</p>
+  <ul><li><strong>13.5% of the $300 million principal authorization</strong>, or</li><li><strong>12.9% of the projected $313 million program capacity including interest</strong>.</li></ul>
+  <p>That is close to the scale of T1&rsquo;s central staffing/management allocation. It does not establish excess cost. It makes the unresolved T1 staffing counterfactual immediately relevant.</p>
+  <p>Moreover, Measure U expressly allows bond proceeds to reimburse the General Fund or other funds for eligible improvement expenditures advanced before bond proceeds are available.<sup><a href="#n15" id="r15-7">[15]</a></sup> Reimbursement is a standard capital-finance tool. In a City simultaneously balancing a structural General Fund deficit partly through personnel and cost reallocations among funds, voters deserve a transparent rule distinguishing legitimate project reimbursement and incremental bond-delivery costs from the migration of costs that would otherwise burden existing funds.</p>
+  <h3>The ordinary policy-design window is now closed</h3>
+  <p>The May 19, 2026 staff schedule identified <strong>August 7, 2026</strong> as the deadline to submit a local measure for the November ballot.<sup><a href="#n14" id="r14-5">[14]</a></sup> Council subsequently placed Measure U on the ballot through the June 16 resolution.<sup><a href="#n15" id="r15-8">[15]</a></sup></p>
+  <p>As of August 21, the ordinary opportunity to redesign the voter authorization has passed. Berkeley may still publish better information, answer questions, promise future practices, or even adopt separate administrative policies. But those actions are not equivalent to placing the missing protections in the voter-approved measure.</p>
+  <p>That distinction is central. A future Council can amend an ordinary Council policy. T1 demonstrates that later Council priorities are exactly what a durable accountability mechanism must be capable of constraining.</p>
+  <p>Voters therefore cannot vote:</p>
+  <p class="pull"><strong>Yes, provided Berkeley later adds start / stop / continue rules and measurable delivery commitments.</strong></p>
+  <p>The choice is between the Measure U now on the ballot and rejecting it so that a future bond can be redesigned.</p>
+
+  <h2 id="judgment">13. Policy judgment: what T1 proves, and what it does not</h2>
+  <h3>What the evidence proves</h3>
+  <ol><li><strong>T1 delivered substantial real infrastructure.</strong> The program cannot fairly be characterized as a failure in the ordinary sense of producing nothing useful.</li><li><strong>The 2016 ballot created broad debt authority, not a fixed project contract.</strong> The specific project portfolio emerged later.</li><li><strong>The later public-prioritization lists were mutable.</strong> Projects were added, removed, rescoped, reduced to design only, and supplemented with additional money.</li><li><strong>Street paving was a central and documented public expectation.</strong> The Phase 2 $6.75 million T1 paving contribution was ultimately eliminated from the T1 portfolio.</li><li><strong>Some outputs labeled complete were design-only rather than physical construction.</strong> A voter-facing definition of delivery should not equate the two.</li><li><strong>AAHRC represents a materially new programmatic purpose that was not before voters in 2016, even though replacement of the existing City-owned structure can plausibly fit the bond&rsquo;s broad legal language.</strong></li><li><strong>Roughly $11.7 million was budgeted across the two phases for central staffing/project management/FESS, plus $1 million for art.</strong> These are not synonymous with waste, but they reduce the share of principal directly available for visible construction.</li><li><strong>Berkeley now explicitly uses staff-cost reallocation among funds as a General Fund balancing tool.</strong> That makes the source and marginality of T1 staff charges a legitimate audit issue.</li><li><strong>The T1 agreed-upon-procedures audits were designed primarily to test accounting, procurement, reporting, and consistency with the Council-approved project list.</strong> They were not voter-promise audits.</li><li><strong>Measure U repeats the same basic accountability architecture while proposing three times the principal and roughly $40.5 million in staffing/implementation resources.</strong></li></ol>
+  <h3>What the evidence does not prove</h3>
+  <ol><li>It does <strong>not</strong> prove that T1 expenditures were illegal.</li><li>It does <strong>not</strong> prove that the AAHRC, Adult Mental Health Services Center, dog park, Santa Fe park conversion, or other later projects are bad public policy.</li><li>It does <strong>not</strong> prove that all project substitutions were avoidable; many were responses to real cost, engineering, funding, or site problems.</li><li>It does <strong>not</strong> prove that T1 staff charges were improperly shifted from the General Fund. The existing record establishes a broader City cost-shifting practice, not misconduct in T1 accounting.</li><li>It does <strong>not</strong> support a precise claim such as &ldquo;only 77 cents of every T1 dollar fixed infrastructure&rdquo; without the project-level T1 expenditure ledger. Public status sheets mix T1 money with grants, General Fund, Parks Tax, CIP, and other sources.</li></ol>
+  <p>The strongest criticism therefore is a governance criticism rather than an accusation of illegality:</p>
+  <p class="pull"><strong>Berkeley asked voters to authorize a broad pot of debt to fix aging infrastructure, then relied on later process and Council discretion to determine the actual portfolio. When the portfolio changed, the accountability system verified that the changes were properly authorized rather than asking whether they preserved the expectations that secured the original vote.</strong></p>
+
+  <h2 id="redesign">14. What a redesigned bond should require &mdash; and what Measure U cannot now supply</h2>
+  <p>A credible successor to T1 would not rely on another assurance that the process will be &ldquo;robust.&rdquo; It would convert lessons from T1 into measurable outcomes, metrics, and durable change-control rules.</p>
+  <p>Because Measure U is already on the November ballot, the distinction between <strong>information Berkeley can still provide</strong> and <strong>protections that can no longer be added to this voter authorization</strong> matters.</p>
+  <h3>14.1 Berkeley can still publish a T1 voter-promise ledger</h3>
+  <p>For every T1 project or project family, the City can still disclose:</p>
+  <ul><li>the 2016 ballot category it served;</li><li>when the project first entered the T1 portfolio;</li><li>whether it was part of the original Phase 1 or Phase 2 public-selection process or was added later;</li><li>original T1 allocation;</li><li>final T1 expenditure;</li><li>other funding sources;</li><li>original physical scope;</li><li>final physical scope;</li><li>status: constructed, partially constructed, design only, removed, or substituted;</li><li>amount reallocated away from or into the project;</li><li>reason for change; and</li><li>the public/commission/Council process used to approve the change.</li></ul>
+  <p>That would materially improve voter information before November. It would not repair Measure U&rsquo;s legal structure.</p>
+  <h3>14.2 Berkeley can still publish a staffing unwind and professional-services ledger</h3>
+  <p>For T1 and the proposed Measure U implementation model, the City can distinguish:</p>
+  <ul><li>newly created positions from existing positions;</li><li>incremental project-delivery capacity from reallocated existing staff time;</li><li>internal staff from outside consultants;</li><li>design consultants from construction-management consultants;</li><li>administrative/FESS costs from project-specific professional costs;</li><li>General Fund costs reimbursed by bond proceeds;</li><li>costs that would exist even without the bond;</li><li>where every T1-funded employee or FTE allocation goes when T1 ends; and</li><li>what funding source carries the position if Measure U does not pass.</li></ul>
+  <p>This would directly address the concern created by Berkeley&rsquo;s documented practice of shifting personnel expenses among funds to relieve pressure on the General Fund.<sup><a href="#n12" id="r12-4">[12]</a></sup><sup><a href="#n17" id="r17-2">[17]</a></sup></p>
+  <p>Again, disclosure would help voters evaluate the measure. It would not bind later Councils.</p>
+  <h3>14.3 A future bond should contain a start / stop / continue change-control rule</h3>
+  <p>The next bond should distinguish routine implementation from material changes.</p>
+  <p><strong>Continue:</strong> technical substitutions that preserve the measurable outcome may use streamlined approval.</p>
+  <p><strong>Stop:</strong> cancelling a project, removing construction funding, converting construction to design-only, or materially reducing an outcome should automatically require an action-calendar item, written findings, alternatives, financial effects, and a recorded vote.</p>
+  <p><strong>Start:</strong> adding a significant project that was not part of the voter-facing baseline should require comparable public justification and an explicit explanation of what existing output or capacity it displaces.</p>
+  <p><strong>Material substitution:</strong> changing function or shifting significant money between materially different purposes should be treated as both a stop and a start.</p>
+  <p>The rule can use objective dollar, percentage, scope, output, or geographic thresholds so ordinary engineering adjustments do not clog the action calendar.</p>
+  <p>This is the practical middle ground between two bad extremes: a completely mutable project list and a project list frozen forever.</p>
+  <h3>14.4 A future bond should define measurable outcomes, not merely eligible categories</h3>
+  <p>Change-control rules have something to protect only if the original bargain is measurable.</p>
+  <p>The voter-facing baseline should therefore identify quantities, conditions, service outcomes, or other auditable outputs wherever practicable. Examples might include:</p>
+  <ul><li>lane-miles or street-condition improvement;</li><li>number and type of facilities completed;</li><li>seismic or accessibility milestones;</li><li>square footage renovated or replaced;</li><li>restroom facilities actually opened;</li><li>specified lifecycle or condition targets; and</li><li>cost and schedule ranges with defined variance thresholds.</li></ul>
+  <p>The point is not to require false precision decades in advance. It is to ensure that an auditor can distinguish between <strong>money spent lawfully</strong> and <strong>the promised result delivered</strong>.</p>
+  <h3>14.5 Reporting should never equate design with physical delivery</h3>
+  <p>Every capital project should report separately:</p>
+  <ul><li>planning complete;</li><li>design complete;</li><li>bid/contract awarded;</li><li>construction started;</li><li>physical project substantially complete; and</li><li>operational/open to the public.</li></ul>
+  <p>If the voter-facing proposition contemplated a built facility, <strong>&ldquo;design complete&rdquo; is not &ldquo;project delivered.&rdquo;</strong></p>
+  <h3>14.6 Audits should report variance from the voter-facing baseline</h3>
+  <p>A future audit should not silently inherit whatever project list Council most recently approved.</p>
+  <p>For example:</p>
+  <p class="pull">Original voter-facing commitment: $X / Y lane-miles / Z facilities. Current commitment: $A / B lane-miles / C facilities. Variance: ___ because ___. Reallocated amount: ___. Replacement project: ___. Approval path: ___.</p>
+  <p>That would let the auditor test not only eligibility, but what changed between authorization and delivery.</p>
+  <h3>14.7 Measure U does not require these protections</h3>
+  <p>Measure U&rsquo;s legal text instead provides broad eligible purposes, a non-exhaustive public-input project list, eligibility for projects never presented in that process, annual commission review, and periodic audit for consistency with the measure&rsquo;s intent.<sup><a href="#n15" id="r15-9">[15]</a></sup></p>
+  <p>That is a permissible governance choice. It is not the accountability architecture described above.</p>
+  <p>And because the ballot measure is already set, voters cannot condition their approval on adding it later.</p>
+
+  <h2 id="what-voter-got">15. The practical answer to &ldquo;What did the 2016 voter get?&rdquo;</h2>
+  <p>The most defensible answer is not a single percentage yet.</p>
+  <p>The voter got <strong>a substantial body of real infrastructure improvements</strong>, including street, park, community-facility, stormwater, sidewalk, pool, and waterfront work. The voter also got a <strong>flexible capital fund whose portfolio was repeatedly rewritten after the election</strong>.</p>
+  <p>Some of that flexibility rescued projects from inflation and construction overruns. Some allowed City government to substitute projects when conditions changed. Some allowed new policy priorities to enter a bond program originally presented as a solution to aging infrastructure. Some physical projects ended as design. A central share of the authorization financed staff and implementation rather than visible construction. And the independent audits certified the resulting program by testing the moving, Council-approved baseline.</p>
+  <p>So the key finding is not:</p>
+  <p class="pull">&ldquo;Berkeley promised $100 million of specific projects and stole the money.&rdquo;</p>
+  <p>The record does not support that claim.</p>
+  <p>The finding is:</p>
+  <p class="pull"><strong>Berkeley persuaded voters to incur $100 million of debt with a simple physical-infrastructure proposition, while retaining broad discretion over the portfolio that the debt would ultimately finance. The later public process did not meaningfully constrain that discretion, and the audit system did not test fidelity to the voter&rsquo;s original expectation.</strong></p>
+  <p>That is a governance design problem.</p>
+
+  <h2 id="conclusion">16. Policy conclusion: Measure U should be judged as a repeat of T1, not as a fresh promise</h2>
+  <p>Measure U asks voters for <strong>$300 million</strong> of new principal. The City again emphasizes extensive public input and a &ldquo;robust&rdquo; engagement process. Yet the governing architecture is essentially the one T1 already tested:</p>
+  <ul><li>broad borrowing authority;</li><li>a public-facing project framework that is not binding;</li><li>later Council discretion;</li><li>no measurable start / stop / continue discipline;</li><li>no requirement that killing a publicly prioritized project leave the consent calendar;</li><li>no durable prohibition on later-added projects displacing voter-facing priorities;</li><li>audits aimed at eligible expenditure rather than variance from voter-promised outcomes; and</li><li>a substantial implementation/staffing allowance whose relationship to existing City staffing has not been fully reconciled.</li></ul>
+  <p>The T1 experience does not prove that Measure U money would be wasted. It proves something more relevant to institutional design: <strong>the process can operate exactly as written while the portfolio that voters thought they were supporting changes materially.</strong></p>
+  <p>The City had ten years of T1 experience from which to design a better voter bargain. The record reviewed here does not show a retrospective exercise that identified the weakness and then incorporated a correction into Measure U.</p>
+  <p>Instead, the City again offers &ldquo;robust&rdquo; process as reassurance.</p>
+  <p>That word does no accountability work.</p>
+  <p class="pull"><strong>Effort is not rigor. Process is not accountability. Accountability requires measurable outcomes and metrics, operating within disciplined rules for changing course.</strong></p>
+  <p>A reasonable supporter of infrastructure investment can therefore oppose Measure U without arguing that Berkeley should stop repairing infrastructure, without insisting that every project be frozen forever, and without claiming that T1 was a wholesale failure.</p>
+  <p>The decision rule is straightforward:</p>
+  <p class="pull"><strong>If a voter believes that a $300 million capital authorization should include measurable delivery commitments and explicit start / stop / continue discipline before the debt is approved, Measure U is unsupportable in its current form.</strong></p>
+  <p>The ordinary policy-design window has closed. The missing protections cannot now be made part of the November voter authorization. A separate promise by the current Council would not create the same durability because future Councils could change it&mdash;the very risk T1 demonstrates.</p>
+  <p>Under that accountability standard, the appropriate action is to <strong>reject Measure U and require Berkeley to return with a redesigned bond</strong> that:</p>
+  <ol><li>states measurable voter-facing outcomes;</li><li>distinguishes routine implementation from material changes;</li><li>forces project cancellations and major substitutions into explicit public decisions;</li><li>requires comparable scrutiny before new projects can displace original priorities;</li><li>reports physical delivery separately from planning and design;</li><li>audits variance from the original voter-facing baseline; and</li><li>discloses the staffing counterfactual so voters know whether bond implementation funding is adding delivery capacity or relocating costs from other strained funds.</li></ol>
+  <p>That is not opposition to infrastructure. It is a requirement that the financing instrument incorporate what Berkeley should have learned from the last one.</p>
+  <p class="pull"><strong>T1 revealed the defect. Measure U had the opportunity to correct it. It did not.</strong></p>
+
+
+  <h2 id="open-questions">Open questions and further verification</h2>
+  <p>This analysis answers the policy question with the presently public record, but one additional dataset is necessary before publishing a precise &ldquo;X cents of every T1 dollar&rdquo; claim: the City&rsquo;s <strong>project-level T1 expenditure ledger</strong> showing final T1-only expenditures by project and fiscal year.</p>
+  <p>The public fact sheets often report total project budgets that combine T1 with General Fund, Parks Tax, CIP, grants, and other sources. The next records request should therefore seek:</p>
+  <ol><li>every T1 project code and subproject code;</li><li>annual actual expenditures by account and funding source;</li><li>internal payroll charges by employee/FTE/project;</li><li>FESS expenditures by account;</li><li>outside professional-services expenditures by project;</li><li>original and revised T1 allocations;</li><li>transfers/reallocations among projects;</li><li>final unspent balances;</li><li>interest earnings applied to projects;</li><li>reconciliation to the full $100 million principal authorization and all interest proceeds;</li><li>a T1 staffing unwind table identifying every employee or FTE fraction currently charged to T1, the planned funding source after T1, and the employee&rsquo;s planned post-T1 responsibilities;</li><li>identification of any T1-funded position expected to return to the General Fund if no successor bond funding is available; and</li><li>a crosswalk of every material project-list change showing whether it was approved on consent or action calendar, the alternatives considered, and the measurable outcome displaced.</li></ol>
+  <p>That ledger would allow the final quantitative question to be answered without inference:</p>
+  <p class="pull"><strong>Of every $100 in principal Berkeley voters authorized in 2016, how many dollars purchased physical repair or replacement of aging infrastructure; how many purchased planning, design, staff, management, art, and professional services; how many were redirected to later-added purposes; and how many were spent on projects that never produced the physical improvement originally contemplated?</strong></p>
+  <p>That is the retrospective Berkeley <strong>should have completed before asking</strong> the same voters to authorize another $300 million. It can still inform voters before November, but it can no longer retrofit the missing safeguards into the Measure U authorization now before them.</p>
+
+  <h2 id="sources">Sources</h2>
+  <ol class="notes">
+    <li id="n1">City of Berkeley, <strong>Measure T1: Infrastructure and Facilities Bond</strong>. Original ballot question, Phase 1/Phase 2 summary, and management/oversight information. https://berkeleyca.gov/your-government/our-work/bond-revenue-measures/measure-t1 <a href="#r1" class="backref">&#8617;</a></li>
+    <li id="n2">City of Berkeley, <strong>Implementing Phase 1 of the Measure T1 Infrastructure Bond Program</strong>, June 27, 2017. Includes the $37.365 million Phase 1 allocation and description of the public/commission process. https://berkeleyca.gov/sites/default/files/documents/2017-06-27%20Item%2049%20Implementing%20Phase%201%20-%20REDUCED.pdf <a href="#r2" class="backref">&#8617;</a></li>
+    <li id="n3">City of Berkeley, <strong>Measure T1 General Obligation Bond &ndash; Fact Sheet</strong>, February 25, 2026. Includes program schedule, 70-meeting statement, staffing controls, 1% art allocation, project statuses, and &ldquo;Completed &ndash; Design Phase only&rdquo; designations. https://berkeleyca.gov/sites/default/files/2026-02/2026-02-25_ECC_Item-7b-T1-Fact-Sheetpdf.pdf <a href="#r3" class="backref">&#8617;</a></li>
+    <li id="n4">City of Berkeley, <strong>Measure T1 Bond Policies and Procedures Manual</strong>. Describes each phase as including a &ldquo;robust public project selection process,&rdquo; and separately describes a &ldquo;robust community engagement process,&rdquo; along with allowable staff/overhead charges, FESS, consultant procurement, program controls, and change procedures. https://berkeleyca.gov/sites/default/files/documents/T1V2%20Manual%20Final%20V04.pdf <a href="#r4" class="backref">&#8617;</a></li>
+    <li id="n5">City of Berkeley, <strong>Providing Direction on Closing Funding Gap to Complete Measure T1 Phase 1 Projects</strong>, March 26, 2019. Documents the January 2018 $2 million Mental Health Building addition and later savings. https://berkeleyca.gov/sites/default/files/city-council-meetings/2019-03-26%20Agenda%20Packet%20-%20WEB.pdf <a href="#r5" class="backref">&#8617;</a></li>
+    <li id="n6">City of Berkeley, <strong>Update of Measure T1 City Infrastructure Bond Program</strong>, April 14, 2020, and related Phase 1 funding records. Documents $5.3 million of Phase 2 resources authorized for Phase 1, project-list modifications, and the roughly $41.8 million Phase 1 program cost. https://berkeleyca.gov/sites/default/files/documents/2020-04-14%20Item%2046%20Measure%20T1%20Update.pdf <a href="#r6" class="backref">&#8617;</a></li>
+    <li id="n7">City of Berkeley, <strong>Measure T1 Phase 2 Project List</strong>, adopted December 2020. Includes $6.75 million street-paving contribution, sidewalks, facilities, parks, waterfront, AAHRC, and other original Phase 2 allocations. https://berkeleyca.gov/sites/default/files/documents/T1%20Phase%202%20project%20list.pdf <a href="#r7" class="backref">&#8617;</a></li>
+    <li id="n8">City of Berkeley, <strong>Measure T1 Bond Measure &ndash; Funding Gap Recommendations Report</strong>, April 2023. Phase 2 matrix identifies $53.25 million project budget, $650,000 art, $7.1 million Staffing/FESS, and $61 million total Phase 2 budget. https://berkeleyca.gov/sites/default/files/documents/T1%20Bond%20Measure%20-%20Funding%20Gap%20Recommendations%20Report%20April%202023.pdf <a href="#r8" class="backref">&#8617;</a></li>
+    <li id="n9">City of Berkeley, <strong>Updates to the Measure T1 Project List</strong>, September 16, 2025. Documents five projects reduced to design, three removed, three added, $6.283 million reallocation, commission concerns, &ldquo;Council priorities&rdquo; rationale, consent-calendar placement, and &ldquo;Alternative Actions Considered: None.&rdquo; https://berkeleyca.gov/sites/default/files/documents/2025-09-16%20Item%2010%20Updates%20to%20the%20Measure%20T1%20Project%20List.pdf <a href="#r9" class="backref">&#8617;</a></li>
+    <li id="n10">City of Berkeley, <strong>African American Holistic Resource Center</strong> project page. Describes project purpose, $7 million T1 allocation, General Fund and federal funding, and evolution from renovation to demolition/new construction. https://berkeleyca.gov/your-government/our-work/capital-projects/african-american-holistic-resource-center <a href="#r10" class="backref">&#8617;</a></li>
+    <li id="n11">City of Berkeley, <strong>Measure T1 Project Funding Update</strong>, May 13, 2020. Includes Phase 1 projected staffing and FESS costs. https://berkeleyca.gov/sites/default/files/2022-01/2020-05-13%20Measure%20T1%20Project%20Funding%20Update.pdf <a href="#r11" class="backref">&#8617;</a></li>
+    <li id="n12">City of Berkeley, <strong>Budget &amp; Finance Committee Agenda Packet</strong>, April 23, 2026, departmental FY2027&ndash;28 budget-balancing plans. Planning and Development expressly shifts existing staff costs from the General Fund to special funds; Public Works describes shifting 51 positions among funds. https://berkeleyca.gov/sites/default/files/legislative-body-meeting-agendas/2026-04-23%20Agenda%20Packet%20-%20Budget.pdf <a href="#r12" class="backref">&#8617;</a></li>
+    <li id="n13">Badawi &amp; Associates / City of Berkeley, <strong>Independent Accountant&rsquo;s Report on Agreed-Upon Procedures Applied to Measure T1 Tax Revenues</strong>, period July 1, 2023&ndash;June 30, 2025, dated March 5, 2026. https://berkeleyca.gov/sites/default/files/2026-03/City%20of%20Berkeley%20Measure%20T1%20AUP%202025%20Final.pdf <a href="#r13" class="backref">&#8617;</a></li>
+    <li id="n14">City of Berkeley, <strong>Presentation and Discussion of 2026 Community Survey Results</strong>, March 17, 2026 / May 19 agenda materials. Describes the &ldquo;robust community engagement and survey process.&rdquo; https://berkeleyca.gov/sites/default/files/city-council-meetings/2026-05-19%20Special%20Agenda%20Packet%20-%20Council%20-%20WEB.pdf <a href="#r14" class="backref">&#8617;</a></li>
+    <li id="n15">City of Berkeley, <strong>Placing a General Obligation Bond Measure on the November 3, 2026 Ballot for Public Infrastructure and Facilities</strong>, June 16, 2026. Includes broad eligible categories, cost and completion caveats, reimbursement authority, annual reporting, commission oversight, and audit provisions. https://berkeleyca.gov/sites/default/files/2026-06/2026-06-16%20Item%2038%20Placing%20a%20General%20Obligation%20Bond%20Measure.pdf <a href="#r15" class="backref">&#8617;</a></li>
+    <li id="n16">Same June 16, 2026 Measure U report, pp. 2 et seq. Working framework: approximately $300 million principal, $13 million projected interest earnings, $272.5 million project costs, and $40.5 million staffing/implementation resources. https://berkeleyca.gov/sites/default/files/2026-06/2026-06-16%20Item%2038%20Placing%20a%20General%20Obligation%20Bond%20Measure.pdf <a href="#r16" class="backref">&#8617;</a></li>
+    <li id="n17">City of Berkeley, <strong>Project Implementation Staffing for Measure FF, the SAFE STREETS Initiative</strong>, July 29, 2025. States that two roles then funded by Measure T1 would be repurposed because T1 was &ldquo;sunsetting,&rdquo; with combined annual salary and benefit cost of approximately $468,823.86; specifically states that the T1-funded Associate Management Analyst would transition to Measure FF as T1 projects were completed. https://berkeleyca.gov/sites/default/files/documents/2025-07-29%20Item%2020%20Project%20Implementation%20Staffing%20for%20Measure%20FF%2C%20the%20SAFE%20STREETS%20Initiative.pdf <a href="#r17" class="backref">&#8617;</a></li>
+  </ol>
+
+  <footer>
+    <p class="quiztail"><strong>Prefer questions to footnotes?</strong> <a href="quiz.html#act-measure-u">Take the Measure U quiz series &rarr;</a></p>
+    <h3>Related</h3>
+    <p><a href="bond-alibi.html">Bonds win elections; budget discipline does not</a> &middot;
+    <a href="build-once.html">If you build it, a plan will come</a> &middot;
+    <a href="small-sites.html">Buy once, pay forever</a> &middot;
+    <a href="crayon-box.html">The crayon box</a> &middot;
+    <a href="framework.html">The Berkeley Budget Framework</a> &middot;
+    <a href="index.html">Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
