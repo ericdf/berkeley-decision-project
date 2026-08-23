@@ -16,7 +16,7 @@ import {
   toggleShield, landMissile, launchShock, reconcileSky,
   availableCuts, availableTaxes, availableExits,
   applyCut, applyTax, applyExit,
-  useOneTimeMoney, payItBack, resolveObligation, ONE_TIME_DRAW,
+  useOneTimeMoney, payItBack, resolveObligation, ONE_TIME_DRAW, serviceLevel, round1,
   startPilot, expiringPilots, decidePilot,
   rolloverYear, isComplete, summariseYear,
   SHIELDS_PER_YEAR, CAMPAIGN_YEARS
@@ -134,16 +134,15 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
         const name = fn(rec.key).name;
         // A single $1M hit is small; only announce when a pip actually goes,
         // so the narration marks real consequences rather than every tick.
-        if (rec.lost) {
-          hud.announce(
-            (rec.redirected
-              ? `Deficit redirected away from a shielded service and landed on ${name}.`
-              : `Deficit landed on ${name}.`) +
-            ` Service now ${SERVICE_WORDS[state.functions[rec.key].service]}.`);
-          toast(rec.redirected ? 'REDIRECTED' : 'SERVICE REDUCED',
-            `${name} → ${SERVICE_WORDS[state.functions[rec.key].service]}`,
-            rec.redirected ? 'redirect' : 'bad');
-        }
+        const st = state.functions[rec.key];
+        hud.announce(
+          (rec.redirected
+            ? `${money(rec.cut)} redirected away from a shielded service and cut from ${name}.`
+            : `${money(rec.cut)} cut from ${name}.`) +
+          ` Now funded at ${money(st.expense)}.`);
+        toast(rec.redirected ? 'REDIRECTED' : 'FUNDING CUT',
+          `${name} −${money(rec.cut)} → ${money(st.expense)}`,
+          rec.redirected ? 'redirect' : 'bad');
         renderBases();
         renderHud();
       },
@@ -314,7 +313,9 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
         <span class="fb-name">${f.name}</span>
         <span class="fb-state">${st.exited
           ? 'NO LONGER A CITY SERVICE'
-          : `${pips(st.service)} ${SERVICE_WORDS[st.service]}`}</span>
+          : `${money(st.expense)} · ${SERVICE_WORDS[serviceLevel(st)]}` +
+            (st.openingExpense - st.expense > 0.05
+              ? ` (was ${money(st.openingExpense)})` : '')}</span>
       </div>`;
     }).join('');
 
@@ -342,7 +343,7 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
         const st = state.functions[f.key];
         return st.exited
           ? `${f.name} is no longer a City service`
-          : `${f.name} ${SERVICE_WORDS[st.service]}`;
+          : `${f.name} funded at ${money(st.expense)}, ${SERVICE_WORDS[serviceLevel(st)]}`;
       }).join('. ') + '. ' +
       (bal < 0 ? `The City is ${money(-bal)} in structural deficit.`
                : `The City holds a ${money(bal)} structural surplus.`) +
@@ -390,20 +391,29 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
           <span class="base-gone">TRANSFERRED OUT</span>
         </div>`;
       }
+      // The budget is the display. A missile is $1M and takes $1M out of the
+      // service it lands on, so the number falling is the mechanic showing
+      // its work — no pip arithmetic to infer.
+      const level = serviceLevel(st);
+      const cut = round1(st.openingExpense - st.expense - (st.pilotLift || 0));
       return `<div class="base" data-fn="${f.key}"
-                   data-shielded="${st.shielded}" data-service="${st.service}">
+                   data-shielded="${st.shielded}" data-service="${level}">
         <span class="base-name">${f.name}</span>
+        <span class="base-budget">
+          <b>${money(st.expense + (st.pilotLift || 0))}</b>
+          ${cut > 0.05 ? `<s>${money(st.openingExpense)}</s>` : ''}
+          ${st.pilotLift ? `<i>+${money(st.pilotLift)} PILOT</i>` : ''}
+        </span>
         <span class="base-service">
-          <i aria-hidden="true">${pips(st.service)}</i>
-          <em>${SERVICE_WORDS[st.service]}</em>
-          ${st.pilotLift ? '<b class="base-pilot">PILOT</b>' : ''}
+          <em>${SERVICE_WORDS[level]}</em>
+          ${cut > 0.05 ? `<u>−${money(cut)}</u>` : ''}
         </span>
         ${st.shielded ? '<span class="base-shield">SHIELDED</span>' : ''}
         <button type="button" class="base-btn" data-shield="${f.key}"
                 ${arming ? '' : 'disabled'}
                 aria-label="${st.shielded
-                  ? `Remove the shield from ${f.name}. Service ${SERVICE_WORDS[st.service]}.`
-                  : `Shield ${f.name}. Service ${SERVICE_WORDS[st.service]}. A shield sends the deficit to another service instead.`}">
+                  ? `Remove the shield from ${f.name}. Funded at ${money(st.expense)}, ${SERVICE_WORDS[level]}.`
+                  : `Shield ${f.name}. Funded at ${money(st.expense)}, ${SERVICE_WORDS[level]}. A shield sends the deficit to another service instead.`}">
           ${st.shielded ? 'UNSHIELD' : 'SHIELD'}
         </button>
       </div>`;
@@ -433,7 +443,7 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
     // Update the label in place — replacing textContent would destroy the
     // button's name/sub/key spans.
     $('#ctl-onetime .ctl-name').textContent = state.oneTimeDrawn
-      ? 'CUSHION DRAWN' : 'ONE-TIME MONEY';
+      ? 'PATCH DRAWN' : 'ONE-TIME PATCH';
     $('#ctl-onetime .ctl-sub').textContent = state.oneTimeDrawn
       ? 'a claim is coming' : 'clears missiles, changes nothing';
     $('#ctl-onetime').disabled = state.oneTimeDrawn;
@@ -484,7 +494,7 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
     let title, items;
 
     if (kind === 'cut') {
-      title = 'CUT — REDUCE A RECURRING EXPENSE';
+      title = 'CUT PROGRAM — REDUCE A RECURRING EXPENSE';
       items = availableCuts(state).map(c => ({
         id: c.id,
         head: c.label,
@@ -497,7 +507,7 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
           ? 'LABOR RELATIONS TOO POOR' : null
       }));
     } else if (kind === 'tax') {
-      title = 'TAX — RAISE RECURRING REVENUE';
+      title = 'IMPOSE TAX — RAISE RECURRING REVENUE';
       items = availableTaxes(state).map(t => ({
         id: t.id,
         head: t.label,
@@ -508,7 +518,7 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
         blocked: state.mood.taxpayers < RESISTANT ? 'TAXPAYERS WILL NOT WEAR IT' : null
       }));
     } else if (kind === 'exit') {
-      title = 'EXIT — LEAVE A LINE OF BUSINESS';
+      title = 'TRANSFER PROGRAM — ANOTHER AGENCY RUNS IT';
       items = availableExits(state).map(f => ({
         id: f.key,
         head: f.exitLabel,
@@ -519,7 +529,7 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
         proto: !!f.verify
       }));
     } else if (kind === 'pilot') {
-      title = 'START A PILOT — TEMPORARY BY DEFAULT';
+      title = 'LAUNCH PILOT — TEMPORARY BY DEFAULT';
       items = PILOTS
         .filter(p => !state.activePilots.some(x => x.id === p.id) &&
                      !state.functions[p.fnKey].exited)

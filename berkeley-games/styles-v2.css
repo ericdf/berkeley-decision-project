@@ -1477,9 +1477,39 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
 .base-name { font-size: 9.5px; font-weight: 800; letter-spacing: 0.04em; line-height: 1.25; }
 .base[data-shielded="true"] .base-name { padding-right: 50px; }
 
-.base-service { display: flex; align-items: baseline; gap: 5px; font-size: 9px; }
-.base-service i { font-style: normal; letter-spacing: 1.5px; }
-.base-service em { font-style: normal; color: var(--dim); font-size: 8.5px; }
+.base-budget {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.base-budget b { font-size: 14px; font-weight: 900; letter-spacing: 0.02em; }
+.base-budget s { font-size: 8px; color: var(--dim); text-decoration-thickness: 1px; }
+.base-budget i {
+  font-style: normal;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  padding: 0 3px;
+}
+
+.base-service { display: flex; align-items: baseline; gap: 5px; font-size: 8.5px; }
+.base-service em { font-style: normal; color: var(--dim); }
+.base-service u {
+  text-decoration: none;
+  font-weight: 800;
+  color: var(--neg);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The budget figure carries the damage, so it colours with the service. */
+.base[data-service="2"] .base-budget b { color: var(--accent); }
+.base[data-service="1"] .base-budget b,
+.base[data-service="0"] .base-budget b { color: var(--neg); }
 
 .base-gone {
   font-size: 8.5px;
@@ -1852,7 +1882,9 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
   }
 
   .base-name { font-size: 8.5px; min-height: 0; }
-  .base-service { font-size: 8px; gap: 3px; }
+  .base-budget b { font-size: 12px; }
+  .base-budget s, .base-budget i { font-size: 7px; }
+  .base-service { font-size: 7.5px; gap: 3px; }
   .base-service em { font-size: 7.5px; }
   .base-shield { top: 4px; right: 4px; font-size: 6.5px; }
   .base[data-shielded="true"] .base-name { padding-right: 42px; }
@@ -1887,9 +1919,9 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
     padding: 5px 6px 7px;
   }
 
-  .ctl { padding: 7px 4px; }
-  .ctl-name { font-size: 10.5px; }
-  .ctl-sub { display: none; }
+  .ctl { padding: 6px 4px; }
+  .ctl-name { font-size: 10px; line-height: 1.15; }
+  .ctl-sub { display: block; font-size: 7.5px; line-height: 1.2; }
   .ctl-key { display: none; }
 
   .hud { padding: 6px 10px; gap: 8px; }
@@ -2164,13 +2196,4 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
   letter-spacing: 0.06em;
 }
 
-/* A service level propped up by a running pilot, not by investment. */
-.base-pilot {
-  font-size: 7.5px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  border-radius: 2px;
-  padding: 0 3px;
-}
+/* Pilot marker styling now lives with .base-budget i, above. */

@@ -26,11 +26,11 @@ export const SHIELDS_PER_YEAR = 2;
 const OPENING_REVENUE = 300;
 
 /**
- * $M of landed deficit that costs one service pip. With one missile per $1M
- * a base absorbs several hits before losing a pip, so damage accumulates
- * visibly rather than arriving all at once.
+ * A landed missile cuts the base's budget by its own value. One missile is
+ * $1M, so a $1M hit removes $1M of funding — the arithmetic is the display,
+ * and there is nothing to explain.
  */
-export const UNITS_PER_PIP = 4;
+export const UNITS_PER_PIP = 1;
 
 /**
  * §7: every normal deficit missile is exactly $1M. A $30M deficit is 30
@@ -47,10 +47,12 @@ export function createBoardState(mode = 'common', rng = Math.random) {
   const functions = {};
   for (const f of FUNCTIONS) {
     functions[f.key] = {
-      service: MAX_PIPS,
       staff: f.staff,
       expense: f.baseExpense,
-      damage: 0,
+      // What the service was funded at before anything happened to it, so the
+      // display can show what has been taken away as well as what is left.
+      openingExpense: f.baseExpense,
+      cutTotal: 0,
       exited: false,
       shielded: false
     };
@@ -119,6 +121,23 @@ export function recurringExpense(s) {
 }
 
 export const structuralBalance = s => round1(s.recurringRevenue - recurringExpense(s));
+
+/**
+ * Service level, derived from how much of a base's original funding survives.
+ * Nothing stores it: the budget is the truth, and this is a reading of it.
+ */
+export function serviceLevel(st) {
+  if (!st || st.exited) return 0;
+  if (!st.openingExpense) return MAX_PIPS;
+  // A pilot's funding counts toward the service whether it is still a pilot
+  // or has been made permanent; the difference is who is paying for it.
+  const f = (st.expense + (st.pilotLift || 0)) / st.openingExpense;
+  if (f >= 0.97) return 4;
+  if (f >= 0.82) return 3;
+  if (f >= 0.6) return 2;
+  if (f > 0.2) return 1;
+  return 0;
+}
 
 /** Positive when the City is short. This is what becomes missiles. */
 export const structuralDeficit = s => Math.max(0, -structuralBalance(s));
@@ -248,35 +267,41 @@ export function landMissile(s, m) {
   m.landedOn = key;
   s.absorbed.landed = round1(s.absorbed.landed + m.remaining);
 
-  // Damage accumulates per base: every UNITS_PER_PIP of landed deficit costs
-  // one pip of service. Partial damage is carried, so nothing is lost to
-  // rounding across a wave of $1M hits.
-  st.damage = round1((st.damage || 0) + m.remaining);
-  let lost = 0;
-  while (st.damage >= UNITS_PER_PIP && st.service > 0) {
-    st.damage = round1(st.damage - UNITS_PER_PIP);
-    st.service = clamp(st.service - 1, 0, MAX_PIPS);
-    lost++;
-  }
+  // The hit comes straight out of the base's budget. This is the whole
+  // mechanic: unfunded deficit lands somewhere, and where it lands, that
+  // service loses exactly that much money.
+  const before = st.expense;
+  st.expense = Math.max(0, round1(st.expense - m.remaining));
+  const cut = round1(before - st.expense);
+  st.cutTotal = round1((st.cutTotal || 0) + cut);
 
-  // A degraded city is a worse place to do business.
-  if (lost && (key === 'streets' || key === 'safety')) applyMood(s, { business: -1 });
+  // Unfunded cuts land on people, and almost everyone dislikes the result.
+  // The exception is public safety: cutting it is the one reduction some
+  // activists have been asking for, so it moves them the other way.
+  const per = cut * 0.16;
+  applyMood(s, {
+    taxpayers: -per,
+    unions: -per * 1.4,          // these are jobs
+    nonprofits: -per * 1.2,      // and contracts
+    activists: key === 'safety' ? +per * 1.2 : -per * 1.2,
+    business: (key === 'streets' || key === 'safety') ? -per * 1.2 : -per * 0.5
+  });
 
-  return { key, lost, redirected, amount: m.remaining };
+  return { key, cut, redirected, amount: m.remaining };
 }
 
 function pickTarget(s, avoid) {
   const cands = FUNCTION_KEYS.filter(k =>
     k !== avoid && !s.functions[k].exited && !s.functions[k].shielded &&
-    s.functions[k].service > 0);
+    s.functions[k].expense > 0);
   if (!cands.length) return null;
-  return cands.sort((a, b) => s.functions[b].service - s.functions[a].service)[0];
+  return cands.sort((a, b) => s.functions[b].expense - s.functions[a].expense)[0];
 }
 
 function pickAny(s) {
   const cands = FUNCTION_KEYS.filter(k => !s.functions[k].exited);
   if (!cands.length) return null;
-  return cands.sort((a, b) => s.functions[b].service - s.functions[a].service)[0];
+  return cands.sort((a, b) => s.functions[b].expense - s.functions[a].expense)[0];
 }
 
 /**
@@ -348,7 +373,10 @@ export function applyCut(s, id) {
   const st = s.functions[c.fnKey];
   st.expense = round1(st.expense - c.saving);
   if (c.staffDelta) st.staff = Math.max(0, st.staff + c.staffDelta);
-  if (c.serviceDelta) st.service = clamp(st.service + c.serviceDelta, 0, MAX_PIPS);
+  // A card that improves or degrades a service does it with money.
+  if (c.serviceDelta) {
+    st.expense = Math.max(0, round1(st.expense + c.serviceDelta * (st.openingExpense * 0.1)));
+  }
   applyMood(s, c.mood);
   s.usedCuts.push(id);
   s.events.push({ year: s.fiscalYear, kind: 'cut', id, saving: c.saving });
@@ -528,8 +556,10 @@ export function startPilot(s, id) {
   // year is not undone by starting one — the lift is borrowed, and it goes
   // back when the pilot ends unless the player pays to keep it.
   const st = s.functions[p.fnKey];
-  st.service = clamp(st.service + 1, 0, MAX_PIPS);
-  st.pilotLift = (st.pilotLift || 0) + 1;
+  // Funded from outside the recurring base, so it lifts the service without
+  // touching recurring expense until the player makes it permanent (§7). The
+  // lift is exactly the cost the card advertises.
+  st.pilotLift = round1((st.pilotLift || 0) + p.permanentCost);
   applyMood(s, p.mood);
   s.events.push({ year: s.fiscalYear, kind: 'pilot-start', id });
   return { ok: true, pilot: p };
@@ -553,17 +583,18 @@ export function decidePilot(s, id, makePermanent) {
     // and the borrowed service lift goes with it.
     s.activePilots = s.activePilots.filter(x => x.id !== id);
     const st = s.functions[p.fnKey];
-    st.service = clamp(st.service - 1, 0, MAX_PIPS);
-    st.pilotLift = Math.max(0, (st.pilotLift || 0) - 1);
+    st.pilotLift = Math.max(0, round1((st.pilotLift || 0) - p.permanentCost));
     s.events.push({ year: s.fiscalYear, kind: 'pilot-end', id });
     return { ok: true, permanent: false, pilot: p };
   }
 
   // Made permanent: the lift is now bought and paid for with recurring money,
   // so it stops being borrowed.
+  // Bought outright. recurringExpense already sums permanent pilots, so the
+  // cost must not also be added to the base — the lift simply stops being
+  // borrowed and the tile keeps crediting it through pilotLift.
   p.permanent = true;
   const st = s.functions[p.fnKey];
-  st.pilotLift = Math.max(0, (st.pilotLift || 0) - 1);
   if (p.staffDelta) st.staff += p.staffDelta;
   applyMood(s, p.mood);
   s.events.push({ year: s.fiscalYear, kind: 'pilot-permanent', id, cost: p.permanentCost });
@@ -624,7 +655,9 @@ export function applyCompensationIncrease(s) {
   for (const k of FUNCTION_KEYS) {
     const st = s.functions[k];
     if (st.exited || !st.staff) continue;
-    st.expense = round1(st.expense + st.staff * perStaff);
+    const rise = round1(st.staff * perStaff);
+    st.expense = round1(st.expense + rise);
+    st.openingExpense = round1(st.openingExpense + rise);
   }
   applyMood(s, { unions: +1 });
   return { staff, total };
