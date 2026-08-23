@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Berkeley Budget Driver</title>
+<meta name="description" content="Seven lanes. One budget. Choose your road. A first-person arcade driving game about fiscal choices.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🚧</text></svg>">
+</head>
+<body data-screen="title-screen">
+
+<!-- Play surface -->
+<div id="stage">
+  <canvas id="game-canvas" aria-label="Berkeley Budget Driver play area" role="img"></canvas>
+
+  <!-- HUD (spec §22) -->
+  <div id="hud" aria-hidden="false">
+    <div class="hud-top">
+      <div class="hud-cell hud-left hud-year">
+        <span class="hud-label">FISCAL YEAR</span>
+        <span class="hud-value" id="hud-fy">FY2028</span>
+      </div>
+      <div class="hud-cell hud-center hud-gap">
+        <span class="hud-label">BUDGET GAP</span>
+        <span class="hud-value hud-value-big" id="hud-gap">$0.0M</span>
+        <span class="hud-sub" id="hud-gap-note">close it before the bridge</span>
+      </div>
+      <div class="hud-cell hud-right">
+        <span class="hud-label">NEXT BRIDGE</span>
+        <span class="hud-value" id="hud-bridge-dist">—</span>
+        <span class="hud-sub">crossed <b id="hud-bridges">0</b></span>
+      </div>
+    </div>
+
+    <div id="hud-banner" data-show="false"></div>
+
+    <div id="hud-candidate" hidden>CANDIDATE</div>
+
+    <!-- Annual fiscal-year reveal (Tightening addendum §5, §39) -->
+    <div id="year-reveal" hidden>
+      <h2 id="year-reveal-title">FY2029 BUDGET CYCLE</h2>
+      <dl id="year-reveal-lines"></dl>
+      <p class="year-reveal-total">
+        <span>BUDGET GAP</span><b id="year-reveal-gap">$0.0M</b>
+      </p>
+      <p class="year-reveal-deadline">BALANCED BUDGET DUE AT BRIDGE</p>
+    </div>
+
+    <div id="hud-lanes" aria-hidden="true"></div>
+
+    <div class="hud-controls">
+      <button type="button" id="btn-pause" class="mini-btn">PAUSE</button>
+      <button type="button" class="mini-btn" data-mute aria-pressed="false">SOUND ON</button>
+    </div>
+
+    <!-- On-demand reality break (On-Demand Special Meeting addendum §3, §4) -->
+    <button type="button" id="btn-call-meeting" hidden
+            aria-label="Call Special Meeting. Need a break from adult decisions?">
+      <span class="csm-title">CALL SPECIAL MEETING</span>
+      <span class="csm-sub">Need a break from adult decisions?</span>
+    </button>
+  </div>
+
+  <!-- Pre-start scoreboard: the seven lanes, held long enough to read, then
+       flown onto the road they belong to (spec §42) -->
+  <div id="start-overlay" hidden>
+    <div class="startboard">
+      <p class="startboard-mode" id="start-overlay-mode"></p>
+      <h2 class="startboard-title">THE SEVEN FISCAL LANES</h2>
+
+      <ol class="startboard-lanes" id="startboard-lanes"></ol>
+
+      <ul class="overlay-lines">
+        <li><b>LEFT / RIGHT</b> to change lanes <span class="dim">(hold to keep moving, or tap either side)</span></li>
+        <li>Choose a fiscal lane <b>before each decision gate</b>.</li>
+        <li>Keep the <b>structural</b> budget balanced before the bridge.</li>
+      </ul>
+
+      <button type="button" id="start-overlay-go" class="btn btn-primary">START YOUR ENGINES</button>
+    </div>
+  </div>
+
+  <!-- Labels fly from the scoreboard rows onto their lanes -->
+  <div id="lane-flight" hidden aria-hidden="true"></div>
+
+  <!-- Special Meeting Pit Stop overlay (Pit Stop addendum §8, §12, §15, §17) -->
+  <div id="meeting-hud" hidden>
+    <div class="meeting-top">
+      <div class="meeting-title">
+        <span class="meeting-kicker">SPECIAL MEETING</span>
+        <span class="meeting-clock" id="meeting-clock">6:00 PM</span>
+      </div>
+      <div class="meeting-meters">
+        <div class="meter" id="meter-voter">
+          <span class="meter-label">VOTER SENTIMENT</span>
+          <span class="meter-bar"><i></i></span>
+          <span class="meter-value">70</span>
+        </div>
+        <div class="meter" id="meter-activist">
+          <span class="meter-label">ACTIVIST SENTIMENT</span>
+          <span class="meter-bar"><i></i></span>
+          <span class="meter-value">75</span>
+        </div>
+      </div>
+      <div class="meter meter-small" id="meter-credibility">
+        <span class="meter-label">CREDIBILITY</span>
+        <span class="meter-bar"><i></i></span>
+        <span class="meter-value">100</span>
+      </div>
+      <div class="meter meter-small" id="meter-profile">
+        <span class="meter-label">POLITICAL PROFILE</span>
+        <span class="meter-bar"><i></i></span>
+        <span class="meter-value">0</span>
+      </div>
+    </div>
+
+    <div id="meeting-exhausted" hidden></div>
+
+    <div id="meeting-ragequit" hidden>
+      <span class="rq-title"></span>
+      <span class="rq-sub"></span>
+    </div>
+
+    <div class="meeting-counters">
+      <span>PUBLIC COMMENTS <b id="meeting-comments">0</b></span>
+      <span>MEETING TIME <b id="meeting-duration">0h 00m</b></span>
+      <span>EXTENSIONS <b id="meeting-extensions">0</b></span>
+    </div>
+
+    <div class="meeting-actions">
+      <button type="button" id="meeting-extend" class="btn btn-extend" hidden>
+        EXTEND MEETING TO MIDNIGHT!
+      </button>
+      <button type="button" id="meeting-mega" class="btn btn-mega" hidden>MEGA PANDER</button>
+      <button type="button" id="meeting-pander" class="btn btn-pander">PANDER</button>
+      <button type="button" id="meeting-end" class="btn" disabled>END MEETING</button>
+    </div>
+  </div>
+
+  <!-- MEGA PANDER program commitment (Tightening addendum §21) -->
+  <div id="mega-modal" hidden role="dialog" aria-modal="true" aria-labelledby="mega-title">
+    <div class="overlay-card mega-card">
+      <h2 id="mega-title">COMMIT TO NEW PROGRAM?</h2>
+      <p class="mega-program" id="mega-program">NEW COMMUNITY PROGRAM</p>
+      <dl class="mega-terms">
+        <div><dt>Annual cost</dt><dd id="mega-cost">$3.5M / YEAR</dd></div>
+        <div><dt>Recurring funding identified</dt><dd class="mega-none">NONE</dd></div>
+      </dl>
+      <div class="overlay-actions">
+        <button type="button" id="mega-yes" class="btn btn-primary" data-autofocus>YES!</button>
+        <button type="button" id="mega-no" class="btn">NO</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Consent fast-track (Tightening addendum §26) -->
+  <div id="consent-modal" hidden role="dialog" aria-modal="true" aria-labelledby="consent-title">
+    <div class="overlay-card mega-card">
+      <h2 id="consent-title">PUT IT ON CONSENT?</h2>
+      <p class="consent-sub">Skip debate. Keep momentum.</p>
+      <div class="overlay-actions">
+        <button type="button" id="consent-yes" class="btn btn-primary" data-autofocus>YES — CONSENT</button>
+        <button type="button" id="consent-no" class="btn">NO — DISCUSS IT</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="consent-stamp" hidden>APPROVED WITHOUT DISCUSSION</div>
+
+  <!-- Meeting summary (addendum §17) -->
+  <!-- Staged tally reveal (Tally Reveal addendum). Labels appear at once;
+       only the values type on, one field at a time; the fiscal verdict lands
+       separately afterwards. -->
+  <div id="meeting-summary" hidden>
+    <div class="overlay-card summary-card">
+      <h2>SPECIAL MEETING COMPLETE</h2>
+
+      <dl class="tally" id="meeting-tally"></dl>
+
+      <div id="meeting-verdict" hidden>
+        <p class="verdict-after" id="verdict-after">AFTER 0:00...</p>
+        <dl class="verdict-gap">
+          <div><dt>BUDGET GAP BEFORE</dt><dd id="verdict-before">$0.0M</dd></div>
+          <div><dt>BUDGET GAP AFTER</dt><dd id="verdict-gap-after">$0.0M</dd></div>
+        </dl>
+        <p class="verdict-headline" id="verdict-closed" hidden>$0 CLOSED</p>
+        <p class="verdict-added" id="verdict-added" hidden></p>
+        <p class="verdict-consent" id="verdict-consent" hidden>APPROVED WITHOUT DISCUSSION</p>
+      </div>
+
+      <button type="button" id="meeting-summary-go" class="btn btn-primary" hidden>
+        BACK TO THE ROAD
+      </button>
+    </div>
+  </div>
+
+  <!-- Roosevelt Avenue Easter Egg (Roosevelt addendum §5, §9) -->
+  <div id="roosevelt-prompt" hidden role="dialog" aria-modal="true"
+       aria-labelledby="roosevelt-title">
+    <div class="municipal-dialog">
+      <div class="municipal-bar">CITY OF BERKELEY · PUBLIC WORKS</div>
+      <h2 id="roosevelt-title">PAVE ROOSEVELT AVENUE?</h2>
+      <p class="municipal-ref">FORM PW-1947 · PAVEMENT MANAGEMENT PROGRAM</p>
+      <button type="button" id="roosevelt-never" class="btn municipal-btn"
+              aria-label="Pave Roosevelt Avenue? Only available response: Never."
+              data-autofocus>NEVER!</button>
+    </div>
+  </div>
+
+  <div id="roosevelt-confirm" hidden>POLICY CONTINUES</div>
+
+  <!-- Pause -->
+  <div id="pause-overlay" hidden>
+    <div class="overlay-card">
+      <h2>PAUSED</h2>
+      <div class="overlay-actions">
+        <button type="button" id="pause-resume" class="btn btn-primary">RESUME</button>
+        <button type="button" id="pause-quit" class="btn">QUIT TO MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="rotate-hint" hidden>
+    <span>Landscape works better. You can keep playing either way.</span>
+    <button type="button" id="rotate-dismiss" class="mini-btn">DISMISS</button>
+  </div>
+</div>
+
+<!-- Title screen (spec §5) -->
+<section class="screen" id="title-screen" hidden>
+  <div class="title-inner">
+    <h1 class="game-title">BERKELEY<br><span>BUDGET DRIVER</span></h1>
+    <p class="game-subtitle">Seven lanes. One budget. Choose your road.</p>
+
+    <div class="mode-buttons">
+      <button type="button" id="btn-common" class="mode-btn mode-common" data-autofocus>
+        <span class="mode-name">COMMON SENSE MODE</span>
+        <span class="mode-desc">All 7 lanes open</span>
+      </button>
+      <button type="button" id="btn-council" class="mode-btn mode-council">
+        <span class="mode-name">CITY COUNCIL MODE</span>
+        <span class="mode-desc">Only 3 lanes open</span>
+      </button>
+    </div>
+
+    <div class="secondary-controls">
+      <button type="button" id="btn-how" class="link-btn">How to Play</button>
+      <button type="button" id="btn-why" class="link-btn">Why these lanes?</button>
+      <button type="button" class="link-btn" data-mute aria-pressed="false">SOUND ON</button>
+    </div>
+  </div>
+</section>
+
+<!-- End screen (spec §24, §25) -->
+<section class="screen" id="end-screen" hidden>
+  <div class="end-inner">
+    <h1 id="end-heading">FISCAL CLIFF</h1>
+    <p id="end-lede" class="end-lede"></p>
+    <p id="end-council-note" class="end-council-note" hidden></p>
+
+    <h2 class="end-subhead" id="end-stats-head">Run record</h2>
+    <dl id="end-stats" class="stats"></dl>
+
+    <div id="end-politics" hidden></div>
+
+    <h2 class="end-subhead">Lane condition</h2>
+    <div id="end-lanes" class="end-lanes"></div>
+
+    <p id="end-hiscore" class="end-hiscore"></p>
+
+    <div class="overlay-actions">
+      <button type="button" id="end-primary" class="btn btn-primary" data-autofocus>TRY COMMON SENSE MODE</button>
+      <button type="button" id="end-secondary" class="btn">PLAY AGAIN</button>
+    </div>
+    <div class="secondary-controls">
+      <button type="button" id="end-why" class="link-btn">Why these lanes?</button>
+      <button type="button" id="end-menu" class="link-btn">Main menu</button>
+    </div>
+  </div>
+</section>
+
+<!-- How to play -->
+<div class="modal" id="how-modal" hidden role="dialog" aria-modal="true" aria-labelledby="how-title">
+  <div class="modal-card">
+    <h2 id="how-title">How to Play</h2>
+    <h3>Controls</h3>
+    <ul>
+      <li><b>Left Arrow / A</b> — move one lane left</li>
+      <li><b>Right Arrow / D</b> — move one lane right</li>
+      <li><b>Space</b>, <b>P</b>, or <b>Escape</b> — pause / unpause</li>
+      <li><b>M</b> — mute / unmute</li>
+      <li><b>Touch</b> — tap the left or right half of the play area</li>
+    </ul>
+    <h3>The loop</h3>
+    <ol>
+      <li>A fiscal problem appears overhead.</li>
+      <li>Overhead boards show what each lane does about it.</li>
+      <li>Be in the lane you want when you pass under the gate — that commits it.</li>
+      <li>That lane wears. Worn lanes crack, then pothole, then fail.</li>
+      <li>In Council Mode, four lanes are barricaded. Steering at one bounces you
+          back — you cannot use it, but you will not crash for trying.</li>
+      <li>Each stretch of road between bridges is one <b>fiscal year</b>.</li>
+      <li>The bridge is only there if the <b>BUDGET GAP</b> has reached zero.</li>
+    </ol>
+    <h3>One number</h3>
+    <p><b>BUDGET GAP</b> is the hole you have to close before the next bridge. Every fiscal year opens with a forecast showing how it was built.</p>
+    <p><b>Recurring</b> choices close the gap now <i>and</i> make next year open smaller. <b>One-time</b> money closes it for this year only, and is capped so it can never carry a year alone. <b>Borrowing</b> closes it now and reopens it later as debt service.</p>
+    <p class="dim">Campaign length: <b id="campaign-length">6</b> bridges. In Council Mode, <b id="council-closed-count">4</b> lanes stay closed.</p>
+    <button type="button" class="btn btn-primary" data-close-modal="how-modal" data-autofocus>CLOSE</button>
+  </div>
+</div>
+
+<!-- Evidence / About panel (spec §29) -->
+<div class="modal" id="evidence-modal" hidden role="dialog" aria-modal="true" aria-labelledby="evidence-title">
+  <div class="modal-card modal-wide">
+    <h2 id="evidence-title">Why these lanes?</h2>
+    <ol id="evidence-points" class="ev-points"></ol>
+
+    <h3>The seven lanes</h3>
+    <div id="evidence-lanes" class="ev-lanes"></div>
+
+    <h3>Content records</h3>
+    <ul id="evidence-records" class="ev-records"></ul>
+
+    <p id="evidence-project" class="ev-project"></p>
+
+    <p class="dim">This game runs entirely in your browser. There is no account, no server, no analytics, and nothing is sent anywhere. A mute preference and a local best score may be stored in this browser only.</p>
+
+    <button type="button" class="btn btn-primary" data-close-modal="evidence-modal" data-autofocus>CLOSE</button>
+  </div>
+</div>
+
+<div id="aria-live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

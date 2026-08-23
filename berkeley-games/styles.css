@@ -1,0 +1,1520 @@
+/* Berkeley Budget Driver — retro arcade UI shell (spec §6, §22, §32, §33) */
+
+:root {
+  --ink: #f2f5f8;
+  --dim: #9fb0c2;
+  --bg: #0b1018;
+  --panel: #131b26;
+  --panel-2: #1b2533;
+  --line: #2c3a4c;
+  --pos: #5ee08a;
+  --neg: #ff6b5e;
+  --accent: #ffd85e;
+  --orange: #e8620f;
+  --focus: #7fd4ff;
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  overscroll-behavior: none;
+}
+
+body { overflow: hidden; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------------- Stage & canvas ---------------- */
+
+#stage {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #05080d;
+}
+
+#game-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: manipulation;
+  cursor: crosshair;
+}
+
+/* The play surface and HUD are hidden until a run starts. */
+body:not([data-screen="play"]) #hud,
+body:not([data-screen="play"]) #game-canvas { visibility: hidden; }
+body[data-screen="end-screen"] #game-canvas { visibility: visible; filter: saturate(0.5) brightness(0.45); }
+
+/* ---------------- HUD ---------------- */
+
+#hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  padding: clamp(6px, 1.4vw, 14px);
+  display: flex;
+  flex-direction: column;
+  font-variant-numeric: tabular-nums;
+}
+
+.hud-top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 8px;
+}
+
+.hud-cell {
+  display: flex;
+  flex-direction: column;
+  background: rgba(9, 14, 22, 0.72);
+  border: 1px solid rgba(120, 150, 180, 0.28);
+  border-radius: 8px;
+  padding: clamp(4px, 0.8vw, 9px) clamp(7px, 1.2vw, 14px);
+  backdrop-filter: blur(3px);
+}
+
+.hud-left  { justify-self: start; }
+.hud-right { justify-self: end; text-align: right; }
+.hud-center { justify-self: center; text-align: center; border-color: rgba(255, 216, 94, 0.45); }
+
+.hud-label {
+  font-size: clamp(8px, 1.1vw, 11px);
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  font-weight: 700;
+}
+
+.hud-value {
+  font-size: clamp(15px, 2.4vw, 26px);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.hud-value-big { font-size: clamp(18px, 3.2vw, 34px); }
+
+.hud-value[data-sign="pos"] { color: var(--pos); }
+.hud-value[data-sign="neg"] { color: var(--neg); }
+
+.hud-sub {
+  font-size: clamp(8px, 1vw, 11px);
+  color: var(--dim);
+  margin-top: 2px;
+}
+.hud-sub b { color: #ffb9a8; }
+
+#hud-banner {
+  margin: clamp(8px, 2vh, 20px) auto 0;
+  max-width: 92%;
+  padding: 7px 16px;
+  border-radius: 6px;
+  background: rgba(9, 14, 22, 0.85);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-weight: 800;
+  font-size: clamp(10px, 1.7vw, 17px);
+  letter-spacing: 0.04em;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+#hud-banner[data-show="true"] { opacity: 1; transform: none; }
+
+/* Seven-segment lane condition strip (spec §22) */
+#hud-lanes {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: clamp(2px, 0.5vw, 6px);
+}
+
+.lane-seg {
+  background: rgba(9, 14, 22, 0.74);
+  border: 1px solid rgba(120, 150, 180, 0.25);
+  border-radius: 5px;
+  padding: clamp(2px, 0.5vw, 5px) clamp(3px, 0.6vw, 7px);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.lane-seg[data-active="true"] {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 1px var(--focus) inset;
+}
+
+.lane-seg-name {
+  font-size: clamp(6px, 0.95vw, 10px);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lane-seg-bar {
+  display: block;
+  height: clamp(3px, 0.6vw, 6px);
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.lane-seg-bar i { display: block; height: 100%; background: var(--pos); transition: width 200ms ease; }
+
+.lane-seg[data-tier="worn"]         .lane-seg-bar i { background: #d8d45e; }
+.lane-seg[data-tier="badly-worn"]   .lane-seg-bar i { background: #f0913c; }
+.lane-seg[data-tier="near-failure"] .lane-seg-bar i { background: #ff6b5e; }
+.lane-seg[data-tier="failed"]       .lane-seg-bar i { background: #7a2620; }
+
+.lane-seg-status {
+  font-size: clamp(6px, 0.9vw, 10px);
+  font-weight: 700;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+/* Closed lanes: dimmed AND crossed AND labeled — never color alone (§32) */
+.lane-seg[data-closed="true"] {
+  opacity: 0.55;
+  border-style: dashed;
+  border-color: var(--orange);
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(232, 98, 15, 0.16) 0 5px,
+      transparent 5px 10px),
+    rgba(9, 14, 22, 0.74);
+}
+.lane-seg[data-closed="true"] .lane-seg-name { text-decoration: line-through; }
+.lane-seg[data-closed="true"] .lane-seg-status { color: #ffb648; }
+.lane-seg[data-tier="failed"] .lane-seg-status { color: #ff8a8a; }
+
+.hud-controls {
+  position: absolute;
+  right: clamp(6px, 1.4vw, 14px);
+  bottom: clamp(58px, 11vh, 96px);
+  display: flex;
+  gap: 6px;
+  pointer-events: auto;
+}
+
+.mini-btn {
+  font: inherit;
+  font-size: clamp(8px, 1.1vw, 11px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  background: rgba(9, 14, 22, 0.8);
+  border: 1px solid rgba(120, 150, 180, 0.4);
+  border-radius: 5px;
+  padding: 5px 9px;
+  cursor: pointer;
+}
+.mini-btn:hover { border-color: var(--focus); }
+
+/* ---------------- Overlays ---------------- */
+
+#start-overlay, #pause-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(5, 8, 13, 0.78);
+  z-index: 20;
+  padding: 16px;
+}
+
+.overlay-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: clamp(18px, 3vw, 30px);
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+}
+
+.overlay-card h2 { margin: 0 0 16px; letter-spacing: 0.12em; }
+
+.overlay-mode {
+  margin: 0 0 14px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  font-size: clamp(11px, 1.5vw, 14px);
+  color: var(--accent);
+}
+
+.overlay-lines {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  text-align: left;
+  display: grid;
+  gap: 9px;
+  font-size: clamp(13px, 1.6vw, 15px);
+  line-height: 1.45;
+}
+.overlay-lines li { padding-left: 16px; position: relative; }
+.overlay-lines li::before {
+  content: "›"; position: absolute; left: 0; color: var(--accent); font-weight: 800;
+}
+
+.overlay-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+#rotate-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  z-index: 25;
+  background: rgba(9, 14, 22, 0.92);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--dim);
+  pointer-events: auto;
+}
+
+/* ---------------- Buttons ---------------- */
+
+.btn {
+  font: inherit;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-size: clamp(12px, 1.5vw, 15px);
+  color: var(--ink);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 22px;
+  cursor: pointer;
+  transition: transform 90ms ease, border-color 120ms ease, background 120ms ease;
+}
+.btn:hover { border-color: var(--focus); background: #223047; }
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #1b1400;
+}
+.btn-primary:hover { background: #ffe184; border-color: #ffe184; }
+
+.link-btn {
+  font: inherit;
+  font-size: clamp(11px, 1.3vw, 13px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--dim);
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+.link-btn:hover { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* ---------------- Screens ---------------- */
+
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  overflow-y: auto;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vh, 48px) 16px;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, #1c3358 0%, transparent 60%),
+    linear-gradient(180deg, #0d1420 0%, #070b11 100%);
+}
+
+.title-inner { text-align: center; max-width: 720px; width: 100%; }
+
+.game-title {
+  margin: 0;
+  font-size: clamp(34px, 8.5vw, 84px);
+  line-height: 0.94;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-shadow: 0 4px 0 #0a0f18, 0 0 34px rgba(127, 212, 255, 0.18);
+}
+.game-title span { color: var(--accent); }
+
+.game-subtitle {
+  margin: 14px 0 clamp(24px, 5vh, 44px);
+  font-size: clamp(13px, 2vw, 19px);
+  color: var(--dim);
+  letter-spacing: 0.06em;
+}
+
+.mode-buttons {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-bottom: clamp(20px, 4vh, 36px);
+}
+
+.mode-btn {
+  font: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  padding: clamp(18px, 3.4vw, 30px) 18px;
+  border-radius: 12px;
+  border: 2px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  transition: transform 100ms ease, border-color 140ms ease, background 140ms ease;
+}
+.mode-btn:hover { transform: translateY(-2px); background: var(--panel-2); }
+
+.mode-common:hover { border-color: var(--pos); }
+.mode-council { position: relative; overflow: hidden; }
+.mode-council:hover { border-color: var(--orange); }
+.mode-council::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg,
+    rgba(232, 98, 15, 0.13) 0 10px, transparent 10px 20px);
+  pointer-events: none;
+}
+
+.mode-name {
+  font-size: clamp(15px, 2.3vw, 22px);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+.mode-desc {
+  font-size: clamp(11px, 1.5vw, 14px);
+  color: var(--dim);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.secondary-controls {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+/* ---------------- End screen ---------------- */
+
+.end-inner {
+  max-width: 640px;
+  width: 100%;
+  text-align: center;
+  background: rgba(11, 16, 24, 0.94);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: clamp(20px, 4vw, 36px);
+}
+
+#end-heading {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 6.5vw, 56px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: var(--neg);
+  line-height: 1;
+}
+body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
+
+.end-lede {
+  margin: 0 0 8px;
+  font-size: clamp(14px, 2vw, 19px);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.end-council-note {
+  margin: 0 0 18px;
+  color: #ffb648;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  font-size: clamp(12px, 1.6vw, 15px);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin: 20px 0;
+  text-align: left;
+}
+.stat {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 12px;
+}
+.stat dt { font-size: 10px; letter-spacing: 0.1em; color: var(--dim); font-weight: 700; text-transform: uppercase; }
+.stat dd { margin: 3px 0 0; font-size: clamp(14px, 2vw, 18px); font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.end-subhead {
+  margin: 22px 0 10px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+.end-lanes { display: grid; gap: 5px; text-align: left; }
+
+.end-lane {
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  font-size: clamp(10px, 1.4vw, 12px);
+}
+.end-lane-name { font-weight: 800; letter-spacing: 0.04em; color: var(--dim); }
+.end-lane-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.end-lane-bar i { display: block; height: 100%; background: var(--pos); }
+.end-lane[data-failed="true"] .end-lane-bar i { background: var(--neg); }
+.end-lane-label { font-weight: 700; color: var(--dim); font-variant-numeric: tabular-nums; }
+
+.end-lane[data-closed="true"] { opacity: 0.6; }
+.end-lane[data-closed="true"] .end-lane-name { text-decoration: line-through; }
+.end-lane[data-closed="true"] .end-lane-bar {
+  background: repeating-linear-gradient(45deg,
+    rgba(232, 98, 15, 0.3) 0 5px, rgba(255,255,255,0.06) 5px 10px);
+}
+.end-lane[data-closed="true"] .end-lane-label { color: #ffb648; }
+.end-lane[data-failed="true"] .end-lane-label { color: #ff8a8a; }
+
+.end-hiscore {
+  margin: 18px 0;
+  font-size: 12px;
+  color: var(--dim);
+  letter-spacing: 0.06em;
+}
+
+/* ---------------- Modals ---------------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(4, 7, 12, 0.82);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.modal-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: clamp(20px, 3.4vw, 32px);
+  max-width: 560px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  line-height: 1.55;
+  font-size: clamp(13px, 1.5vw, 15px);
+}
+.modal-wide { max-width: 720px; }
+
+.modal-card h2 { margin: 0 0 14px; font-size: clamp(19px, 2.6vw, 26px); letter-spacing: 0.04em; }
+.modal-card h3 {
+  margin: 22px 0 8px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.modal-card ul, .modal-card ol { padding-left: 20px; margin: 0 0 12px; }
+.modal-card li { margin-bottom: 6px; }
+.modal-card p { margin: 0 0 10px; }
+.modal-card .btn { margin-top: 20px; }
+
+.dim { color: var(--dim); font-size: 0.92em; }
+
+.ev-points li { margin-bottom: 10px; }
+
+.ev-lanes { display: grid; gap: 7px; margin-bottom: 12px; }
+.ev-lane {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 12px;
+  padding: 7px 10px;
+  background: var(--panel-2);
+  border-radius: 6px;
+  font-size: 0.92em;
+}
+.ev-lane strong { color: var(--accent); letter-spacing: 0.04em; }
+
+.ev-records { list-style: none; padding: 0; }
+.ev-records li {
+  background: var(--panel-2);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+.ev-note, .ev-src { display: block; color: var(--dim); font-size: 0.88em; margin-top: 4px; }
+.ev-src a { color: var(--focus); }
+.ev-project { margin-top: 14px; font-weight: 700; }
+
+/* ---------------- Responsive & motion ---------------- */
+
+@media (max-width: 560px) {
+  .ev-lane { grid-template-columns: 1fr; gap: 2px; }
+  .end-lane { grid-template-columns: 72px 1fr auto; }
+  .hud-controls { bottom: clamp(50px, 9vh, 74px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* `display` on these overlays would otherwise defeat the `hidden` attribute,
+   leaving an invisible full-viewport layer that swallows clicks. */
+[hidden] { display: none !important; }
+
+#end-heading[data-outcome="win"] { color: var(--pos); }
+
+/* On short landscape viewports the lane strip would sit on top of the hood
+   badge; drop the badge rather than the gameplay-relevant strip. */
+@media (max-height: 460px) {
+  .hud-controls { bottom: clamp(44px, 16vh, 62px); }
+}
+
+/* ---------------- Special Meeting Pit Stop ---------------- */
+
+#meeting-hud {
+  position: absolute;
+  inset: 0;
+  z-index: 18;
+  pointer-events: none;
+  padding: clamp(8px, 1.6vw, 16px);
+  display: flex;
+  flex-direction: column;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The meeting panel sits below the fiscal HUD row rather than across it: the
+   frozen THIS YEAR / STRUCTURAL values must stay readable throughout, since
+   proving they do not move is the whole point of the scene. */
+.meeting-top {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  margin-top: clamp(64px, 12vh, 104px);
+  /* Legibility plate: the crowd presses in behind this, never over it. */
+  padding: 10px 14px 12px;
+  border-radius: 12px;
+  background: rgba(6, 9, 15, 0.55);
+  backdrop-filter: blur(4px);
+  align-self: center;
+  max-width: min(680px, 96%);
+}
+
+.meeting-title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  background: rgba(8, 11, 18, 0.86);
+  border: 1px solid rgba(255, 160, 60, 0.45);
+  border-radius: 8px;
+  padding: 6px 16px;
+}
+.meeting-kicker {
+  font-size: clamp(9px, 1.2vw, 12px);
+  letter-spacing: 0.18em;
+  font-weight: 800;
+  color: #ffb648;
+}
+.meeting-clock {
+  font-size: clamp(15px, 2.2vw, 24px);
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.meeting-meters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 240px));
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+.meter {
+  background: rgba(8, 11, 18, 0.86);
+  border: 1px solid rgba(140, 165, 195, 0.3);
+  border-radius: 8px;
+  padding: 6px 11px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "label value" "bar bar";
+  gap: 4px 8px;
+}
+.meter-label {
+  grid-area: label;
+  font-size: clamp(8px, 1vw, 10px);
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  color: var(--dim);
+}
+.meter-value {
+  grid-area: value;
+  font-size: clamp(11px, 1.5vw, 14px);
+  font-weight: 800;
+}
+.meter-bar {
+  grid-area: bar;
+  height: clamp(5px, 0.8vw, 8px);
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.meter-bar i { display: block; height: 100%; transition: width 140ms linear; }
+
+#meter-voter .meter-bar i { background: #62b6ff; }
+#meter-activist .meter-bar i { background: #ffa23c; }
+/* Never colour-only: a low meter also gets a text state via .meter-value. */
+.meter[data-low="true"] { border-color: var(--neg); }
+.meter[data-low="true"] .meter-value { color: var(--neg); }
+
+.meeting-counters {
+  /* Sit above the action buttons, which sit above the lane-condition strip. */
+  margin-top: auto;
+  margin-bottom: clamp(126px, 21vh, 168px);
+  align-self: center;
+  padding: 5px 14px;
+  border-radius: 8px;
+  background: rgba(6, 9, 15, 0.62);
+  display: flex;
+  gap: clamp(8px, 2vw, 22px);
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: clamp(9px, 1.2vw, 12px);
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--dim);
+}
+.meeting-counters b { color: var(--ink); margin-left: 5px; }
+
+.meeting-actions {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: clamp(74px, 13vh, 104px);
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  pointer-events: auto;
+}
+
+.btn-extend {
+  background: #e8620f;
+  border-color: #ff8a3c;
+  color: #14100a;
+  font-size: clamp(12px, 1.8vw, 18px);
+  animation: extend-pulse 1.1s ease-in-out infinite;
+}
+.btn-extend:hover { background: #ff7a24; border-color: #ffab6a; }
+
+@keyframes extend-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 140, 60, 0.55); }
+  50%      { box-shadow: 0 0 0 12px rgba(255, 140, 60, 0); }
+}
+
+#meeting-summary {
+  position: absolute;
+  inset: 0;
+  z-index: 22;
+  display: grid;
+  place-items: center;
+  background: rgba(5, 8, 13, 0.86);
+  padding: 16px;
+}
+#meeting-summary .overlay-card { max-width: 500px; }
+
+
+
+.end-meeting-zero {
+  margin: 6px 0 0;
+  font-size: clamp(11px, 1.5vw, 14px);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--dim);
+}
+.end-meeting-zero b { color: #ffb648; }
+
+/* Higher Office campaign indicator (Higher Office addendum §7) */
+#hud-candidate {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: clamp(94px, 17vh, 132px);
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffe89a, #ffd043);
+  border: 1px solid #8a6d12;
+  color: #3a2c00;
+  font-size: clamp(9px, 1.2vw, 12px);
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  box-shadow: 0 0 18px rgba(255, 214, 80, 0.5);
+  animation: candidate-glow 1.4s ease-in-out infinite;
+}
+@keyframes candidate-glow {
+  0%, 100% { box-shadow: 0 0 12px rgba(255, 214, 80, 0.35); }
+  50%      { box-shadow: 0 0 26px rgba(255, 214, 80, 0.75); }
+}
+
+/* The escape is a found ending, not a fiscal win: gold, but never green. */
+#end-heading[data-outcome="escape"] {
+  color: #ffd043;
+  text-shadow: 0 3px 0 #0a0f18, 0 0 40px rgba(255, 208, 67, 0.35);
+}
+
+/* PANDER: deliberately the small lever next to EXTEND (Pandering §3, §17) */
+.btn-pander {
+  background: #253449;
+  border-color: #4a6484;
+  font-size: clamp(10px, 1.3vw, 13px);
+  padding: 8px 16px;
+  letter-spacing: 0.12em;
+}
+.btn-pander:hover:not(:disabled) { background: #2f4560; border-color: #6f95c0; }
+.btn-pander:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-style: dashed;
+  border-color: var(--neg);
+  color: var(--dim);
+}
+.btn-pander:disabled::after {
+  content: attr(data-disabled-note);
+  display: block;
+  font-size: 0.76em;
+  letter-spacing: 0.06em;
+  color: var(--neg);
+  margin-top: 2px;
+}
+
+/* Credibility sits below the two sentiment meters and is visibly smaller. */
+.meter-small {
+  grid-column: 1 / -1;
+  justify-self: center;
+  max-width: 260px;
+  width: 100%;
+  padding: 4px 10px;
+  opacity: 0.92;
+}
+.meter-small .meter-label,
+.meter-small .meter-value { font-size: clamp(7px, 0.95vw, 10px); }
+.meter-small .meter-bar { height: clamp(3px, 0.55vw, 5px); }
+#meter-credibility .meter-bar i { background: #a9b8cc; }
+#meter-credibility[data-empty="true"] .meter-bar i { background: var(--neg); }
+#meter-credibility[data-empty="true"] .meter-value { color: var(--neg); }
+
+#meeting-exhausted {
+  margin: 10px auto 0;
+  padding: 7px 20px;
+  border-radius: 6px;
+  background: rgba(20, 6, 6, 0.9);
+  border: 2px solid var(--neg);
+  color: #ff8a7a;
+  font-size: clamp(13px, 2.2vw, 22px);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-align: center;
+  animation: exhausted-in 260ms ease-out;
+}
+@keyframes exhausted-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Floating +ACTIVIST / −VOTER feedback (Pandering §16) */
+.pander-fx {
+  /* Anchored to the action row rather than the meters, so the readout it is
+     describing stays legible while the feedback floats. */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: clamp(120px, 20vh, 156px);
+  display: flex;
+  gap: 14px;
+  pointer-events: none;
+  font-size: clamp(11px, 1.5vw, 15px);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  animation: pander-float 900ms ease-out forwards;
+}
+.pander-fx .up { color: #ffa23c; }
+.pander-fx .down { color: #62b6ff; }
+@keyframes pander-float {
+  0%   { opacity: 0; transform: translate(-50%, 10px); }
+  25%  { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, -30px); }
+}
+
+/* RAGE QUIT banner (Bottle Episode addendum §14) */
+#meeting-ragequit {
+  margin: 10px auto 0;
+  padding: 8px 22px;
+  border-radius: 6px;
+  background: rgba(28, 10, 4, 0.92);
+  border: 2px solid #ff8a3c;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: ragequit-in 240ms cubic-bezier(.2,1.4,.4,1);
+}
+#meeting-ragequit .rq-title {
+  font-size: clamp(15px, 2.6vw, 26px);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #ffb648;
+}
+#meeting-ragequit .rq-sub {
+  font-size: clamp(8px, 1.1vw, 11px);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--dim);
+}
+@keyframes ragequit-in {
+  from { opacity: 0; transform: scale(0.85) translateY(-6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Roosevelt Avenue prompt: plain, muted, bureaucratic (Roosevelt §9) */
+#roosevelt-prompt {
+  position: absolute;
+  inset: 0;
+  z-index: 24;
+  display: grid;
+  place-items: center;
+  background: rgba(6, 9, 14, 0.55);
+  padding: 16px;
+}
+
+.municipal-dialog {
+  background: #e9e7e0;
+  color: #1d1f22;
+  border: 2px solid #6f7378;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.5);
+  max-width: 420px;
+  width: 100%;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  text-align: center;
+}
+
+.municipal-bar {
+  background: #5c6169;
+  color: #f2f3f4;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  padding: 5px 10px;
+  text-align: left;
+}
+
+.municipal-dialog h2 {
+  margin: 20px 18px 8px;
+  font-size: clamp(15px, 2.2vw, 21px);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.municipal-ref {
+  margin: 0 18px 20px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #6b6f75;
+}
+
+.municipal-btn {
+  font-family: inherit;
+  margin: 0 18px 20px;
+  background: #d7d4cc;
+  border: 2px solid #4a4e54;
+  color: #1d1f22;
+  border-radius: 2px;
+  padding: 9px 30px;
+  letter-spacing: 0.14em;
+}
+.municipal-btn:hover { background: #c9c5bb; }
+.municipal-btn:focus-visible { outline: 3px solid #2b6cb0; outline-offset: 2px; }
+
+#roosevelt-confirm {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 24;
+  background: rgba(233, 231, 224, 0.95);
+  color: #1d1f22;
+  border: 2px solid #6f7378;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: clamp(11px, 1.5vw, 14px);
+  letter-spacing: 0.14em;
+  padding: 10px 24px;
+}
+
+/* ---------------- Start scoreboard ---------------- */
+
+.startboard {
+  background: linear-gradient(180deg, #101826 0%, #0b111b 100%);
+  border: 2px solid #2f4258;
+  border-radius: 14px;
+  padding: clamp(16px, 2.6vw, 26px) clamp(14px, 2.4vw, 28px) clamp(18px, 2.6vw, 26px);
+  max-width: 640px;
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+.startboard-mode {
+  margin: 0 0 4px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  font-size: clamp(10px, 1.4vw, 13px);
+  color: var(--accent);
+}
+
+.startboard-title {
+  margin: 0 0 clamp(10px, 1.6vh, 16px);
+  font-size: clamp(15px, 2.4vw, 24px);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+}
+
+/* Scoreboard rows: rank, name, meaning — like a record board. */
+.startboard-lanes {
+  list-style: none;
+  margin: 0 0 clamp(12px, 2vh, 20px);
+  padding: 0;
+  display: grid;
+  gap: 3px;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+.sb-lane {
+  display: grid;
+  grid-template-columns: 1.6em minmax(96px, auto) 1fr;
+  gap: clamp(6px, 1.2vw, 14px);
+  align-items: center;
+  padding: clamp(5px, 0.9vh, 9px) clamp(8px, 1.2vw, 12px);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.035);
+  border-left: 3px solid var(--lane-hue, #5ee08a);
+  position: relative;
+}
+.sb-lane:nth-child(odd) { background: rgba(255, 255, 255, 0.065); }
+
+.sb-rank {
+  font-size: clamp(10px, 1.3vw, 13px);
+  font-weight: 900;
+  color: var(--dim);
+}
+
+.sb-name {
+  font-size: clamp(11px, 1.6vw, 15px);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: var(--lane-hue, #5ee08a);
+  white-space: nowrap;
+}
+
+.sb-meaning {
+  font-size: clamp(9px, 1.2vw, 12px);
+  color: var(--dim);
+  line-height: 1.35;
+}
+
+/* Council Mode: closed lanes are struck through and stamped. */
+.sb-lane[data-closed="true"] {
+  /* Dimmed, but not so far that the explanation stops being readable — the
+     point of the board is that the player learns what each lane does, closed
+     or not. */
+  opacity: 0.72;
+  border-left-color: var(--orange);
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(232, 98, 15, 0.12) 0 6px, transparent 6px 12px),
+    rgba(255, 255, 255, 0.03);
+}
+.sb-lane[data-closed="true"] .sb-name {
+  color: #ffb648;
+  text-decoration: line-through;
+}
+/* Only the lane name is struck through. The explanation stays legible: what
+   the tool does is still worth knowing, and is arguably the whole argument. */
+.sb-lane[data-closed="true"] .sb-meaning {
+  text-decoration: none;
+  color: #b9c6d4;
+}
+
+.sb-stamp {
+  grid-column: 1 / -1;
+  justify-self: start;
+  margin-top: 3px;
+  font-size: clamp(8px, 1.05vw, 10px);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: #ffb648;
+  border: 1.5px solid var(--orange);
+  border-radius: 3px;
+  padding: 2px 7px;
+  transform: rotate(-1.5deg);
+}
+
+/* ---------------- Lane label flight ---------------- */
+
+#lane-flight {
+  position: absolute;
+  inset: 0;
+  z-index: 21;
+  pointer-events: none;
+}
+
+.flying-label {
+  position: absolute;
+  font-size: clamp(8px, 1.05vw, 11px);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: rgba(9, 14, 22, 0.92);
+  border: 1px solid currentColor;
+  transform: translate(-50%, -50%);
+  will-change: left, top, opacity;
+}
+.flying-label[data-closed="true"] { color: #ffb648; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flying-label { transition: opacity 200ms linear !important; }
+}
+
+/* ---------------- Single Budget Gap HUD ---------------- */
+
+/* The gap is the only number that decides anything, so it dominates. */
+.hud-gap {
+  border-color: rgba(255, 216, 94, 0.6);
+  min-width: clamp(160px, 22vw, 260px);
+}
+.hud-gap .hud-value-big { font-size: clamp(22px, 4vw, 42px); }
+#hud-gap[data-sign="pos"] { color: var(--pos); }
+#hud-gap[data-sign="neg"] { color: var(--neg); }
+
+#hud-gap-note {
+  font-size: clamp(8px, 1vw, 11px);
+  letter-spacing: 0.06em;
+  color: var(--dim);
+}
+
+.hud-year .hud-value,
+.hud-right .hud-value { font-size: clamp(13px, 1.9vw, 20px); }
+
+/* ---------------- Annual fiscal-year reveal ---------------- */
+
+#year-reveal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 19;
+  min-width: min(400px, 88vw);
+  /* Opaque: the forecast is a briefing, and road showing through it made the
+     line items hard to read. */
+  background: #0a0f18;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: clamp(14px, 2.4vw, 22px) clamp(16px, 2.6vw, 26px);
+  font-variant-numeric: tabular-nums;
+  animation: reveal-in 260ms ease-out;
+  pointer-events: none;
+}
+
+@keyframes reveal-in {
+  from { opacity: 0; transform: translate(-50%, calc(-50% + 10px)); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+#year-reveal-title {
+  margin: 0 0 10px;
+  font-size: clamp(18px, 2.8vw, 28px);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-align: center;
+}
+
+#year-reveal-lines { margin: 0; display: grid; gap: 3px; }
+
+.yr-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  font-size: clamp(10px, 1.35vw, 13px);
+}
+.yr-line dt { color: var(--dim); margin: 0; }
+.yr-line dd { margin: 0; font-weight: 800; color: #ffb9a8; }
+.yr-line[data-credit="true"] dd { color: var(--pos); }
+
+.year-reveal-total {
+  margin: 12px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 18px;
+  font-size: clamp(10px, 1.3vw, 12px);
+  letter-spacing: 0.14em;
+  font-weight: 800;
+  color: var(--dim);
+}
+.year-reveal-total b {
+  font-size: clamp(18px, 2.8vw, 26px);
+  letter-spacing: 0;
+  color: var(--neg);
+}
+
+/* ---------------- MEGA PANDER ---------------- */
+
+/* Hierarchy (Tightening addendum §20): EXTEND > MEGA PANDER > PANDER. */
+.btn-mega {
+  background: linear-gradient(180deg, #7a3ea8 0%, #5c2b82 100%);
+  border-color: #a86fd4;
+  color: #f4e8ff;
+  font-size: clamp(11px, 1.55vw, 15px);
+  padding: 10px 20px;
+  letter-spacing: 0.1em;
+}
+.btn-mega:hover { background: linear-gradient(180deg, #8f4cc2 0%, #6d3399 100%); }
+
+#meter-profile .meter-bar i { background: #c07ee8; }
+
+#mega-modal, #consent-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 26;
+  display: grid;
+  place-items: center;
+  background: rgba(5, 8, 13, 0.82);
+  padding: 16px;
+}
+
+.mega-card { max-width: 440px; border-color: #a86fd4; }
+.mega-card h2 {
+  margin: 0 0 6px;
+  font-size: clamp(16px, 2.4vw, 23px);
+  letter-spacing: 0.06em;
+  color: #e0c4f6;
+}
+
+.mega-program {
+  margin: 0 0 16px;
+  font-size: clamp(13px, 1.8vw, 17px);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.mega-terms { margin: 0 0 20px; display: grid; gap: 6px; }
+.mega-terms > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 7px 12px;
+  background: var(--panel-2);
+  border-radius: 6px;
+  font-size: clamp(10px, 1.3vw, 13px);
+}
+.mega-terms dt { margin: 0; color: var(--dim); }
+.mega-terms dd { margin: 0; font-weight: 800; }
+.mega-none { color: var(--neg); letter-spacing: 0.1em; }
+
+.consent-sub {
+  margin: 0 0 20px;
+  color: var(--dim);
+  font-size: clamp(11px, 1.5vw, 14px);
+}
+
+#consent-stamp {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%) rotate(-9deg);
+  z-index: 26;
+  padding: 10px 26px;
+  border: 4px double #38a169;
+  border-radius: 4px;
+  color: #6ee7a0;
+  background: rgba(8, 22, 14, 0.85);
+  font-size: clamp(13px, 2.1vw, 21px);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  animation: stamp-in 220ms cubic-bezier(.2,1.6,.4,1);
+  pointer-events: none;
+}
+@keyframes stamp-in {
+  from { opacity: 0; transform: translate(-50%, -50%) rotate(-9deg) scale(1.8); }
+  to   { opacity: 1; transform: translate(-50%, -50%) rotate(-9deg) scale(1); }
+}
+
+/* ---------------- On-demand Special Meeting ---------------- */
+
+/* Secondary to the fiscal readouts, but always discoverable (addendum §21). */
+#btn-call-meeting {
+  position: absolute;
+  left: clamp(6px, 1.4vw, 14px);
+  bottom: clamp(74px, 13vh, 104px);
+  z-index: 17;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  text-align: left;
+  font: inherit;
+  padding: 7px 13px;
+  border-radius: 7px;
+  cursor: pointer;
+  background: rgba(9, 14, 22, 0.82);
+  border: 1px solid rgba(255, 160, 60, 0.45);
+  color: var(--ink);
+  transition: border-color 140ms ease, background 140ms ease, box-shadow 200ms ease;
+}
+#btn-call-meeting:hover:not(:disabled) {
+  background: rgba(30, 20, 12, 0.92);
+  border-color: var(--orange);
+}
+
+.csm-title {
+  font-size: clamp(9px, 1.15vw, 12px);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: #ffb648;
+}
+.csm-sub {
+  font-size: clamp(8px, 1vw, 10.5px);
+  font-style: italic;
+  color: var(--dim);
+}
+
+/* Optional pressure cue: more tempting as the gap worsens (addendum §22).
+   Presentation only — availability never changes. */
+#btn-call-meeting[data-pressure="high"] {
+  border-color: var(--orange);
+  animation: csm-tempt 2.4s ease-in-out infinite;
+}
+@keyframes csm-tempt {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232, 98, 15, 0); }
+  50%      { box-shadow: 0 0 16px 2px rgba(232, 98, 15, 0.35); }
+}
+
+#btn-call-meeting:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  border-style: dashed;
+  animation: none;
+}
+#btn-call-meeting:disabled .csm-title { color: var(--dim); }
+#btn-call-meeting:disabled .csm-sub { font-style: normal; color: #8c7a66; }
+
+@media (prefers-reduced-motion: reduce) {
+  #btn-call-meeting[data-pressure="high"] { animation: none; }
+}
+
+/* Barrier rejection banner: a refusal, not a fiscal update. */
+#hud-banner[data-tone="reject"] {
+  border-color: var(--orange);
+  color: #ffb648;
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(232, 98, 15, 0.16) 0 8px, transparent 8px 16px),
+    rgba(24, 10, 4, 0.92);
+  animation: reject-shake 320ms ease-out;
+}
+@keyframes reject-shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-7px); }
+  45%      { transform: translateX(6px); }
+  70%      { transform: translateX(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #hud-banner[data-tone="reject"] { animation: none; }
+}
+
+.year-reveal-deadline {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: clamp(9px, 1.15vw, 11px);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+}
+
+/* ---------------- Special Meeting tally reveal ---------------- */
+
+.summary-card { max-width: 480px; }
+
+.tally {
+  margin: 18px 0 0;
+  display: grid;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+/* The statistics recede so the fiscal result owns the screen (§14). */
+.tally[data-receded="true"] {
+  opacity: 0.32;
+  transform: scale(0.96);
+}
+
+.tally-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 18px;
+  padding: 4px 2px;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.08);
+}
+.tally-row dt {
+  margin: 0;
+  font-size: clamp(9px, 1.15vw, 11px);
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--dim);
+}
+.tally-row dd {
+  margin: 0;
+  min-height: 1.2em;
+  font-size: clamp(13px, 1.8vw, 17px);
+  font-weight: 800;
+  color: var(--ink);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ---------------- Fiscal verdict ---------------- */
+
+#meeting-verdict { margin-top: 18px; }
+
+.verdict-after {
+  margin: 0 0 12px;
+  text-align: center;
+  font-size: clamp(14px, 2.1vw, 20px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  animation: fade-in 380ms ease;
+}
+
+.verdict-gap {
+  margin: 0 0 16px;
+  display: grid;
+  gap: 3px;
+}
+.verdict-gap > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  font-size: clamp(10px, 1.3vw, 12px);
+  letter-spacing: 0.1em;
+}
+.verdict-gap dt { margin: 0; color: var(--dim); font-weight: 700; }
+.verdict-gap dd {
+  margin: 0;
+  font-weight: 900;
+  color: var(--neg);
+  font-variant-numeric: tabular-nums;
+}
+
+.verdict-headline {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(30px, 6.5vw, 58px);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  color: var(--neg);
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.5);
+  animation: verdict-stamp 300ms cubic-bezier(.2, 1.5, .4, 1);
+}
+
+.verdict-added {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: clamp(19px, 3.6vw, 34px);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  color: #ffb648;
+  animation: verdict-stamp 300ms cubic-bezier(.2, 1.5, .4, 1);
+}
+
+.verdict-consent {
+  margin: 6px 0 0;
+  text-align: center;
+  font-size: clamp(9px, 1.2vw, 11px);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #6ee7a0;
+}
+
+#meeting-summary-go { margin-top: 20px; }
+
+@keyframes verdict-stamp {
+  from { opacity: 0; transform: scale(1.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Reduced motion keeps the sequence, drops the movement (§25). */
+@media (prefers-reduced-motion: reduce) {
+  .verdict-headline,
+  .verdict-added { animation: fade-in 200ms ease; }
+  .tally[data-receded="true"] { transform: none; }
+}

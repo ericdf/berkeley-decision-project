@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elections Have Consequences: Berkeley Edition</title>
+<meta name="description" content="A collection of playable Berkeley decisions and their consequences.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="styles-v2.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>&#128499;</text></svg>">
+</head>
+<body data-screen="select-screen">
+
+<!-- Anthology mission select (Front Matter §3, §4, §16) -->
+<section class="screen" id="select-screen">
+  <div class="select-inner">
+    <h1 class="anthology-title">ELECTIONS HAVE CONSEQUENCES</h1>
+    <p class="anthology-edition">Berkeley Edition</p>
+    <p class="anthology-action">CHOOSE A GAME</p>
+    <div class="episode-grid" id="episode-grid"></div>
+    <div class="secondary-controls">
+      <button type="button" class="link-btn" data-mute aria-pressed="false">SOUND ON</button>
+    </div>
+  </div>
+</section>
+
+<!-- Budget Quest mode select -->
+<section class="screen" id="mode-screen" hidden>
+  <div class="title-inner">
+    <h1 class="game-title">BUDGET<br><span>QUEST</span></h1>
+    <p class="game-subtitle">If you&rsquo;re wondering who the ATM is, you&rsquo;re the ATM.</p>
+    <div class="mode-buttons">
+      <button type="button" id="btn-common" class="mode-btn mode-common" data-autofocus>
+        <span class="mode-name">COMMON SENSE MODE</span>
+        <span class="mode-desc">All seven fiscal tools</span>
+      </button>
+      <button type="button" id="btn-council" class="mode-btn mode-council">
+        <span class="mode-name">CITY COUNCIL MODE</span>
+        <span class="mode-desc">Three tools and a red button</span>
+      </button>
+    </div>
+    <div class="secondary-controls">
+      <button type="button" class="link-btn" data-back>&larr; ALL GAMES</button>
+    </div>
+  </div>
+</section>
+
+<!-- Deficit board (Structural Deficit revision v3.1) -->
+<section class="screen" id="board-screen" hidden data-arming="false" data-paused="false">
+
+  <header class="hud">
+    <span class="hud-year" id="hud-year">FY 2028</span>
+    <span class="hud-deficit-wrap">
+      <b>DEFICIT REMAINING</b>
+      <i id="hud-deficit" data-clear="false">$0.0M</i>
+    </span>
+    <span class="hud-structural" id="hud-structural" data-tone="bad">STRUCTURAL DEFICIT $0.0M</span>
+    <button type="button" id="ctl-pause" class="btn btn-small">PAUSE</button>
+  </header>
+
+  <div class="play">
+    <div class="sky">
+      <canvas id="board-canvas" aria-hidden="true"></canvas>
+      <div id="banner" hidden></div>
+      <div id="toast" hidden data-tone="info">
+        <span id="toast-title"></span>
+        <span id="toast-detail"></span>
+      </div>
+      <div id="arming" hidden>
+        <span class="arm-text">
+          CHOOSE TWO PRIORITIES &mdash; <b id="arming-shields">2</b> LEFT
+        </span>
+        <span class="arm-sub">A shield does not remove the deficit. It sends it somewhere else.</span>
+        <span class="arm-count"><b id="arming-count">7</b></span>
+        <button type="button" id="arming-go" class="btn btn-small">LAUNCH NOW (S)</button>
+      </div>
+    </div>
+
+    <!-- The six bases being defended -->
+    <div class="bases" id="bases" role="group"
+         aria-label="Berkeley services. Shield two before the missiles launch."></div>
+  </div>
+
+  <!-- Four political meters, tucked to the side -->
+  <aside class="meters" id="meters" aria-label="Political standing"></aside>
+
+  <!-- The four permanent controls, plus contextual PAY IT BACK -->
+  <div class="controls">
+    <button type="button" id="ctl-cut" class="ctl ctl-cut">
+      <span class="ctl-name">CUT</span>
+      <span class="ctl-sub">lower recurring expense</span>
+      <span class="ctl-key">C</span>
+    </button>
+    <button type="button" id="ctl-tax" class="ctl ctl-tax">
+      <span class="ctl-name">TAX</span>
+      <span class="ctl-sub">raise recurring revenue</span>
+      <span class="ctl-key">T</span>
+    </button>
+    <button type="button" id="ctl-exit" class="ctl ctl-exit">
+      <span class="ctl-name">EXIT</span>
+      <span class="ctl-sub">leave a line of business</span>
+      <span class="ctl-key">X</span>
+    </button>
+    <button type="button" id="ctl-onetime" class="ctl ctl-onetime" data-armed="false">
+      <span class="ctl-name">ONE-TIME MONEY</span>
+      <span class="ctl-sub">clears missiles, changes nothing</span>
+      <span class="ctl-key">O</span>
+    </button>
+    <button type="button" id="ctl-payback" class="ctl ctl-payback" hidden>
+      <span class="ctl-name">PAY IT BACK</span>
+      <span class="ctl-sub">restore the cushion, fund it now</span>
+      <span class="ctl-key">B</span>
+    </button>
+    <button type="button" id="ctl-pilot" class="ctl ctl-pilot">
+      <span class="ctl-name">PILOT</span>
+      <span class="ctl-sub">temporary unless you renew it</span>
+    </button>
+  </div>
+
+  <!-- Action-resolution impact (§21-§28) -->
+  <div id="impact" hidden aria-hidden="true">
+    <div class="impact-card">
+      <span class="impact-head" id="impact-head"></span>
+      <div class="impact-lines" id="impact-lines"></div>
+      <div class="impact-sentiment" id="impact-sentiment" hidden>
+        <span class="impact-sh">CONSTITUENCY SENTIMENT IMPACT</span>
+        <div class="impact-rows" id="impact-rows"></div>
+      </div>
+      <span class="impact-extra" id="impact-extra" hidden></span>
+    </div>
+  </div>
+
+  <!-- Opening tutorial (§26) -->
+  <div id="tutorial" hidden>
+    <div class="overlay-card tut-card">
+      <h2>MISSILES ARE DEFICITS.</h2>
+      <p class="tut-lead">
+        Recurring expenses above recurring revenue create missiles.
+        Balance the structure and the sky clears.
+      </p>
+      <dl class="tut-list">
+        <div><dt>CUT</dt><dd>lowers recurring expense.</dd></div>
+        <div><dt>TAX</dt><dd>raises recurring revenue.</dd></div>
+        <div><dt>EXIT</dt><dd>removes an entire City responsibility and its recurring cost.</dd></div>
+        <div><dt>ONE-TIME MONEY</dt><dd>clears missiles now without changing recurring
+          revenue or expense. It stands for reserves, contribution holidays and similar
+          temporary balances. If that cushion is gone when a future obligation arrives,
+          new missiles appear.</dd></div>
+        <div><dt>PAY IT BACK</dt><dd>restores the cushion &mdash; but you must fund the
+          repayment now.</dd></div>
+        <div><dt>PILOTS</dt><dd>expire unless you choose to make them permanent.</dd></div>
+      </dl>
+      <button type="button" id="tut-go" class="btn btn-primary">START</button>
+    </div>
+  </div>
+
+  <!-- Between-year briefing -->
+  <div id="briefing" hidden>
+    <div class="overlay-card brief-card">
+      <h2 id="brief-year">FY 2028</h2>
+      <div id="brief-rows" class="brief-rows"></div>
+      <p class="brief-balance" id="brief-balance" data-tone="bad">STRUCTURAL DEFICIT $0.0M</p>
+      <p class="brief-note" id="brief-note" hidden></p>
+      <button type="button" id="brief-go" class="btn btn-primary">TAKE THE BOARD</button>
+    </div>
+  </div>
+
+  <!-- Option menu for CUT / TAX / EXIT / PILOT -->
+  <div id="option-menu" hidden role="dialog" aria-modal="true"
+       aria-labelledby="option-title">
+    <div class="overlay-card option-card">
+      <h2 id="option-title">CUT</h2>
+      <div id="option-list" class="option-list"></div>
+      <button type="button" id="option-cancel" class="btn">CANCEL (ESC)</button>
+    </div>
+  </div>
+
+  <!-- Pilot permanence (§8) -->
+  <div id="pilot-modal" hidden role="dialog" aria-modal="true" aria-labelledby="pilot-title">
+    <div class="overlay-card">
+      <h2 id="pilot-title">MAKE PILOT PERMANENT?</h2>
+      <p class="pilot-name" id="pilot-name"></p>
+      <dl class="pilot-terms">
+        <div><dt>Added recurring expense</dt><dd id="pilot-cost">$0.0M / YEAR</dd></div>
+      </dl>
+      <p class="pilot-effect" id="pilot-effect"></p>
+      <div class="overlay-actions">
+        <button type="button" id="pilot-yes" class="btn btn-primary">MAKE IT PERMANENT</button>
+        <button type="button" id="pilot-no" class="btn">LET IT END</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Year end -->
+  <div id="resolve" hidden>
+    <div class="overlay-card resolve-card">
+      <h2 id="resolve-title">FY 2028 CLOSED</h2>
+      <dl id="resolve-rows" class="res-rows"></dl>
+      <h3 class="res-h">The recurring structure</h3>
+      <dl id="resolve-structure" class="res-rows"></dl>
+      <p class="res-exposure" id="resolve-exposure" hidden></p>
+      <button type="button" id="resolve-go" class="btn btn-primary">NEXT FISCAL YEAR</button>
+    </div>
+  </div>
+
+  <!-- Four years later -->
+  <div id="final" hidden>
+    <div class="overlay-card final-card">
+      <h1 id="final-heading">FOUR YEARS LATER</h1>
+      <div id="final-bases" class="final-bases"></div>
+      <h3 class="res-h">Where it stands</h3>
+      <dl id="final-stats" class="stats"></dl>
+      <h3 class="res-h">Political standing</h3>
+      <div id="final-meters" class="meters-list"></div>
+      <p class="final-line">THE NEXT BUDGET STARTS NOW.</p>
+      <div class="overlay-actions">
+        <button type="button" id="final-again" class="btn btn-primary">PLAY AGAIN</button>
+        <button type="button" id="final-exit" class="btn">ALL GAMES</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaving mid-term -->
+  <div id="leave-confirm" hidden role="dialog" aria-modal="true" aria-labelledby="leave-title">
+    <div class="overlay-card">
+      <h2 id="leave-title">LEAVE THIS TERM?</h2>
+      <p class="leave-sub">The budgets you have closed will not be saved.</p>
+      <div class="overlay-actions">
+        <button type="button" id="leave-yes" class="btn btn-primary">RAGE QUIT</button>
+        <button type="button" id="leave-no" class="btn">STAY IN OFFICE</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Special Meeting bottle episode (Reboot spec §57-§69) -->
+<section class="screen" id="meeting-screen" hidden>
+  <canvas id="meeting-canvas" aria-hidden="true"></canvas>
+
+  <div id="meeting-ui">
+    <div class="meeting-top">
+      <div class="meeting-title">
+        <span class="meeting-kicker">SPECIAL MEETING</span>
+        <span class="meeting-clock" id="meeting-clock">6:00 PM</span>
+      </div>
+      <div class="meeting-meters">
+        <div class="meter" id="meter-voter">
+          <span class="meter-label">VOTER SENTIMENT</span>
+          <span class="meter-bar"><i></i></span>
+          <span class="meter-value">70</span>
+        </div>
+        <div class="meter" id="meter-activist">
+          <span class="meter-label">ACTIVIST SENTIMENT</span>
+          <span class="meter-bar"><i></i></span>
+          <span class="meter-value">70</span>
+        </div>
+        <div class="meter meter-small" id="meter-credibility">
+          <span class="meter-label">CREDIBILITY</span>
+          <span class="meter-bar"><i></i></span>
+          <span class="meter-value">100</span>
+        </div>
+        <div class="meter meter-small" id="meter-profile">
+          <span class="meter-label">POLITICAL PROFILE</span>
+          <span class="meter-bar"><i></i></span>
+          <span class="meter-value">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="meeting-exhausted" hidden></div>
+    <div id="motion-failed" hidden>MOVEMENT FAILED!</div>
+    <div id="meeting-ragequit" hidden>
+      <span class="rq-title"></span>
+      <span class="rq-sub"></span>
+    </div>
+
+    <div class="meeting-counters">
+      <span>PUBLIC COMMENTS <b id="meeting-comments">0</b></span>
+      <span>EXTENSIONS <b id="meeting-extensions">0</b></span>
+    </div>
+
+    <div class="meeting-actions">
+      <button type="button" id="meeting-extend" class="btn btn-extend" hidden>
+        EXTEND MEETING TO MIDNIGHT!
+      </button>
+      <button type="button" id="meeting-mega" class="btn btn-mega" hidden>MEGA PANDER</button>
+      <button type="button" id="meeting-pander" class="btn btn-pander">PANDER</button>
+      <button type="button" id="meeting-end" class="btn" disabled>MOVE TO END MEETING</button>
+    </div>
+  </div>
+
+  <div id="mega-modal" hidden role="dialog" aria-modal="true" aria-labelledby="mega-title">
+    <div class="overlay-card mega-card">
+      <h2 id="mega-title">COMMIT TO NEW PROGRAM?</h2>
+      <p class="mega-program" id="mega-program">NEW COMMUNITY PROGRAM</p>
+      <dl class="mega-terms">
+        <div><dt>Annual cost</dt><dd id="mega-cost">$3.5M / YEAR</dd></div>
+        <div><dt>Recurring funding identified</dt><dd class="mega-none">NONE</dd></div>
+      </dl>
+      <div class="overlay-actions">
+        <button type="button" id="mega-yes" class="btn btn-primary" data-autofocus>YES!</button>
+        <button type="button" id="mega-no" class="btn">NO</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="consent-modal" hidden role="dialog" aria-modal="true" aria-labelledby="consent-title">
+    <div class="overlay-card mega-card">
+      <h2 id="consent-title">PUT IT ON CONSENT?</h2>
+      <p class="consent-sub">Skip debate. Keep momentum.</p>
+      <div class="overlay-actions">
+        <button type="button" id="consent-yes" class="btn btn-primary" data-autofocus>YES — CONSENT</button>
+        <button type="button" id="consent-no" class="btn">NO — DISCUSS IT</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="consent-stamp" hidden>APPROVED WITHOUT DISCUSSION</div>
+
+  <div id="meeting-summary" hidden>
+    <div class="overlay-card summary-card">
+      <h2>SPECIAL MEETING COMPLETE</h2>
+      <dl class="tally" id="meeting-tally"></dl>
+      <div id="meeting-verdict" hidden>
+        <p class="verdict-after" id="verdict-after">AFTER 0:00...</p>
+        <dl class="verdict-gap">
+          <div><dt>BUDGET GAP BEFORE</dt><dd id="verdict-before">$0.0M</dd></div>
+          <div><dt>BUDGET GAP AFTER</dt><dd id="verdict-gap-after">$0.0M</dd></div>
+        </dl>
+        <p class="verdict-headline" id="verdict-closed" hidden>$0 CLOSED</p>
+        <p class="verdict-consolation" id="verdict-consolation" hidden>
+          (but at least people thousands of miles away have heard our opinion)
+        </p>
+        <p class="verdict-added" id="verdict-added" hidden></p>
+        <p class="verdict-consent" id="verdict-consent" hidden>APPROVED WITHOUT DISCUSSION</p>
+      </div>
+      <button type="button" id="meeting-summary-go" class="btn btn-primary" hidden>
+        ALL GAMES
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- HOPKINS -->
+<section class="screen" id="hopkins-screen" hidden>
+  <canvas id="hopkins-canvas" aria-hidden="true"></canvas>
+  <div class="ep-ui">
+    <div id="hopkins-caption" hidden></div>
+    <div id="hopkins-hint" class="ep-hint"></div>
+  </div>
+  <div id="hopkins-tally" hidden>
+    <div class="overlay-card summary-card">
+      <h2 id="hopkins-tally-head">HOPKINS COMPLETE</h2>
+      <dl class="tally" id="hopkins-tally-rows"></dl>
+      <p class="verdict-headline" id="hopkins-tag">CORRIDOR COMPLETE</p>
+      <button type="button" id="hopkins-go" class="btn btn-primary" data-autofocus>
+        ALL GAMES
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- GET TO SACRAMENTO OR DIE TRYIN' -->
+<section class="screen" id="sac-screen" hidden>
+  <div class="sac-ui">
+    <header class="sac-top">
+      <span class="sac-title">GET TO SACRAMENTO OR DIE TRYIN&rsquo;</span>
+      <span class="sac-days" id="sac-days">28 DAYS TO ELECTION</span>
+    </header>
+    <div class="sac-coalition">
+      <span id="sac-coalition">COALITION: 55%</span>
+      <span class="sac-coalition-track"><i id="sac-coalition-bar"></i></span>
+    </div>
+    <div class="sac-groups" id="sac-groups"></div>
+  </div>
+  <div id="sac-result" hidden>
+    <div class="overlay-card">
+      <p class="verdict-headline" id="sac-result-text">YOU MADE IT TO SACRAMENTO</p>
+      <p class="sac-result-sub" id="sac-result-sub" hidden></p>
+      <p class="sac-result-detail" id="sac-result-detail"></p>
+      <button type="button" id="sac-result-go" class="btn btn-primary" data-autofocus>
+        ALL GAMES
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Always a visible way out. Hidden only on the menu itself. -->
+<button type="button" id="quit-game" hidden
+        aria-label="Leave this game and return to all games. Keyboard shortcut: Escape.">
+  <span aria-hidden="true">&larr;</span> ALL GAMES <kbd>ESC</kbd>
+</button>
+
+<!-- A game that will not load says so, rather than ignoring the click. -->
+<div id="load-error" hidden role="dialog" aria-modal="true" aria-labelledby="load-error-title">
+  <div class="overlay-card">
+    <h2 id="load-error-title">COULD NOT LOAD</h2>
+    <p class="load-error-name" id="load-error-name"></p>
+    <p class="load-error-hint">
+      Try reloading the page. If you have played before, a hard reload
+      (Cmd&#8209;Shift&#8209;R) clears a stale cached copy.
+    </p>
+    <div class="overlay-actions">
+      <button type="button" id="load-error-go" class="btn btn-primary">BACK TO THE GAMES</button>
+    </div>
+  </div>
+</div>
+
+<div id="aria-live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+<script type="module" src="js/shared/main.js"></script>
+</body>
+</html>

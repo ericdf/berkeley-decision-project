@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Berkeley Budget Driver</title>
+<meta name="description" content="Close the budget gap, then drive through the city you created.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="styles-v2.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>&#128679;</text></svg>">
+</head>
+<body data-screen="title-screen">
+
+<!-- Title (Reboot spec §5) -->
+<section class="screen" id="title-screen">
+  <div class="title-inner">
+    <h1 class="game-title">BERKELEY<br><span>BUDGET DRIVER</span></h1>
+    <p class="game-subtitle">Close the gap. Then drive through the city you made.</p>
+
+    <div class="mode-buttons">
+      <button type="button" id="btn-common" class="mode-btn mode-common" data-autofocus>
+        <span class="mode-name">COMMON SENSE MODE</span>
+        <span class="mode-desc">All seven fiscal tools</span>
+      </button>
+      <button type="button" id="btn-council" class="mode-btn mode-council">
+        <span class="mode-name">CITY COUNCIL MODE</span>
+        <span class="mode-desc">Three tools and a red button</span>
+      </button>
+    </div>
+
+    <div class="secondary-controls">
+      <button type="button" id="btn-how" class="link-btn">How to Play</button>
+      <button type="button" class="link-btn" data-mute aria-pressed="false">SOUND ON</button>
+    </div>
+  </div>
+</section>
+
+<!-- Opening budget reveal (Reboot spec §7) -->
+<section class="screen" id="reveal-screen" hidden>
+  <div class="reveal-card">
+    <h2 id="reveal-title">FY2029 BUDGET</h2>
+    <dl id="reveal-lines"></dl>
+    <p class="reveal-total"><span>BUDGET GAP</span><b id="reveal-gap">$0.0M</b></p>
+    <button type="button" id="reveal-go" class="btn btn-primary" data-autofocus>
+      OPEN THE GARAGE
+    </button>
+  </div>
+</section>
+
+<!-- City Budget Garage (Reboot spec §9-§14, §32-§37) -->
+<section class="screen" id="garage-screen" hidden>
+  <canvas id="garage-canvas" aria-hidden="true"></canvas>
+
+  <div class="garage-ui">
+    <header class="garage-top">
+      <span class="garage-title">CITY BUDGET GARAGE</span>
+      <span class="garage-year" id="garage-year">FY2029</span>
+    </header>
+
+    <div class="scoreboard">
+      <span class="scoreboard-label">GAP REMAINING</span>
+      <span class="scoreboard-value" id="garage-gap">$0.0M</span>
+      <span class="scoreboard-note" id="garage-gap-note">you have to get to zero</span>
+    </div>
+
+    <div id="garage-flash" data-show="false" data-tone="info"></div>
+
+    <div class="garage-body">
+      <div class="garage-col">
+        <h3 class="garage-h">FISCAL TOOLS</h3>
+        <div id="garage-tools" class="stations"></div>
+      </div>
+
+      <div class="garage-col garage-side">
+        <h3 class="garage-h">ONE-TIME MEASURES</h3>
+        <div id="garage-onetime" class="onetimes"></div>
+
+        <h3 class="garage-h garage-h-danger">EMERGENCY</h3>
+        <div id="garage-slash" class="slash" data-active="false">
+          <div class="slash-head">
+            <span class="slash-name">SLASH SERVICES</span>
+            <span class="slash-value" id="garage-slash-value">$0.0M</span>
+          </div>
+          <p class="slash-warn">Closes the gap by cutting services residents use.</p>
+          <div class="station-row">
+            <button type="button" class="step" data-dir="-1"
+                    aria-label="Decrease service cuts">−</button>
+            <button type="button" class="step" data-dir="1"
+                    aria-label="Increase service cuts">+</button>
+          </div>
+        </div>
+
+        <button type="button" id="garage-call-meeting" hidden
+                aria-label="Call Special Meeting. Need a break from adult decisions?">
+          <span class="csm-title">CALL SPECIAL MEETING</span>
+          <span class="csm-sub">Need a break from adult decisions?</span>
+        </button>
+      </div>
+    </div>
+
+    <footer class="garage-foot">
+      <span class="garage-adopt-note" id="garage-adopt-note">YOU HAVE TO GET TO ZERO</span>
+      <button type="button" id="garage-adopt" class="btn btn-primary" disabled>
+        ADOPT BUDGET
+      </button>
+    </footer>
+  </div>
+</section>
+
+
+<!-- City tour (Reboot spec §38-§48) -->
+<section class="screen" id="tour-screen" hidden>
+  <canvas id="tour-canvas" aria-hidden="true"></canvas>
+
+  <div class="tour-ui">
+    <header class="tour-top">
+      <span class="tour-year" id="tour-year">FY2029</span>
+      <span class="tour-title">THE CITY YOU BUDGETED</span>
+      <span class="tour-progress"><i id="tour-progress-bar"></i></span>
+    </header>
+
+    <div id="tour-card" hidden>
+      <span class="tc-label" id="tour-card-label"></span>
+      <span class="tc-detail" id="tour-card-detail"></span>
+      <span class="tc-cost" id="tour-card-cost"></span>
+    </div>
+
+    <div class="tour-hint">← → to steer</div>
+  </div>
+
+  <!-- Roosevelt Avenue easter egg (§73) -->
+  <div id="roosevelt-prompt" hidden role="dialog" aria-modal="true"
+       aria-labelledby="roosevelt-title">
+    <div class="municipal-dialog">
+      <div class="municipal-bar">CITY OF BERKELEY · PUBLIC WORKS</div>
+      <h2 id="roosevelt-title">PAVE ROOSEVELT AVENUE?</h2>
+      <p class="municipal-ref">FORM PW-1947 · PAVEMENT MANAGEMENT PROGRAM</p>
+      <button type="button" id="roosevelt-never" class="btn municipal-btn"
+              aria-label="Pave Roosevelt Avenue? Only available response: Never."
+              data-autofocus>NEVER!</button>
+    </div>
+  </div>
+  <div id="roosevelt-confirm" hidden>POLICY CONTINUES</div>
+</section>
+
+<!-- Special Meeting bottle episode (Reboot spec §57-§69) -->
+<section class="screen" id="meeting-screen" hidden>
+  <canvas id="meeting-canvas" aria-hidden="true"></canvas>
+
+  <div id="meeting-ui">
+    <div class="meeting-top">
+      <div class="meeting-title">
+        <span class="meeting-kicker">SPECIAL MEETING</span>
+        <span class="meeting-clock" id="meeting-clock">6:00 PM</span>
+      </div>
+      <div class="meeting-meters">
+        <div class="meter" id="meter-voter">
+          <span class="meter-label">VOTER SENTIMENT</span>
+          <span class="meter-bar"><i></i></span>
+          <span class="meter-value">70</span>
+        </div>
+        <div class="meter" id="meter-activist">
+          <span class="meter-label">ACTIVIST SENTIMENT</span>
+          <span class="meter-bar"><i></i></span>
+          <span class="meter-value">70</span>
+        </div>
+        <div class="meter meter-small" id="meter-credibility">
+          <span class="meter-label">CREDIBILITY</span>
+          <span class="meter-bar"><i></i></span>
+          <span class="meter-value">100</span>
+        </div>
+        <div class="meter meter-small" id="meter-profile">
+          <span class="meter-label">POLITICAL PROFILE</span>
+          <span class="meter-bar"><i></i></span>
+          <span class="meter-value">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="meeting-exhausted" hidden></div>
+    <div id="meeting-ragequit" hidden>
+      <span class="rq-title"></span>
+      <span class="rq-sub"></span>
+    </div>
+
+    <div class="meeting-counters">
+      <span>PUBLIC COMMENTS <b id="meeting-comments">0</b></span>
+      <span>EXTENSIONS <b id="meeting-extensions">0</b></span>
+    </div>
+
+    <div class="meeting-actions">
+      <button type="button" id="meeting-extend" class="btn btn-extend" hidden>
+        EXTEND MEETING TO MIDNIGHT!
+      </button>
+      <button type="button" id="meeting-mega" class="btn btn-mega" hidden>MEGA PANDER</button>
+      <button type="button" id="meeting-pander" class="btn btn-pander">PANDER</button>
+      <button type="button" id="meeting-end" class="btn" disabled>END MEETING</button>
+    </div>
+  </div>
+
+  <div id="mega-modal" hidden role="dialog" aria-modal="true" aria-labelledby="mega-title">
+    <div class="overlay-card mega-card">
+      <h2 id="mega-title">COMMIT TO NEW PROGRAM?</h2>
+      <p class="mega-program" id="mega-program">NEW COMMUNITY PROGRAM</p>
+      <dl class="mega-terms">
+        <div><dt>Annual cost</dt><dd id="mega-cost">$3.5M / YEAR</dd></div>
+        <div><dt>Recurring funding identified</dt><dd class="mega-none">NONE</dd></div>
+      </dl>
+      <div class="overlay-actions">
+        <button type="button" id="mega-yes" class="btn btn-primary" data-autofocus>YES!</button>
+        <button type="button" id="mega-no" class="btn">NO</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="consent-modal" hidden role="dialog" aria-modal="true" aria-labelledby="consent-title">
+    <div class="overlay-card mega-card">
+      <h2 id="consent-title">PUT IT ON CONSENT?</h2>
+      <p class="consent-sub">Skip debate. Keep momentum.</p>
+      <div class="overlay-actions">
+        <button type="button" id="consent-yes" class="btn btn-primary" data-autofocus>YES — CONSENT</button>
+        <button type="button" id="consent-no" class="btn">NO — DISCUSS IT</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="consent-stamp" hidden>APPROVED WITHOUT DISCUSSION</div>
+
+  <div id="meeting-summary" hidden>
+    <div class="overlay-card summary-card">
+      <h2>SPECIAL MEETING COMPLETE</h2>
+      <dl class="tally" id="meeting-tally"></dl>
+      <div id="meeting-verdict" hidden>
+        <p class="verdict-after" id="verdict-after">AFTER 0:00...</p>
+        <dl class="verdict-gap">
+          <div><dt>BUDGET GAP BEFORE</dt><dd id="verdict-before">$0.0M</dd></div>
+          <div><dt>BUDGET GAP AFTER</dt><dd id="verdict-gap-after">$0.0M</dd></div>
+        </dl>
+        <p class="verdict-headline" id="verdict-closed" hidden>$0 CLOSED</p>
+        <p class="verdict-added" id="verdict-added" hidden></p>
+        <p class="verdict-consent" id="verdict-consent" hidden>APPROVED WITHOUT DISCUSSION</p>
+      </div>
+      <button type="button" id="meeting-summary-go" class="btn btn-primary" hidden>
+        BACK TO THE BUDGET
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Higher Office escape (§72) -->
+<section class="screen" id="escape-screen" hidden>
+  <canvas id="escape-canvas" aria-hidden="true"></canvas>
+  <p id="escape-message" hidden>YOU ESCAPED TO HIGHER OFFICE</p>
+  <div class="escape-actions" id="escape-actions" hidden>
+    <button type="button" id="escape-again" class="btn btn-primary" data-autofocus>PLAY AGAIN</button>
+  </div>
+</section>
+
+<!-- Term complete (§88, §89) -->
+<section class="screen" id="end-screen" hidden>
+  <div class="end-inner">
+    <h1 id="end-heading">TERM COMPLETE</h1>
+    <p id="end-lede" class="end-lede"></p>
+    <h2 class="end-subhead">The city you left behind</h2>
+    <div id="end-city" class="end-city"></div>
+    <h2 class="end-subhead">Where it stands</h2>
+    <dl id="end-stats" class="stats"></dl>
+    <div class="overlay-actions">
+      <button type="button" id="end-again" class="btn btn-primary" data-autofocus>PLAY AGAIN</button>
+      <button type="button" id="end-other" class="btn">TRY THE OTHER MODE</button>
+    </div>
+  </div>
+</section>
+
+<div id="aria-live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+<script type="module" src="js/v2/main.js"></script>
+</body>
+</html>
