@@ -100,10 +100,37 @@ function buildSelect() {
 function requestExit() {
   if (document.body.dataset.screen === 'select-screen') return;
   if (current?.requestExit?.()) return;   // the game is handling it
-  backToSelect();
+  confirmLeave();
+}
+
+/**
+ * Ask before abandoning a game in progress. Budget Quest supplies its own
+ * version because a four-year term has more to lose, but every game gets the
+ * question — walking out by accident is the same mistake everywhere.
+ */
+let confirmingLeave = false;
+function confirmLeave() {
+  if (confirmingLeave) return;
+  confirmingLeave = true;
+  const el = $('#leave-confirm');
+  $('#leave-title').textContent = 'LEAVE THIS GAME?';
+  $('#leave-sub').textContent = 'Your progress will not be saved.';
+  el.hidden = false;
+  $('#leave-yes').focus();
+  hud.announce('Leave this game? Progress will be lost.');
+  const close = leave => {
+    el.hidden = true;
+    confirmingLeave = false;
+    if (leave) backToSelect();
+    else hud.announce('Staying.');
+  };
+  $('#leave-yes').onclick = () => close(true);
+  $('#leave-no').onclick = () => close(false);
 }
 
 function backToSelect() {
+  $('#leave-confirm').hidden = true;
+  confirmingLeave = false;
   current?.stop?.();
   current = null;
   showScreen('select-screen');
@@ -252,7 +279,8 @@ function init() {
   // never fires, because that handler stops propagation.
   window.addEventListener('keydown', e => {
     if (e.key === 'Escape' && document.body.dataset.screen !== 'select-screen') {
-      backToSelect();
+      if (!$('#leave-confirm').hidden) return;   // the question is already up
+      requestExit();
     }
   });
 

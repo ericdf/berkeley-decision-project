@@ -220,17 +220,6 @@
     </div>
   </div>
 
-  <!-- Leaving mid-term -->
-  <div id="leave-confirm" hidden role="dialog" aria-modal="true" aria-labelledby="leave-title">
-    <div class="overlay-card">
-      <h2 id="leave-title">LEAVE THIS TERM?</h2>
-      <p class="leave-sub">The budgets you have closed will not be saved.</p>
-      <div class="overlay-actions">
-        <button type="button" id="leave-yes" class="btn btn-primary">RAGE QUIT</button>
-        <button type="button" id="leave-no" class="btn">STAY IN OFFICE</button>
-      </div>
-    </div>
-  </div>
 </section>
 
 
@@ -386,6 +375,19 @@
     </div>
   </div>
 </section>
+
+<!-- Leaving a game in progress. Shared by every game, so it lives outside
+     any one <section class="screen">; a game may reword it before showing. -->
+<div id="leave-confirm" hidden role="dialog" aria-modal="true" aria-labelledby="leave-title">
+  <div class="overlay-card">
+    <h2 id="leave-title">LEAVE THIS GAME?</h2>
+    <p class="leave-sub" id="leave-sub">Your progress will not be saved.</p>
+    <div class="overlay-actions">
+      <button type="button" id="leave-yes" class="btn btn-primary">RAGE QUIT</button>
+      <button type="button" id="leave-no" class="btn">STAY AND FIGHT</button>
+    </div>
+  </div>
+</div>
 
 <!-- Always a visible way out. Hidden only on the menu itself. -->
 <button type="button" id="quit-game" hidden

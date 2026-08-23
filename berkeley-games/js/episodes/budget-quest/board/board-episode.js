@@ -881,6 +881,8 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
     const wasPaused = wave?.paused;
     wave?.setPaused(true);
     const el = $('#leave-confirm');
+    $('#leave-title').textContent = 'LEAVE THIS TERM?';
+    $('#leave-sub').textContent = 'The budgets you have closed will not be saved.';
     el.hidden = false;
     $('#leave-yes').focus();
     hud.announce('Leave this term? Progress will be lost.');
