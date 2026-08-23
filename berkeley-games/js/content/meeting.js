@@ -13,6 +13,11 @@ export const FINAL_SIGN = {
   citation: 'What We Do in the Shadows, s1e2'
 };
 
+/**
+ * What the crowd is holding. Mostly earnest, with enough people who are
+ * clearly there for their own reasons that the room reads as a real one.
+ * PAVE ROOSEVELT! appears three times because somebody organised.
+ */
 export const PROTEST_SIGNS = [
   'WE DEMAND ACTION',
   'LISTEN TO US',
@@ -23,7 +28,14 @@ export const PROTEST_SIGNS = [
   'PASS THE RESOLUTION',
   'NO MORE DELAY',
   'HEAR US',
-  'THANK YOU COUNCIL'
+  'THANK YOU COUNCIL',
+  'PROTEST IS MY CARDIO',
+  'I WAS TOLD THERE WOULD BE SNACKS',
+  'MY OTHER SIGN IS ANGRIER',
+  'I SUPPORT WHATEVER THIS IS',
+  'PAVE ROOSEVELT!',
+  'PAVE ROOSEVELT!',
+  'PAVE ROOSEVELT!'
 ];
 
 // The roadside offramp is superseded by the on-demand CALL SPECIAL MEETING
@@ -71,6 +83,10 @@ export const MEETING_TUNING = {
 
   minDurationSeconds: 8,
   maxDurationSeconds: 30,
+  // Extending buys real playing time, not just a later wall clock. Without
+  // this, extending at 29 seconds ended the meeting immediately, which is the
+  // opposite of what the button says it does.
+  extensionRealSeconds: 16,
 
   // Meeting clock starts somewhere in the early evening.
   clockStartMinMinutes: 18 * 60,      // 6:00 PM

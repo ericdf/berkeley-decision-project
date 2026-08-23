@@ -20,8 +20,18 @@ function hash01(n) {
 
 export function createMeetingRenderer(ctx, view) {
   // Fixed layout, generated once.
+  // Sign-holders are spaced across the width rather than placed at random,
+  // so the placards are readable instead of stacking on top of each other.
+  // Everyone else fills in wherever.
+  const holders = Array.from({ length: CROWD_COUNT }, (_, i) => i)
+    .filter(i => hash01(i * 13.7) > 0.34);
+  const slotOf = new Map(holders.map((i, n) => [i, n]));
+
   const crowd = Array.from({ length: CROWD_COUNT }, (_, i) => ({
-    x: hash01(i * 3.1),
+    x: slotOf.has(i)
+      // Evenly spaced with a little jitter, so it is not a picket line.
+      ? (slotOf.get(i) + 0.5) / holders.length + (hash01(i * 3.1) - 0.5) * 0.055
+      : hash01(i * 3.1),
     depth: hash01(i * 7.7),            // 0 = nearest the viewpoint
     height: 0.82 + hash01(i * 5.3) * 0.4,
     sign: PROTEST_SIGNS[Math.floor(hash01(i * 11.9) * PROTEST_SIGNS.length)],
@@ -260,26 +270,36 @@ export function createMeetingRenderer(ctx, view) {
     ctx.lineWidth = 1;
     ctx.strokeRect(x - sw / 2, y - sh, sw, sh);
 
-    const fs = Math.max(5, sh * 0.30);
-    ctx.font = `800 ${fs}px system-ui, -apple-system, sans-serif`;
-    ctx.fillStyle = '#1a1a1e';
+    // Wrap to the board rather than at the midpoint: some of these are much
+    // longer than others, and a fixed two-line split overflowed the placard.
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    const words = text.split(' ');
-    const lines = words.length > 2
-      ? [words.slice(0, Math.ceil(words.length / 2)).join(' '),
-         words.slice(Math.ceil(words.length / 2)).join(' ')]
-      : [text];
-    lines.forEach((line, i) => {
-      let size = fs;
-      const font = ctx.font;
-      while (ctx.measureText(line).width > sw - 4 && size > 4) {
-        size -= 0.5;
-        ctx.font = font.replace(/[\d.]+px/, `${size}px`);
+    const maxW = sw - 6;
+    let fs = Math.max(5, sh * 0.30);
+    let lines = [];
+    for (let attempt = 0; attempt < 14; attempt++) {
+      ctx.font = `800 ${fs}px system-ui, -apple-system, sans-serif`;
+      lines = [];
+      let line = '';
+      for (const word of text.split(' ')) {
+        const test = line ? `${line} ${word}` : word;
+        if (ctx.measureText(test).width > maxW && line) { lines.push(line); line = word; }
+        else line = test;
       }
-      ctx.fillText(line, x, y - sh + (sh / lines.length) * (i + 0.5));
-      ctx.font = font;
-    });
+      if (line) lines.push(line);
+      // Fits when every line is inside the board and the stack is not too tall.
+      const tall = lines.length * fs * 1.12 > sh - 4;
+      const wide = lines.some(l => ctx.measureText(l).width > maxW);
+      if (!tall && !wide) break;
+      fs -= 0.6;
+      if (fs < 4) break;
+    }
+
+    ctx.fillStyle = '#1a1a1e';
+    const lineH = fs * 1.12;
+    const top = y - sh / 2 - ((lines.length - 1) * lineH) / 2;
+    lines.forEach((line, i) => ctx.fillText(line, x, top + i * lineH));
+
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
   }

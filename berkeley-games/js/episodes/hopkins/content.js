@@ -168,5 +168,7 @@ export const SCENES = {
 
 export const END = {
   heading: 'HOPKINS COMPLETE',
-  tag: 'CORRIDOR COMPLETE'
+  // Stamped across the scoreboard at an angle, the way an APPROVED stamp
+  // lands on a form.
+  stamp: 'YOU MONSTER!'
 };

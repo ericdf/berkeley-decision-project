@@ -235,7 +235,11 @@ function hopkinsUi() {
       $('#hopkins-tally-head').textContent = heading;
       $('#hopkins-tally-rows').innerHTML = rows.map(([k, v]) =>
         `<div class="tally-row"><dt>${k}</dt><dd>${v}</dd></div>`).join('');
-      $('#hopkins-tag').textContent = tag;
+      // The stamp lands a beat after the rows, like a hand coming down.
+      const stamp = $('#hopkins-tag');
+      stamp.textContent = tag;
+      stamp.hidden = true;
+      setTimeout(() => { stamp.hidden = false; }, 700);
       $('#hopkins-tally').hidden = false;
       $('#hopkins-go').onclick = () => { $('#hopkins-tally').hidden = true; onGo(); };
       $('#hopkins-go').focus();

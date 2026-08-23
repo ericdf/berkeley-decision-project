@@ -381,12 +381,22 @@ export function reconcileSky(s) {
 /* CUT (§21)                                                           */
 /* ------------------------------------------------------------------ */
 
+/**
+ * City Council mode has three levers: tax, one-time money, and starting
+ * something new. Cutting a program and transferring one are not on the table,
+ * which is the joke and also the constraint.
+ */
+export const canCut = s => s.mode !== 'council';
+export const canExit = s => s.mode !== 'council';
+
 export function availableCuts(s) {
+  if (!canCut(s)) return [];
   return CUTS.filter(c =>
     !s.usedCuts.includes(c.id) && !s.functions[c.fnKey].exited);
 }
 
 export function applyCut(s, id) {
+  if (!canCut(s)) return { ok: false, reason: 'NOT IN COUNCIL MODE' };
   const c = CUTS.find(x => x.id === id);
   if (!c) return { ok: false, reason: 'NO SUCH OPTION' };
   if (s.usedCuts.includes(id)) return { ok: false, reason: 'ALREADY DONE' };
@@ -441,6 +451,7 @@ export function applyTax(s, id) {
 /* ------------------------------------------------------------------ */
 
 export function availableExits(s) {
+  if (!canExit(s)) return [];
   return FUNCTIONS.filter(f => f.exitable && !s.functions[f.key].exited);
 }
 
@@ -451,6 +462,7 @@ export function availableExits(s) {
  * reduced; the base simply leaves the board.
  */
 export function applyExit(s, key) {
+  if (!canExit(s)) return { ok: false, reason: 'NOT IN COUNCIL MODE' };
   const f = fn(key);
   if (!f || !f.exitable) return { ok: false, reason: f?.exitReason || 'CANNOT EXIT' };
   const st = s.functions[key];

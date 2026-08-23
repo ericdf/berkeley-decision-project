@@ -106,17 +106,18 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
     // A visual reset before the final beat (§10).
     await T(reducedMotion() ? 120 : 420);
 
+    // The caution stays up. Both bubbles on screen at once is the whole
+    // point: the same person, arguing both sides, a moment apart.
     const caution = say('against', COLD_OPEN.tregubCaution, 0);
     await T(reducedMotion() ? 600 : 3600);
-
-    // The pause is the whole joke: nothing labels it (§10, §11).
-    await clear([caution], reducedMotion() ? 60 : 200);
     await T(reducedMotion() ? 150 : 550);
 
-    const aye = say('for', COLD_OPEN.tregubVote, 0);
+    const aye = say('for', COLD_OPEN.tregubVote, 1);
     aye.shout = true;
     audio.stamp?.();
-    await T(reducedMotion() ? 500 : 1900);
+    await T(reducedMotion() ? 700 : 2600);
+
+    await clear([caution, aye], reducedMotion() ? 60 : 220);
 
     // The roll call, then the tally (§12).
     for (let i = 1; i <= 9; i++) {
@@ -124,7 +125,6 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
       audio.leverClick?.();
       await T(reducedMotion() ? 30 : 90);
     }
-    await clear([aye], reducedMotion() ? 60 : 200);
     voteShown = true;
     audio.tallyImpact?.();
     hud.announce(`${RECORD.vote.tally}. ${RECORD.vote.result}.`);
@@ -153,7 +153,8 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
       const x = x0 + (x1 - x0) * ease + (left ? -1 : 1) * outF * w * 0.3;
 
       // Two vertical slots so an overlapping pair never collides.
-      const y = h * (b.shout ? 0.42 : (b.slot ? 0.30 : 0.46));
+      // Slot 0 sits high, slot 1 below it, so a pair can share the screen.
+      const y = h * (b.slot ? 0.52 : 0.24);
 
       ctx.save();
       ctx.globalAlpha = Math.min(1, ease) * (1 - outF);
@@ -1228,11 +1229,11 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
       ['CYCLISTS HIT', String(stats.ridersHit || 0)]
     ];
     if (stats.crossingFailed) rows.splice(1, 0, ['CROSSING', 'DID NOT MAKE IT']);
-    ui.showTally(END.heading, rows, END.tag, onExit);
+    ui.showTally(END.heading, rows, END.stamp, onExit);
     hud.announce(
       `${END.heading}. Crossing time ${fmt(stats.crossingTime)}. ` +
       `${stats.bikeBells} bike bells. Emergency delay ${fmt(stats.emergencyDelay)}. ` +
-      `${stats.cansClipped} bins clipped. ${END.tag}.`
+      `${stats.cansClipped} bins clipped. ${END.stamp}`
     );
   }
 

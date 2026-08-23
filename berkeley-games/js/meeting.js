@@ -177,7 +177,9 @@ export function updateMeeting(meeting, dt) {
   const suppressed = meeting.calmRemaining > 0 ? target * 0.12 : target;
   meeting.crowdPressure += (suppressed - meeting.crowdPressure) * Math.min(1, dt * 3);
 
-  if (meeting.elapsedRealSeconds >= T.maxDurationSeconds) return 'time';
+  const limit = T.maxDurationSeconds
+    + meeting.extensionsUsed * T.extensionRealSeconds;
+  if (meeting.elapsedRealSeconds >= limit) return 'time';
   if (meeting.voterSentiment <= 0) return 'voters';
   return 'running';
 }

@@ -17,7 +17,7 @@ import {
   availableCuts, availableTaxes, availableExits,
   applyCut, applyTax, applyExit,
   useOneTimeMoney, payItBack, resolveObligation, ONE_TIME_DRAW, serviceLevel, round1,
-  overtimeBands, applyAttrition, collapsedBloc, applyMood,
+  overtimeBands, applyAttrition, collapsedBloc, applyMood, canCut, canExit,
   startPilot, expiringPilots, decidePilot,
   rolloverYear, isComplete, summariseYear,
   SHIELDS_PER_YEAR, CAMPAIGN_YEARS
@@ -533,6 +533,9 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
     // PAY IT BACK is contextual, not a fifth permanent control (§16).
     $('#ctl-payback').hidden = !state.oneTimeDrawn;
 
+    // Council mode simply does not have these two.
+    $('#ctl-cut').hidden = !canCut(state);
+    $('#ctl-exit').hidden = !canExit(state);
     $('#ctl-cut').disabled = !availableCuts(state).length;
     $('#ctl-tax').disabled = !availableTaxes(state).length;
     $('#ctl-exit').disabled = !availableExits(state).length;
@@ -954,9 +957,13 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
     if (openMenu) return;
 
     const k = e.key.toLowerCase();
-    if (k === 'c' && !$('#ctl-cut').disabled) { e.preventDefault(); openOptions('cut'); }
+    if (k === 'c' && !$('#ctl-cut').hidden && !$('#ctl-cut').disabled) {
+      e.preventDefault(); openOptions('cut');
+    }
     else if (k === 't' && !$('#ctl-tax').disabled) { e.preventDefault(); openOptions('tax'); }
-    else if (k === 'x' && !$('#ctl-exit').disabled) { e.preventDefault(); openOptions('exit'); }
+    else if (k === 'x' && !$('#ctl-exit').hidden && !$('#ctl-exit').disabled) {
+      e.preventDefault(); openOptions('exit');
+    }
     else if (k === 'o' && !$('#ctl-onetime').disabled) { e.preventDefault(); doOneTime(); }
     else if (k === 'b' && !$('#ctl-payback').hidden) { e.preventDefault(); doPayBack(); }
     else if (k === 's' && wave?.arming) { e.preventDefault(); wave.armNow(); }

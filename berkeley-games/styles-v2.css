@@ -553,7 +553,14 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
   justify-content: center;
   flex-wrap: wrap;
   pointer-events: auto;
+  /* Bounded and centred, so a fourth button wraps into a tidy second row
+     instead of spilling sideways into the counters above it. */
+  width: min(760px, 94vw);
+  row-gap: 8px;
 }
+
+/* The counters sit clear of however many rows of buttons there are. */
+.meeting-counters { margin-bottom: 6px; }
 
 .btn-extend {
   background: #e8620f;
@@ -2232,3 +2239,65 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
 }
 
 #final[data-collapse="true"] #final-heading { color: var(--neg); }
+
+/* The verdict stamped across the Hopkins scoreboard, the way an APPROVED
+   stamp lands on a form: hard, at an angle, slightly off-register. */
+.hopkins-stamp {
+  position: absolute;
+  left: 50%;
+  bottom: 84px;
+  transform: translateX(-50%) rotate(-11deg);
+  z-index: 5;
+  padding: 8px 26px;
+  font-size: clamp(22px, 4.4vw, 40px);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: #d8342f;
+  border: 5px solid #d8342f;
+  border-radius: 6px;
+  background: rgba(216, 52, 47, 0.07);
+  pointer-events: none;
+  text-transform: uppercase;
+  animation: hopkins-stamp-down 0.42s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+
+@keyframes hopkins-stamp-down {
+  from { transform: translateX(-50%) rotate(-11deg) scale(2.6); opacity: 0; }
+  60%  { transform: translateX(-50%) rotate(-11deg) scale(0.94); opacity: 1; }
+  to   { transform: translateX(-50%) rotate(-11deg) scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hopkins-stamp { animation: none; }
+}
+
+/* The card needs to be the positioning context and leave room underneath. */
+#hopkins-tally .summary-card { position: relative; padding-bottom: 96px; }
+
+/* On a screen with room, the scoreboard moves out of the middle of the crowd
+   and stacks in the top-left corner. The signs are the scene; the panel was
+   sitting on the best of them. */
+@media (min-width: 900px) {
+  .meeting-top {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    margin-top: 0;
+    align-self: flex-start;
+    align-items: stretch;
+    max-width: 260px;
+    padding: 8px 10px 10px;
+    gap: 6px;
+  }
+
+  .meeting-title { padding: 5px 12px; justify-content: space-between; }
+
+  /* One column, so it reads as a narrow strip rather than a banner. */
+  .meeting-meters { grid-template-columns: 1fr; gap: 5px; }
+  .meeting-meters .meter { padding: 4px 9px; }
+}
+
+/* Wider still, and it can afford to be a little larger again. */
+@media (min-width: 1400px) {
+  .meeting-top { max-width: 290px; top: 56px; }
+}
