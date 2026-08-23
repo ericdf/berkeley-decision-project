@@ -380,19 +380,44 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
 
       let row = 0, px = 0.5, t0 = performance.now(), done = false;
       let hits = 0, failT = 0, failing = false;
-      ui.showHint(`← → move along the kerb · ↑ step across · ${SCENES.crossing.maxHits} knocks and you are done`);
-      hud.announce('Cross Hopkins Street. The market is on the far side.');
+      ui.showHint(isTouch()
+        ? `TAP to step across · SWIPE to move along the kerb · ${SCENES.crossing.maxHits} knocks and you are done`
+        : `← → move along the kerb · ↑ step across · ${SCENES.crossing.maxHits} knocks and you are done`);
+      hud.announce(
+        'Cross Hopkins Street. The market is on the far side. ' +
+        (isTouch() ? 'Tap to step across, swipe left or right to move along the kerb.'
+                   : 'Arrow keys to move.'));
       audio.gate?.();
+
+      const forward = () => {
+        if (done || failing) return;
+        row = Math.min(lanes.length - 1, row + 1);
+        step();
+      };
+      const sidestep = dir => {
+        if (done || failing || !dir) return;
+        px = Math.max(0.05, Math.min(0.95, px + dir * 0.06));
+      };
 
       const key = e => {
         if (done) return;
-        if (e.key === 'ArrowUp' || e.key === 'w') { row = Math.min(lanes.length - 1, row + 1); step(); }
+        if (e.key === 'ArrowUp' || e.key === 'w') forward();
         if (e.key === 'ArrowDown' || e.key === 's') row = Math.max(0, row - 1);
-        if (e.key === 'ArrowLeft' || e.key === 'a') px = Math.max(0.05, px - 0.06);
-        if (e.key === 'ArrowRight' || e.key === 'd') px = Math.min(0.95, px + 0.06);
+        if (e.key === 'ArrowLeft' || e.key === 'a') sidestep(-1);
+        if (e.key === 'ArrowRight' || e.key === 'd') sidestep(1);
         e.preventDefault();
       };
       window.addEventListener('keydown', key);
+
+      // Movement here is discrete steps, so a held drag repeats rather than
+      // setting a velocity.
+      let sideTimer = 0;
+      const untouch = bindTouch(dir => {
+        clearInterval(sideTimer);
+        if (!dir) return;
+        sidestep(dir);
+        sideTimer = setInterval(() => sidestep(dir), 170);
+      }, forward);
 
       function step() {
         if (row >= lanes.length - 1) finish();
@@ -403,6 +428,8 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
         stats.crossingTime = (performance.now() - t0) / 1000;
         stats.crossingFailed = !!failed;
         window.removeEventListener('keydown', key);
+        clearInterval(sideTimer);
+        untouch();
         ui.showHint('');
         resolve();
       }
@@ -607,7 +634,7 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
         }
       }
 
-      ui.showHint('← → drive');
+      ui.showHint(isTouch() ? 'DRAG to drive' : '← → drive');
       ui.caption(`${S.call} · ${S.timerLabel}`, 2200);
       hud.announce(
         'Fire in the hills. The engine is coming down Hopkins from the right. ' +
@@ -621,12 +648,14 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
       const ku = () => { steer = 0; };
       window.addEventListener('keydown', kd);
       window.addEventListener('keyup', ku);
+      const untouch = bindTouch(dir => { steer = dir; });
 
       const finish = () => {
         if (done) return;
         done = true;
         window.removeEventListener('keydown', kd);
         window.removeEventListener('keyup', ku);
+        untouch();
         ui.showHint('');
         resolve();
       };
@@ -872,7 +901,7 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
       }
 
       ui.caption(S.title, 1800);
-      ui.showHint('← → steer between the bins');
+      ui.showHint(isTouch() ? 'DRAG to steer between the bins' : '← → steer between the bins');
       hud.announce(
         'Trash day. You are driving the collection truck down Hopkins and the ' +
         'bins are in your lane. Steer between them.');
@@ -886,6 +915,7 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
       };
       window.addEventListener('keydown', kd);
       window.addEventListener('keyup', ku);
+      const untouch = bindTouch(dir => { steer = dir; });
 
       drawLoop((now, dt) => {
         elapsed += dt;
@@ -945,6 +975,7 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
           done = true;
           window.removeEventListener('keydown', kd);
           window.removeEventListener('keyup', ku);
+          untouch();
           ui.showHint('');
           resolve();
         }
@@ -1149,6 +1180,84 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
       `${stats.cansClipped} bins clipped. ${END.tag}.`
     );
   }
+
+  /**
+   * Touch and mouse control for a scene, since none of these games were
+   * playable without a keyboard.
+   *
+   * @param onSteer  called with -1, 0 or +1 as a drag or hold moves
+   * @param onTapUp  called when the player taps the upper part of the frame,
+   *                 which is "step forward" in the crossing
+   * @returns a teardown function
+   */
+  function bindTouch(onSteerIn, onTapUp) {
+    let onSteer = onSteerIn;
+    let active = false;
+    let startX = 0;
+    let startY = 0;
+    let moved = false;
+
+    const rect = () => canvas.getBoundingClientRect();
+
+    const down = e => {
+      active = true;
+      moved = false;
+      startX = e.clientX;
+      startY = e.clientY;
+      canvas.setPointerCapture?.(e.pointerId);
+      e.preventDefault();
+    };
+
+    const move = e => {
+      if (!active) return;
+      const dx = e.clientX - startX;
+      // A short drag steers; anything less is still a tap.
+      if (Math.abs(dx) > rect().width * 0.03) {
+        moved = true;
+        onSteer(dx > 0 ? 1 : -1);
+      } else {
+        onSteer(0);
+      }
+      e.preventDefault();
+    };
+
+    const up = e => {
+      if (!active) return;
+      active = false;
+      onSteer(0);
+      // A tap in the upper half means "go", where the scene has a use for it.
+      if (!moved && onTapUp) {
+        const r = rect();
+        const y = (e.clientY - r.y) / r.height;
+        const x = (e.clientX - r.x) / r.width;
+        if (y < 0.62) onTapUp();
+        else onSteer(x < 0.5 ? -1 : 1), setTimeout(() => onSteer(0), 180);
+      }
+      e.preventDefault();
+    };
+
+    if (window.__BBD_TEST__) {
+      const spy = onSteer;
+      onSteer = v => { window.__hopSteer = v; spy(v); };
+    }
+
+    canvas.addEventListener('pointerdown', down);
+    canvas.addEventListener('pointermove', move);
+    canvas.addEventListener('pointerup', up);
+    canvas.addEventListener('pointercancel', up);
+    canvas.style.touchAction = 'none';
+
+    return () => {
+      canvas.removeEventListener('pointerdown', down);
+      canvas.removeEventListener('pointermove', move);
+      canvas.removeEventListener('pointerup', up);
+      canvas.removeEventListener('pointercancel', up);
+    };
+  }
+
+  /** True when the device is touch-first, so hints can name the right gesture. */
+  const isTouch = () =>
+    window.matchMedia?.('(hover: none)').matches || 'ontouchstart' in window;
 
   /** Elapsed seconds as a response clock, e.g. 0:07. */
   function fmt(sec) {
