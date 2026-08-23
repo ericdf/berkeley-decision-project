@@ -120,7 +120,9 @@ export function createBoardRenderer(canvas) {
       const r = tileRects[key];
       if (!r) continue;
       const cx = r.x + r.w / 2;
-      const cy = Math.min(r.y, h);
+      // On narrow screens the tiles sit below the canvas entirely, so the
+      // dome rests on the canvas floor instead of floating where the tile is.
+      const cy = Math.min(r.y, h - 1);
       const rx = r.w * 0.54;
       const ry = Math.min(38, r.w * 0.34);
 
@@ -200,7 +202,7 @@ export function createBoardRenderer(canvas) {
       ctx.save();
       ctx.globalAlpha = a;
       ctx.fillStyle = f.redirected ? '#7fd4ff' : '#ff6b5e';
-      const y = Math.min(r.y, h);
+      const y = Math.min(r.y, h - 1);
       ctx.fillRect(r.x, y - 3, r.w, 3);
       ctx.restore();
     }
