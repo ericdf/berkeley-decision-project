@@ -159,7 +159,9 @@ export const SCENES = {
               stalledSeconds: 10,
               // The truck never gets through. What it was answering burns.
               tooLate: 'TOO LATE',
-              aftermath: 'The bikes keep going.' },
+              // The Fire Chief testified the adopted configuration had not
+              // been reviewed; Council adopted it hours later. See RECORD.
+              aftermath: 'Gee, maybe we should have listened to the Fire Chief' },
   collection:{ title: 'TRASH DAY SLALOM', seconds: 20,
                // Hitting a rider is the thing the corridor was supposed to
                // prevent. It is not played for laughs in the narration.

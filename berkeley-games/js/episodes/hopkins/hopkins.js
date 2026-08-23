@@ -715,10 +715,13 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
 
       drawLoop((now, dt) => {
         // Bikes never stop, in any phase.
-        for (const b of bikes) {
-          b.x += b.speed * b.dir * dt;
-          if (b.x > 1.22) b.x -= 1.44;
-          if (b.x < -0.22) b.x += 1.44;
+        // The bikes only flow while the street is still a street.
+        if (phase === 'run') {
+          for (const b of bikes) {
+            b.x += b.speed * b.dir * dt;
+            if (b.x > 1.22) b.x -= 1.44;
+            if (b.x < -0.22) b.x += 1.44;
+          }
         }
 
         if (phase === 'run') {
@@ -763,7 +766,12 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
           }
         } else if (phase === 'fireball') {
           fireT += dt;
-          if (fireT > 1.9) { phase = 'aftermath'; fireT = 0; hud.announce(S.aftermath); }
+          if (fireT > 1.9) {
+            phase = 'aftermath';
+            fireT = 0;
+            scatterBikes(bikes);
+            hud.announce(S.aftermath);
+          }
         } else {
           // Hold the ruin on screen. The point is not the explosion, it is
           // the block afterwards with the bikes still going past it.
@@ -821,10 +829,20 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Bike tracks either side of the road, still flowing.
+    // Riding while the street is a street; lying where they fell afterwards.
     for (const b of bikes) {
-      const y = top + (b.lane === 0 ? 1 : 4) * laneH + laneH * 0.52;
-      drawBicycle(ctx, b.x * w, y, laneH * 0.86, b.dir, b.x * 26 * b.dir);
+      if (b.down) {
+        ctx.save();
+        ctx.globalAlpha = 0.85;
+        ctx.translate(b.x * w, top + b.fy * laneH);
+        ctx.rotate(b.spin);
+        // No rider: just the bike, on its side in the road.
+        drawBicycle(ctx, 0, 0, laneH * 0.86, b.dir, 0, { riderless: true });
+        ctx.restore();
+      } else {
+        const y = top + (b.lane === 0 ? 1 : 4) * laneH + laneH * 0.52;
+        drawBicycle(ctx, b.x * w, y, laneH * 0.86, b.dir, b.x * 26 * b.dir);
+      }
     }
 
     // Traffic, both directions: buses with the flow, cars against it.
@@ -1314,6 +1332,20 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
   /** True when the device is touch-first, so hints can name the right gesture. */
   const isTouch = () =>
     window.matchMedia?.('(hover: none)').matches || 'ontouchstart' in window;
+
+  /**
+   * The blast puts every bike on the ground. They are strewn across the whole
+   * roadway rather than parked in their lanes, and they do not move again.
+   */
+  function scatterBikes(bikes) {
+    bikes.forEach((b, i) => {
+      b.down = true;
+      b.x = 0.05 + hash01(i * 5.7) * 0.9;
+      // Anywhere across the roadway and its bike tracks: lanes 1 through 4.
+      b.fy = 1.15 + hash01(i * 9.1) * 3.5;
+      b.spin = (hash01(i * 3.3) - 0.5) * 3.4;
+    });
+  }
 
   /** Elapsed seconds as a response clock, e.g. 0:07. */
   function fmt(sec) {

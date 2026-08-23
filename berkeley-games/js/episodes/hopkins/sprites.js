@@ -258,7 +258,7 @@ function fitText(ctx, text, maxW) {
  * leaning over them. Unmistakably a bicycle at small sizes, which the
  * previous rectangle-and-dot was not.
  */
-export function drawBicycle(ctx, cx, cy, size, dir = 1, phase = 0) {
+export function drawBicycle(ctx, cx, cy, size, dir = 1, phase = 0, opts = {}) {
   const r = size * 0.26;            // wheel radius
   const base = cy + size * 0.34;    // ground line
   const back = cx - dir * size * 0.42;
@@ -309,7 +309,9 @@ export function drawBicycle(ctx, cx, cy, size, dir = 1, phase = 0) {
   ctx.lineTo(bar.x + dir * size * 0.05, bar.y - size * 0.02);
   ctx.stroke();
 
-  // Rider: head, torso leaning forward, legs pedalling
+  // Rider: head, torso leaning forward, legs pedalling. A wrecked bike has
+  // nobody on it.
+  if (opts.riderless) { ctx.restore(); return; }
   const hip = { x: seat.x + dir * size * 0.02, y: seat.y - size * 0.03 };
   const shoulder = { x: cx + dir * size * 0.08, y: base - r * 2.3 };
   ctx.strokeStyle = '#7fd4ff';

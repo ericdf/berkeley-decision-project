@@ -240,6 +240,7 @@ export function createMeetingRenderer(ctx, view) {
   function drawCrowd(meeting, t, W, H, pressure, reducedMotion) {
     // Nearer figures last. Higher pressure pulls the crowd toward the viewpoint.
     const sorted = [...crowd].sort((a, b) => b.depth - a.depth);
+    const signs = [];
     for (const p of sorted) {
       const push = pressure * 0.22;
       const depth = Math.max(0, p.depth - push);
@@ -260,12 +261,18 @@ export function createMeetingRenderer(ctx, view) {
       ctx.fill();
 
       if (p.hasSign) {
-        const sx = Math.min(Math.max(x, W * 0.08), W * 0.92);
-        // Sign size tracks the figure but is capped, so a near holder does
-        // not swamp the frame, and each is held at its own height.
-        const sh = Math.min(ph, H * 0.2) * 0.95;
-        drawProtestSign(p.sign, sx, groundY - ph * (0.98 + p.lift * 0.34) + bob, sh);
+        // Held back and drawn after every figure: a placard behind a nearer
+        // body was unreadable, which defeats the point of the sign.
+        signs.push({ p, x, groundY, ph, bob });
       }
+    }
+
+    for (const { p, x, groundY, ph, bob } of signs) {
+      const sx = Math.min(Math.max(x, W * 0.08), W * 0.92);
+      // Sign size tracks the figure but is capped, so a near holder does not
+      // swamp the frame, and each is held at its own height.
+      const sh = Math.min(ph, H * 0.2) * 0.95;
+      drawProtestSign(p.sign, sx, groundY - ph * (0.98 + p.lift * 0.34) + bob, sh);
     }
   }
 

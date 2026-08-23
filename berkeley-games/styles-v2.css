@@ -2245,8 +2245,9 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
 .hopkins-stamp {
   position: absolute;
   left: 50%;
-  bottom: 84px;
-  transform: translateX(-50%) rotate(-11deg);
+  /* Centred on the card, above the button row rather than across it. */
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-11deg);
   z-index: 5;
   padding: 8px 26px;
   font-size: clamp(22px, 4.4vw, 40px);
@@ -2262,9 +2263,9 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
 }
 
 @keyframes hopkins-stamp-down {
-  from { transform: translateX(-50%) rotate(-11deg) scale(2.6); opacity: 0; }
-  60%  { transform: translateX(-50%) rotate(-11deg) scale(0.94); opacity: 1; }
-  to   { transform: translateX(-50%) rotate(-11deg) scale(1); opacity: 1; }
+  from { transform: translate(-50%, -50%) rotate(-11deg) scale(2.6); opacity: 0; }
+  60%  { transform: translate(-50%, -50%) rotate(-11deg) scale(0.94); opacity: 1; }
+  to   { transform: translate(-50%, -50%) rotate(-11deg) scale(1); opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2272,7 +2273,7 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
 }
 
 /* The card needs to be the positioning context and leave room underneath. */
-#hopkins-tally .summary-card { position: relative; padding-bottom: 96px; }
+#hopkins-tally .summary-card { position: relative; }
 
 /* On a screen with room, the scoreboard moves out of the middle of the crowd
    and stacks in the top-left corner. The signs are the scene; the panel was
