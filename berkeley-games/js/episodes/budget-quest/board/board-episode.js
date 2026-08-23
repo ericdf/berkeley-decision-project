@@ -17,13 +17,15 @@ import {
   availableCuts, availableTaxes, availableExits,
   applyCut, applyTax, applyExit,
   useOneTimeMoney, payItBack, resolveObligation, ONE_TIME_DRAW, serviceLevel, round1,
+  overtimeBands, applyAttrition, collapsedBloc, applyMood,
   startPilot, expiringPilots, decidePilot,
   rolloverYear, isComplete, summariseYear,
   SHIELDS_PER_YEAR, CAMPAIGN_YEARS
 } from './board-state.js';
 import {
   FUNCTIONS, FUNCTION_KEYS, METERS, MAX_PIPS, pips, money, fn,
-  SERVICE_WORDS, RESISTANT, PILOTS, moodBand, moodWord, MISSILE_KINDS
+  SERVICE_WORDS, RESISTANT, PILOTS, moodBand, moodWord, MISSILE_KINDS, BOMBS,
+  BOMB_UNION_COST, METERS as ALL_METERS
 } from './content.js';
 import { createBoardRenderer } from './render-board.js';
 import { createWave } from './wave.js';
@@ -39,6 +41,49 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
   let tileRects = {};
   let openMenu = null;
   let confirmingExit = false;
+  // Highest overtime band already answered with a bomb this wave.
+  let overtimeSeen = 0;
+  let pendingAttrition = [];
+  let collapsed = null;
+
+  /**
+   * Drop a consequence bomb on a service and flash what happened when it
+   * lands. Nothing fiscal changes — this is the beat, not a line item.
+   */
+  function dropConsequence(key, bomb) {
+    audio.whoosh?.();
+    renderer.dropBomb(key, () => {
+      audio.thunder?.();
+      // Both bombs land on the people doing the work.
+      applyMood(state, { unions: BOMB_UNION_COST / 5 });
+      banner(bomb.text, 1700);
+      toast(bomb.text,
+        `${fn(key).name} · ${bomb.sub} · UNIONS ${BOMB_UNION_COST}`, 'bad');
+      renderBases();
+      renderMeters(['unions']);
+      checkCollapse();
+    });
+    hud.announce(
+      `${bomb.text}. ${fn(key).name}. ${bomb.sub}. Unions ${BOMB_UNION_COST}.`);
+  }
+
+  /**
+   * A constituency at zero ends the term on the spot. Nothing about the rest
+   * of the year matters once one of these has happened.
+   */
+  function checkCollapse() {
+    if (collapsed) return false;
+    const c = collapsedBloc(state);
+    if (!c) return false;
+    collapsed = c;
+    wave?.stop();
+    closeMenu();
+    for (const t of impactTimers) clearTimeout(t);
+    impactTimers = [];
+    audio.rageQuit?.();
+    setTimeout(() => showFinal(c), 900);
+    return true;
+  }
 
   /* ---------------------------------------------------------------- */
   /* Frame loop                                                        */
@@ -98,6 +143,11 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
     if (intro?.comp) {
       notes.push(`Scheduled compensation increase across ${intro.comp.staff} staffing units: +${money(intro.comp.total)}/yr.`);
     }
+    if (intro?.attrition?.length) {
+      notes.push(
+        intro.attrition.map(a => `${fn(a.key).name} lost staff (${a.shortfall}% underfunded)`)
+          .join('; ') + '.');
+    }
     if (intro?.obligation) {
       notes.push(intro.obligation.funded
         ? 'CLAIMS DUE — paid from available balance.'
@@ -125,6 +175,11 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
 
   function runWave() {
     const clear = skyIsClear(state);
+    overtimeSeen = overtimeBands(state);
+
+    // Anyone who quit at rollover gets their bomb as the year opens.
+    for (const a of pendingAttrition) dropConsequence(a.key, BOMBS.attrition);
+    pendingAttrition = [];
 
     wave = createWave({
       state,
@@ -145,8 +200,17 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
           rec.redirected ? 'redirect' : 'bad');
         renderBases();
         renderHud();
+        renderMeters();
+        if (checkCollapse()) return;
+
+        // Cutting public safety does not reduce the work. A bomb falls on it.
+        const bands = overtimeBands(state);
+        if (bands > overtimeSeen) {
+          overtimeSeen = bands;
+          dropConsequence('safety', BOMBS.overtime);
+        }
       },
-      onTick: t => renderHud(t),
+      onTick: t => { renderHud(t); checkCollapse(); },
       onArmed: () => {
         renderBases();
         renderHud();
@@ -280,6 +344,7 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
     $('#resolve-go').onclick = () => {
       $('#resolve').hidden = true;
       const intro = rolloverYear(state);
+      pendingAttrition = intro.attrition || [];
       if (isComplete(state)) { showFinal(); return; }
       // A shock obligation launches into the new year's sky.
       composeWave(state);
@@ -306,7 +371,17 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
   /* FOUR YEARS LATER                                                  */
   /* ---------------------------------------------------------------- */
 
-  function showFinal() {
+  /**
+   * @param collapse the bloc that ended the term early, if one did. The
+   *   summary is the same either way: what the City looks like now.
+   */
+  function showFinal(collapse) {
+    state.phase = 'complete';
+    $('#final-heading').textContent = collapse ? collapse.heading : 'FOUR YEARS LATER';
+    $('#final-lede').textContent = collapse ? collapse.line : '';
+    $('#final-lede').hidden = !collapse;
+    $('#final').dataset.collapse = collapse ? 'true' : 'false';
+
     $('#final-bases').innerHTML = FUNCTIONS.map(f => {
       const st = state.functions[f.key];
       return `<div class="final-base" data-exited="${st.exited}">
@@ -332,13 +407,17 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
       `<div class="stat"><dt>${k}</dt><dd>${v}</dd></div>`).join('');
 
     $('#final-meters').innerHTML = METERS.map(m => meterRow(m)).join('');
+    // A term someone else finishes does not get the hopeful sign-off.
+    $('.final-line').textContent = collapse
+      ? 'SOMEBODY ELSE\u2019S BUDGET STARTS NOW.'
+      : 'THE NEXT BUDGET STARTS NOW.';
     $('#final').hidden = false;
     $('#final-again').focus();
     $('#final-again').onclick = () => start(state.mode);
     $('#final-exit').onclick = () => onExit?.();
 
     hud.announce(
-      'Four years later. ' +
+      (collapse ? `${collapse.heading}. ${collapse.line} ` : 'Four years later. ') +
       FUNCTIONS.map(f => {
         const st = state.functions[f.key];
         return st.exited
@@ -407,6 +486,9 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
         <span class="base-service">
           <em>${SERVICE_WORDS[level]}</em>
           ${cut > 0.05 ? `<u>−${money(cut)}</u>` : ''}
+          ${st.attrition ? `<s class="base-quit">${st.attrition} QUIT</s>` : ''}
+          ${f.key === 'safety' && overtimeBands(state)
+            ? '<s class="base-ot">OVERTIME</s>' : ''}
         </span>
         ${st.shielded ? '<span class="base-shield">SHIELDED</span>' : ''}
         <button type="button" class="base-btn" data-shield="${f.key}"
@@ -757,6 +839,7 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
     $('#board-screen').dataset.resolving = 'false';
     wave?.setFrozen(false);
     renderAll();
+    if (checkCollapse()) return;
     checkClear();
   }
 
@@ -992,6 +1075,7 @@ export function createDeficitBoard({ audio, hud, reducedMotion, onExit }) {
   if (window.__BBD_TEST__) {
     api.__wave = () => wave;
     api.__arm = () => wave?.armNow();
+    api.__bomb = (key, kind) => dropConsequence(key, BOMBS[kind] || BOMBS.overtime);
   }
   return api;
 }

@@ -92,8 +92,8 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
     // slightly, clearing before the next pair, and gaining pace (§9).
     for (let i = 0; i < COLD_OPEN.pairings.length; i++) {
       const pair = COLD_OPEN.pairings[i];
-      // Later pairings run a little faster than earlier ones.
-      const hold = (reducedMotion() ? 260 : 1500) - i * (reducedMotion() ? 0 : 110);
+      // Long enough to read both bubbles, still tightening as it goes.
+      const hold = (reducedMotion() ? 500 : 3400) - i * (reducedMotion() ? 0 : 180);
 
       const a = say('for', pair.for, i % 2);
       await T(reducedMotion() ? 60 : 520 / beat);
@@ -107,7 +107,7 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
     await T(reducedMotion() ? 120 : 420);
 
     const caution = say('against', COLD_OPEN.tregubCaution, 0);
-    await T(reducedMotion() ? 400 : 2100);
+    await T(reducedMotion() ? 600 : 3600);
 
     // The pause is the whole joke: nothing labels it (§10, §11).
     await clear([caution], reducedMotion() ? 60 : 200);
@@ -116,7 +116,7 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
     const aye = say('for', COLD_OPEN.tregubVote, 0);
     aye.shout = true;
     audio.stamp?.();
-    await T(reducedMotion() ? 350 : 1100);
+    await T(reducedMotion() ? 500 : 1900);
 
     // The roll call, then the tally (§12).
     for (let i = 1; i <= 9; i++) {

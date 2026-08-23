@@ -2197,3 +2197,38 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
 }
 
 /* Pilot marker styling now lives with .base-budget i, above. */
+
+/* The Special Meeting canvas had no sizing rule, so it sat at the default
+   300x150 and every canvas visual in that game — the crowd, the signs, the
+   closing dissolve — was drawing into a postage stamp behind the UI. */
+#meeting-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Consequences the player did not choose: staff leaving, and overtime the
+   City has to pay because it cut a service that still has to be covered. */
+.base-quit, .base-ot {
+  text-decoration: none;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0 3px;
+  border-radius: 2px;
+}
+
+.base-quit { color: #10141c; background: var(--neg); }
+.base-ot { color: #10141c; background: var(--orange); }
+
+/* A term that ended early says why, above the summary. */
+.final-lede {
+  margin: -6px 0 14px;
+  font-size: clamp(12px, 2vw, 15px);
+  line-height: 1.5;
+  color: var(--dim);
+}
+
+#final[data-collapse="true"] #final-heading { color: var(--neg); }

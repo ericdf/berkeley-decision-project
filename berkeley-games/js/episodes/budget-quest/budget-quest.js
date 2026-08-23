@@ -32,6 +32,7 @@ export function createBudgetQuest({ hud, audio, onExit }) {
     stop() { board.stop(); },
     get state() { return board.state; },
     requestExit() { return board.requestExit(); },
-    __arm() { board.__arm?.(); }
+    __arm() { board.__arm?.(); },
+    __bomb(key, kind) { board.__bomb?.(key, kind); }
   };
 }

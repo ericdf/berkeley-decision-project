@@ -15,7 +15,8 @@
 
 import {
   FUNCTIONS, FUNCTION_KEYS, METER_KEYS, MAX_PIPS, fn,
-  CUTS, TAXES, PILOTS, RESISTANT
+  CUTS, TAXES, PILOTS, RESISTANT,
+  OVERTIME_PER, ATTRITION_AT, COLLAPSE, BOMB_UNION_COST
 } from './content.js';
 
 export const CAMPAIGN_YEARS = 4;
@@ -117,7 +118,31 @@ export function recurringExpense(s) {
   // Services transferred out still cost the City what it pays the receiving
   // agency — EXIT changes who delivers, not who is on the hook entirely.
   total += s.transferCosts || 0;
+
   return round1(total);
+}
+
+/**
+ * How far past the overtime threshold public safety has been cut. This is
+ * only used to decide when to drop a bomb and flash the message; the cost is
+ * not modelled, because the point is the consequence, not another line item.
+ */
+export function overtimeBands(s) {
+  const st = s.functions.safety;
+  if (!st || st.exited) return 0;
+  const cut = (st.openingExpense || 0) - st.expense - (st.pilotLift || 0);
+  return Math.max(0, Math.floor(cut / OVERTIME_PER));
+}
+
+/**
+ * The first constituency to hit zero, if any. A bloc at zero has stopped
+ * negotiating and the term is over — see COLLAPSE for what each one does.
+ */
+export function collapsedBloc(s) {
+  for (const k of METER_KEYS) {
+    if (s.mood[k] <= 0) return { key: k, ...COLLAPSE[k] };
+  }
+  return null;
 }
 
 export const structuralBalance = s => round1(s.recurringRevenue - recurringExpense(s));
@@ -663,6 +688,33 @@ export function applyCompensationIncrease(s) {
   return { staff, total };
 }
 
+/**
+ * Staff leaving a service that has been cut too far. This is not a saving
+ * the player elected to make; it is the cost of absorbing cuts that do not
+ * make sense, paid by the people doing the work.
+ *
+ * @returns the services that lost someone this year
+ */
+export function applyAttrition(s) {
+  const lost = [];
+  for (const key of FUNCTION_KEYS) {
+    const st = s.functions[key];
+    if (st.exited || st.staff <= 0) continue;
+    const funded = st.expense + (st.pilotLift || 0);
+    const shortfall = 1 - funded / (st.openingExpense || 1);
+    if (shortfall < ATTRITION_AT) continue;
+
+    st.staff -= 1;
+    st.attrition = (st.attrition || 0) + 1;
+    lost.push({ key, shortfall: Math.round(shortfall * 100) });
+  }
+  if (lost.length) {
+    // Losing staff is felt by the workforce and by the people they served.
+    applyMood(s, { unions: -1.5 * lost.length, nonprofits: -0.5 * lost.length });
+  }
+  return lost;
+}
+
 export function rolloverYear(s) {
   s.yearLog.push(summariseYear(s));
   clearShields(s);
@@ -676,9 +728,10 @@ export function rolloverYear(s) {
   if (s.taxBurden >= 5) applyMood(s, { business: -1 });
 
   const comp = applyCompensationIncrease(s);
+  const attrition = applyAttrition(s);
   const obligation = resolveObligation(s);
 
-  return { comp, obligation };
+  return { comp, attrition, obligation };
 }
 
 export const isComplete = s => s.year >= CAMPAIGN_YEARS;

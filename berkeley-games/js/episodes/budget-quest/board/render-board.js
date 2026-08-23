@@ -32,6 +32,16 @@ export function createBoardRenderer(canvas) {
 
   function flash(key, redirected) { flashes.push({ key, t: 0, redirected }); }
 
+  /**
+   * A consequence bomb: a heavy blimp-shaped thing that falls on one service
+   * and detonates. It carries no label — the message flashes on impact.
+   */
+  const bombs = [];
+  function dropBomb(key, onImpact) {
+    bombs.push({ key, t: 0, fell: false, onImpact });
+  }
+  const bombsFalling = () => bombs.some(b => !b.fell);
+
   /** An intercepted missile: it flares and dissolves rather than landing. */
   function burst(x, y, tone) {
     bursts.push({ x, y, t: 0, tone: tone || '#7ee787' });
@@ -72,7 +82,103 @@ export function createBoardRenderer(canvas) {
     drawShields(state, tileRects);
     drawMissiles(state, tileRects, opts.dimmed);
     drawLegend(state);
+    drawBombs(tileRects, dt);
     drawEffects(tileRects, dt);
+  }
+
+  /** The bomb's fall and detonation. */
+  function drawBombs(tileRects, dt) {
+    for (let i = bombs.length - 1; i >= 0; i--) {
+      const b = bombs[i];
+      b.t += dt;
+      const r = tileRects[b.key];
+      if (!r) { bombs.splice(i, 1); continue; }
+
+      const fallFor = 1.1;
+      const cx = r.x + r.w / 2;
+      const groundY = Math.min(r.y, h - 1);
+
+      if (b.t < fallFor) {
+        // Accelerating downward, wobbling as it goes.
+        const f = b.t / fallFor;
+        const y = -h * 0.25 + (groundY + h * 0.25) * (f * f);
+        const bw = Math.max(26, Math.min(r.w * 0.72, w * 0.07));
+        const bh = bw * 1.9;
+        const wob = Math.sin(b.t * 9) * 0.06;
+
+        ctx.save();
+        ctx.translate(cx, y);
+        ctx.rotate(wob);
+
+        // Body: a fat bomb casing.
+        const g = ctx.createLinearGradient(-bw / 2, 0, bw / 2, 0);
+        g.addColorStop(0, '#2a3038');
+        g.addColorStop(0.4, '#59636e');
+        g.addColorStop(1, '#1d2229');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, bw / 2, bh / 2, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Nose cone.
+        ctx.fillStyle = '#151a20';
+        ctx.beginPath();
+        ctx.moveTo(-bw * 0.3, bh * 0.3);
+        ctx.lineTo(0, bh * 0.62);
+        ctx.lineTo(bw * 0.3, bh * 0.3);
+        ctx.closePath();
+        ctx.fill();
+
+        // Tail fins.
+        ctx.fillStyle = '#39424c';
+        for (const s2 of [-1, 1]) {
+          ctx.beginPath();
+          ctx.moveTo(s2 * bw * 0.16, -bh * 0.3);
+          ctx.lineTo(s2 * bw * 0.62, -bh * 0.56);
+          ctx.lineTo(s2 * bw * 0.16, -bh * 0.56);
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        // A warning stripe, so it reads as ordnance rather than a barrel.
+        ctx.fillStyle = '#ffc14a';
+        ctx.fillRect(-bw / 2, -bh * 0.08, bw, bh * 0.09);
+        ctx.restore();
+
+        // Whistle trail.
+        ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 8]);
+        ctx.beginPath();
+        ctx.moveTo(cx, -10);
+        ctx.lineTo(cx, y - bh * 0.6);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        continue;
+      }
+
+      if (!b.fell) { b.fell = true; b.onImpact?.(); }
+
+      // Detonation: a hard white core going orange, then smoke.
+      const e = b.t - fallFor;
+      if (e > 1.2) { bombs.splice(i, 1); continue; }
+      const rad = (0.1 + e * 1.5) * w * 0.5;
+      const a = Math.max(0, 1 - e / 1.2);
+      const g2 = ctx.createRadialGradient(cx, groundY, rad * 0.05, cx, groundY, rad);
+      g2.addColorStop(0, `rgba(255,255,240,${a})`);
+      g2.addColorStop(0.22, `rgba(255,198,86,${a * 0.95})`);
+      g2.addColorStop(0.55, `rgba(226,88,34,${a * 0.7})`);
+      g2.addColorStop(1, 'rgba(120,26,8,0)');
+      ctx.fillStyle = g2;
+      ctx.beginPath();
+      ctx.arc(cx, groundY, rad, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (e < 0.16) {
+        ctx.fillStyle = `rgba(255,250,235,${(1 - e / 0.16) * 0.8})`;
+        ctx.fillRect(0, 0, w, h);
+      }
+    }
   }
 
   /**
@@ -230,7 +336,7 @@ export function createBoardRenderer(canvas) {
   }
 
   return {
-    resize, draw, flash, burst, pointAt,
+    resize, draw, flash, burst, pointAt, dropBomb, bombsFalling,
     get size() { return { w, h }; }
   };
 }

@@ -309,7 +309,9 @@ export function createMeetingSession({
   function beginDissolve() {
     phase = 'dissolve';
     dissolveMs = 0;
-    $('#meeting-ui').hidden = false;
+    // The signs close over the whole frame, so the meeting chrome gets out of
+    // the way rather than floating on top of them.
+    $('#meeting-ui').hidden = true;
     audio.whoosh?.();
     lastT = performance.now();
     raf = requestAnimationFrame(step);

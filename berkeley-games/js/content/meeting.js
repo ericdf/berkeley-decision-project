@@ -4,6 +4,15 @@
 // conveys political intensity, not agreement, and release 1 must not name any
 // real conflict (addendum §27).
 
+/**
+ * The sign that fills the frame at the end of the meeting. The citation is
+ * shown because the line is quoted, not invented.
+ */
+export const FINAL_SIGN = {
+  text: 'Just here for a quick mega-feed',
+  citation: 'What We Do in the Shadows, s1e2'
+};
+
 export const PROTEST_SIGNS = [
   'WE DEMAND ACTION',
   'LISTEN TO US',

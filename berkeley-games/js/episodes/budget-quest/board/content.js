@@ -94,6 +94,67 @@ export const FUNCTION_KEYS = FUNCTIONS.map(f => f.key);
 export const fn = key => FUNCTIONS.find(f => f.key === key);
 
 /** Service health, 0-4. The only per-base indicator (SCOPE is gone). */
+/**
+ * Consequences of cutting a service past the point where it can absorb it.
+ * Neither is modelled as a cost: each drops a bomb on the service and flashes
+ * what happened. The point is the consequence, not another line item.
+ *
+ * MANDATORY OVERTIME. Public safety cannot do less when it is funded less —
+ * the shifts still have to be covered.
+ *
+ * ATTRITION. A service cut by a fifth starts losing people. Management
+ * failing to prioritise is paid for by the people absorbing the cuts.
+ */
+export const OVERTIME_PER = 10;      // $M of cut before the next bomb falls
+export const ATTRITION_AT = 0.2;     // fraction of funding lost before quits
+
+/** What the bombs say when they land, and what they cost the workforce. */
+export const BOMBS = {
+  overtime: { text: 'MANDATORY OVERTIME',
+              sub: 'THE SHIFTS STILL HAVE TO BE COVERED' },
+  attrition: { text: 'THEY QUIT',
+               sub: 'NOBODY STAYS TO ABSORB CUTS THAT MAKE NO SENSE' }
+};
+
+/** Unions stand in for the workforce, and both bombs land on them. */
+export const BOMB_UNION_COST = -10;
+
+/**
+ * A constituency at zero has stopped being a constituency and started being
+ * an event. Every one of them ends the term. Nonprofits end it in the most
+ * Berkeley way available: not a strike or a riot, just a quiet organised
+ * defeat at the next election.
+ */
+export const COLLAPSE = {
+  unions: {
+    heading: 'GENERAL STRIKE',
+    line: 'The workforce has stopped. Nothing the City does is being done.',
+    lost: true
+  },
+  taxpayers: {
+    heading: 'VOTER RECALL',
+    line: 'The recall qualified. You are not finishing this term.',
+    lost: true
+  },
+  activists: {
+    heading: 'PATCHOULI RIOT',
+    line: 'Old City Hall smells like a drum circle and nobody can hear the agenda.',
+    lost: true
+  },
+  business: {
+    heading: 'FINANCIAL NOSEDIVE',
+    line: 'The commercial base has left. The revenue you were counting on left with it.',
+    lost: true
+  },
+  nonprofits: {
+    heading: 'RE-ELECTION FUNDING YANKED',
+    line: 'Every contract lapsed, and every organisation that held one has a ' +
+          'mailing list, a board, and somebody else to write cheques to. ' +
+          'You lose the next election.',
+    lost: true
+  }
+};
+
 export const MAX_PIPS = 4;
 export const pips = n =>
   '●'.repeat(Math.max(0, n)) + '○'.repeat(Math.max(0, MAX_PIPS - n));
