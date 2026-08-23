@@ -1819,6 +1819,10 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
     height: 100%;
   }
 
+  /* .play spans the sky and the bases, and the canvas underlays both — the
+     same arrangement as desktop. A shield dome is drawn at its tile's top
+     edge, so if the canvas stops short of the tiles the domes float in a gap
+     with nothing under them. */
   .play {
     grid-area: play;
     display: grid;
@@ -1827,12 +1831,11 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
     min-height: 0;
   }
 
-  /* The canvas underlays only the sky row, not the bases. */
-  .sky { position: relative; inset: auto; display: block; height: auto; min-height: 0; }
+  .sky { position: absolute; inset: 0; display: block; height: auto; }
 
   .bases {
-    position: static;
-    z-index: auto;
+    position: relative;
+    z-index: 2;
     grid-row: 2;
     grid-template-columns: repeat(3, 1fr);
     gap: 4px;
@@ -1842,7 +1845,7 @@ body[data-screen="end-screen"] #end-heading { text-shadow: 0 3px 0 #0a0f18; }
   /* Compact tiles: the shield button only needs room during the arming
      window, so the reserved space goes away the rest of the time. */
   .base {
-    background: var(--panel);
+    background: rgba(19,27,38,0.95);
     min-height: 0;
     padding: 5px 6px;
     border-bottom-width: 3px;
