@@ -79,7 +79,7 @@ export function playTallyReveal(els, data, hooks = {}) {
     }
 
     if (data.addedPerYear > 0) {
-      els.added.textContent = `+$${data.addedPerYear.toFixed(1)}M/YR ADDED`;
+      els.added.textContent = `GAP INCREASE +$${data.addedPerYear.toFixed(1)}M/YR`;
       els.added.hidden = false;
       hooks.impact?.();
       if (data.onConsent) els.consent.hidden = false;

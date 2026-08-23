@@ -7,7 +7,7 @@
 // session, same gap, same tentative allocations (§56, §69).
 
 import {
-  createMeetingState, beginMeeting, updateMeeting, canEndMeeting, canExtend,
+  createMeetingState, beginMeeting, updateMeeting, canExtend,
   fiscalChanged,
   extendMeeting, endMeeting, canPander, pander, maybeRageQuit,
   canMegaPander, pickProposal, approveMegaPander, resolveConsent,
@@ -63,7 +63,6 @@ export function createMeetingSession({
     $('#meeting-extend').hidden = !canExtend(meeting);
     $('#meeting-mega').hidden = !canMegaPander(meeting, politics);
     $('#meeting-pander').disabled = !canPander(meeting);
-    $('#meeting-end').disabled = !canEndMeeting(meeting);
   }
 
   function setMeter(sel, value) {
@@ -353,7 +352,7 @@ export function createMeetingSession({
       $('#meeting-pander').onclick = onPander;
       $('#meeting-extend').onclick = onExtend;
       $('#meeting-mega').onclick = onMega;
-      $('#meeting-end').onclick = () => { if (canEndMeeting(meeting)) moveToEnd(); };
+      $('#meeting-end').onclick = () => moveToEnd();
 
       beginMeeting(meeting, state, politics, null, rng);
 

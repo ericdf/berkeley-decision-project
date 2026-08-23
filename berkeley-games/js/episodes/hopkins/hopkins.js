@@ -1,7 +1,7 @@
 // HOPKINS — one council decision, lived through three ways.
 // (Hopkins Episode Spec; authored linear sequence per §4, §40, §41.)
 
-import { RECORD, BANNERS, TRANSITION_TITLE, CHAPTERS, SCENES, END } from './content.js';
+import { RECORD, COLD_OPEN, TRANSITION_TITLE, CHAPTERS, SCENES, END } from './content.js';
 import {
   drawShopRow, drawCafe, drawHouseRow,
   drawBicycle, drawCar, drawBus, drawFireTruck, drawBin
@@ -44,69 +44,185 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
 
   /* ================= PART I — Council cold open ================= */
 
+  /**
+   * The Council cold open (Cold-Open Replacement Directive v1.1).
+   *
+   * Five fast collisions of opposed rhetoric, then Tregub warning against
+   * constraining staff, then Tregub voting AYE, then 7-2. Nothing explains
+   * the contradiction; the sequence carries it (§20).
+   */
   async function councilColdOpen() {
-    let burn = 0;          // 0..1 across the first banner
-    let clock = 90;        // compressed 1:30 (§10)
-    let swapped = false;
+    const bubbles = [];      // live speech bubbles, drawn newest last
     let voteShown = false;
-    let hands = 0;
+    let cast = 0;
 
     drawLoop(now => {
       drawChamber(now);
-      drawBanner(swapped ? BANNERS.second : BANNERS.first, burn, swapped);
-      if (!swapped) drawQuote();
-      if (clock > 0) drawClock(clock);
-      drawDais(hands, now);
+      drawDais(cast, now);
+      drawBubbles(bubbles, now);
       if (voteShown) drawVote();
     });
 
-    hud.announce('Berkeley City Council. A motion on Hopkins Street is under consideration.');
-    await T(1400);
-
-    // Quote lands, then the earnest banner catches (§8, §9).
-    ui.caption(quoteLine(), 3200);
-    await T(2600);
-
-    audio.whoosh?.();
-    // The stamp comes down hard, then holds.
-    for (let i = 0; i <= 12; i++) { burn = i / 12; await T(reducedMotion() ? 8 : 22); }
-    audio.stamp?.();
-    await T(reducedMotion() ? 200 : 700);
-    hud.announce(`The banner reading ${BANNERS.first} burns away.`);
-    await T(500);
-
-    // Ninety seconds compressed into a spin, not endured (§10).
-    ui.caption('1:30', 1200);
-    const spinFor = reducedMotion() ? 500 : 1500;
-    const t0 = performance.now();
-    while (performance.now() - t0 < spinFor) {
-      clock = Math.max(0, 90 * (1 - (performance.now() - t0) / spinFor));
-      await T(30);
-    }
-    clock = 0;
-
-    swapped = true; burn = 0;
-    audio.stamp?.();
     hud.announce(
-      `Ninety seconds later the banner reads ${BANNERS.second}. ` +
-      RECORD.reversal.summary
-    );
-    await T(1200);
+      'Berkeley City Council, July 28th, on Hopkins Street. ' +
+      'Arguments for the plan on the left, against on the right.');
+    await T(reducedMotion() ? 300 : 700);
 
-    // Hands go up, then the tally (§12, §13).
-    for (let i = 1; i <= 9; i++) { hands = i; audio.leverClick?.(); await T(reducedMotion() ? 40 : 130); }
-    await T(300);
+    const beat = reducedMotion() ? 90 : 1;
+    const say = (side, q, slot) => {
+      const b = {
+        side, speaker: q.speaker, text: q.text,
+        slot, born: performance.now(), out: 0
+      };
+      bubbles.push(b);
+      audio.leverClick?.();
+      hud.announce(`${q.speaker}. ${q.text}`);
+      return b;
+    };
+    const clear = async (list, ms) => {
+      for (const b of list) b.out = performance.now();
+      await T(ms);
+      for (const b of list) {
+        const i = bubbles.indexOf(b);
+        if (i >= 0) bubbles.splice(i, 1);
+      }
+    };
+
+    // Pairings 1-5: for from the left, against from the right, overlapping
+    // slightly, clearing before the next pair, and gaining pace (§9).
+    for (let i = 0; i < COLD_OPEN.pairings.length; i++) {
+      const pair = COLD_OPEN.pairings[i];
+      // Later pairings run a little faster than earlier ones.
+      const hold = (reducedMotion() ? 260 : 1500) - i * (reducedMotion() ? 0 : 110);
+
+      const a = say('for', pair.for, i % 2);
+      await T(reducedMotion() ? 60 : 520 / beat);
+      const b = say('against', pair.against, i % 2);
+      await T(hold);
+      await clear([a, b], reducedMotion() ? 60 : 220);
+      await T(reducedMotion() ? 40 : 130);
+    }
+
+    // A visual reset before the final beat (§10).
+    await T(reducedMotion() ? 120 : 420);
+
+    const caution = say('against', COLD_OPEN.tregubCaution, 0);
+    await T(reducedMotion() ? 400 : 2100);
+
+    // The pause is the whole joke: nothing labels it (§10, §11).
+    await clear([caution], reducedMotion() ? 60 : 200);
+    await T(reducedMotion() ? 150 : 550);
+
+    const aye = say('for', COLD_OPEN.tregubVote, 0);
+    aye.shout = true;
+    audio.stamp?.();
+    await T(reducedMotion() ? 350 : 1100);
+
+    // The roll call, then the tally (§12).
+    for (let i = 1; i <= 9; i++) {
+      cast = i;
+      audio.leverClick?.();
+      await T(reducedMotion() ? 30 : 90);
+    }
+    await clear([aye], reducedMotion() ? 60 : 200);
     voteShown = true;
     audio.tallyImpact?.();
     hud.announce(`${RECORD.vote.tally}. ${RECORD.vote.result}.`);
-    await T(1900);
+    await T(reducedMotion() ? 500 : 1100);
   }
 
-  function quoteLine() {
-    // Unverified wording is never attributed to a named person.
-    return RECORD.quote.verified
-      ? `“${RECORD.quote.text}” — ${RECORD.quote.attributionWhenVerified}`
-      : RECORD.quote.paraphrase;
+  /**
+   * Speech bubbles. FOR slides in from the left, AGAINST from the right, each
+   * with its attribution always visible (§9).
+   */
+  function drawBubbles(bubbles, now) {
+    const { w, h } = view;
+    const wide = w > 640;
+
+    for (const b of bubbles) {
+      const age = (now - b.born) / 1000;
+      const inF = Math.min(1, age / 0.22);
+      const ease = 1 - Math.pow(1 - inF, 3);
+      const outF = b.out ? Math.min(1, (now - b.out) / 0.22 / 1000) : 0;
+      if (outF >= 1) continue;
+
+      const left = b.side === 'for';
+      const bw = Math.min(w * (wide ? 0.44 : 0.78), 520);
+      const x0 = left ? -bw : w;
+      const x1 = left ? w * 0.04 : w * 0.96 - bw;
+      const x = x0 + (x1 - x0) * ease + (left ? -1 : 1) * outF * w * 0.3;
+
+      // Two vertical slots so an overlapping pair never collides.
+      const y = h * (b.shout ? 0.42 : (b.slot ? 0.30 : 0.46));
+
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, ease) * (1 - outF);
+
+      const fs = b.shout
+        ? Math.max(30, Math.min(h * 0.13, bw * 0.2))
+        : Math.max(11, Math.min(h * 0.032, bw * 0.048));
+      const nameFs = Math.max(9, fs * (b.shout ? 0.26 : 0.62));
+      const pad = fs * 0.75;
+
+      ctx.font = `800 ${fs}px ui-sans-serif, system-ui, sans-serif`;
+      const lines = wrapLines(ctx, b.text, bw - pad * 2);
+      const lineH = fs * 1.28;
+      const bh = pad * 2 + nameFs * 1.5 + lines.length * lineH;
+
+      // Bubble body, tinted by which side is speaking.
+      ctx.fillStyle = left ? '#f3f6ef' : '#efeef6';
+      ctx.strokeStyle = left ? '#3f7d4f' : '#8a3f43';
+      ctx.lineWidth = 3;
+      roundedRect(ctx, x, y, bw, bh, 10);
+      ctx.fill();
+      ctx.stroke();
+
+      // Tail, pointing back toward the speaker's side of the room.
+      ctx.beginPath();
+      const tx = left ? x + bw * 0.12 : x + bw * 0.88;
+      ctx.moveTo(tx - fs * 0.4, y + bh);
+      ctx.lineTo(tx + fs * 0.4, y + bh);
+      ctx.lineTo(left ? tx - fs * 0.9 : tx + fs * 0.9, y + bh + fs * 0.85);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Attribution, always visible (§9).
+      ctx.fillStyle = left ? '#3f7d4f' : '#8a3f43';
+      ctx.font = `900 ${nameFs}px ui-sans-serif, system-ui, sans-serif`;
+      ctx.textBaseline = 'top';
+      ctx.fillText(b.speaker, x + pad, y + pad * 0.7);
+
+      ctx.fillStyle = '#161b22';
+      ctx.font = `800 ${fs}px ui-sans-serif, system-ui, sans-serif`;
+      lines.forEach((ln, i) => {
+        ctx.fillText(ln, x + pad, y + pad * 0.7 + nameFs * 1.5 + i * lineH);
+      });
+      ctx.restore();
+    }
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  function wrapLines(ctx, text, maxW) {
+    const out = [];
+    let line = '';
+    for (const word of text.split(' ')) {
+      const test = line ? `${line} ${word}` : word;
+      if (ctx.measureText(test).width > maxW && line) { out.push(line); line = word; }
+      else line = test;
+    }
+    if (line) out.push(line);
+    return out;
+  }
+
+  function roundedRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
   }
 
   function drawChamber(now) {
@@ -124,74 +240,6 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
     }
   }
 
-  /**
-   * The banner for a motion. `burn` is now the stamp animation: the first
-   * substitute does not catch fire, it gets stamped FAILED, which is what
-   * actually happened to it.
-   */
-  function drawBanner(text, burn, clean) {
-    const { w, h } = view;
-    const bw = w * 0.72, bh = h * 0.12, x = w * 0.5 - bw / 2, y = h * 0.14;
-
-    ctx.save();
-    ctx.fillStyle = clean ? '#f4f7f4' : '#e8e2cf';
-    ctx.fillRect(x, y, bw, bh);
-    ctx.strokeStyle = clean ? '#2b6cb0' : '#8a7f5f';
-    ctx.lineWidth = 3; ctx.strokeRect(x + 2, y + 2, bw - 4, bh - 4);
-    ctx.fillStyle = '#1b1f26';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    let fs = Math.max(12, bh * 0.42);
-    ctx.font = `900 ${fs}px ui-sans-serif, system-ui, sans-serif`;
-    while (ctx.measureText(text).width > bw - 30 && fs > 8) {
-      fs -= 1; ctx.font = `900 ${fs}px ui-sans-serif, system-ui, sans-serif`;
-    }
-    ctx.fillText(text, w * 0.5, y + bh / 2);
-
-    // FAILED, stamped across it. It slams down oversized and settles.
-    if (burn > 0) {
-      const t = Math.min(1, burn);
-      const settle = t < 0.35 ? 1 + (0.35 - t) * 4 : 1;
-      ctx.save();
-      ctx.globalAlpha = Math.min(1, t * 3);
-      ctx.translate(w * 0.5, y + bh * 0.52);
-      ctx.rotate(-0.16);
-      ctx.scale(settle, settle);
-      const sfs = bh * 0.62;
-      ctx.font = `900 ${sfs}px ui-sans-serif, system-ui, sans-serif`;
-      const label = 'FAILED';
-      const tw = ctx.measureText(label).width;
-      const pad = sfs * 0.42;
-      ctx.strokeStyle = '#c8322f';
-      ctx.lineWidth = Math.max(3, sfs * 0.13);
-      ctx.strokeRect(-tw / 2 - pad, -sfs * 0.72, tw + pad * 2, sfs * 1.44);
-      ctx.fillStyle = 'rgba(200,50,47,0.14)';
-      ctx.fillRect(-tw / 2 - pad, -sfs * 0.72, tw + pad * 2, sfs * 1.44);
-      ctx.fillStyle = '#c8322f';
-      ctx.fillText(label, 0, 0);
-      ctx.restore();
-    }
-    ctx.restore();
-    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-  }
-
-  function drawQuote() { /* rendered as a DOM caption for legibility */ }
-
-  function drawClock(sec) {
-    const { w, h } = view;
-    const m = Math.floor(sec / 60), s = Math.floor(sec % 60);
-    const text = `${m}:${String(s).padStart(2, '0')}`;
-    ctx.font = `900 ${Math.max(18, h * 0.075)}px ui-monospace, Menlo, monospace`;
-    ctx.textAlign = 'center';
-    ctx.fillStyle = sec > 0 ? '#ffd043' : '#ff6b5e';
-    ctx.fillText(text, w * 0.5, h * 0.42);
-    ctx.textAlign = 'left';
-  }
-
-  /**
-   * The dais. Votes read as a scoreboard rather than as raised hands: seven
-   * green checks and two red crosses, which is what the roll call was.
-   * @param cast how many of the nine seats have voted so far
-   */
   function drawDais(cast, now) {
     const { w, h } = view;
     const y = h * 0.74;
@@ -608,13 +656,17 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
       // meeting it. Cars queue behind the bus in its lane and run normally in
       // the other — until the engine straddles the centre line, at which point
       // everything stops and still nothing can get past.
+      // The bus is oncoming traffic: lower lane, travelling left to right,
+      // with cars queued behind it. The engine comes the other way down the
+      // middle of the street, and the two meet head-on.
       const traffic = [
         { x: 0.1, speed: 0.028, dir: 1, bus: true },
-        { x: -0.12, speed: 0.028, dir: 1 },
-        { x: -0.32, speed: 0.028, dir: 1 },
-        { x: 1.3, speed: 0.05, dir: -1 },
-        { x: 1.74, speed: 0.05, dir: -1 },
-        { x: 2.16, speed: 0.05, dir: -1 }
+        { x: -0.14, speed: 0.028, dir: 1 },
+        { x: -0.36, speed: 0.028, dir: 1 },
+        // The other direction, in the upper lane, also stopped by the engine.
+        { x: 1.32, speed: 0.05, dir: -1 },
+        { x: 1.76, speed: 0.05, dir: -1 },
+        { x: 2.18, speed: 0.05, dir: -1 }
       ];
       const bus = traffic[0];
       // Bikes keep flowing throughout, including after the fire (§ user).
@@ -688,13 +740,14 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
 
           for (const v of traffic) {
             if (stalled) continue;          // the whole street is stopped
-            // Oncoming traffic yields to the engine coming down the middle.
-            if (v.dir < 0 && v.x - truckX < 0.28 && v.x > truckX) continue;
+            // The engine straddles the centre line, so nothing in either lane
+            // can pass it: the upper-lane flow runs up behind it and stops.
+            if (v.dir < 0 && v.x - truckX > 0 && v.x - truckX < 0.24) continue;
             // The queue behind the bus goes no faster than the bus.
             if (v.dir > 0 && v !== bus && v.x < bus.x && bus.x - v.x < 0.24) continue;
             v.x += v.speed * v.dir * dt;
             if (v.dir > 0 && v.x > 1.3) v.x -= 1.9;
-            if (v.dir < 0 && v.x < -0.3) v.x += 2.4;
+            if (v.dir < 0 && v.x < -0.3) v.x += 2.5;
           }
 
           // Once the street has locked up there is nothing left to play for:
@@ -779,7 +832,9 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
       traffic.forEach((v, i) => {
         if (v.x < -0.32 || v.x > 1.34) return;
         // Each direction keeps to its own lane.
-        const y = (v.dir > 0 ? roadY : roadY2) + laneH * 0.5;
+        // dir > 0 travels left to right: the lower lane, where the bus is.
+        // dir < 0 travels right to left in the upper lane.
+        const y = (v.dir > 0 ? roadY2 : roadY) + laneH * 0.5;
         if (v.bus) {
           drawBus(ctx, v.x * w, y, w * 0.19, laneH * 0.98, v.dir);
         } else {
@@ -851,7 +906,7 @@ export function createHopkins({ canvas, ui, audio, hud, reducedMotion, onExit })
       if (st.stalled) {
         ctx.fillStyle = '#ff8a7a';
         ctx.font = `800 ${Math.max(11, h * 0.03)}px ui-sans-serif, system-ui, sans-serif`;
-        ctx.fillText('NEITHER OF YOU CAN MOVE', w * 0.5, h * 0.9);
+        ctx.fillText('OOPS, THE ROAD IS TOO NARROW AFTER ALL!', w * 0.5, h * 0.9);
       }
       ctx.textAlign = 'left';
     }

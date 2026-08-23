@@ -63,9 +63,77 @@ export const RECORD = {
   }
 };
 
-export const BANNERS = {
-  first: 'STUDY THE ALTERNATIVES FIRST',
-  second: 'ADOPT THE PLAN AS SUBMITTED'
+/**
+ * The Council cold open (Cold-Open Replacement Directive v1.1).
+ *
+ * SOURCING. Every quotation below was checked line by line against
+ * `../council/text/BCC 2026-07-28 Regular Captioning.txt` on 2026-08-23. The
+ * wording is the caption's wording; `[…]` marks each internal elision and
+ * nothing is paraphrased inside the quotation marks (§15).
+ *
+ * ATTRIBUTION IS NOT VERIFIED. The caption file labels almost every line
+ * `Boardroom:` rather than naming a councilmember, so the speaker names here
+ * come from the directive, not from a source this repo can check. §16
+ * requires confirming each attribution against the meeting video before
+ * public release. `attributionVerified: false` records that state, and the
+ * UI marks the sequence accordingly rather than presenting the names as
+ * settled fact.
+ *
+ * O'KEEFE, PAIRING 3. The caption reads "it is not needed, it is wanted",
+ * which may be a dropped "not". §6 forbids silently repairing it, so only the
+ * fragment before the comma is shown. Do not extend it without the video.
+ */
+export const COLD_OPEN = {
+  source: '../council/text/BCC 2026-07-28 Regular Captioning.txt',
+  checked: '2026-08-23',
+  quotesVerified: true,
+  attributionVerified: false,
+
+  /** FOR enters from the left, AGAINST from the right (§2). Never reversed. */
+  pairings: [
+    {
+      for: { speaker: 'HUMBERT',
+             text: 'No parking spot on Hopkins is worth a human life.' },
+      against: { speaker: 'O’KEEFE',
+                 text: 'This is absolutely madness.' }
+    },
+    {
+      for: { speaker: 'LUNAPARA',
+             text: 'Every fatality from traffic violence […] is a policy choice.' },
+      against: { speaker: 'BARTLETT',
+                 text: 'The streets look like the Flintstones. It’s gravel.' }
+    },
+    {
+      for: { speaker: 'LUNAPARA',
+             text: 'Without physical separation, you are entirely at the mercy of the driver.' },
+      // §6: the caption's remainder is ambiguous; do not extend this.
+      against: { speaker: 'O’KEEFE',
+                 text: 'It is not needed.' }
+    },
+    {
+      for: { speaker: 'HUMBERT',
+             text: 'We must avoid […] climate action, except if it would mean ' +
+                   'parking our second car further away.' },
+      against: { speaker: 'BLACKABY',
+                 text: '145 parking spots […] is 10,000 people who come in and ' +
+                       'out of Hopkins using a car.' }
+    },
+    {
+      for: { speaker: 'TAPLIN',
+             text: 'When we adopt plans, we […] have to assume that someday we ' +
+                   'will implement these plans.' },
+      against: { speaker: 'BARTLETT',
+                 text: 'There may be a cheap alternative. We haven’t even looked at it.' }
+    }
+  ],
+
+  /** The final beat: a caution from the right, then the vote from the left. */
+  tregubCaution: {
+    speaker: 'TREGUB',
+    text: 'If we constrain our staff’s options […] we may be putting ' +
+          'ourselves in a corner.'
+  },
+  tregubVote: { speaker: 'TREGUB', text: 'AYE' }
 };
 
 export const TRANSITION_TITLE = 'The Hopkins of Tomorrow';
@@ -86,7 +154,7 @@ export const SCENES = {
               closed: 'Thanks for letting us serve you all of these years',
               lease: 'FOR LEASE' },
   emergency:{ title: 'EMERGENCY RESPONSE', call: 'EMERGENCY CALL',
-              timerLabel: 'RESPONSE TIMER STARTED', blockedSeconds: 9, seconds: 45,
+              timerLabel: 'RESPONSE TIMER STARTED', blockedSeconds: 9, seconds: 20,
               // Once the street locks up, this is all the time left.
               stalledSeconds: 10,
               // The truck never gets through. What it was answering burns.
