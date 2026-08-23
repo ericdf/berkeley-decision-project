@@ -109,7 +109,9 @@ export function recurringExpense(s) {
   for (const key of FUNCTION_KEYS) {
     const st = s.functions[key];
     if (st.exited) continue;
-    total += st.expense;
+    // What the service costs, not what the City chose to fund. An obligation
+    // nobody paid is still an obligation.
+    total += st.expense + (st.unfunded || 0);
   }
   // Pilots the player made permanent are part of the recurring structure.
   for (const p of s.activePilots) {
@@ -292,13 +294,16 @@ export function landMissile(s, m) {
   m.landedOn = key;
   s.absorbed.landed = round1(s.absorbed.landed + m.remaining);
 
-  // The hit comes straight out of the base's budget. This is the whole
-  // mechanic: unfunded deficit lands somewhere, and where it lands, that
-  // service loses exactly that much money.
+  // The service loses the money, so the tile shows less funding and less
+  // capacity. But the obligation does not go away just because nobody funded
+  // it: it carries as unfunded, and next year's baseline still has to cover
+  // it. Otherwise letting everything land would be the cheapest way to
+  // balance a budget, which is the opposite of the point.
   const before = st.expense;
   st.expense = Math.max(0, round1(st.expense - m.remaining));
   const cut = round1(before - st.expense);
   st.cutTotal = round1((st.cutTotal || 0) + cut);
+  st.unfunded = round1((st.unfunded || 0) + cut);
 
   // Unfunded cuts land on people, and almost everyone dislikes the result.
   // The exception is public safety: cutting it is the one reduction some
@@ -738,6 +743,20 @@ export function rolloverYear(s) {
   // Business responds to the tax burden it is carrying and to the state of
   // the city it operates in — under the hood, surfacing only as the meter.
   if (s.taxBurden >= 5) applyMood(s, { business: -1 });
+
+  // Last year's unfunded cuts become this year's baseline problem. The
+  // service is still expected to operate, so the money is owed again.
+  let carried = 0;
+  for (const key of FUNCTION_KEYS) {
+    const st = s.functions[key];
+    if (!st.unfunded) continue;
+    carried = round1(carried + st.unfunded);
+    // The cost returns to the base: the service still has to run, so the
+    // money is owed again and the deficit it created is still there.
+    st.expense = round1(st.expense + st.unfunded);
+    st.unfunded = 0;
+  }
+  s.carriedUnfunded = carried;
 
   const comp = applyCompensationIncrease(s);
   const attrition = applyAttrition(s);

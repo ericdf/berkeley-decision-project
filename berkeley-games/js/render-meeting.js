@@ -24,18 +24,24 @@ export function createMeetingRenderer(ctx, view) {
   // so the placards are readable instead of stacking on top of each other.
   // Everyone else fills in wherever.
   const holders = Array.from({ length: CROWD_COUNT }, (_, i) => i)
-    .filter(i => hash01(i * 13.7) > 0.34);
+    .filter(i => hash01(i * 13.7) > 0.52);
   const slotOf = new Map(holders.map((i, n) => [i, n]));
 
   const crowd = Array.from({ length: CROWD_COUNT }, (_, i) => ({
     x: slotOf.has(i)
       // Evenly spaced with a little jitter, so it is not a picket line.
-      ? (slotOf.get(i) + 0.5) / holders.length + (hash01(i * 3.1) - 0.5) * 0.055
+      ? (slotOf.get(i) + 0.5) / holders.length + (hash01(i * 3.1) - 0.5) * 0.02
       : hash01(i * 3.1),
-    depth: hash01(i * 7.7),            // 0 = nearest the viewpoint
+    // Alternate holders near and far, so adjacent signs differ in size and
+    // height rather than forming a solid band across the frame.
+    depth: slotOf.has(i)
+      ? (slotOf.get(i) % 2 ? 0.62 : 0.16) + hash01(i * 7.7) * 0.2
+      : hash01(i * 7.7),             // 0 = nearest the viewpoint
     height: 0.82 + hash01(i * 5.3) * 0.4,
     sign: PROTEST_SIGNS[Math.floor(hash01(i * 11.9) * PROTEST_SIGNS.length)],
-    hasSign: hash01(i * 13.7) > 0.34,
+    hasSign: hash01(i * 13.7) > 0.52,
+    // How high this one is held, so a row of signs is not a flat line.
+    lift: 0.9 + hash01(i * 17.3) * 0.85,
     phase: hash01(i * 2.9) * Math.PI * 2,
     coat: ['#3b4a5e', '#5a4038', '#37503f', '#4a3a58', '#2f4652', '#553f47'][i % 6]
   }));
@@ -255,7 +261,10 @@ export function createMeetingRenderer(ctx, view) {
 
       if (p.hasSign) {
         const sx = Math.min(Math.max(x, W * 0.08), W * 0.92);
-        drawProtestSign(p.sign, sx, groundY - ph * 1.02 + bob, ph);
+        // Sign size tracks the figure but is capped, so a near holder does
+        // not swamp the frame, and each is held at its own height.
+        const sh = Math.min(ph, H * 0.2) * 0.95;
+        drawProtestSign(p.sign, sx, groundY - ph * (0.98 + p.lift * 0.34) + bob, sh);
       }
     }
   }

@@ -50,7 +50,7 @@ export function createWave({ state, rng, onLand, onTick, onArmed, onComplete }) 
       }
       // Slight per-missile speed variation keeps the stream from marching in
       // lockstep, while §18 keeps the whole flight deliberately slow.
-      m.travel = WAVE_SECONDS * (0.42 + rand() * 0.16);
+      m.travel = WAVE_SECONDS * (0.42 + rand() * 0.16) * 0.7;
     });
   }
 
