@@ -177,6 +177,19 @@ p { margin: .85rem 0; }
 .rail-cta:hover { background: var(--accent-hover); color: var(--accent-soft); }
 .rail-all { display: block; font-family: var(--sans); font-size: 12.5px; font-weight: 600;
             margin-top: 9px; }
+/* Two measures, two buttons. The rail's single CTA pointed only at Measure V,
+   which left the $300M bond reachable only by opening the season page first.
+   Measure U also ships in two lengths, so its button carries the pair beneath
+   it rather than forcing a choice the reader cannot yet make: the button is the
+   quiz, the two links under it are how long it takes. */
+.rail-m { margin-top: 13px; padding-top: 13px; border-top: 1px solid var(--rule); }
+.rail-m:first-of-type { padding-top: 0; border-top: 0; }
+/* 19rem of rail will not hold a long label on one line, so the button wraps to
+   two rather than overflowing the column. */
+.rail-m .rail-cta { display: block; margin-top: 0; text-align: left; line-height: 1.35; }
+.rail-lens { font-family: var(--sans); font-size: 12.5px; color: var(--ink-2); margin-top: 8px; }
+.rail-lens a { font-weight: 700; }
+.rail-lens .sep { color: var(--ink-3); margin: 0 6px; }
 
 @media (max-width: 1179px) {
   /* Inline above the hero, full measure, so a phone reader meets it first. */
@@ -260,7 +273,13 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
     and what was never asked.</p>
     <div class="rail-h"><a href="quiz.html">The Berkeley Voter Quiz</a></div>
     <div class="rail-s">Season One: Before You Vote on U &amp; V</div>
-    <a class="rail-cta" href="quiz-why-another-sales-tax.html">Why another sales tax? &rarr;</a>
+    <div class="rail-m">
+      <a class="rail-cta" href="quiz-why-another-sales-tax.html">Measure V &middot; Why another sales tax? &rarr;</a>
+    </div>
+    <div class="rail-m">
+      <a class="rail-cta" href="quiz-u-basic.html">Measure U &middot; Haven&rsquo;t we done this before? &rarr;</a>
+      <div class="rail-lens"><a href="quiz-u-basic.html">Basic &middot; 7 questions</a><span class="sep">|</span><a href="quiz.html#act-measure-u">Advanced &middot; 6 quizzes</a></div>
+    </div>
     <a class="rail-all" href="quiz.html">All 16 quizzes &rarr;</a>
   </div>
 </div>
@@ -387,6 +406,9 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
   <div class="feature">
     <h3><a href="measure-u-is-t1-again.html">Measure U Is T1 Again</a></h3>
     <p>What the 2016 voter got for $100 million &mdash; and why Measure U repeats the design.</p>
+    <p class="alt">Rather play it? Take the argument as a quiz &mdash; the
+    <a href="quiz-u-basic.html">seven-question version</a>, or
+    <a href="quiz.html#act-measure-u">all six installments</a>.</p>
     <a class="feature-cta" href="measure-u-is-t1-again.html">See the analysis &rarr;</a>
   </div>
 
