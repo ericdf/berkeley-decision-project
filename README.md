@@ -16,6 +16,11 @@ private source repository and overwritten on each publish.
 - **Source:** `ericdf/Berkeley-council-scorecards` (private)
 - **Build:** `build_publications.py`, driven by `publications.json`
 - **Publish:** `./publish-policy.sh` from the source repo
+- **Deploy:** GitHub Pages, serving this repository's root directory
+
+`berkeley-games/` is the exception to "built from `pages/`": it is a self-contained
+app staged from `games/` in the source repo, and ships as a subdirectory rather than
+a page. It is still published by `./publish-policy.sh`, under the same approval.
 
 Page assignment between this publication and Council Scorecards is by editorial
 purpose, recorded explicitly in `publications.json`, not inferred from paths.

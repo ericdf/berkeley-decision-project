@@ -9,6 +9,30 @@ python3 -m http.server 8000
 # then visit http://localhost:8000/
 ```
 
+## Role in the architecture
+
+This directory used to be its own repository (`berkeley-budget-driver`). It was merged
+into `council` in August 2026, with its history intact, because content published under
+our editorial contract should not live in a separate repo.
+
+- **Responsible for:** the four satirical civic games, and nothing else. Self-contained
+  vanilla ES modules and Canvas 2D — no build step, no backend, no analytics, no cookies,
+  and no image assets (all art is drawn procedurally).
+- **Published at:** <https://ericdf.github.io/berkeley-decision-project/berkeley-games/>
+- **Deployed by:** `../publish-policy.sh`, Step 3c. It rsyncs this directory (minus
+  `docs/`, `test/`) into the Decision Project output repo, which GitHub Pages serves.
+
+Two consequences worth knowing before you push anything:
+
+**Publishing the games publishes the whole Decision Project site**, which names real
+officeholders. Never run the publisher without `--dry-run` unless that specific push has
+been approved.
+
+**`test/run.sh` is the only thing guarding these games.** The site validator deliberately
+does not walk `berkeley-games/` — it checks only that `index.html` exists — because these
+are an app with their own conventions rather than site pages. Run the tests yourself.
+
+
 ## Games
 
 ### BUDGET QUEST
