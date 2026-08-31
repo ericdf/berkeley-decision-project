@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berkeley Has an Economic Development Office. Where Is the Strategy?</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Figures are the spine of this page, so numeric cells get tabular figures and are kept
+   on one line: a reader comparing 16.5% against 51.6% down a column should not have to
+   re-read to be sure which row a number belongs to. */
+.num { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.yr { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+      color: var(--ink-2); white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+/* The measurement callout. The strongest finding on this page is not an inference of ours —
+   it is a property of the City's own instrument, stated in the City's own documents. That
+   distinction is the difference between an opinion piece and a finding, so it gets the page's
+   only accent-filled panel rather than sitting in body text where a skimming reader would
+   take it for our assertion. */
+.aud { background: var(--accent-soft); border: 1px solid var(--accent);
+       border-left: 5px solid var(--accent); border-radius: 0 4px 4px 0;
+       padding: 1.25rem 1.4rem; margin: 1.8rem 0; }
+.aud-h { font-family: var(--sans); font-size: .69rem; font-weight: 800; letter-spacing: .13em;
+         text-transform: uppercase; color: var(--accent); margin-bottom: .75rem; }
+.aud-q { font-size: 1.12rem; line-height: 1.5; font-weight: 600; color: var(--ink);
+         margin-bottom: .8rem; }
+.aud p { font-size: .95rem; margin-bottom: .7rem; }
+.aud p:last-child { margin-bottom: 0; }
+.aud-src { font-family: var(--sans); font-size: .76rem; color: var(--ink-2); line-height: 1.55; }
+
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style></head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+  <div class="kicker">Analysis</div>
+  <h1>Berkeley Has an Economic Development Office. Where Is the Strategy?</h1>
+
+  <p class="standfirst">Berkeley faces a <strong>$30&nbsp;million annual structural deficit</strong>. City Hall has framed the response largely as a choice between raising more revenue and cutting services.</p>
+
+  <p class="standfirst">That leaves out a basic management question: <strong>What is Berkeley doing to grow and preserve the economic base that generates City revenue, and how does it know whether that work is succeeding?</strong></p>
+
+  <div class="byline">An argument about management, not about the market &middot; August 2026</div>
+
+  <p>Berkeley has an Office of Economic Development. It funds tourism promotion, business assistance, arts and workforce programs. Council has loosened R&amp;D rules, expanded startup tax incentives, adopted &ldquo;Keep Innovation in Berkeley,&rdquo; pursued corridor projects, and approved major development.</p>
+
+  <p>Those are actions. <strong>The public record does not show a citywide economic-development strategy that connects those actions to measurable results, assigns accountability, and changes course when they fail.</strong></p>
+
+  <p>Instead, Berkeley repeatedly measures activity, not outcomes. It can show what government did. It often cannot show what changed because of it.</p>
+
+  <p>That is not strategy. It is a list of interventions without a feedback loop.</p>
+
+  <h2>Activity is not strategy</h2>
+
+  <p>A serious economic-development strategy needs six things:</p>
+
+  <ol>
+    <li>a baseline;</li>
+    <li>a defined objective;</li>
+    <li>an intervention intended to change it;</li>
+    <li>a measurable result and timetable;</li>
+    <li>someone accountable for the result; and</li>
+    <li>a decision rule: <a href="framework.html#continue">continue</a>, change, or <a href="framework.html#stop">stop</a>.</li>
+  </ol>
+
+  <p>Without that loop, City Hall can count programs, meetings, grants, posts, permits, and policy changes without knowing whether any of them worked. This is the same institutional failure documented in <a href="measuring-nothing.html">Measuring Nothing</a>: activity data substituted for outcome data.</p>
+
+  <p>Economic development makes that failure especially stark because its purpose is to change measurable economic conditions.</p>
+
+  <h3>Berkeley talks about retaining startups without measuring retention</h3>
+
+  <p>Berkeley has tracked the <strong>stock</strong> of startups since 2015. Its 2025 Economic Dashboard reported about <strong>370 companies</strong>, down from roughly 400 in prior years.</p>
+
+  <p>What Berkeley does not publish is the corresponding <strong>flow</strong>: how many companies form, how many stay as they grow, how many leave, where they go, and why.</p>
+
+  <p>The February 2026 Haas Institute for Business Innovation study was commissioned in part to examine &ldquo;what factors influence their decisions to remain in Berkeley or relocate.&rdquo; It did not produce a retention rate. Instead, its &ldquo;Considerations for Future Studies&rdquo; section proposed asking:</p>
+
+  <blockquote><p>&ldquo;When startups leave Berkeley, what are the most common places they relocate to, both in the Bay Area or elsewhere?&rdquo;</p><div class="attrib">Haas Institute for Business Innovation, February 2026</div></blockquote>
+
+  <p>That question was listed as future work in a study commissioned to examine the issue.</p>
+
+  <p><strong>Berkeley has spent years talking about startup retention without counting retention.</strong></p>
+
+  <p>It therefore cannot tell residents whether its retention policies retained companies.</p>
+
+  <h2>Life science: a forecast is not a strategy</h2>
+
+  <p>Berkeley Commons added roughly <strong>540,000 square feet</strong> of lab space at Aquatic Park, the largest life-science R&amp;D project built in Berkeley in a decade. The project stood complete and empty. By Q3 2025, Berkeley&rsquo;s <strong>lab vacancy rate had reached 51.6%</strong>, which the City attributed directly to the new inventory.</p>
+
+  <p>At the same time, founders surveyed by Haas said spaces such as Berkeley Commons were &ldquo;too large and require too much time to customize for startups that are time and funding constrained.&rdquo; Berkeley can therefore have abundant lab space and still fail to offer the space its startups need.</p>
+
+  <p>Asked about vacancy rates in that range, the City&rsquo;s chief strategist of sustainable growth told Berkeleyside:</p>
+
+  <blockquote><p>&ldquo;There is a lot of innovation that will be happening in Berkeley for many years to come. No one is questioning that. <strong>We don&rsquo;t have any major long-term concerns. It&rsquo;s an issue of timing.</strong>&rdquo;</p><div class="attrib">Office of Economic Development, quoted in Berkeleyside, November 2024</div></blockquote>
+
+  <p>Maybe the market recovers. That is not the management question.</p>
+
+  <p>The management question is: <strong>What vacancy rate, for how long, triggers a different response? What result would show that the current policy is working? What happens if the expected recovery does not arrive?</strong></p>
+
+  <p>The reviewed record supplies no threshold, target, timetable, or contingency.</p>
+
+  <div class="pull">&ldquo;It will come back&rdquo; is a forecast. A strategy defines what government will measure and what it will do if the forecast is wrong.</div>
+
+  <h2>Downtown: Berkeley&rsquo;s own metric hides part of the condition</h2>
+
+  <p>Berkeley&rsquo;s official downtown vacancy measure cannot see a major category of empty commercial space.</p>
+
+  <div class="aud">
+    <div class="aud-h">&#9888; The measurement finding</div>
+    <p class="aud-q">The City excludes empty spaces from its downtown retail-vacancy measure when redevelopment is planned and the space is no longer being marketed.</p>
+  </div>
+
+  <p>The City reported a <strong>10.9%</strong> downtown retail vacancy rate. Downtown Berkeley Association CEO John Caner reported <strong>28.2%</strong>. The important fact is not which headline number wins. The measures use different definitions.</p>
+
+  <p>Berkeley&rsquo;s official measure excludes empty commercial spaces at redevelopment sites, including locations at the top of Center Street, because those spaces are no longer offered to tenants. It also counts properties such as the downtown parking garage as occupied. The City separately reported <strong>6.3% citywide ground-floor commercial vacancy</strong> in Q4 2025. These figures measure different things and should not be treated as interchangeable.</p>
+
+  <p>The exclusion rule is the problem. Several downtown businesses closed, buildings were demolished or partially demolished, and replacement projects then stalled. Regional financing conditions explain much of the construction stall: interest rates, construction costs, tariffs, steel-frame economics, falling rents, and UC&rsquo;s housing-supply surge all matter.</p>
+
+  <div class="pull">Those market forces are not Berkeley&rsquo;s responsibility. Measuring the resulting commercial condition is.</div>
+
+  <p>A management system cannot respond intelligently to a problem its own metric removes from view.</p>
+
+  <p>The same issue applies to the standard response of approving more development. An entitlements consultant on three stalled downtown projects said developers &ldquo;don&rsquo;t want to flood the market again&rdquo; and will &ldquo;mete themselves out&rdquo; over several years. If entitled projects are deliberately paced, more entitlements do not automatically produce housing or active storefronts.</p>
+
+  <h2>Tourism: publishing content is not an outcome</h2>
+
+  <p>Berkeley pays for destination marketing. That makes the City-supported Visit Berkeley product a simple test of stewardship and measurement.</p>
+
+  <p>A manual audit conducted for this project on August 31, 2026 found <strong>13 closed restaurants still listed in the Visit Berkeley directory</strong>. The site listed one restaurant that closed in 2024 and its replacement at the same address as two separate dining options. It continued to list a closed hotel. Its &ldquo;Things to Do&rdquo; page led with Habitot Children&rsquo;s Discovery Museum even though Habitot describes itself as &ldquo;100% Mobile,&rdquo; has no permanent public location, and is raising money to reopen one in two to five years.</p>
+
+  <p><strong>The public-facing product Berkeley helps finance was not being maintained accurately.</strong></p>
+
+  <p>But stale listings are only the most visible failure. Even a perfectly maintained tourism website would not answer the larger question.</p>
+
+  <p>Pages, posts, spotlights, and campaigns are outputs. <strong>The outcomes are additional room nights, occupancy, visitor spending, taxable sales, event conversions, and hotel-tax revenue attributable to the work.</strong></p>
+
+  <p>What is Berkeley buying from tourism promotion?</p>
+
+  <p>The answer cannot be &ldquo;tourism promotion.&rdquo;</p>
+
+  <h2>The Mayor&rsquo;s own budget message shows the imbalance</h2>
+
+  <p>On April 15, 2026, Mayor Adena Ishii told constituents that Berkeley faced a <strong>&ldquo;longstanding structural deficit of $30 million per year that we cannot afford to ignore.&rdquo;</strong> She said jobs were at stake and that City leadership had also been focused on <strong>&ldquo;revenue generation.&rdquo;</strong> She added: <strong>&ldquo;I&rsquo;ve been promoting our local hotels and businesses.&rdquo;</strong></p>
+
+  <p>The next day, a constituent asked what that promotion consisted of, what the Mayor was doing regularly, and where the public could see it.</p>
+
+  <p>No responsive answer arrived during the next four and a half months covered by this review.</p>
+
+  <p>The contrast with taxation is hard to miss.</p>
+
+  <p>A tax proposal has a rate. Staff estimate the yield. Council takes legislative action. Ballot language is written. A campaign forms. The mechanism is concrete and measurable.</p>
+
+  <p>&ldquo;Promoting our local hotels and businesses&rdquo; should meet the same basic standard: <strong>What is the intervention? Who is the audience? What is the baseline? What result is expected? By when? How will the City know whether it worked?</strong></p>
+
+  <p>The reviewed record does not provide that chain.</p>
+
+  <p>Nor does it establish the premise behind hotel promotion: how much unsold room inventory exists that City promotion could plausibly fill, and how much of Berkeley hotel demand is actually responsive to municipal marketing rather than UC-driven demand.</p>
+
+  <p>Four months later, the Mayor&rsquo;s office advertised a Director of Policy position at <strong>$125,000&ndash;$135,000</strong>. The posting named three priorities: <strong>housing and homelessness, public safety, and infrastructure</strong>. &ldquo;Economic,&rdquo; &ldquo;commercial,&rdquo; &ldquo;downtown,&rdquo; and &ldquo;small business&rdquo; do not appear in it.</p>
+
+  <p>That posting does not define everything the Mayor&rsquo;s office does. It does show what the office chose to name as the priorities for a senior policy hire while arguing that revenue generation was central to Berkeley&rsquo;s fiscal response.</p>
+
+  <div class="pull">Economic development was invoked in April. It was not named among the policy priorities in August.</div>
+
+  <h2>University Avenue: parcel-by-parcel decisions are not a corridor strategy</h2>
+
+  <p>University Avenue is Berkeley&rsquo;s western gateway to UC Berkeley. The City has made major land-use and program decisions there: motel conversions to interim or supportive housing, public and nonprofit uses, and the <strong>$6.7 million</strong> acquisition of the former Premier Cru property, portions of which are now leased at nominal rents.</p>
+
+  <p>Those decisions have consequences for housing, shelter, retail activity, tax-producing uses, service demand, public assets, and the City&rsquo;s fiscal base.</p>
+
+  <p>The question is not whether each project can be defended individually. The question is whether Berkeley ever managed those decisions <strong>as a corridor</strong>.</p>
+
+  <p>A corridor strategy would define what University Avenue is supposed to become, how its competing uses fit together, what the City is trying to improve, and how success will be measured.</p>
+
+  <p>The reviewed record shows no such integrated economic strategy. It shows decisions taken one at a time.</p>
+
+  <p>The 1619 University Avenue lease alone totals <strong>$5.18 million over five years</strong> before service contracts. State grant coverage expires after year two, and the July 2023 Council packet identified Measure P as the replacement source. That creates a continuing local obligation financed from a tax base tied to high-value property transfers while the new use also changes the property&rsquo;s future commercial and tax-producing role.</p>
+
+  <p>Those effects should be analyzed together: program cost, replacement funding, service demand, land use, and tax-base effects.</p>
+
+  <p>They have not been presented to residents as one corridor-level economic ledger.</p>
+
+  <div class="pull">Berkeley is making a series of consequential economic decisions without showing the common outcome they are supposed to produce.</div>
+
+  <h2>What a real economic-development operating system would publish</h2>
+
+  <p>Residents should be able to see the same core measures every year, on stable definitions:</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>What Berkeley should publish</th><th>What it would answer</th></tr></thead>
+      <tbody>
+        <tr><td>Business openings and closures</td><td>Is the business base growing or shrinking?</td></tr>
+        <tr><td>Commercial vacancy by corridor and type</td><td>Where is commercial weakness actually concentrated?</td></tr>
+        <tr><td>Taxable sales adjusted for inflation and tax-rate changes</td><td>Did economic activity grow, or did the tax rate change?</td></tr>
+        <tr><td>Hotel occupancy, room rates, room revenue, and TOT</td><td>Is hotel demand growing, and is promotion affecting it?</td></tr>
+        <tr><td>Startup formation, retention, relocation, employment, and space needs</td><td>Are Berkeley&rsquo;s startup policies retaining firms as they grow?</td></tr>
+        <tr><td>End-to-end permitting time for common business and development cases</td><td>Is the City improving the process it directly controls?</td></tr>
+        <tr><td>Cost, intended outcome, target, and result for every material program</td><td>Should the program continue, change, or stop?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Government does not control interest rates, venture markets, construction costs, or every business decision.</p>
+
+  <p><strong>It does control whether its own interventions have defined goals, measurable results, and consequences when they fail.</strong></p>
+
+  <h2>The fiscal question</h2>
+
+  <p>Start with the two streams the Mayor&rsquo;s stated strategy actually reaches. Promoting hotels and local businesses moves transient occupancy tax and sales tax, and Berkeley&rsquo;s FY2025 financial report records what those streams are worth in full: <strong>$19,962,225</strong> in General Fund sales taxes and <strong>$6,408,094</strong> in net transient occupancy taxes. About <strong>$26.4 million</strong> combined &mdash; the entire existing base, not the increment promotion might add, and already smaller than the recurring gap.</p>
+
+  <p>Closing $30 million from there would mean generating more than another whole sales-tax base on top of the one Berkeley has. Berkeley already pays Visit Berkeley roughly <strong>$700,000 a year</strong>, drawn from hotel-tax revenue, to do that promotion.</p>
+
+  <div class="pull">Retail and hotel promotion is being asked to do something the size of those two tax streams makes it unable to do.</div>
+
+  <p>That bounds the promotion strategy, not economic development. The larger levers sit elsewhere &mdash; whether companies stay in Berkeley as they scale, whether commercial and lab space is occupied, what the property-tax base does as parcels change use, and whether the City&rsquo;s own permitting speeds or obstructs the activity it says it wants. Those are slower, larger, and harder to promote your way out of, which is exactly why they need a strategy and a feedback loop rather than a campaign.</p>
+
+  <p>Berkeley&rsquo;s fiscal problem is not only the tax rate. It is also the size and health of the economic base being taxed.</p>
+
+  <p>If the City&rsquo;s most concrete revenue response is to collect more from existing transactions and existing taxpayers, it should show comparable institutional discipline in expanding and preserving the economic activity on which those revenues depend.</p>
+
+  <p>That is the <a href="crayon-box.html">crayon-box problem</a> in another form. The revenue tools that extract more from the existing base are concrete, legislated, costed, and pursued. The economic-development tools are a collection of programs and actions without a demonstrated feedback loop.</p>
+
+  <p>Berkeley has an economic-development office. It has incentives, zoning changes, promotional spending, business programs, and development initiatives.</p>
+
+  <p><strong>What it has not demonstrated is a system that tells residents which of those interventions worked, which failed, and what changed as a result.</strong></p>
+
+  <h2>The accountability question</h2>
+
+  <p>Berkeley does not need another list of economic-development activities.</p>
+
+  <p>It needs to show the operating logic connecting public action to economic results:</p>
+
+  <p><strong>What is the objective? What is the intervention? What is the target? Who owns the result? What happened? What changes if it fails?</strong></p>
+
+  <p>Until Berkeley can answer those questions, it cannot credibly claim to have an economic-development strategy. It has economic-development activity.</p>
+
+  <div class="pull">Where is the strategy &mdash; and where are the measurements showing that it worked?</div>
+
+  <footer>
+    <h3>Sources</h3>
+    <p><strong>Fiscal and mayoral record:</strong> Mayor&rsquo;s office budget message to constituents, April 15, 2026 (mass mailing, archived verbatim); constituent request for specifics, April 16, 2026, and verified absence of a responsive reply through August 26, 2026; Director of Policy recruitment posted August 3, 2026 and archived August 20, 2026, with priorities and absent terms verified against the raw page source.</p>
+    <p><strong>Market figures:</strong> City of Berkeley 2025 Economic Dashboards, presented at the Council worksession of March 10, 2026, sourced to Newmark Cornish &amp; Carey 3Q25 &mdash; office availability 16.5%, lab vacancy 51.6%, and approximately 370 startup companies. Downtown retail vacancy of 10.9% and its exclusion rule, and the Downtown Berkeley Association&rsquo;s 28.2% figure, from the City&rsquo;s official measure and Berkeleyside reporting; citywide ground-floor commercial vacancy of 6.3% from the City&rsquo;s Q4 2025 dashboard. Housing permits from HCD Housing Element Annual Progress Report Table A2. FY2025 General Fund sales taxes of $19,962,225 and net transient occupancy taxes of $6,408,094 from Berkeley&rsquo;s FY2025 Annual Comprehensive Financial Report; the Visit Berkeley distribution of one-twelfth of annual transient occupancy tax revenue from City contract materials.</p>
+    <p><strong>Innovation ecosystem:</strong> <em>Economic Impacts of UC Berkeley&rsquo;s Innovation &amp; Entrepreneurship Ecosystem on the City of Berkeley and Alameda County</em>, Haas Institute for Business Innovation, February 2026 (research conducted Fall 2025) &mdash; scoped question on relocation, future-studies item, space-mismatch finding, and 8.8/10 recommendation score. Berkeley Commons and life-science vacancy: Berkeleyside, November 25, 2024. Office of Economic Development quotation from the same article. Downtown construction stall, causes, and project-pacing statements: Berkeleyside, April 4, 2025.</p>
+    <p><strong>University Avenue:</strong> Premier Cru acquisition, lease terms, and interim Council Chamber from City budget and lease materials, as published in <a href="framework.html#case-j">the framework&rsquo;s Case Study J</a>; 1619 University Avenue lease total and grant expiry from the July 11, 2023 Council packet.</p>
+    <h3>Method</h3>
+    <p>Market figures are dated because they change. Downtown retail vacancy, citywide ground-floor commercial vacancy, lab vacancy, and office availability use different definitions and should not be compared as though they measure the same thing. The Visit Berkeley closed-listing count comes from a manual review of the full directory conducted August 31, 2026 because its client-side pagination returned the same subset on repeated requests. This page evaluates institutional strategy and measurement; individual councilmember records are assessed separately.</p>
+    <h3>Related</h3>
+    <p><a href="measuring-nothing.html">Measuring Nothing</a> &middot; <a href="crayon-box.html">The Crayon Box</a> &middot; <a href="hidden-budget-cycle.html">The Hidden Budget Cycle</a> &middot; <a href="small-sites.html">Buy once, pay forever</a> &middot; <a href="framework.html">The Berkeley Budget Framework</a> &middot; <a href="index.html">Home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
