@@ -22,6 +22,10 @@
      else on the page, and not --ok, which means "you got it right" in every
      reveal — a correctness colour here would read as a score. */
   --send:#0f6b5c; --send-hover:#0b5449; --send-ink:#fff;
+  /* Subscribe. A peer of the share button and so it needs its own colour: not
+     --send, which would read as a second copy of the same action, and not
+     --accent, which is every ordinary link on the page. */
+  --sub:#2c4a7c; --sub-hover:#223c66; --sub-ink:#fff;
   --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
   --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -31,7 +35,8 @@
     --quote:#8fb3e0; --quote-soft:#1a2331;
     --hero-bg:#16211f; --hero-rule:#33524d; --hero-ink:#eef5f3; --hero-ink-2:#93b3ad;
     --ok:#5fbf92; --ok-soft:#16281f; --no:#e0808f; --no-soft:#2a1a1d;
-    --send:#3fbfa4; --send-hover:#5fd4bb; --send-ink:#0a1614; }
+    --send:#3fbfa4; --send-hover:#5fd4bb; --send-ink:#0a1614;
+    --sub:#7ea6dd; --sub-hover:#9dbde8; --sub-ink:#0d1626; }
 }
 :root[data-theme="dark"] {
   --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
@@ -40,6 +45,7 @@
   --hero-bg:#16211f; --hero-rule:#33524d; --hero-ink:#eef5f3; --hero-ink-2:#93b3ad;
   --ok:#5fbf92; --ok-soft:#16281f; --no:#e0808f; --no-soft:#2a1a1d;
   --send:#3fbfa4; --send-hover:#5fd4bb; --send-ink:#0a1614;
+  --sub:#7ea6dd; --sub-hover:#9dbde8; --sub-ink:#0d1626;
 }
 :root[data-theme="light"] {
   --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
@@ -51,6 +57,10 @@
      else on the page, and not --ok, which means "you got it right" in every
      reveal — a correctness colour here would read as a score. */
   --send:#0f6b5c; --send-hover:#0b5449; --send-ink:#fff;
+  /* Subscribe. A peer of the share button and so it needs its own colour: not
+     --send, which would read as a second copy of the same action, and not
+     --accent, which is every ordinary link on the page. */
+  --sub:#2c4a7c; --sub-hover:#223c66; --sub-ink:#fff;
 }
 body { background: var(--ground); color: var(--ink); font-family: var(--serif);
        line-height: 1.62; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
