@@ -18,6 +18,10 @@
   --quote:#2c4a7c; --quote-soft:#eef3fa;
   --hero-bg:#1a2e2b; --hero-rule:#2f5c56; --hero-ink:#fff; --hero-ink-2:#a8c5c0;
   --ok:#1c6b4a; --ok-soft:#e8f4ee; --no:#9d2f3f; --no-soft:#fbeced;
+  /* The share action. Deliberately not --accent, which is nearly everything
+     else on the page, and not --ok, which means "you got it right" in every
+     reveal — a correctness colour here would read as a score. */
+  --send:#0f6b5c; --send-hover:#0b5449; --send-ink:#fff;
   --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
   --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -26,7 +30,8 @@
     --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-hover:#e8c37a; --accent-soft:#203330;
     --quote:#8fb3e0; --quote-soft:#1a2331;
     --hero-bg:#16211f; --hero-rule:#33524d; --hero-ink:#eef5f3; --hero-ink-2:#93b3ad;
-    --ok:#5fbf92; --ok-soft:#16281f; --no:#e0808f; --no-soft:#2a1a1d; }
+    --ok:#5fbf92; --ok-soft:#16281f; --no:#e0808f; --no-soft:#2a1a1d;
+    --send:#3fbfa4; --send-hover:#5fd4bb; --send-ink:#0a1614; }
 }
 :root[data-theme="dark"] {
   --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
@@ -34,6 +39,7 @@
   --quote:#8fb3e0; --quote-soft:#1a2331;
   --hero-bg:#16211f; --hero-rule:#33524d; --hero-ink:#eef5f3; --hero-ink-2:#93b3ad;
   --ok:#5fbf92; --ok-soft:#16281f; --no:#e0808f; --no-soft:#2a1a1d;
+  --send:#3fbfa4; --send-hover:#5fd4bb; --send-ink:#0a1614;
 }
 :root[data-theme="light"] {
   --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
@@ -41,6 +47,10 @@
   --quote:#2c4a7c; --quote-soft:#eef3fa;
   --hero-bg:#1a2e2b; --hero-rule:#2f5c56; --hero-ink:#fff; --hero-ink-2:#a8c5c0;
   --ok:#1c6b4a; --ok-soft:#e8f4ee; --no:#9d2f3f; --no-soft:#fbeced;
+  /* The share action. Deliberately not --accent, which is nearly everything
+     else on the page, and not --ok, which means "you got it right" in every
+     reveal — a correctness colour here would read as a score. */
+  --send:#0f6b5c; --send-hover:#0b5449; --send-ink:#fff;
 }
 body { background: var(--ground); color: var(--ink); font-family: var(--serif);
        line-height: 1.62; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
@@ -74,6 +84,29 @@ a:hover { color: var(--accent-hover); }
 .bar-in { max-width: 46rem; margin: 0 auto; padding: 9px 26px; display: flex;
           gap: 18px; font-family: var(--sans); font-size: 13px; color: var(--ink-2); flex-wrap: wrap; }
 .bar b { color: var(--ink); font-weight: 800; font-variant-numeric: tabular-nums; }
+/* Sits at the end of the score bar so it cannot cover anything the reader is
+   reading. Reduced motion is handled globally; this only fades. */
+.bar-go { margin-left: auto; font-family: var(--sans); font-size: 16px; font-weight: 800;
+          letter-spacing: .2px; padding: 12px 22px; min-height: 48px; border-radius: 7px;
+          border: 1px solid var(--accent); background: var(--accent); color: var(--panel);
+          cursor: pointer; animation: barGoIn .5s ease both; }
+.bar-go:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.bar-go[hidden] { display: none; }
+@keyframes barGoIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+/* The bar carries running counts while the quiz is in progress; once it also
+   carries the way to the result, that is the important thing in it. Give the
+   row room so the button reads as a destination rather than a chip. */
+.bar-in.has-go { padding-top: 7px; padding-bottom: 7px; align-items: center; }
+@media (max-width: 620px) {
+  .bar-go { margin-left: 0; width: 100%; justify-content: center; font-size: 15.5px; }
+  .bar-in { gap: 10px; }
+}
+
+/* The result is a destination, so it is set apart from the question sequence
+   rather than continuing it — the reader should feel they have arrived
+   somewhere, not scrolled into one more section. */
+.done-arrive { animation: doneArrive .55s ease both; }
+@keyframes doneArrive { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 .q { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px;
      padding: 22px 22px 20px; margin-top: 18px; }
@@ -153,10 +186,41 @@ a:hover { color: var(--accent-hover); }
 .done { background: var(--panel); border: 1px solid var(--accent); border-radius: 8px;
         padding: 24px 22px; margin-top: 22px; }
 .done[hidden] { display: none; }
-.done .sc { font-family: var(--sans); font-size: 40px; font-weight: 900; letter-spacing: -1px;
-            font-variant-numeric: tabular-nums; }
-.done .sl { font-family: var(--sans); font-size: 13px; color: var(--ink-3); margin-top: 2px; }
+/* The finding is the dominant thing on the completion panel. The score is a
+   line of text below the share action — spec: "the finding is visually
+   dominant over the score", and completion language never ranks the reader. */
+.done-eyebrow { font-family: var(--sans); font-size: 11px; font-weight: 800; letter-spacing: 1.3px;
+                text-transform: uppercase; color: var(--accent); }
+.finding { font-family: var(--sans); font-size: 27px; font-weight: 800; letter-spacing: -.4px;
+           line-height: 1.24; margin-top: 9px; }
+.proof { font-size: 16.5px; color: var(--ink-2); margin-top: 13px; }
+.proof p + p { margin-top: .8rem; }
+.proof strong { color: var(--ink); }
+.score-line { font-family: var(--sans); font-size: 13.5px; color: var(--ink-3); margin-top: 18px;
+              font-variant-numeric: tabular-nums; }
+.score-line b { color: var(--ink-2); font-weight: 800; }
+@media (max-width: 560px) { .finding { font-size: 22px; } }
 .done .msg { font-size: 16px; color: var(--ink-2); margin-top: 12px; }
+
+/* Two or three ways onward. Completion is marked with text, never colour
+   alone, so it survives a colour-blind reader and a monochrome print. */
+.rel { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--rule); }
+.rel-h { font-family: var(--sans); font-size: 11px; font-weight: 800; letter-spacing: 1.3px;
+         text-transform: uppercase; color: var(--ink-3); }
+.rel-c { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+         margin-top: 9px; padding: 13px 15px; min-height: 44px; text-decoration: none;
+         border: 1px solid var(--rule); border-radius: 7px; background: var(--panel); }
+.rel-c:hover { border-color: var(--accent); background: var(--accent-soft); }
+.rel-t { font-family: var(--sans); font-size: 15px; font-weight: 700; line-height: 1.3; }
+.rel-done { font-family: var(--sans); font-size: 11px; font-weight: 800; letter-spacing: .8px;
+            text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
+.rel-done[hidden] { display: none; }
+.rel-all { margin-top: 12px; }
+.rel-all a { font-family: var(--sans); font-size: 13.5px; font-weight: 700; }
+/* Secondary by rule: it must not compete with the finding or the share action. */
+.news { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.news a { font-family: var(--sans); font-size: 13.5px; font-weight: 700; color: var(--ink-2); }
+.news a:hover { color: var(--accent); }
 /* An installment's own closing argument. It is the quiz's conclusion, not one
    question's answer, so it is ruled off from the score above it and given its own
    ground — the reader should see it arrive as a separate thing. */
@@ -167,16 +231,24 @@ a:hover { color: var(--accent-hover); }
 .done-body p + p { margin-top: .85rem; }
 .done-body strong { color: var(--ink); }
 @media (max-width: 560px) { .done-h2 { font-size: 20px; } }
-.share-h { font-family: var(--sans); font-size: 11px; font-weight: 800; letter-spacing: 1.3px;
-           text-transform: uppercase; color: var(--accent); margin-top: 20px; }
-.share { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 10px; }
+.share { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 24px; }
 .share button, .share a { font-family: var(--sans); font-size: 13.5px; font-weight: 700;
         padding: 11px 16px; min-height: 44px; border-radius: 7px; border: 1px solid var(--rule);
         background: var(--panel); color: var(--ink); cursor: pointer; text-decoration: none;
         display: inline-flex; align-items: center; }
-.share .pri { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+/* One action carries the weight. It is the thing the whole card is for, so it
+   is sized like a decision rather than like one option among several. */
+.share .pri { background: var(--send); border-color: var(--send); color: var(--send-ink);
+        font-size: 16px; padding: 14px 26px; min-height: 52px; }
+/* The secondary is for a reader who wants the bare URL. It should be findable
+   and never compete — a link, not a second button. */
+.share .sec { background: none; border: none; padding: 8px 2px; min-height: 40px;
+        font-size: 13.5px; font-weight: 700; color: var(--ink-3); text-decoration: underline;
+        text-underline-offset: 3px; }
+.share .sec:hover { color: var(--accent); border: none; }
 .share button:hover, .share a:hover { border-color: var(--accent); }
-.share .pri:hover { background: var(--accent-hover); }
+.share .pri:hover { background: var(--send-hover); border-color: var(--send-hover); }
+@media (max-width: 460px) { .share .pri { width: 100%; justify-content: center; } }
 .said { font-family: var(--sans); font-size: 13px; color: var(--ok); margin-top: 9px; min-height: 1.2em; }
 .onward { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 20px; padding-top: 16px;
           border-top: 1px solid var(--rule); }
@@ -300,7 +372,7 @@ a:hover { color: var(--accent-hover); }
 <body>
 <div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div>
 <div class="s">Better questions. Better evidence. Better choices.</div></a></div>
-<div class="qhero"><div class="qhero-in"><div class="crumb"><a href="quiz.html">The Berkeley Voter Quiz</a> &middot; Season 1: Berkeley's November Ballot &middot; Quiz 10 of 24</div><h1>Who Audits the Follow-Through?</h1><p class="deck">Berkeley's accountability problem is not primarily that nobody finds problems. It is whether management corrects them and Council enforces follow-through.</p><div class="sig">Finding a problem and fixing it are two different systems.</div></div></div><div class="bar"><div class="bar-in" id="bar" role="status" aria-live="polite"><span>Answered <b id="nAns">0</b> of <b>6</b></span><span>Score <b id="nPts">0</b> of <b>6</b> points</span></div></div><div class="wrap"><main id="quiz"><section class="q" id="q-audit-first-formal-warning" data-qid="audit-first-formal-warning" data-type="single"><div class="q-n">Question 1 of 6</div><h2 class="q-p" id="p-audit-first-formal-warning">When did Berkeley officials first receive a formal City Auditor warning that rising recurring benefit costs and unfunded obligations required long-term corrective action?</h2><ul class="choices" role="group" aria-labelledby="p-audit-first-formal-warning"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">When the FY2027–28 deficit was announced</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">During the COVID emergency</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">In the 2022 financial-condition audit</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">At least by the Auditor's 2010 employee-benefits report</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-first-formal-warning" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The Auditor's November 2010 report, <strong>Employee Benefits: Tough Decisions Ahead</strong>, warned that government employee benefits represented a rapidly increasing City cost. It addressed significant underfunded liabilities for pensions, police retiree medical benefits, and leave payouts; projected steep increases in pension contribution rates; and warned that the City's pension funded level would erode without additional set-asides.</p><p>Police retiree medical was reported as only 13% funded and unused-leave liabilities as 2% funded.</p></div><div class="tp"><span class="tp-h">Teaching point</span>The exact FY2027–28 deficit estimate is new. The fiscal condition producing it is not.</div><div class="links links-solo"><a href="https://berkeleyca.gov/sites/default/files/2022-01/2010-11-16_Item_13_Employee_Benefits_Tough_Decisions_Ahead-Auditor%281%29.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-missing-liability-report" data-qid="audit-missing-liability-report" data-type="single"><div class="q-n">Question 2 of 6</div><h2 class="q-p" id="p-audit-missing-liability-report">Council adopted a 2012 requirement for management to report every other year on current and projected unfunded liabilities. What happened to the FY2025 report?</h2><ul class="choices" role="group" aria-labelledby="p-audit-missing-liability-report"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">It showed that every liability was fully funded</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">It was published but never placed on a Council agenda</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Management did not produce it, citing limited staff time and competing priorities</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">Voters repealed the reporting requirement</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-missing-liability-report" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The Auditor's 2026 financial-condition report says management did not release the FY2025 update. The Auditor concluded that Council and the public therefore lacked complete, accessible information about unfunded liabilities before budget deliberations.</p><p>This is central to the “new deficit” framing. Council had required an early-warning instrument and then proceeded without its scheduled reading.</p></div><div class="links"><a href="https://berkeleyca.gov/sites/default/files/2026-04/2026-04-28%20Item%2009%20Berkeley%E2%80%99s%20Financial%20Condition%20%28FY%202016-FY%202025%29.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a><span class="lsep" aria-hidden="true">&middot;</span><a class="fullcase" href="hidden-budget-cycle.html">Why this matters</a></div></div></section><section class="q" id="q-audit-fleet-reporting-interval" data-qid="audit-fleet-reporting-interval" data-type="single"><div class="q-n">Question 3 of 6</div><h2 class="q-p" id="p-audit-fleet-reporting-interval">After the 2021 fleet audit required an initial January 2022 update and reports every six months thereafter, how many status reports had been delivered by October 2025?</h2><ul class="choices" role="group" aria-labelledby="p-audit-fleet-reporting-interval"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">All eight expected reports</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Six</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Four</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">None</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-fleet-reporting-interval" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The City's October 2025 report identifies updates dated November 3, 2022; March 19, 2024; December 10, 2024; and October 28, 2025. The first arrived roughly ten months after its deadline. Subsequent gaps were approximately sixteen, nine, and ten-and-a-half months — not six.</p><p>The October 2025 report then scheduled the next update for fall 2026, openly moving to roughly another annual interval while recommendations remained incomplete.</p></div><div class="links links-solo"><a href="https://berkeleyca.gov/sites/default/files/documents/2025-10-28%20Item%2035%20Audit%20Status%20Reports%20Fleet%20Replacement%20Fund%20Short%20Millions.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-dropped-recommendations" data-qid="audit-dropped-recommendations" data-type="single"><div class="q-n">Question 4 of 6</div><h2 class="q-p" id="p-audit-dropped-recommendations">Why did nine outstanding recommendations from the 2019 fire-prevention-inspections audit disappear from active tracking in 2024?</h2><ul class="choices" role="group" aria-labelledby="p-audit-dropped-recommendations"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">Every recommendation was implemented</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Fire risk no longer existed</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">They passed the Auditor's five-year tracking limit</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">The original audit was withdrawn</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-dropped-recommendations" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The recommendations were classified as dropped because the audit was more than five years old — not because the corrective work was complete. Under the Auditor's current terminology, “dropped” can mean management accepts the risk and is unable or unwilling to implement the recommendation; open recommendations also close this way at five years.</p></div><div class="tp"><span class="tp-h">Teaching point</span>Dashboard closure is not the same as risk resolution.</div><div class="links links-solo"><a href="https://berkeleyca.gov/sites/default/files/2026-05/City_Auditor_Fiscal_Year_2027_Audit_Plan.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-lease-risks-sixteen-years" data-qid="audit-lease-risks-sixteen-years" data-type="single"><div class="q-n">Question 5 of 6</div><h2 class="q-p" id="p-audit-lease-risks-sixteen-years">How long after Berkeley's original lease-management audit did the Auditor find that substantially the same risks remained?</h2><ul class="choices" role="group" aria-labelledby="p-audit-lease-risks-sixteen-years"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">Two years</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Five years</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Ten years</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">Sixteen years</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-lease-risks-sixteen-years" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The 2025 follow-up found that Berkeley still lacked a complete central lease-and-license inventory, clear citywide direction, consistent standards for below-market arrangements, and adequate capacity for strategic oversight.</p><p>Eight recommendations were reopened.</p></div><div class="links links-solo"><a href="https://berkeleyca.gov/sites/default/files/documents/2009_Leases_Audit_Follow_Up_Berkeley_Faces_the_Same_Risks_16_Years_Later.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-whistleblower-expansion-paused" data-qid="audit-whistleblower-expansion-paused" data-type="single"><div class="q-n">Question 6 of 6</div><h2 class="q-p" id="p-audit-whistleblower-expansion-paused">After Berkeley's new whistleblower program substantiated an unauthorized $286,000 ambulance purchase, what happened to its planned public expansion?</h2><ul class="choices" role="group" aria-labelledby="p-audit-whistleblower-expansion-paused"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">It immediately expanded to every Berkeley resident</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Budget reductions forced the Auditor to pause public expansion</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Council eliminated anonymous reporting</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">The investigation was withdrawn</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-whistleblower-expansion-paused" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>Council formally established the Auditor's whistleblower authority in June 2024. The program's first public investigation later substantiated that a former employee had committed the City to a $286,000 ambulance purchase without authority and outside required controls.</p><p>The FY2027 Audit Plan says baseline reductions then forced the Auditor to pause expansion of the hotline to the broader Berkeley public and limited resources for audit work and staff training.</p></div><div class="tp"><span class="tp-h">Teaching point</span>The City did not lack an accountability mechanism. It reduced the mechanism it had just watched work.</div><div class="fn"><span class="fn-h">In fairness</span>The confidential employee hotline continues. The program was reduced in reach, not eliminated.</div><div class="links links-solo"><a href="https://berkeleyca.gov/sites/default/files/2026-03/2026-03-24%20Item%2018%20Whistleblower%20Investigation%20Report.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="done" id="done" hidden tabindex="-1" aria-labelledby="done-h"><h2 class="sr" id="done-h">Quiz complete</h2><div class="sc"><span id="fPts">0</span> / 6</div><div class="sl">points &middot; 6 of 6 questions answered</div><p class="msg">That is the whole installment. Every answer above stays open — the reveals are the point of the quiz, and they are worth more than the score.</p><div class="share-h">Share your score</div><div class="share"><button type="button" class="pri" data-share="native">Share your score</button><button type="button" data-share="copylink">Copy link</button><button type="button" data-share="copytext">Copy score text</button><a data-share="sms" href="#">Messages</a><a data-share="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a><a data-share="email" href="#">Email</a></div><div class="said" id="said" role="status" aria-live="polite"></div><div class="onward"><a href="quiz-measure-z-operating-model.html">Next: Measure Z: Can the Public-Bank Model Work? &rarr;</a><a href="quiz.html">All 24 quizzes in Season 1</a></div><button type="button" class="restart" data-restart>Clear my answers and start over</button></section></main><div class="pull-complete"><strong>Berkeley's auditors repeatedly found the problem. The unresolved question is whether a finding creates a corrective deadline, an accountable owner, and a consequence when the correction never arrives.</strong></div><div class="nextq"><div class="nextq-k">Next</div><div class="nextq-t"><a href="quiz-measure-z-operating-model.html">Measure Z: Can the Public-Bank Model Work?</a></div><div class="nextq-d">Measure Z asks Berkeley property owners to capitalize a public bank intended to serve a broader East Bay region. Test what voters are authorizing, who can benefit, what happens if no bank is chartered, and whether the operating and lending assumptions have been demonstrated.</div><a class="nextq-cta" href="quiz-measure-z-operating-model.html">Continue &rarr;</a></div></div><div class="foot">
+<div class="qhero"><div class="qhero-in"><div class="crumb"><a href="quiz.html">The Berkeley Voter Quiz</a> &middot; Follow-through</div><h1>Who Audits the Follow-Through?</h1><p class="deck">Berkeley's accountability problem is not primarily that nobody finds problems. It is whether management corrects them and Council enforces follow-through.</p><div class="sig">Finding a problem and fixing it are two different systems.</div></div></div><div class="bar"><div class="bar-in" id="bar" role="status" aria-live="polite"><span>Answered <b id="nAns">0</b> of <b>6</b></span><span>Score <b id="nPts">0</b> of <b>6</b> points</span><button type="button" class="bar-go" id="barGo" hidden data-go-result>See what you&#8217;ve uncovered &darr;</button></div></div><div class="wrap"><main id="quiz"><section class="q" id="q-audit-first-formal-warning" data-qid="audit-first-formal-warning" data-type="single"><div class="q-n">Question 1 of 6</div><h2 class="q-p" id="p-audit-first-formal-warning">When did Berkeley officials first receive a formal City Auditor warning that rising recurring benefit costs and unfunded obligations required long-term corrective action?</h2><ul class="choices" role="group" aria-labelledby="p-audit-first-formal-warning"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">When the FY2027–28 deficit was announced</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">During the COVID emergency</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">In the 2022 financial-condition audit</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">At least by the Auditor's 2010 employee-benefits report</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-first-formal-warning" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The Auditor's November 2010 report, <strong>Employee Benefits: Tough Decisions Ahead</strong>, warned that government employee benefits represented a rapidly increasing City cost. It addressed significant underfunded liabilities for pensions, police retiree medical benefits, and leave payouts; projected steep increases in pension contribution rates; and warned that the City's pension funded level would erode without additional set-asides.</p><p>Police retiree medical was reported as only 13% funded and unused-leave liabilities as 2% funded.</p></div><div class="tp"><span class="tp-h">Teaching point</span>The exact FY2027–28 deficit estimate is new. The fiscal condition producing it is not.</div><div class="links links-solo"><a href="https://berkeleyca.gov/sites/default/files/2022-01/2010-11-16_Item_13_Employee_Benefits_Tough_Decisions_Ahead-Auditor%281%29.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-missing-liability-report" data-qid="audit-missing-liability-report" data-type="single"><div class="q-n">Question 2 of 6</div><h2 class="q-p" id="p-audit-missing-liability-report">Council adopted a 2012 requirement for management to report every other year on current and projected unfunded liabilities. What happened to the FY2025 report?</h2><ul class="choices" role="group" aria-labelledby="p-audit-missing-liability-report"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">It showed that every liability was fully funded</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">It was published but never placed on a Council agenda</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Management did not produce it, citing limited staff time and competing priorities</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">Voters repealed the reporting requirement</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-missing-liability-report" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The Auditor's 2026 financial-condition report says management did not release the FY2025 update. The Auditor concluded that Council and the public therefore lacked complete, accessible information about unfunded liabilities before budget deliberations.</p><p>This is central to the “new deficit” framing. Council had required an early-warning instrument and then proceeded without its scheduled reading.</p></div><div class="links"><a href="https://berkeleyca.gov/sites/default/files/2026-04/2026-04-28%20Item%2009%20Berkeley%E2%80%99s%20Financial%20Condition%20%28FY%202016-FY%202025%29.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a><span class="lsep" aria-hidden="true">&middot;</span><a class="fullcase" href="hidden-budget-cycle.html">Why this matters</a></div></div></section><section class="q" id="q-audit-fleet-reporting-interval" data-qid="audit-fleet-reporting-interval" data-type="single"><div class="q-n">Question 3 of 6</div><h2 class="q-p" id="p-audit-fleet-reporting-interval">After the 2021 fleet audit required an initial January 2022 update and reports every six months thereafter, how many status reports had been delivered by October 2025?</h2><ul class="choices" role="group" aria-labelledby="p-audit-fleet-reporting-interval"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">All eight expected reports</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Six</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Four</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">None</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-fleet-reporting-interval" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The City's October 2025 report identifies updates dated November 3, 2022; March 19, 2024; December 10, 2024; and October 28, 2025. The first arrived roughly ten months after its deadline. Subsequent gaps were approximately sixteen, nine, and ten-and-a-half months — not six.</p><p>The October 2025 report then scheduled the next update for fall 2026, openly moving to roughly another annual interval while recommendations remained incomplete.</p></div><div class="links links-solo"><a href="https://berkeleyca.gov/sites/default/files/documents/2025-10-28%20Item%2035%20Audit%20Status%20Reports%20Fleet%20Replacement%20Fund%20Short%20Millions.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-dropped-recommendations" data-qid="audit-dropped-recommendations" data-type="single"><div class="q-n">Question 4 of 6</div><h2 class="q-p" id="p-audit-dropped-recommendations">Why did nine outstanding recommendations from the 2019 fire-prevention-inspections audit disappear from active tracking in 2024?</h2><ul class="choices" role="group" aria-labelledby="p-audit-dropped-recommendations"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">Every recommendation was implemented</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Fire risk no longer existed</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">They passed the Auditor's five-year tracking limit</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">The original audit was withdrawn</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-dropped-recommendations" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The recommendations were classified as dropped because the audit was more than five years old — not because the corrective work was complete. Under the Auditor's current terminology, “dropped” can mean management accepts the risk and is unable or unwilling to implement the recommendation; open recommendations also close this way at five years.</p></div><div class="tp"><span class="tp-h">Teaching point</span>Dashboard closure is not the same as risk resolution.</div><div class="links links-solo"><a href="https://berkeleyca.gov/sites/default/files/2026-05/City_Auditor_Fiscal_Year_2027_Audit_Plan.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-lease-risks-sixteen-years" data-qid="audit-lease-risks-sixteen-years" data-type="single"><div class="q-n">Question 5 of 6</div><h2 class="q-p" id="p-audit-lease-risks-sixteen-years">How long after Berkeley's original lease-management audit did the Auditor find that substantially the same risks remained?</h2><ul class="choices" role="group" aria-labelledby="p-audit-lease-risks-sixteen-years"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">Two years</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Five years</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Ten years</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">Sixteen years</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-lease-risks-sixteen-years" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>The 2025 follow-up found that Berkeley still lacked a complete central lease-and-license inventory, clear citywide direction, consistent standards for below-market arrangements, and adequate capacity for strategic oversight.</p><p>Eight recommendations were reopened.</p></div><div class="links links-solo"><a href="https://berkeleyca.gov/sites/default/files/documents/2009_Leases_Audit_Follow_Up_Berkeley_Faces_the_Same_Risks_16_Years_Later.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="q" id="q-audit-whistleblower-expansion-paused" data-qid="audit-whistleblower-expansion-paused" data-type="single"><div class="q-n">Question 6 of 6</div><h2 class="q-p" id="p-audit-whistleblower-expansion-paused">After Berkeley's new whistleblower program substantiated an unauthorized $286,000 ambulance purchase, what happened to its planned public expansion?</h2><ul class="choices" role="group" aria-labelledby="p-audit-whistleblower-expansion-paused"><li><button type="button" class="choice" data-cid="a"><span class="k" aria-hidden="true">A</span><span class="lb">It immediately expanded to every Berkeley resident</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="b"><span class="k" aria-hidden="true">B</span><span class="lb">Budget reductions forced the Auditor to pause public expansion</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="c"><span class="k" aria-hidden="true">C</span><span class="lb">Council eliminated anonymous reporting</span><span class="mk"></span></button></li><li><button type="button" class="choice" data-cid="d"><span class="k" aria-hidden="true">D</span><span class="lb">The investigation was withdrawn</span><span class="mk"></span></button></li></ul><div class="reveal" id="r-audit-whistleblower-expansion-paused" hidden><div class="rv-a" data-answer></div><div class="rv-sub" data-answer-sub hidden></div><div class="rv-b"><p>Council formally established the Auditor's whistleblower authority in June 2024. The program's first public investigation later substantiated that a former employee had committed the City to a $286,000 ambulance purchase without authority and outside required controls.</p><p>The FY2027 Audit Plan says baseline reductions then forced the Auditor to pause expansion of the hotline to the broader Berkeley public and limited resources for audit work and staff training.</p></div><div class="tp"><span class="tp-h">Teaching point</span>The City did not lack an accountability mechanism. It reduced the mechanism it had just watched work.</div><div class="fn"><span class="fn-h">In fairness</span>The confidential employee hotline continues. The program was reduced in reach, not eliminated.</div><div class="links links-solo"><a href="https://berkeleyca.gov/sites/default/files/2026-03/2026-03-24%20Item%2018%20Whistleblower%20Investigation%20Report.pdf" target="_blank" rel="noopener">See the evidence<span class="ext" aria-hidden="true">&#8599;</span><span class="sr"> (opens in a new tab)</span></a></div></div></section><section class="done" id="done" hidden tabindex="-1" aria-labelledby="done-h"><h2 class="sr" id="done-h">Quiz complete</h2><div class="sr" id="doneSay" role="status" aria-live="polite"></div><div class="done-eyebrow">Now you know</div><p class="finding">Berkeley has systems that find problems, but no reliable system that makes sure they get fixed — and the public-facing whistleblower program was defunded before it ever opened.</p><div class="proof"><p>Audit recommendations linger, tracking ends without completion, and old problems recur: nine fire-inspection recommendations left the tracking system by expiring rather than being completed, and the same lease-management risks were found sixteen years apart. Detection works; correction has no deadline, no owner, and no consequence. As for the hotline, the Auditor said the expansion was paused for lack of resources. That was a budgeting choice. In a process supposedly about protecting essential functions, an independent channel for the public to report suspected wrongdoing should have been treated as a priority, not an optional extra.</p></div><div class="share"><button type="button" class="pri" data-share="native">Share this finding</button><button type="button" class="sec" data-share="copylink">Copy link</button></div><div class="said" id="said" role="status" aria-live="polite"></div><div class="score-line">Your score: <b id="fPts">0</b> of 6 points &middot; 6 of 6 questions answered</div><div class="rel" data-related><div class="rel-h">Keep going</div><a class="rel-c" href="quiz-measure-z-operating-model.html" data-rel-id="measure-z-operating-model"><span class="rel-t">Measure Z: Can the Public-Bank Model Work?</span><span class="rel-done" hidden>Completed</span></a><a class="rel-c" href="quiz-ballot-cost.html" data-rel-id="ballot-cost"><span class="rel-t">What Will This Ballot Cost?</span><span class="rel-done" hidden>Completed</span></a><a class="rel-c" href="quiz-why-another-sales-tax.html" data-rel-id="why-another-sales-tax"><span class="rel-t">Why Does Berkeley Need Another Sales Tax?</span><span class="rel-done" hidden>Completed</span></a></div><div class="rel-all"><a href="quiz.html">Browse all 11 quizzes &rarr;</a></div><div class="news"><a href="https://berkeleydecisionproject.substack.com/p/welcome-to-the-berkeley-decision" target="_blank" rel="noopener">Stay updated on new quizzes &#8599;</a></div><button type="button" class="restart" data-restart>Clear my answers and start over</button></section></main><div class="pull-complete"><strong>Berkeley's auditors repeatedly found the problem. The unresolved question is whether a finding creates a corrective deadline, an accountable owner, and a consequence when the correction never arrives.</strong></div><div class="nextq"><div class="nextq-k">Next</div><div class="nextq-t"><a href="quiz-measure-z-operating-model.html">Measure Z: Can the Public-Bank Model Work?</a></div><div class="nextq-d">Measure Z asks Berkeley property owners to capitalize a public bank intended to serve a broader East Bay region. Test what voters are authorizing, who can benefit, what happens if no bank is chartered, and whether the operating and lending assumptions have been demonstrated.</div><a class="nextq-cta" href="quiz-measure-z-operating-model.html">Continue &rarr;</a></div></div><div class="foot">
 <p>Every answer links to the primary record it comes from — a City audit, staff report, ballot filing or Council transcript. Questions are drawn from the project's canonical question bank and are not published until the quotes, dates and amounts in them have been checked against those records.</p>
 <p style="margin-top:10px"><a href="quiz.html">&larr; The Berkeley Voter Quiz</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
 </div>
@@ -309,7 +381,7 @@ a:hover { color: var(--accent-hover); }
 <script>
 (function () {
   "use strict";
-  var Q = {"season": 1, "quiz": "audits-follow-through", "version": 2, "series": "The Berkeley Voter Quiz", "title": "Who Audits the Follow-Through?", "url": "https://ericdf.github.io/berkeley-decision-project/quiz-audits-follow-through.html", "totalPoints": 6, "questions": [{"id": "audit-first-formal-warning", "type": "single", "choices": [{"id": "a", "label": "When the FY2027–28 deficit was announced", "correct": false}, {"id": "b", "label": "During the COVID emergency", "correct": false}, {"id": "c", "label": "In the 2022 financial-condition audit", "correct": false}, {"id": "d", "label": "At least by the Auditor's 2010 employee-benefits report", "correct": true}]}, {"id": "audit-missing-liability-report", "type": "single", "choices": [{"id": "a", "label": "It showed that every liability was fully funded", "correct": false}, {"id": "b", "label": "It was published but never placed on a Council agenda", "correct": false}, {"id": "c", "label": "Management did not produce it, citing limited staff time and competing priorities", "correct": true}, {"id": "d", "label": "Voters repealed the reporting requirement", "correct": false}]}, {"id": "audit-fleet-reporting-interval", "type": "single", "choices": [{"id": "a", "label": "All eight expected reports", "correct": false}, {"id": "b", "label": "Six", "correct": false}, {"id": "c", "label": "Four", "correct": true}, {"id": "d", "label": "None", "correct": false}]}, {"id": "audit-dropped-recommendations", "type": "single", "choices": [{"id": "a", "label": "Every recommendation was implemented", "correct": false}, {"id": "b", "label": "Fire risk no longer existed", "correct": false}, {"id": "c", "label": "They passed the Auditor's five-year tracking limit", "correct": true}, {"id": "d", "label": "The original audit was withdrawn", "correct": false}]}, {"id": "audit-lease-risks-sixteen-years", "type": "single", "choices": [{"id": "a", "label": "Two years", "correct": false}, {"id": "b", "label": "Five years", "correct": false}, {"id": "c", "label": "Ten years", "correct": false}, {"id": "d", "label": "Sixteen years", "correct": true}]}, {"id": "audit-whistleblower-expansion-paused", "type": "single", "choices": [{"id": "a", "label": "It immediately expanded to every Berkeley resident", "correct": false}, {"id": "b", "label": "Budget reductions forced the Auditor to pause public expansion", "correct": true}, {"id": "c", "label": "Council eliminated anonymous reporting", "correct": false}, {"id": "d", "label": "The investigation was withdrawn", "correct": false}]}]};
+  var Q = {"season": 1, "quiz": "audits-follow-through", "version": 2, "series": "The Berkeley Voter Quiz", "title": "Who Audits the Follow-Through?", "url": "https://ericdf.github.io/berkeley-decision-project/quiz-audits-follow-through.html", "totalPoints": 6, "finding": "Berkeley has systems that find problems, but no reliable system that makes sure they get fixed — and the public-facing whistleblower program was defunded before it ever opened.", "shareSupport": "Nine audit recommendations left the tracking system by expiring rather than being completed.", "shareText": "Measure U and Measure Z both promise independent audits. Berkeley's audit record suggests that may be less reassuring than it sounds.", "questions": [{"id": "audit-first-formal-warning", "type": "single", "choices": [{"id": "a", "label": "When the FY2027–28 deficit was announced", "correct": false}, {"id": "b", "label": "During the COVID emergency", "correct": false}, {"id": "c", "label": "In the 2022 financial-condition audit", "correct": false}, {"id": "d", "label": "At least by the Auditor's 2010 employee-benefits report", "correct": true}]}, {"id": "audit-missing-liability-report", "type": "single", "choices": [{"id": "a", "label": "It showed that every liability was fully funded", "correct": false}, {"id": "b", "label": "It was published but never placed on a Council agenda", "correct": false}, {"id": "c", "label": "Management did not produce it, citing limited staff time and competing priorities", "correct": true}, {"id": "d", "label": "Voters repealed the reporting requirement", "correct": false}]}, {"id": "audit-fleet-reporting-interval", "type": "single", "choices": [{"id": "a", "label": "All eight expected reports", "correct": false}, {"id": "b", "label": "Six", "correct": false}, {"id": "c", "label": "Four", "correct": true}, {"id": "d", "label": "None", "correct": false}]}, {"id": "audit-dropped-recommendations", "type": "single", "choices": [{"id": "a", "label": "Every recommendation was implemented", "correct": false}, {"id": "b", "label": "Fire risk no longer existed", "correct": false}, {"id": "c", "label": "They passed the Auditor's five-year tracking limit", "correct": true}, {"id": "d", "label": "The original audit was withdrawn", "correct": false}]}, {"id": "audit-lease-risks-sixteen-years", "type": "single", "choices": [{"id": "a", "label": "Two years", "correct": false}, {"id": "b", "label": "Five years", "correct": false}, {"id": "c", "label": "Ten years", "correct": false}, {"id": "d", "label": "Sixteen years", "correct": true}]}, {"id": "audit-whistleblower-expansion-paused", "type": "single", "choices": [{"id": "a", "label": "It immediately expanded to every Berkeley resident", "correct": false}, {"id": "b", "label": "Budget reductions forced the Auditor to pause public expansion", "correct": true}, {"id": "c", "label": "Council eliminated anonymous reporting", "correct": false}, {"id": "d", "label": "The investigation was withdrawn", "correct": false}]}]};
   var STORE = "bvq:" + Q.season + ":" + Q.quiz + ":v" + Q.version;
   var state = load();
 
@@ -365,6 +437,50 @@ a:hover { color: var(--accent-hover); }
     return { answered: answered, points: pts };
   }
 
+  // ── Completion across the season ──────────────────────────────────────────
+  // One key for the whole season, separate from per-quiz answer state, so
+  // clearing one quiz's answers does not forget that the others were played.
+  // Local only: no server, nothing identifying, and every access guarded —
+  // Safari in private mode throws on read as well as write.
+  var DONE_STORE = "bvq:done:" + Q.season;
+
+  function completions() {
+    try {
+      var raw = localStorage.getItem(DONE_STORE);
+      var v = raw ? JSON.parse(raw) : null;
+      return (v && typeof v === "object") ? v : {};
+    } catch (e) { return {}; }
+  }
+  function markComplete(points) {
+    try {
+      var all = completions();
+      all[Q.quiz] = {
+        completedAt: new Date().toISOString(),
+        pointsEarned: points,
+        pointsAvailable: Q.totalPoints
+      };
+      localStorage.setItem(DONE_STORE, JSON.stringify(all));
+    } catch (e) {}
+  }
+
+  // Related quizzes the reader has already finished are labelled and sink to
+  // the bottom, so what is offered first is something new. Text, never colour
+  // alone. Build order is preserved among equals.
+  function paintRelated() {
+    var wrap = document.querySelector("[data-related]");
+    if (!wrap) return;
+    var all = completions();
+    var cards = Array.prototype.slice.call(wrap.querySelectorAll("[data-rel-id]"));
+    var seen = [];
+    cards.forEach(function (c) {
+      var isDone = !!all[c.getAttribute("data-rel-id")];
+      var tag = c.querySelector(".rel-done");
+      if (tag) tag.hidden = !isDone;
+      if (isDone) seen.push(c);
+    });
+    seen.forEach(function (c) { wrap.appendChild(c); });
+  }
+
   function refresh() {
     var t = tally();
     document.getElementById("nAns").textContent = t.answered;
@@ -372,12 +488,141 @@ a:hover { color: var(--accent-hover); }
     var done = document.getElementById("done");
     if (t.answered === Q.questions.length) {
       document.getElementById("fPts").textContent = t.points;
-      // Reveal completion in place. Never focus or scroll it: the reader may be
-      // mid-reveal several questions up, and moving them would lose their place.
-      done.hidden = false;
+      markComplete(t.points);
+      paintRelated();
+      // Announce once, on arrival, in the page's own order: the finding, then
+      // the score. Re-announcing on every refresh would interrupt a reader who
+      // is still working back through the reveals.
+      var announce = document.getElementById("doneSay");
+      if (announce && !announce.textContent) {
+        announce.textContent = "Quiz complete. You scored " + t.points + " of "
+          + Q.totalPoints + " points. Your result is at the end of the page.";
+      }
+      // Reveal completion in place. Never focus or scroll it unasked: the last
+      // thing a reader does is answer a question, and that question's reveal —
+      // the evidence the finding summarizes — renders right where they are
+      // looking. Moving them off it, or covering it, would deliver the
+      // conclusion on top of the proof. The bar offers a way down instead, and
+      // the reader decides when to take it.
+      if (done.hidden) {
+        done.hidden = false;
+        done.classList.add("done-arrive");
+      }
+      watchResult();
     } else {
       done.hidden = true;
+      showGo(false);
     }
+  }
+
+  // ── The invitation ────────────────────────────────────────────────────────
+  // A finished quiz has a result waiting below the reveals. The reader must be
+  // told it exists without being pulled away from what they are reading, so the
+  // offer lives in the score bar and withdraws itself the moment the result is
+  // actually on screen.
+  var goBtn = document.getElementById("barGo");
+
+  // How much of the viewport the pinned chrome covers right now. Measured
+  // rather than assumed: the score bar changes height when the offer is in it,
+  // and both bars are styled in CSS that can move without this script knowing.
+  function stickyDepth() {
+    // The lowest edge any pinned bar reaches, not the sum of their heights:
+    // the score bar is offset into the nav's box, so adding the two overshoots
+    // badly — and both wrap to several lines on a narrow screen, which is
+    // exactly where the finding was landing underneath them.
+    var depth = 0;
+    ["nav", "bar"].forEach(function (cls) {
+      var el = document.querySelector("." + cls);
+      if (!el || getComputedStyle(el).position !== "sticky") return;
+      var box = el.getBoundingClientRect();
+      // Where it will be once pinned, which is not where it is mid-scroll.
+      var pinned = (parseFloat(getComputedStyle(el).top) || 0) + box.height;
+      if (pinned > depth) depth = pinned;
+    });
+    return depth;
+  }
+
+  function showGo(on) {
+    if (!goBtn) return;
+    goBtn.hidden = !on;
+    // The bar gets room only while the offer is in it. A class rather than
+    // :has(), which is not safe to rely on across the browsers this has to run in.
+    var bar = document.getElementById("bar");
+    if (bar) bar.classList.toggle("has-go", !!on);
+  }
+
+  function watchResult() {
+    var done = document.getElementById("done");
+    if (!goBtn || !done) return;
+    // Offer it as soon as the quiz is finished. An observer on an element far
+    // below the fold reports nothing until it approaches, so waiting for the
+    // first callback would hide the offer exactly when it is most useful — the
+    // observer's job here is to withdraw the offer, not to make it.
+    if (done.hidden) return;              // nothing to observe or measure yet
+    var box = done.getBoundingClientRect();
+    showGo(!(box.top < window.innerHeight && box.bottom > 0));
+    // A scroll listener backs the observer up rather than replacing it: some
+    // environments never deliver intersection callbacks, and without this the
+    // offer would sit there after the reader had plainly arrived. Cheap, and it
+    // detaches itself the moment the result has been seen.
+    if (!watchResult.scrolling) {
+      watchResult.scrolling = true;
+      var onScroll = function () {
+        var el = document.getElementById("done");
+        if (!el || el.hidden) return;
+        var r = el.getBoundingClientRect();
+        showGo(!(r.top < window.innerHeight && r.bottom > 0));
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+    }
+    if (!("IntersectionObserver" in window)) return;
+    if (watchResult.observing) return;
+    // Latch only once the panel is real and observable: an observer attached
+    // to a hidden element never reports, and latching then would leave the
+    // offer stuck on screen for the rest of the session.
+    watchResult.observing = true;
+    // No threshold. The panel is often taller than the viewport, so requiring a
+    // fraction of it to be visible can never be satisfied — any overlap counts
+    // as the reader having arrived.
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        // Purely a visibility mirror: hidden while the result is on screen,
+        // offered again the moment the reader scrolls away from it. It is a
+        // way back to the result, not a one-time announcement.
+        showGo(!e.isIntersecting);
+      });
+    });
+    io.observe(done);
+  }
+
+  if (goBtn) {
+    goBtn.addEventListener("click", function () {
+      var done = document.getElementById("done");
+      if (!done) return;
+      showGo(false);
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      // Two stacked sticky bars sit over the top of the page, and the score bar
+      // grows while it carries this button — so scrollIntoView's "start" puts
+      // the finding's first line underneath them. Measure what is actually
+      // pinned and stop short of it.
+      var top = window.scrollY + done.getBoundingClientRect().top - stickyDepth() - 14;
+      try { window.scrollTo({ top: top, behavior: reduce ? "auto" : "smooth" }); }
+      catch (e) { window.scrollTo(0, top); }
+      // Send focus with the scroll so a keyboard reader arrives too, not just
+      // the viewport. The panel is tabindex="-1" for exactly this.
+      //
+      // preventScroll is deliberate: focusing mid-animation would otherwise
+      // jump the page and cancel the smooth scroll. But where smooth behavior
+      // is unsupported the scroll silently does nothing, and a focus that also
+      // refuses to scroll would strand the reader — so check we actually
+      // arrived, and fall back to an instant scroll when we did not.
+      setTimeout(function () {
+        var box = done.getBoundingClientRect();
+        var arrived = box.top < window.innerHeight && box.bottom > 0;
+        try { done.focus({ preventScroll: arrived }); } catch (e) { try { done.focus(); } catch (e2) {} }
+        if (!arrived) window.scrollTo(0, window.scrollY + done.getBoundingClientRect().top - stickyDepth() - 14);
+      }, reduce ? 0 : 420);
+    });
   }
 
   function commit(qq, picked) {
@@ -493,45 +738,30 @@ a:hover { color: var(--accent-hover); }
   refresh();
 
   // ── Sharing ───────────────────────────────────────────────────────────────
-  // The payload is score + quiz title + series + invitation + canonical URL.
-  // It never contains answers, per-question results, or any inference about the
-  // reader. The URL is the plain canonical page, not a stateful one.
-  // Every variant must name Q.series and carry the score. A share that reports a
-  // result without saying what it is from tells the recipient nothing about
-  // where to go, which is the whole point of sharing. Both asserted in tests.
+  // The payload is the FINDING, not the score. A shared score tells the
+  // recipient nothing they can act on or check; the finding is the thing worth
+  // passing on, and it must travel intact to someone who never took the quiz.
+  // Structure: finding, one supporting sentence, canonical URL.
   //
-  // Variants are selected by how the reader actually did, not by score % 3.
-  // Choosing arithmetically once put "I thought I knew this issue" on a perfect
-  // score, which reads as false modesty and is a reaction the reader did not
-  // choose. These stay factual: the score and an invitation, nothing about how
-  // anyone felt.
-  var VARIANTS = {
-    high: [
-      function (s, t) { return "I got " + s + " on “" + t + "” — " + Q.series + ". Try it."; },
-      function (s, t) { return "I scored " + s + " on “" + t + "” — " + Q.series + ". Can you beat it?"; }
-    ],
-    mid: [
-      function (s, t) { return "I got " + s + " on “" + t + "” — " + Q.series + ". Try it."; },
-      function (s, t) { return "I scored " + s + " on “" + t + "” — " + Q.series + ". How well do you know the story behind Berkeley's ballot measures?"; }
-    ],
-    low: [
-      function (s, t) { return "I got " + s + " on “" + t + "” — " + Q.series + ". Harder than it looks."; },
-      function (s, t) { return "I scored " + s + " on “" + t + "” — " + Q.series + ". See how you do."; }
-    ]
-  };
-
+  // The score is deliberately absent. It varies by reader, says nothing about
+  // Berkeley, and turned the share into a knowledge contest — which is what the
+  // result-card spec supersedes. The payload is therefore identical for every
+  // reader of a given quiz: no score band, no variants, nothing derived from
+  // how anyone did. It still never contains answers or per-question results,
+  // and the URL is the plain canonical page, not a stateful one.
   function shareText() {
-    var t = tally();
-    var s = t.points + "/" + Q.totalPoints;
-    var share = Q.totalPoints ? t.points / Q.totalPoints : 0;
-    var band = share >= 0.8 ? "high" : share >= 0.5 ? "mid" : "low";
-    var pool = VARIANTS[band];
-    // Vary within the band so repeated shares of the same result are not
-    // identical, without letting the copy claim a reaction.
-    var v = pool[t.points % pool.length];
-    return v(s, Q.title);
+    // An installment that wrote its own shared message uses it verbatim.
+    if (Q.shareText) return Q.shareText;
+    if (Q.finding) {
+      var body = Q.finding;
+      if (Q.shareSupport) body += "\n\n" + Q.shareSupport;
+      return body;
+    }
+    // No finding authored: name the quiz and the series so the link has
+    // context, rather than reporting a score.
+    return "“" + Q.title + "” — " + Q.series + ".";
   }
-  function shareAll() { return shareText() + " " + Q.url; }
+  function shareAll() { return shareText() + "\n\n" + Q.url; }
 
   function say(msg) {
     var el = document.getElementById("said");
@@ -555,7 +785,7 @@ a:hover { color: var(--accent-hover); }
   if (!navigator.share) {
     // No native sheet: the primary action becomes the copy that always works,
     // rather than a button that silently does nothing.
-    nativeBtn.textContent = "Copy score text";
+    nativeBtn.textContent = Q.finding ? "Copy this finding" : "Copy text";
     nativeBtn.setAttribute("data-share", "copytext");
   }
 
@@ -564,34 +794,30 @@ a:hover { color: var(--accent-hover); }
       var kind = el.getAttribute("data-share");
       if (kind === "native") {
         ev.preventDefault();
-        navigator.share({ title: Q.title, text: shareText(), url: Q.url }).catch(function () {});
+        // The URL goes inside `text`, never alongside it as `url`.
+        //
+        // Passing `url` loses the message on Apple platforms: iMessage builds a
+        // link preview from it and discards `text` outright, so the recipient
+        // gets a bare link, and Mail appends it as its own element styled
+        // separately — body at one size, link at another. Both were reported
+        // from real devices.
+        //
+        // The cost is Mail's subject line, which comes out empty: Mail derives
+        // a subject from `url`, and `title` alone does not fill it (tested — it
+        // is passed here and Mail still opens with no subject). That is the
+        // accepted trade. iMessage is how this actually gets forwarded, and a
+        // sender looking at a composed email can type a subject; a recipient
+        // handed a bare link cannot recover the message. Do not "fix" the
+        // subject by restoring `url` — that reintroduces the worse bug.
+        //
+        // `title` stays for the targets that do use it.
+        navigator.share({ title: Q.title, text: shareAll() }).catch(function () {});
       } else if (kind === "copylink") {
-        ev.preventDefault(); copy(Q.url, "Link copied.");
+        ev.preventDefault(); copy(Q.url, "Link copied to clipboard.");
       } else if (kind === "copytext") {
-        ev.preventDefault(); copy(shareAll(), "Score text copied.");
+        ev.preventDefault(); copy(shareAll(), Q.finding ? "Finding copied to clipboard." : "Copied to clipboard.");
       }
     });
-  });
-
-  // The href-based targets are set at click time so they always carry the
-  // current score. Assembling them earlier would freeze a stale number.
-  function hrefTarget(kind) {
-    var body = encodeURIComponent(shareAll());
-    if (kind === "sms") {
-      // iOS wants &body after a ?, Android accepts ?body. "?&body=" works on both.
-      return "sms:?&body=" + body;
-    }
-    if (kind === "whatsapp") return "https://wa.me/?text=" + body;
-    if (kind === "email") {
-      return "mailto:?subject=" + encodeURIComponent(Q.series + " — " + Q.title)
-           + "&body=" + encodeURIComponent(shareAll());
-    }
-    return "#";
-  }
-  ["sms", "whatsapp", "email"].forEach(function (kind) {
-    var el = document.querySelector('[data-share="' + kind + '"]');
-    if (!el) return;
-    el.addEventListener("click", function () { el.href = hrefTarget(kind); });
   });
 
   // ── Choice order ──────────────────────────────────────────────────────────
@@ -619,6 +845,17 @@ a:hover { color: var(--accent-hover); }
     restart.addEventListener("click", function () {
       state = {};
       try { localStorage.removeItem(STORE); } catch (e) {}
+      // Starting this quiz over also un-marks it as completed. The rest of the
+      // season's record stays: the button clears these answers, not every quiz
+      // the reader has ever finished.
+      try {
+        var all = completions();
+        if (all[Q.quiz]) {
+          delete all[Q.quiz];
+          if (Object.keys(all).length) localStorage.setItem(DONE_STORE, JSON.stringify(all));
+          else localStorage.removeItem(DONE_STORE);
+        }
+      } catch (e) {}
       location.reload();
     });
   }
