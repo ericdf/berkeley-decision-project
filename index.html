@@ -175,21 +175,11 @@ p { margin: .85rem 0; }
             text-decoration: none; padding: 10px 15px; border-radius: 6px; margin-top: 13px;
             background: var(--accent); color: var(--accent-soft); transition: background .15s; }
 .rail-cta:hover { background: var(--accent-hover); color: var(--accent-soft); }
-.rail-all { display: block; font-family: var(--sans); font-size: 12.5px; font-weight: 600;
-            margin-top: 9px; }
-/* Two measures, two buttons. The rail's single CTA pointed only at Measure V,
-   which left the $300M bond reachable only by opening the season page first.
-   Measure U also ships in two lengths, so its button carries the pair beneath
-   it rather than forcing a choice the reader cannot yet make: the button is the
-   quiz, the two links under it are how long it takes. */
-.rail-m { margin-top: 13px; padding-top: 13px; border-top: 1px solid var(--rule); }
-.rail-m:first-of-type { padding-top: 0; border-top: 0; }
-/* 19rem of rail will not hold a long label on one line, so the button wraps to
-   two rather than overflowing the column. */
-.rail-m .rail-cta { display: block; margin-top: 0; text-align: left; line-height: 1.35; }
-.rail-lens { font-family: var(--sans); font-size: 12.5px; color: var(--ink-2); margin-top: 8px; }
-.rail-lens a { font-weight: 700; }
-.rail-lens .sep { color: var(--ink-3); margin: 0 6px; }
+/* One button to the quiz landing page, which is generated and stays current.
+   The per-measure grid this replaced carried a hand-copied question count under
+   each link; Measure Z's said "3 questions" against a quiz that had grown to
+   seven. 19rem of rail will not hold the label on one line, so it wraps. */
+.rail-one { display: block; margin-top: 15px; text-align: center; line-height: 1.35; }
 
 @media (max-width: 1179px) {
   /* Inline above the hero, full measure, so a phone reader meets it first. */
@@ -273,18 +263,14 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
     and what was never asked.</p>
     <div class="rail-h"><a href="quiz.html">The Berkeley Voter Quiz</a></div>
     <div class="rail-s">Before you vote on Berkeley&rsquo;s November ballot</div>
-    <div class="rail-m">
-      <a class="rail-cta" href="quiz-why-another-sales-tax.html">Measure V &middot; Why another sales tax? &rarr;</a>
-    </div>
-    <div class="rail-m">
-      <a class="rail-cta" href="quiz-u-basic.html">Measure U &middot; Haven&rsquo;t we done this before? &rarr;</a>
-      <div class="rail-lens">7 questions</div>
-    </div>
-    <div class="rail-m">
-      <a class="rail-cta" href="quiz-measure-z-operating-model.html">Measure Z &middot; Does the business case hold up? &rarr;</a>
-      <div class="rail-lens">Public bank &middot; 3 questions</div>
-    </div>
-    <a class="rail-all" href="quiz.html">More quiz investigations &rarr;</a>
+    <!-- One button, not a per-measure grid. The grid hand-copied a question
+         count beside each link, and a hand-copied count goes stale the moment a
+         quiz gains a question: Measure Z shipped saying "3 questions" against a
+         quiz that had grown to seven. The counts were also doing no work — a
+         reader choosing what to read does not need the length first. The quiz
+         landing page is where the current set is organized, and it generates
+         itself from the data, so it cannot drift the way this rail did. -->
+    <a class="rail-cta rail-one" href="quiz.html">The 2026 ballot &mdash; and more &rarr;</a>
   </div>
 </div>
 
@@ -410,9 +396,12 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
   <div class="feature">
     <h3><a href="measure-u-is-t1-again.html">Measure U Is T1 Again</a></h3>
     <p>What the 2016 voter got for $100 million &mdash; and why Measure U repeats the design.</p>
+    <!-- No question or installment counts: they are hand-copied here and go
+         stale the moment a quiz gains a question, as the rail's did. The
+         distinction a reader needs is length, and short/full carries it. -->
     <p class="alt">Rather play it? Take the argument as a quiz &mdash; the
-    <a href="quiz-u-basic.html">seven-question version</a>, or
-    <a href="quiz-measure-u.html">all six installments</a>.</p>
+    <a href="quiz-u-basic.html">short version</a>, or the
+    <a href="quiz-measure-u.html">full series</a>.</p>
     <a class="feature-cta" href="measure-u-is-t1-again.html">See the analysis &rarr;</a>
   </div>
 

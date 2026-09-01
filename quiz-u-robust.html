@@ -280,6 +280,23 @@ a:hover { color: var(--accent-hover); }
 .calc { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 7px;
         padding: 15px 17px; margin-top: 18px; font-size: 15px; }
 .calc-ask { font-size: 14.5px; color: var(--ink-2); margin-top: 8px; }
+/* The same offer before the first question. Visually distinct from the reveal
+   panels below it so it reads as a companion tool rather than as quiz content,
+   and it carries a real button — this is the one place on the page asking the
+   reader to leave, so a link buried in a sentence would not do it. */
+.calc-cta { background: var(--panel); border: 1px solid var(--rule);
+            border-left: 3px solid var(--send); border-radius: 8px;
+            padding: 17px 19px; margin-bottom: 26px; }
+.calc-cta strong { font-family: var(--sans); font-size: 16px; font-weight: 800;
+                   letter-spacing: -.2px; display: block; }
+.calc-cta p { font-size: 14.5px; color: var(--ink-2); margin-top: 6px; }
+.calc-cta a { display: inline-flex; align-items: center; margin-top: 13px;
+              font-family: var(--sans); font-size: 14px; font-weight: 800;
+              text-decoration: none; border-radius: 7px; padding: 11px 17px;
+              min-height: 44px; background: var(--send); border: 1px solid var(--send);
+              color: var(--send-ink); }
+.calc-cta a:hover { background: var(--send-hover); border-color: var(--send-hover);
+                    color: var(--send-ink); }
 .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
       clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
