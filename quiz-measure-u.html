@@ -133,6 +133,10 @@ a:hover { color: var(--accent-hover); }
 .decision { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 18px; display: flex; flex-direction: column; min-height: 250px; }
 .decision .measure { font-family: var(--sans); font-size: 13px; font-weight: 900; color: var(--ink); }
 .decision h3 { font-family: var(--sans); font-size: 19px; line-height: 1.2; letter-spacing: -.2px; margin-top: 7px; }
+/* The heading is the link to the quiz, so it reads as the card's own title and
+   underlines on hover the way the Go-deeper tiles do. */
+.decision h3 a { color: var(--ink); text-decoration: none; }
+.decision h3 a:hover { color: var(--accent); text-decoration: underline; }
 .decision p { font-size: 14.5px; color: var(--ink-2); margin-top: 9px; flex: 1; }
 .decision .actions { margin-top: 15px; font-family: var(--sans); font-size: 13px; font-weight: 700; }
 .decision .actions a { display: block; margin-top: 6px; text-decoration: none; }
