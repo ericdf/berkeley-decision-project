@@ -168,9 +168,13 @@ p { margin: .85rem 0; }
 .rail-q { font-family: var(--sans); font-size: 16.5px; font-weight: 800; line-height: 1.28;
           letter-spacing: -.2px; margin-top: 7px; }
 .rail-p { font-size: 14.5px; color: var(--ink-2); margin: 9px 0 0; line-height: 1.5; }
-.rail-h { font-family: var(--sans); font-size: 14.5px; font-weight: 800; margin-top: 13px; }
+/* Closes the pitch rather than titling what follows, so it is ruled off from the
+   paragraph above and the quiz name sits under it as the destination. */
+.rail-h { font-family: var(--sans); font-size: 14.5px; font-weight: 800; line-height: 1.4;
+          margin-top: 15px; padding-top: 14px; border-top: 1px solid var(--rule); }
 .rail-h a { text-decoration: none; }
-.rail-s { font-family: var(--sans); font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+.rail-s { font-family: var(--sans); font-size: 13px; color: var(--ink-2); margin-top: 6px; }
+.rail-s a { font-weight: 700; text-decoration: none; }
 .rail-cta { display: inline-block; font-family: var(--sans); font-size: 13.5px; font-weight: 700;
             text-decoration: none; padding: 10px 15px; border-radius: 6px; margin-top: 13px;
             background: var(--accent); color: var(--accent-soft); transition: background .15s; }
@@ -256,13 +260,12 @@ footer { max-width: 46rem; margin: 0 auto; padding: 26px; border-top: 1px solid 
 <div class="rail">
   <div class="rail-in">
     <div class="rail-k">Why this is needed</div>
-    <div class="rail-q">Look at the decisions being made right now.</div>
-    <p class="rail-p">The habits on this page are not abstractions. Berkeley&rsquo;s November
-    ballot asks residents for more money, and each quiz traces one habit through the
-    City&rsquo;s own audits, staff reports and Council transcripts &mdash; to what it cost
-    and what was never asked.</p>
-    <div class="rail-h"><a href="quiz.html">The Berkeley Voter Quiz</a></div>
-    <div class="rail-s">Before you vote on Berkeley&rsquo;s November ballot</div>
+    <div class="rail-q">The facts are buried in mountains of government documents.</div>
+    <p class="rail-p">These quizzes turn that material into a quick, engaging way to
+    understand the decisions Berkeley is making &mdash; and asking you to make.</p>
+    <div class="rail-h">The format is fun. The evidence is serious. The decisions are
+    consequential.</div>
+    <div class="rail-s"><a href="quiz.html">The Berkeley Voter Quiz</a></div>
     <!-- One button, not a per-measure grid. The grid hand-copied a question
          count beside each link, and a hand-copied count goes stale the moment a
          quiz gains a question: Measure Z shipped saying "3 questions" against a
