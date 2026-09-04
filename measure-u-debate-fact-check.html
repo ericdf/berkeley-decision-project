@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fact-Checking Berkeley&rsquo;s Measure U Debate</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --r-supported:#1f6b45; --r-supported-bg:#eef7f1;
+  --r-context:var(--accent); --r-context-bg:var(--accent-soft);
+  --r-misleading:#a33208; --r-misleading-bg:#fdf0ea;
+  --r-incorrect:#8f1616; --r-incorrect-bg:#fbeaea;
+  --r-unsupported:#7a3ba0; --r-unsupported-bg:#f6eefb;
+  --r-analysis:#586074; --r-analysis-bg:#f1f3f6;
+  --logic:#334; --logic-bg:#eceef2;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331;
+    --r-supported:#5fc48d; --r-supported-bg:#12251b;
+    --r-misleading:#f08a5d; --r-misleading-bg:#2b1810;
+    --r-incorrect:#f2726f; --r-incorrect-bg:#2e1414;
+    --r-unsupported:#c99ae6; --r-unsupported-bg:#221630;
+    --r-analysis:#a4acbc; --r-analysis-bg:#20242e;
+    --logic:#b9c1d1; --logic-bg:#232935;
+  }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+  --r-supported:#5fc48d; --r-supported-bg:#12251b;
+  --r-misleading:#f08a5d; --r-misleading-bg:#2b1810;
+  --r-incorrect:#f2726f; --r-incorrect-bg:#2e1414;
+  --r-unsupported:#c99ae6; --r-unsupported-bg:#221630;
+  --r-analysis:#a4acbc; --r-analysis-bg:#20242e;
+  --logic:#b9c1d1; --logic-bg:#232935;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.8rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h3 { font-family: var(--sans); font-size: 1.02rem; font-weight: 700; line-height: 1.35;
+     margin: 1.9rem 0 .6rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--quote); }
+
+/* ---- disclosure ---- */
+.disclose { background: var(--accent-soft); border: 1px solid var(--accent);
+            border-radius: 5px; padding: 1rem 1.15rem; margin: 0 0 2.2rem;
+            font-family: var(--sans); font-size: .87rem; line-height: 1.6; }
+.disclose .lbl { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .14em;
+                 text-transform: uppercase; color: var(--accent); margin-bottom: .45rem; }
+.disclose p { margin-bottom: .6rem; }
+
+/* ---- rating key ---- */
+.key { border: 1px solid var(--rule); border-radius: 5px; background: var(--panel);
+       padding: 1.1rem 1.25rem; margin: 1.6rem 0 2.4rem; font-family: var(--sans); font-size: .84rem; }
+.key h3 { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+          color: var(--ink-2); margin: 0 0 .8rem; }
+.key dl { display: grid; grid-template-columns: max-content 1fr; gap: .55rem .85rem; align-items: baseline; }
+.key dd { color: var(--ink-2); line-height: 1.5; }
+
+/* ---- quote card ---- */
+/* The pull quote is the dominant object on the page; the annotation under it is
+   deliberately smaller and set in sans, so the reader's eye lands on what was said
+   before it lands on our verdict. */
+.item { padding: 2.6rem 0 0; border-top: 1px solid var(--rule); margin-top: 2.6rem; }
+.item:first-of-type { border-top: 0; margin-top: 1.2rem; padding-top: 0; }
+
+.meta { font-family: var(--sans); font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+        text-transform: uppercase; color: var(--ink-3); margin-bottom: 1rem; }
+.meta .nm { color: var(--ink); }
+.meta .aud { color: var(--ink-2); font-style: normal; }
+.meta .ts { font-weight: 500; letter-spacing: .06em; }
+.meta .ts::before { content: "\00a0\00b7\00a0"; color: var(--ink-3); }
+
+blockquote.q { font-size: 1.5rem; line-height: 1.34; font-weight: 400; letter-spacing: -.011em;
+               color: var(--ink); text-wrap: pretty; margin: 0 0 1rem; }
+blockquote.q p { margin-bottom: .7rem; }
+blockquote.q p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .82rem; color: var(--ink-2); margin-bottom: 1.2rem; }
+
+/* Section break before the audience Q&A: the questions come from the room, not
+   from the two debaters, and the rating rules for them differ. */
+.section-break { margin: 3.2rem 0 0; padding-top: 2.4rem; border-top: 2px solid var(--ink); }
+.section-break h2 { margin-top: 0; }
+.section-break .lede { font-family: var(--sans); font-size: .88rem; color: var(--ink-2);
+                       line-height: 1.6; margin-top: .5rem; }
+
+/* ---- rating label ---- */
+.rating { display: inline-block; font-family: var(--sans); font-size: .84rem; font-weight: 800;
+          letter-spacing: .01em; padding: .3rem .6rem; border-radius: 3px; margin-bottom: .95rem; }
+.r-supported   { color: var(--r-supported);   background: var(--r-supported-bg); }
+.r-context     { color: var(--r-context);     background: var(--r-context-bg); }
+.r-misleading  { color: var(--r-misleading);  background: var(--r-misleading-bg); }
+.r-incorrect   { color: var(--r-incorrect);   background: var(--r-incorrect-bg); }
+.r-unsupported { color: var(--r-unsupported); background: var(--r-unsupported-bg); }
+.r-analysis    { color: var(--r-analysis);    background: var(--r-analysis-bg); }
+
+.finding { font-size: 1.02rem; line-height: 1.7; color: var(--ink); }
+.finding p { margin-bottom: .85rem; }
+.finding p:last-child { margin-bottom: 0; }
+.finding strong { font-weight: 700; }
+
+/* Reasoning is visually separate from the factual rating: a flag is never
+   evidence that a claim is false, and must not read as part of the verdict. */
+.reason { margin-top: 1rem; padding: .8rem .95rem; background: var(--logic-bg);
+          border-radius: 4px; font-family: var(--sans); font-size: .87rem;
+          line-height: 1.6; color: var(--ink-2); }
+.reason .lead { display: block; font-size: .63rem; font-weight: 800; letter-spacing: .13em;
+                text-transform: uppercase; color: var(--logic); margin-bottom: .3rem; }
+.reason strong { color: var(--ink); }
+
+.srcline a.tlink { color: var(--quote); white-space: nowrap; font-weight: 600; }
+.srcline { margin-top: .9rem; font-family: var(--sans); font-size: .76rem; color: var(--ink-3);
+           line-height: 1.55; }
+
+/* ---- disclosure blocks ---- */
+details.disc { margin: 1.5rem 0; border: 1px solid var(--rule); border-radius: 5px;
+               background: var(--panel); }
+details.disc > summary { cursor: pointer; padding: .8rem 1.1rem; font-family: var(--sans);
+                         font-size: .82rem; font-weight: 700; color: var(--ink-2);
+                         list-style: none; }
+details.disc > summary::-webkit-details-marker { display: none; }
+details.disc > summary::before { content: "\25B8"; display: inline-block; margin-right: .5rem;
+                                 transition: transform .15s; color: var(--ink-3); }
+details.disc[open] > summary::before { transform: rotate(90deg); }
+details.disc > summary:hover { color: var(--ink); }
+.disc-body { padding: 0 1.1rem 1.1rem; font-family: var(--sans); font-size: .84rem;
+             line-height: 1.62; color: var(--ink-2); }
+.disc-body p { margin-bottom: .75rem; }
+.disc-body strong { color: var(--ink); }
+
+/* ---- source list ---- */
+ol.srcs { font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--ink-2);
+          padding-left: 1.3rem; }
+ol.srcs li { margin-bottom: .7rem; }
+ol.srcs strong { color: var(--ink); }
+
+ul.pts { padding-left: 1.2rem; margin-bottom: 1.05rem; }
+ul.pts li { margin-bottom: .55rem; }
+
+.note { font-family: var(--sans); font-size: .8rem; color: var(--ink-3); line-height: 1.6;
+        border-top: 1px solid var(--rule); padding-top: 1.2rem; margin-top: 2.8rem; }
+.note p { margin-bottom: .7rem; }
+
+@media (max-width: 34rem) {
+  h1 { font-size: 1.85rem; }
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  .key dl { grid-template-columns: 1fr; gap: .15rem; }
+  .key dt { margin-top: .5rem; }
+  blockquote.q { font-size: 1.25rem; }
+}
+@media print {
+  .nav { display: none; }
+  body { background: #fff; }
+}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+  <div class="kicker">Fact check</div>
+  <h1>Fact-Checking Berkeley&rsquo;s Measure U Debate</h1>
+  <p class="standfirst">Mayor Adena Ishii and Geoff Lomax debated Berkeley&rsquo;s proposed $300 million infrastructure bond. We checked the consequential factual claims and the reasoning used to support and oppose it.</p>
+  <div class="byline">Berkeley Decision Project &middot; Measure U debate, moderated by Kate Harrison &middot; Published September 3, 2026</div>
+
+  <div class="disclose">
+    <span class="lbl">Disclosure</span>
+    <p>This site is published by Eric Friedman, who opposes Measure U and directed this fact check. He was not a participant in this debate.</p>
+    <p><strong>AI disclosure:</strong> AI tools assisted substantially with analysis and drafting. Eric Friedman selected the claims, supplied and reviewed the evidence, edited the analysis, and takes responsibility for the conclusions.</p>
+  </div>
+
+  <p>Rather than reproduce the entire debate, this article isolates statements that carry factual or logical weight. Quotations remain in chronological order so readers can follow the argument. We check statements by both debaters and, where an audience question contains an important factual premise, the premise of the question as well. Policy judgments are not rated true or false merely because we agree or disagree with them.</p>
+
+  <p>The source is a 14&frac12;-minute excerpt that begins in the middle of Mayor Ishii&rsquo;s opening statement. Quotations are lightly edited for punctuation and obvious transcription errors; a speaker&rsquo;s substantive factual error is never silently repaired. The <a href="measure-u-debate-transcript.html">full transcript is published separately</a>, and every card below links to the passage it evaluates.</p>
+
+  <div class="key">
+    <h3>How to read the ratings</h3>
+    <dl>
+      <dt><span class="rating r-supported">Supported</span></dt>
+      <dd>The available record directly supports the material claim.</dd>
+      <dt><span class="rating r-context">Needs context</span></dt>
+      <dd>Substantially grounded, but missing context changes its significance.</dd>
+      <dt><span class="rating r-misleading">Misleading</span></dt>
+      <dd>Contains a factual basis but materially distorts scale, scope, chronology or category.</dd>
+      <dt><span class="rating r-incorrect">Incorrect</span></dt>
+      <dd>Contradicted by the available evidence or by the relevant definition.</dd>
+      <dt><span class="rating r-analysis">Analysis</span></dt>
+      <dd>A prediction, inference, analogy, causal theory or normative judgment rather than a directly checkable fact.</dd>
+    </dl>
+    <p style="margin-top:.9rem;font-size:.83rem;color:var(--ink-2);line-height:1.55">Reasoning notes are separate from factual ratings. A statement can be factually true and still fail to support the conclusion it is offered for.</p>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">00:00 &middot; opening</span></div>
+    <blockquote class="q">&ldquo;&hellip;Building Trades Council of Alameda, League of Women Voters, City Auditor Jenny Wong, former City Auditor Ann-Marie Hogan, Alameda County Treasurer Hank Levy &hellip; accountability is a huge part of this.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-analysis">Analysis</div>
+    <div class="finding">
+      <p>The excerpt begins partway through Ishii&rsquo;s list of supporters, so it should not be reconstructed beyond the words actually captured. Endorsements are politically relevant, but they do not establish that Measure U&rsquo;s project list is binding, that the proposed borrowing amount follows from a demonstrated financing gap, or that the accountability provisions guarantee delivery of the projects used to promote the measure.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>Expert and institutional support can be evidence about whom voters trust. It cannot substitute for the underlying proposition being tested. When the status of the endorsers is offered as proof of the measure&rsquo;s necessity or accountability, the argument risks an <strong>appeal to authority</strong>; when the breadth of support is offered as proof, it risks an <strong>appeal to popularity</strong>.</div>
+    <div class="srcline">Sources: debate recording; Measure U full legal text. <a class="tlink" href="measure-u-debate-transcript.html#t-00-00">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">00:09 &middot; opening</span></div>
+    <blockquote class="q">&ldquo;We&rsquo;ve really shown that with Measure T1, the bond that we put up previously, that those projects have been delivered. And in fact, today I actually just did a ribbon cutting for the D and E docks, which are new in the Berkeley Marina.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-misleading">Misleading</div>
+    <div class="finding">
+      <p>The D and E dock replacement is a real T1 Phase 2 project, and it was part of the Council-approved 2020 Phase 2 list. But Ishii uses one ribbon cutting to support the much broader claim that T1 showed <strong>&ldquo;those projects have been delivered.&rdquo;</strong> The T1 record is substantially more complicated: projects were added, removed, reduced to design-only, or changed in scope, and numerous Phase 2 projects remained unfinished in 2026. Ishii herself later corrected the categorical claim during the audience Q&amp;A: <strong>&ldquo;I apologize if I said that all of those projects are done.&rdquo;</strong></p>
+      <p>The dock example also sits beside a particularly revealing later T1 reallocation. In September 2025, Council approved a single consent-calendar package that removed the remaining <strong>$3.95 million T1 contribution to annual street paving</strong>, limited or removed several other projects, and freed <strong>$6.283 million</strong> for redistribution. The same action added three new projects &mdash; <strong>F&amp;G Dock Re-decking, the Adeline Area Dog Park &amp; Landscaping, and the Santa Fe Trackbed to Park Conversion</strong> &mdash; with approximately <strong>$650,000</strong> of the freed pool assigned to those additions. The street removal was the largest single source of the reallocated pool. The money was not traced dollar-for-dollar from paving to the docks, and staff said other paving funding had been identified; the defensible point is that <strong>street-paving bond capacity went out and new waterfront and park projects came in through the same reallocation action</strong>.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>A ribbon cutting proves that a particular project was delivered. It does not prove that the publicly developed T1 package was delivered as presented to the public. The September 2025 reallocation illustrates why that distinction matters. The Transportation and Infrastructure Commission specifically expressed concern about reducing street funding; neither reviewing commission approved the changes. Staff nevertheless recommended the revised list as aligning with <strong>&ldquo;Council priorities.&rdquo;</strong> Council approved it on the <strong>consent calendar</strong>, and the staff report listed <strong>&ldquo;Alternative Actions Considered: None.&rdquo;</strong> T1&rsquo;s audits can verify eligible use of bond proceeds; they do not prevent later councils from changing which eligible projects receive the money.</div>
+    <div class="srcline">Sources: <em>Updates to the Measure T1 Project List</em>, September 16, 2025; Measure T1 program page; T1 Phase 2 project list, February 2026. <a class="tlink" href="measure-u-debate-transcript.html#t-00-09">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Geoff Lomax</span><span class="ts">00:34 &middot; opening</span></div>
+    <blockquote class="q">&ldquo;We&rsquo;re being asked to incur $600 million in a financial obligation through the issuance of municipal bonds, and residents will be required to pay that $600 million over a 30-year period.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Geoff Lomax</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>Lomax was close on the total cost but <strong>understated the duration and slightly understated the total obligation</strong>. Berkeley&rsquo;s Tax Rate Statement estimates approximately <strong>$610 million</strong> in total debt service if all $300 million is issued, with bond taxes continuing for roughly <strong>40 years</strong> and the final collection projected in fiscal year <strong>2066&ndash;67</strong>. The City assumes three $100 million issuances at five-year intervals beginning in 2027.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The correction runs in the same direction as Lomax&rsquo;s argument rather than against it: the City&rsquo;s own projection describes a somewhat larger and substantially longer taxpayer obligation than the roughly $600 million over 30 years he told the audience.</div>
+    <div class="srcline">Sources: debate recording; June 16, 2026 Measure U Council report and Tax Rate Statement. <a class="tlink" href="measure-u-debate-transcript.html#t-00-34">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Geoff Lomax</span><span class="ts">01:52 &middot; opening</span></div>
+    <blockquote class="q">&ldquo;Berkeley Measure O, 2016 affordable housing bond &mdash; a very well-defined purpose. It&rsquo;s narrow in scope.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Geoff Lomax</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>Lomax is right about Measure O&rsquo;s narrow affordable-housing purpose, but he gives the wrong election year. Berkeley voters approved the <strong>$135 million Measure O affordable-housing bond in November 2018</strong>, not 2016. The ballot question expressly authorized bonds to create and preserve affordable housing for specified groups.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The date error does not defeat Lomax&rsquo;s substantive comparison between a purpose-specific housing bond and Measure U&rsquo;s broader infrastructure categories, but it should be corrected rather than silently repaired.</div>
+    <div class="srcline">Sources: debate recording; Measure O program page. <a class="tlink" href="measure-u-debate-transcript.html#t-01-52">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">02:55 &middot; on maintenance</span></div>
+    <blockquote class="q">&ldquo;I don&rsquo;t have the specifics of the percentages between what is new and what is maintenance &hellip; but I can say that this bond does look at both &hellip; maintenance was an essential part of this.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-misleading">Misleading</div>
+    <div class="finding">
+      <p>Measure U is a <strong>capital</strong> bond. It can finance acquisition, renovation, replacement, reconstruction and other improvements to real property, including capital work that addresses a deferred-maintenance problem. But the City&rsquo;s own bond report says the program&rsquo;s implementation resources are <strong>&ldquo;not ongoing operations or routine maintenance,&rdquo;</strong> and the measure says adequate maintenance funding for bond-financed improvements is expected to come from <strong>existing sources</strong>.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The word <strong>&ldquo;maintenance&rdquo;</strong> is doing two jobs. Capital rehabilitation can repair an asset that has suffered from deferred maintenance; routine maintenance is an ongoing operating cost. Measure U can fund the former. It is not a routine-maintenance funding measure for the latter.</div>
+    <div class="srcline">Sources: Measure U full legal text; June 16, 2026 Measure U Council report. <a class="tlink" href="measure-u-debate-transcript.html#t-02-55">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Geoff Lomax</span><span class="ts">03:24 &middot; on maintenance</span></div>
+    <blockquote class="q">&ldquo;The reason we&rsquo;re facing a $2 billion infrastructure deficit in the City of Berkeley is because we built too much stuff with no plan about how we&rsquo;re going to take care of it.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Geoff Lomax</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>The scale of the infrastructure problem is supported: Berkeley&rsquo;s proposed FY2027&ndash;31 Capital Improvement Program identifies <strong>more than $2.1 billion in infrastructure and facilities needs</strong>. But the City describes that figure as identified <strong>needs</strong>, not an accounting &ldquo;deficit.&rdquo; More importantly, the reviewed records do not establish Lomax&rsquo;s asserted single cause &mdash; that Berkeley has the problem because it <strong>&ldquo;built too much stuff.&rdquo;</strong></p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>Berkeley&rsquo;s record does document aging infrastructure, deferred maintenance and inadequate recurring capital funding. Those facts support a lifecycle-planning critique. They do not by themselves prove that overbuilding is the principal cause of the entire $2.1 billion need.</div>
+    <div class="srcline">Sources: Measure U full legal text; June 16, 2026 Measure U Council report. <a class="tlink" href="measure-u-debate-transcript.html#t-03-24">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Geoff Lomax</span><span class="ts">03:29 &middot; on maintenance</span></div>
+    <blockquote class="q">&ldquo;We built too much stuff with no plan about how we&rsquo;re going to take care of it.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Geoff Lomax</div>
+    <div class="rating r-analysis">Analysis</div>
+    <div class="finding">
+      <p>This is a causal theory, not a directly established fact in the records reviewed for this article. The City has documented inadequate maintenance and lifecycle funding, but the infrastructure backlog also includes aging assets, seismic and accessibility requirements, climate resilience, modernization, inflation, and proposed new or expanded work.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>Reducing a multi-billion-dollar capital-needs inventory to one cause risks <strong>causal oversimplification</strong>. The stronger, supportable point is that building or acquiring an asset without a sustainable maintenance plan can add future liabilities.</div>
+    <div class="srcline">Sources: Measure U full legal text; June 16, 2026 Measure U Council report. <a class="tlink" href="measure-u-debate-transcript.html#t-03-29">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Geoff Lomax</span><span class="ts">05:17 &middot; on Measure FF</span></div>
+    <blockquote class="q">&ldquo;We just passed a maintenance measure, FF &hellip; and now we need to start borrowing money to fix the same stuff. It&rsquo;s just not clear what the objective is here, and why we&rsquo;re using the most expensive financing mechanism for something that should be done with the parcel-tax funds.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Geoff Lomax</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>There is real overlap. Measure FF, approved in 2024, raises special parcel-tax revenue for <strong>street, sidewalk and pedestrian-path repair, repaving and reconstruction</strong>, along with safety and environmental improvements. Measure U also authorizes accessibility and infrastructure work and the City&rsquo;s proposed-project materials include sidewalks. But Measure U is much broader than FF, covering fire and emergency facilities, parks and recreation, seismic work, civic facilities, climate resilience and other public infrastructure.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>Saying the measures fund <strong>&ldquo;the same stuff&rdquo;</strong> is accurate for some categories, particularly sidewalks, but overstates the overlap across the whole bond. The stronger question is why the City proposes bond financing for categories that already have dedicated recurring revenue, and how it distinguishes the job of each funding source.</div>
+    <div class="srcline">Sources: Measure U full legal text; Measure FF program page. <a class="tlink" href="measure-u-debate-transcript.html#t-05-17">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">06:08 &middot; on project specificity</span></div>
+    <blockquote class="q">&ldquo;When you talk about specificity of projects &hellip; you can actually go to the City website and see exactly which projects. So it&rsquo;s not just random projects. And in fact, you talked about the fire stations. That&rsquo;s actually one of the projects that&rsquo;s on there.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-misleading">Misleading</div>
+    <div class="finding">
+      <p>The City website does contain a public list of <strong>proposed</strong> projects, including fire-station work. But the legal measure does <strong>not</strong> bind the City to that list. Measure U expressly calls the public list <strong>&ldquo;non-exhaustive&rdquo;</strong> and says projects that were <strong>not identified in that process are also eligible</strong> if they fit the measure&rsquo;s broad infrastructure purposes. The City also states that final project costs will be determined later and that it <strong>cannot guarantee</strong> the bonds will complete all needed improvements.</p>
+      <p>The Council resolution goes further for CEQA purposes: placing the financing measure on the ballot <strong>&ldquo;does not involve any commitment to specific projects to be constructed with proceeds of the Bonds.&rdquo;</strong> Individual projects remain subject to later approval.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The City can show voters a concrete proposed list while preserving legal discretion to fund a different mix later. Saying voters can see <strong>&ldquo;exactly which projects&rdquo;</strong> confuses a planning and campaign list with a binding delivery commitment.</div>
+    <div class="srcline">Sources: Measure U full legal text; June 16, 2026 Council report; City proposed-project page. <a class="tlink" href="measure-u-debate-transcript.html#t-06-08">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">06:27 &middot; on public engagement</span></div>
+    <blockquote class="q">&ldquo;We actually went to the people to talk to them. That&rsquo;s how we came up with this list of projects, because we had a number of different community meetings to hear with people around the City about their needs and their priorities.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>The public-engagement claim is supported. Berkeley conducted a roughly six-month process that included commission meetings, focus groups, joint district meetings, survey research and public information about infrastructure priorities. The City says public feedback helped develop the proposed list.</p>
+      <p>The missing context is what that participation produced legally. It produced input into a <strong>non-exhaustive proposed list</strong>, not a voter-enforceable project schedule. City staff and departments also used an internal evaluation framework and Council direction to refine the project set.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>Public participation and binding accountability are different questions. A project can emerge from public input without becoming a legally guaranteed deliverable.</div>
+    <div class="srcline">Sources: June 16, 2026 Council report; City proposed-project page. <a class="tlink" href="measure-u-debate-transcript.html#t-06-27">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="section-break">
+    <h2>Audience questions</h2>
+    <p class="lede">Audience questions are checked only where the premise itself materially shapes the debate or prompts a correction. An incorrect premise is rated as such; it is not treated as evidence that the questioner acted in bad faith.</p>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="aud">Audience member</span><span class="ts">07:01</span></div>
+    <blockquote class="q">&ldquo;I think Mayor Ishii made a misstatement that all of the projects in T1 were completed. And that&rsquo;s not true.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Audience member</div>
+    <div class="rating r-supported">Supported</div>
+    <div class="finding">
+      <p>The challenge is supported. Berkeley&rsquo;s own T1 records show numerous Phase 2 projects still in progress during 2026, as well as projects completed only through design and a project list that had been modified over time. Ishii immediately responded: <strong>&ldquo;I apologize if I said that all of those projects are done.&rdquo;</strong></p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The correction is important because T1 is being offered as the accountability precedent for Measure U. T1 delivered substantial infrastructure, but its history also demonstrates project substitutions, scope changes and incomplete work.</div>
+    <div class="srcline">Sources: Measure T1 program page; T1 Phase 2 project list, February 2026; <em>Updates to the Measure T1 Project List</em>, September 16, 2025. <a class="tlink" href="measure-u-debate-transcript.html#t-07-01">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">07:26 &middot; response</span></div>
+    <blockquote class="q">&ldquo;I apologize if I said that all of those projects are done. I know that sometimes what happens is that there&rsquo;s a project that becomes infeasible, or there was funding that was available for it that we were leveraging that we wouldn&rsquo;t be able to move forward on it.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-supported">Supported</div>
+    <div class="finding">
+      <p>This correction is consistent with the T1 record. The City&rsquo;s T1 procedures expressly allowed the Council to add, remove or change projects, and the City did so. T1 projects were removed, reduced to design, renamed or rescoped, while other projects were added later.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The correction also bears directly on Measure U. Measure U similarly preserves discretion: its proposed project list is non-exhaustive, external funding remains partly unsecured, final costs come later, and the City says it cannot guarantee completion of all needed improvements.</div>
+    <div class="srcline">Sources: Measure U full legal text; T1 Phase 2 project list; <em>Updates to the Measure T1 Project List</em>. <a class="tlink" href="measure-u-debate-transcript.html#t-07-26">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">10:04 &middot; on Vision 2050</span></div>
+    <blockquote class="q">&ldquo;Absolutely, Vision 2050 was taken into account when we came up with this infrastructure bond. I actually re-established that task force. We called it Realize Vision 2050 &hellip; and out of that reinvigoration of the task force, that&rsquo;s where we came up with the idea that we needed to do the infrastructure bond now. &hellip; We have people who worked on Vision 2050 and the Realize Vision 2050 Task Force who are supporting this as well.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>Ishii did reconvene the Vision 2050 task force in <strong>February 2025</strong>, and its October 2025 report recommended additional funding and stronger infrastructure planning. The City&rsquo;s Measure U report also expressly says the bond is informed by Vision 2050.</p>
+      <p>But the bond&rsquo;s origin was broader than the task force alone. Council separately referred a potential fire-facility revenue measure in June 2025 and a recreation and community-facility measure in September 2025, while the task force work was ongoing. On December 2, 2025, Council considered the task-force report and potential 2026 ballot measures as separate agenda items.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The task force is relevant evidence about the planning framework. The fact that task-force participants support Measure U is not evidence that the bond&rsquo;s amount, scope or legal accountability provisions are correct; using their support that way risks an <strong>appeal to authority</strong>.</div>
+    <div class="srcline">Sources: <em>Realize Vision 2050</em>, October 2025; June 16, 2026 Council report; Council referral record. <a class="tlink" href="measure-u-debate-transcript.html#t-10-04">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Geoff Lomax</span><span class="ts">11:09 &middot; on who pays</span></div>
+    <blockquote class="q">&ldquo;The costs are going to be sliding scale. &hellip; Newer residents who are paying more money to live in the City are going to take a much bigger hit than older residents, because the payment schedule is based on the value of where they&rsquo;re living. &hellip; Newer residents are going to pay a lot. Older residents typically pay less.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Geoff Lomax</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>The tax is levied on <strong>assessed property value</strong>, not market value and not simply on the current cost of &ldquo;where they&rsquo;re living.&rdquo; Under Proposition 13, recently purchased homes often have substantially higher assessed values than comparable homes held for many years, so Lomax&rsquo;s directional point is often true for homeowners. But it is not universally true, and renters do not receive the Measure U property-tax bill directly.</p>
+      <p>The City estimates an average Measure U tax of about <strong>$22 per $100,000 of assessed value</strong>, with a projected peak of about <strong>$35 per $100,000</strong>.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The relevant denominator is assessed value. Using &ldquo;newer residents&rdquo; as a proxy for assessed value blurs owner and renter status, purchase history, exemptions and individual assessment differences.</div>
+    <div class="srcline">Sources: debate recording; June 16, 2026 Council report and Tax Rate Statement. <a class="tlink" href="measure-u-debate-transcript.html#t-11-09">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="aud">Audience member</span><span class="ts">12:23</span></div>
+    <blockquote class="q">&ldquo;The bond measure goes into the General Fund, and doesn&rsquo;t that mean that no matter what promises you tell us and what&rsquo;s on the list, the money can be used in any way since it&rsquo;s in the General Fund?&rdquo;</blockquote>
+    <div class="attrib">&mdash; Audience member</div>
+    <div class="rating r-incorrect">Incorrect</div>
+    <div class="finding">
+      <p>The premise is incorrect. Measure U&rsquo;s bond proceeds do <strong>not</strong> become unrestricted General Fund revenue. The measure requires that bond proceeds be used <strong>only for the purposes specified in the measure</strong> and deposited into an account created and held by the City. Bond proceeds may reimburse the General Fund or other funds for money the City advanced earlier for an <strong>eligible Measure U improvement</strong>, but that does not convert the bond into general-purpose revenue.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>This distinction matters because it separates two different accountability criticisms. Measure U does restrict the <strong>category of permissible spending</strong>. What it does not do is bind the City to the specific proposed project list, quantities, completion dates or outcomes used to explain the measure to voters.</div>
+    <div class="srcline">Sources: Measure U full legal text. <a class="tlink" href="measure-u-debate-transcript.html#t-12-23">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">12:40 &middot; response</span></div>
+    <blockquote class="q">&ldquo;So just like we did with Measure T1, we will have regular reports, there will be audits. &hellip; We understand that people are concerned about making sure the money goes where it&rsquo;s supposed to go.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>The audit and reporting provisions are real. Measure U requires an annual City Manager report, annual commission oversight, and a City Auditor audit at least once every three years.</p>
+      <p>But Ishii did not directly correct the audience member&rsquo;s false General Fund premise. The more important limitation is that the audits test whether bond expenditures are <strong>consistent with the broad purposes of Measure U</strong>. They are not audits against a fixed voter-approved project list, because the measure expressly makes the public project list non-exhaustive and permits projects not identified during the 2026 public process.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>Audits answer <strong>&ldquo;Was the money spent within the authorized purposes?&rdquo;</strong> They cannot by themselves answer <strong>&ldquo;Did voters receive the particular projects, quantities and completion schedule used to build support for the bond?&rdquo;</strong> Pointing to audits without making that distinction risks a non sequitur.</div>
+    <div class="srcline">Sources: Measure U full legal text; June 16, 2026 Council report. <a class="tlink" href="measure-u-debate-transcript.html#t-12-40">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">12:57 &middot; response</span></div>
+    <blockquote class="q">&ldquo;Our City staff have already done work to identify funding to leverage from this infrastructure bond, so it&rsquo;s actually very essential that we continue to do the projects that we&rsquo;ve already said that we&rsquo;re doing &mdash; unless, of course, like I said, if it becomes infeasible or we aren&rsquo;t able to leverage the funding that we need for it.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>The City has identified opportunities to combine bond money with outside funding. But Measure U itself says some expected non-bond funds <strong>have not yet been secured</strong> and that the City <strong>cannot guarantee</strong> the bonds will be sufficient to complete all needed improvements.</p>
+      <p>Ishii&rsquo;s qualification is therefore important: the City intends to pursue the proposed projects, but feasibility, outside funding, later approvals and changing costs can alter what ultimately gets built.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>This is substantially consistent with the legal measure, but it also undercuts any claim that the public project list is a guaranteed delivery schedule.</div>
+    <div class="srcline">Sources: Measure U full legal text; June 16, 2026 Council report. <a class="tlink" href="measure-u-debate-transcript.html#t-12-57">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Geoff Lomax</span><span class="ts">13:17 &middot; response</span></div>
+    <blockquote class="q">&ldquo;Correct, the money goes into the General Fund. &hellip; As we saw with T1, future councils may not share that same set of priorities &hellip; because at the end of the day, these funds become a set of competing interests.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Geoff Lomax</div>
+    <div class="rating r-misleading">Misleading</div>
+    <div class="finding">
+      <p>The first sentence is <strong>incorrect</strong>: Measure U bond proceeds do not become unrestricted General Fund money. They are restricted to the real-property infrastructure purposes authorized by the measure and must be held in a City account for those purposes.</p>
+      <p>But Lomax&rsquo;s broader concern about <strong>project substitution</strong> is supported for a different reason. Measure U&rsquo;s legal project categories are broad; its public project list is expressly non-exhaustive; projects not on that list remain eligible; specific project expenditures require later approvals; final costs are determined later; and the City cannot guarantee completion of all needed improvements.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The conclusion contains a legitimate accountability issue, but it rests first on a <strong>false premise</strong> about the General Fund. The accurate argument is not <strong>&ldquo;Council can spend the money on anything.&rdquo;</strong> It is <strong>&ldquo;Council retains substantial discretion over which eligible infrastructure projects receive the money.&rdquo;</strong></div>
+    <div class="srcline">Sources: Measure U full legal text; June 16, 2026 Council report. <a class="tlink" href="measure-u-debate-transcript.html#t-13-17">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Geoff Lomax</span><span class="ts">13:41 &middot; closing</span></div>
+    <blockquote class="q">&ldquo;It adds up to $300 million yesterday. It&rsquo;s probably $350 million today. It&rsquo;s probably going to be $400 million by the time the bonds are issued. &hellip; That&rsquo;s why the smart move is targeted bonding for very specific, narrow purposes.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Geoff Lomax</div>
+    <div class="rating r-analysis">Analysis</div>
+    <div class="finding">
+      <p>Construction inflation and project-cost escalation are real risks, and Measure U itself says final costs will not be known until plans, bids and construction are further advanced. But Lomax&rsquo;s <strong>$350 million</strong> and <strong>$400 million</strong> figures are predictions offered without a calculation in the debate. They should not be treated as established estimates.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The underlying point &mdash; that a fixed $300 million authorization can buy less scope if project costs rise &mdash; is sound. The specific future totals are a <strong>bare assertion</strong> unless supported by a reproducible cost-escalation model.</div>
+    <div class="srcline">Sources: Measure U full legal text; June 16, 2026 Council report. <a class="tlink" href="measure-u-debate-transcript.html#t-13-41">See in transcript &rarr;</a></div>
+  </div>
+
+  <h2>What the checks show</h2>
+
+  <p>The debate contains important points supported by the record on both sides. Berkeley has a very large infrastructure need. Measure U would provide substantial capital funding. The City conducted public engagement and uses Vision 2050 as a planning framework. The opposition is also correct that the project mix overlaps some existing revenue sources and that a fixed bond authorization does not guarantee delivery of every project shown to voters.</p>
+
+  <p>The records reviewed here support seven narrower conclusions.</p>
+
+  <ul class="pts">
+    <li><strong>Measure U is expected to cost about $610 million in principal and interest, but over a projected 40-year tax period, not 30 years.</strong> Lomax was close on total cost and wrong on duration.</li>
+    <li><strong>Measure U does not fund routine maintenance.</strong> It can finance capital rehabilitation and replacement, while ongoing maintenance is supposed to come from existing sources.</li>
+    <li><strong>The City&rsquo;s project list is real but not binding.</strong> Measure U calls it non-exhaustive, allows unlisted eligible projects, leaves final costs for later and says the bonds may not complete all needed improvements.</li>
+    <li><strong>T1 delivered many projects, but it is not evidence that a public project list will remain fixed.</strong> T1&rsquo;s own record includes incomplete projects, design-only outcomes, additions, removals and scope changes. Ishii corrected her initial overstatement during the Q&amp;A.</li>
+    <li><strong>Measure FF and Measure U overlap in some categories, especially sidewalks, but they are not the same measure.</strong> FF provides recurring special-tax funding for streets and sidewalks; U is a broader capital bond.</li>
+    <li><strong>The General Fund premise in the audience Q&amp;A was wrong, and Lomax incorrectly endorsed it.</strong> Bond proceeds are restricted to Measure U&rsquo;s authorized infrastructure purposes. His broader point about future Council discretion is nevertheless valid within those broad purposes.</li>
+    <li><strong>Audits provide spending accountability, not a guarantee of the advertised project package.</strong> The Auditor can test whether expenditures fall within Measure U&rsquo;s purposes. The measure does not supply a fixed project list, quantities, schedules or guaranteed completion against which to audit delivery.</li>
+  </ul>
+
+  <p>The central distinction is therefore narrower than either <strong>&ldquo;the City can spend it on anything&rdquo;</strong> or <strong>&ldquo;the City has told you exactly what you will get.&rdquo;</strong> Neither is correct. Measure U legally restricts the money to a broad class of infrastructure spending while leaving future councils substantial discretion over the actual project mix.</p>
+
+  <p>For the longer argument about what the 2016 voter received for the $100 million Measure T1 authorization, see <a href="measure-u-is-t1-again.html">Measure U Is T1 Again</a>. The companion fact check of the <a href="measure-v-debate-fact-check.html">Measure V sales-tax debate</a> covers the other Berkeley revenue measure on the same ballot.</p>
+
+  <details class="disc">
+    <summary>Sources and method</summary>
+    <div class="disc-body">
+      <p>Every rating rests on a document named below, not on a summary of one.</p>
+      <ol class="srcs">
+        <li><strong>Debate recording.</strong> Timestamped 14:28 excerpt including moderator questions and audience Q&amp;A. The excerpt begins mid-sentence in Mayor Ishii&rsquo;s opening statement; omitted words are not reconstructed. The <a href="measure-u-debate-transcript.html">full transcript is published separately</a>.</li>
+        <li><strong>Measure U full legal text</strong>, <em>Authorizing the City of Berkeley to Issue General Obligation Bonds to Finance the Acquisition or Improvement of Real Property for Public Infrastructure and Facilities.</em> Broad eligible purposes; non-exhaustive project list; unlisted projects eligible; maintenance from existing sources; unsecured outside funding; no guarantee of completion; restricted use of proceeds; dedicated City account; annual reports; commission oversight; Auditor review at least once every three years.</li>
+        <li><strong>June 16, 2026 Measure U Council report and Tax Rate Statement.</strong> $300M principal; approximately $610M estimated total debt service; projected 40-year tax period; $22.14 average annual tax per $100,000 assessed value; approximately $35 peak; routine-maintenance exclusion; community engagement; project-evaluation framework; CEQA statement that the ballot action commits to no specific construction project.</li>
+        <li><strong>City proposed-project page</strong>, <em>2026 Bond Measure Infrastructure Projects.</em> Public list of proposed projects; six-month feedback process.</li>
+        <li><strong>Measure T1 program page.</strong> T1 history; Phase 1 delivery; Phase 2 ongoing work.</li>
+        <li><strong>T1 Phase 2 Project List &mdash; By Category</strong>, February 2026 commission agenda materials. Projects still in progress in 2026; projects marked &ldquo;Completed &mdash; Design Phase only.&rdquo;</li>
+        <li><strong>Updates to the Measure T1 Project List</strong>, September 16, 2025. Consent-calendar report reallocating $6.283M of T1 Phase 2 funds; removal of the remaining $3.95M T1 street-paving contribution; addition of F&amp;G Dock Re-decking ($250K), Adeline Area Dog Park &amp; Landscaping ($250K) and Santa Fe Trackbed to Park Conversion ($150K); commission concerns; &ldquo;Alternative Actions Considered: None.&rdquo; Archived and verified against the document text, September 2026.</li>
+        <li><strong>Measure O program page.</strong> November 2018 election date; $135M purpose-specific affordable-housing bond.</li>
+        <li><strong>Measure FF program page.</strong> 2024 special parcel tax for street, sidewalk and pedestrian-path repair and reconstruction.</li>
+        <li><strong>Realize Vision 2050</strong>, October 2025, presented to Council December 2, 2025. Task force reconvened February 2025; recommendations on maintenance, planning, funding and engagement.</li>
+      </ol>
+      <p><strong>A note on the D and E docks.</strong> They were on the Council-approved 2020 Phase 2 list and are not among the projects added in the September 2025 reshuffling; the waterfront project added then was F&amp;G Dock Re-decking. The ribbon cutting Ishii describes is not disputed here. Nor is it claimed that street paving stopped: staff said other funding had been identified. The supported criticism concerns the reallocation of T1 bond capacity and the substitution of projects.</p>
+    </div>
+  </details>
+
+  <div class="note">
+    <p><strong>What this page does not cover.</strong> It checks the consequential claims made in one 14-minute debate excerpt. It is not an evaluation of Measure U, and a reader deciding how to vote needs the ballot materials and the City Attorney&rsquo;s impartial analysis. Silence here on a question is not a verdict on it.</p>
+    <p><strong>Corrections.</strong> If a finding is wrong, or a document says something other than what is reported here, say so and it will be corrected on the page with the change noted.</p>
+  </div>
+
+</div>
+
+<script>
+/* Print the audit trail: open every collapsed section for printing, restore afterward. */
+(function () {
+  var opened = [];
+  function expand() {
+    opened = [];
+    document.querySelectorAll('details.disc').forEach(function (d) {
+      if (!d.open) { opened.push(d); d.open = true; }
+    });
+  }
+  function restore() { opened.forEach(function (d) { d.open = false; }); opened = []; }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    var handler = function (e) { e.matches ? expand() : restore(); };
+    mq.addEventListener ? mq.addEventListener('change', handler) : mq.addListener(handler);
+  }
+  window.addEventListener('beforeprint', expand);
+  window.addEventListener('afterprint', restore);
+})();
+</script>
+</body>
+</html>

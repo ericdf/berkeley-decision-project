@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Measure U Debate: Full Transcript</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --r-supported:#1f6b45; --r-supported-bg:#eef7f1;
+  --r-context:var(--accent); --r-context-bg:var(--accent-soft);
+  --r-misleading:#a33208; --r-misleading-bg:#fdf0ea;
+  --r-incorrect:#8f1616; --r-incorrect-bg:#fbeaea;
+  --r-unsupported:#7a3ba0; --r-unsupported-bg:#f6eefb;
+  --r-analysis:#586074; --r-analysis-bg:#f1f3f6;
+  --logic:#334; --logic-bg:#eceef2;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331;
+    --r-supported:#5fc48d; --r-supported-bg:#12251b;
+    --r-misleading:#f08a5d; --r-misleading-bg:#2b1810;
+    --r-incorrect:#f2726f; --r-incorrect-bg:#2e1414;
+    --r-unsupported:#c99ae6; --r-unsupported-bg:#221630;
+    --r-analysis:#a4acbc; --r-analysis-bg:#20242e;
+    --logic:#b9c1d1; --logic-bg:#232935;
+  }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+  --r-supported:#5fc48d; --r-supported-bg:#12251b;
+  --r-misleading:#f08a5d; --r-misleading-bg:#2b1810;
+  --r-incorrect:#f2726f; --r-incorrect-bg:#2e1414;
+  --r-unsupported:#c99ae6; --r-unsupported-bg:#221630;
+  --r-analysis:#a4acbc; --r-analysis-bg:#20242e;
+  --logic:#b9c1d1; --logic-bg:#232935;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.8rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h3 { font-family: var(--sans); font-size: 1.02rem; font-weight: 700; line-height: 1.35;
+     margin: 1.9rem 0 .6rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--quote); }
+
+/* ---- disclosure ---- */
+.disclose { background: var(--accent-soft); border: 1px solid var(--accent);
+            border-radius: 5px; padding: 1rem 1.15rem; margin: 0 0 2.2rem;
+            font-family: var(--sans); font-size: .87rem; line-height: 1.6; }
+.disclose .lbl { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .14em;
+                 text-transform: uppercase; color: var(--accent); margin-bottom: .45rem; }
+.disclose p { margin-bottom: .6rem; }
+
+/* ---- rating key ---- */
+.key { border: 1px solid var(--rule); border-radius: 5px; background: var(--panel);
+       padding: 1.1rem 1.25rem; margin: 1.6rem 0 2.4rem; font-family: var(--sans); font-size: .84rem; }
+.key h3 { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+          color: var(--ink-2); margin: 0 0 .8rem; }
+.key dl { display: grid; grid-template-columns: max-content 1fr; gap: .55rem .85rem; align-items: baseline; }
+.key dd { color: var(--ink-2); line-height: 1.5; }
+
+/* ---- rating pill ---- */
+.pill { display: inline-block; font-family: var(--sans); font-size: .63rem; font-weight: 800;
+        letter-spacing: .1em; text-transform: uppercase; padding: .22rem .5rem;
+        border-radius: 3px; white-space: nowrap; border: 1px solid currentColor; }
+.p-supported   { color: var(--r-supported);   background: var(--r-supported-bg); }
+.p-context     { color: var(--r-context);     background: var(--r-context-bg); }
+.p-misleading  { color: var(--r-misleading);  background: var(--r-misleading-bg); }
+.p-unsupported { color: var(--r-unsupported); background: var(--r-unsupported-bg); }
+.p-analysis    { color: var(--r-analysis);    background: var(--r-analysis-bg); }
+
+/* ---- transcript ---- */
+.turn { margin: 1.9rem 0 0; }
+.spk { font-family: var(--sans); font-size: .7rem; font-weight: 800; letter-spacing: .12em;
+       text-transform: uppercase; margin-bottom: .4rem; }
+.spk .who { color: var(--ink); }
+.spk .ts { font-weight: 500; letter-spacing: .06em; color: var(--ink-3); }
+.spk .ts::before { content: "\00a0\00b7\00a0"; }
+.turn.mod .spk .who { color: var(--ink-3); }
+.turn.aud .spk .who { color: var(--ink-2); }
+h2.tsec { font-family: var(--sans); font-size: .72rem; font-weight: 800; letter-spacing: .14em;
+          text-transform: uppercase; color: var(--ink-3); margin: 2.8rem 0 .4rem;
+          padding-top: 1.6rem; border-top: 1px solid var(--rule); }
+.anch { display: inline; }
+.tx { font-size: 1.03rem; line-height: 1.78; color: var(--ink); margin: 0;
+      padding-left: 1rem; border-left: 2px solid var(--rule); }
+.turn.mod .tx { color: var(--ink-2); font-size: .96rem; }
+
+/* Passages quoted on the fact-check page. The highlight is the reason this page
+   exists: a reader following a link should land on the sentence, not the minute. */
+mark.hl { background: var(--accent-soft); color: inherit;
+          box-shadow: inset 0 -2px 0 var(--accent); padding: .06em 0; }
+mark.hl:target, mark.hl.flash { animation: flash 1.6s ease-out; }
+@keyframes flash {
+  0%, 35% { background: var(--accent); color: var(--panel); }
+  100% { background: var(--accent-soft); color: inherit; }
+}
+:target { scroll-margin-top: 5.5rem; }
+
+.backlink { display: inline-block; font-family: var(--sans); font-size: .8rem;
+            font-weight: 700; color: var(--quote); text-decoration: none;
+            margin-bottom: 1.6rem; }
+.backlink:hover { text-decoration: underline; }
+
+/* ---- disclosure blocks ---- */
+details.disc { margin: 1.5rem 0; border: 1px solid var(--rule); border-radius: 5px;
+               background: var(--panel); }
+details.disc > summary { cursor: pointer; padding: .8rem 1.1rem; font-family: var(--sans);
+                         font-size: .82rem; font-weight: 700; color: var(--ink-2);
+                         list-style: none; }
+details.disc > summary::-webkit-details-marker { display: none; }
+details.disc > summary::before { content: "\25B8"; display: inline-block; margin-right: .5rem;
+                                 transition: transform .15s; color: var(--ink-3); }
+details.disc[open] > summary::before { transform: rotate(90deg); }
+details.disc > summary:hover { color: var(--ink); }
+.disc-body { padding: 0 1.1rem 1.1rem; font-family: var(--sans); font-size: .84rem;
+             line-height: 1.62; color: var(--ink-2); }
+.disc-body p { margin-bottom: .75rem; }
+.disc-body strong { color: var(--ink); }
+
+/* ---- source list ---- */
+ol.srcs { font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--ink-2);
+          padding-left: 1.3rem; }
+ol.srcs li { margin-bottom: .7rem; }
+ol.srcs strong { color: var(--ink); }
+
+ul.pts { padding-left: 1.2rem; margin-bottom: 1.05rem; }
+ul.pts li { margin-bottom: .55rem; }
+
+.note { font-family: var(--sans); font-size: .8rem; color: var(--ink-3); line-height: 1.6;
+        border-top: 1px solid var(--rule); padding-top: 1.2rem; margin-top: 2.8rem; }
+.note p { margin-bottom: .7rem; }
+
+@media (max-width: 34rem) {
+  h1 { font-size: 1.85rem; }
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  .key dl { grid-template-columns: 1fr; gap: .15rem; }
+  .key dt { margin-top: .5rem; }
+  blockquote.q { font-size: 1.25rem; }
+}
+@media print {
+  .nav { display: none; }
+  body { background: #fff; }
+}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+  <a class="backlink" href="measure-u-debate-fact-check.html">&larr; Back to the fact check</a>
+
+  <div class="kicker">Source document</div>
+  <h1>Measure U Debate: Full Transcript</h1>
+  <p class="standfirst">Mayor Adena Ishii and Geoff Lomax debated Berkeley&rsquo;s proposed $300 million infrastructure bond, moderated by Kate Harrison. A 14:28 excerpt, including audience questions.</p>
+  <div class="byline">Berkeley Decision Project &middot; Published September 3, 2026</div>
+
+  <p>This is the evidentiary source for the <a href="measure-u-debate-fact-check.html">Measure U debate fact check</a>. Passages quoted there are <mark class="hl">highlighted</mark> below; following a &ldquo;See in transcript&rdquo; link from any fact-check card lands on the highlighted passage it evaluates.</p>
+
+  <p>The recording begins in the middle of Mayor Ishii&rsquo;s opening statement, and the omitted words are not reconstructed. The text is lightly edited from an automated transcript: obvious errors in names and Berkeley terminology are corrected, punctuation is added, and duplicated speech-to-text artifacts are removed. A speaker&rsquo;s substantive factual error is never silently repaired &mdash; Geoff Lomax dating Measure O to 2016 appears as spoken, and is corrected in the fact check rather than here.</p>
+
+  <h2 class="tsec">Opening statements</h2>
+  <div class="turn ishii">
+    <div class="spk"><span class="who">Adena Ishii</span><span class="ts">00:00</span></div>
+    <p class="tx"><span id="t-00-00" class="anch"></span> [Excerpt begins mid-statement.] <mark class="hl">“…Building Trades Council of Alameda, League of Women Voters, City Auditor Jenny Wong, former City Auditor Ann-Marie Hogan, Alameda County Treasurer Hank Levy, and that is really important because accountability is a huge part of this.</mark> <span id="t-00-09" class="anch"></span><mark class="hl">And we’ve really shown that with Measure T1, the bond that we put up previously, that those projects have been delivered. And in fact, today I actually just did a ribbon cutting for the D and E docks, which are new in the Berkeley Marina.</mark> So, very proud of the work that we’ve been doing there. Thank you, and thanks so very, very much.”</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">00:28</span></div>
+    <p class="tx">“Thank you very much, Mr. Lomax.”</p>
+  </div>
+  <div class="turn lomax">
+    <div class="spk"><span class="who">Geoff Lomax</span><span class="ts">00:34</span></div>
+    <p class="tx"><span id="t-00-34" class="anch"></span> “Great. Thank you all for sticking around. Can you hear me all right? Great, thank you. So let’s understand the ask here. <mark class="hl">We’re being asked to incur $600 million in a financial obligation through the issuance of municipal bonds, and residents will be required to pay that $600 million over a 30-year period.</mark> So bonds are a great tool for public finance. They’re one tool among many. But when you’re issuing debt at that level, there are really three driving criteria you want to take into account. Projects should be extremely well-defined in purpose. And if you look at the vast majority of municipal bonding that occurs in the state of California, it’s for a very defined public purpose, not a list of projects that span all sorts of things, including existing parcel-tax revenues. The project should also be deemed essential. So again, if you’re looking at a project that’s going to cost a lot of money, if you’re taking on debt, you’re taking on among the most expensive financing mechanisms. So you reserve that mechanism for essential public safety and public-need projects. And finally, those projects should be durable, because you’re taking on 30 years of debt, and those benefits need to accrue over a 30-year time period and actually beyond that time horizon. <span id="t-01-52" class="anch"></span>And so let me give you an example: <mark class="hl">Berkeley Measure O, 2016 affordable housing bond, on a very well-defined purpose. It’s narrow in scope.</mark> It addressed the housing crisis. And now we have a series of durable projects that are going to outlive me and hopefully everyone in this room. We’re opposing this measure because its purpose is ill-defined. It’s a list of things that are the befuddling imagination. It includes sidewalks and curb ramps, which we just funded with a parcel-tax Measure FF. And many of the projects—the list of projects—is simply not feasible, simply adding up the numbers. And we’re at time, so I will leave it at that.”</p>
+  </div>
+  <h2 class="tsec">Moderator questions</h2>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">02:38</span></div>
+    <p class="tx">“Thank you very much, Mr. Lomax. For the mayor, I had a question about maintenance funding for these capital projects and past needs for maintenance. How much of this bond is going to maintenance as opposed to new capital? And what is the plan for maintaining new facilities that we might be creating?”</p>
+  </div>
+  <div class="turn ishii">
+    <div class="spk"><span class="who">Adena Ishii</span><span class="ts">02:55</span></div>
+    <p class="tx"><span id="t-02-55" class="anch"></span> “Yeah, thank you very much for that question, Kate. <mark class="hl">So I don’t have the specifics of the percentages between what is new and what is maintenance, but I’m happy to get back to you all with the answers to that question. But I can say that this bond does look at both, because I think that that is essential. I think sometimes when cities create new infrastructure, they are not considering how to maintain it, and maintenance was an essential part of this.</mark> So thanks for the question.”</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">03:22</span></div>
+    <p class="tx">“Thank you. Mr. Lomax, any comments on the maintenance?”</p>
+  </div>
+  <div class="turn lomax">
+    <div class="spk"><span class="who">Geoff Lomax</span><span class="ts">03:24</span></div>
+    <p class="tx"><span id="t-03-24" class="anch"></span> <mark class="hl">“If you can’t afford it and you don’t have a plan to take care of it, you shouldn’t build it.</mark> <span id="t-03-29" class="anch"></span><mark class="hl">The reason we’re facing a $2 billion infrastructure deficit in the City of Berkeley is because we built too much stuff with no plan about how we’re going to take care of it.</mark> This measure potentially repeats those mistakes over and over again, if you look at the list of projects, or it just simply doesn’t make sense. For example, Civic Center, which is a project that could deserve a bond itself—the renovation of Civic Center—there’s a sprinkling of money in there to play with the foundation. And as soon as you put that shovel in the ground, you’re going to find out you’ve got a $200 million problem. So if you can’t finance the project through a real plan, then don’t start with something that’s just going to become a bigger problem as you move forward.”</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">04:20</span></div>
+    <p class="tx">“Okay. I have one more question, and that is for Mr. Lomax. How would you address the fact that the infrastructure does not have a plan? You know, the day we don’t pave a road, it’s more expensive in a couple of years. What are we doing in this interim period to maintain and make sure that our infrastructure doesn’t degrade more?”</p>
+  </div>
+  <div class="turn lomax">
+    <div class="spk"><span class="who">Geoff Lomax</span><span class="ts">04:39</span></div>
+    <p class="tx">“Okay, let’s start with, again, back to the point of bonds. If there was a bond measure on this ballot that was going to implement the strategic plan for Berkeley Fire, I don’t think there would be anyone sitting in this seat speaking in opposition, perhaps with the exception of the arson lobby. So, first of all, you have to be strategic in how you use the most expensive public financing tool in our toolkit, and it’s for something like fire. Again, everyone in our coalition would say if it was about rebuilding the fire stations, none of us would be here today. <span id="t-05-17" class="anch"></span><mark class="hl">Again, we just passed a maintenance measure, FF, among the largest parcel taxes in the history of our city, and now we need to start borrowing money to fix the same stuff. It’s just not clear what the objective is here and why we’re using the most expensive financing mechanism for something that should be done with the parcel-tax funds.”</mark></p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">05:42</span></div>
+    <p class="tx">“Thank you very much. I’m going to turn to audience questions now.”</p>
+  </div>
+  <div class="turn ishii">
+    <div class="spk"><span class="who">Adena Ishii</span><span class="ts">05:44</span></div>
+    <p class="tx">“I’m sorry, can I also address that?”</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">05:45</span></div>
+    <p class="tx">“Oh, yes, would you like to address that?”</p>
+  </div>
+  <div class="turn ishii">
+    <div class="spk"><span class="who">Adena Ishii</span><span class="ts">05:46</span></div>
+    <p class="tx">“Yeah, thank you.”</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">05:46</span></div>
+    <p class="tx">“Briefly, thank you.”</p>
+  </div>
+  <div class="turn ishii">
+    <div class="spk"><span class="who">Adena Ishii</span><span class="ts">05:48</span></div>
+    <p class="tx">“Yeah, so I do want to say that that’s an important question, because every time we don’t pay for something, we know it’s going to cost way more down the line than what we’re paying for. The cost of materials is going to continue to go up. The cost of labor is going to continue to go up. So that’s why it’s so important that we’re dealing with this deficit for our infrastructure right now. <span id="t-06-08" class="anch"></span><mark class="hl">And when you talk about specificity of projects, excuse me, you can actually go to the City website and see exactly which projects. So it’s not just random projects. And in fact, you talked about the fire stations. That’s actually one of the projects that’s on there.</mark> So that, I think, shows how these projects are super essential. <span id="t-06-27" class="anch"></span><mark class="hl">And we actually went to the people to talk to them. That’s how we came up with this list of projects, because we had a number of different community meetings to hear from people around the City about their needs and their priorities.</mark> And many of those needs are urgent because of climate change, because of our needs around our fire stations, because we have crumbling infrastructure. As a city that’s about 100 years old, we have 100-year-old infrastructure. Thank you very much.”</p>
+  </div>
+  <h2 class="tsec">Audience Q&amp;A</h2>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">06:52</span></div>
+    <p class="tx">“We have three questions. And I’m going to ask you to really phrase a question. And we’ll have one-minute answers. Thank you. Yes.”</p>
+  </div>
+  <div class="turn aud">
+    <div class="spk"><span class="who">Audience member 1</span><span class="ts">07:01</span></div>
+    <p class="tx"><span id="t-07-01" class="anch"></span> <mark class="hl">“Hello. I think that Mayor Ishii made a misstatement that all of the projects in T1 were completed. And that’s not true.</mark> There were projects on T1 which appear now in T2. So can you talk about how all of the projects here will get done, since it’s clear that all of the projects that were funded in T1 didn’t get done? Thank you.”</p>
+  </div>
+  <div class="turn ishii">
+    <div class="spk"><span class="who">Adena Ishii</span><span class="ts">07:26</span></div>
+    <p class="tx"><span id="t-07-26" class="anch"></span> <mark class="hl">“I apologize if I said that all of those projects are done. I know that sometimes what happens is that there’s a project that becomes infeasible, or there was funding that was available for it that we were leveraging that we wouldn’t be able to move forward on it.</mark> And in terms of the crossover on projects, I know sidewalks was brought up from Measure FF. So yes, there are sidewalk projects that were funded with FF. And with the 50-50 sidewalk program, there’s a $9 million backlog of people who want to fix the sidewalks in front of their homes. And the City helps to pay for it 50-50, which is why it’s called that. And that’s why that project in particular is a crossover from FF and this current bond. Thank you.”</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">08:09</span></div>
+    <p class="tx">“Mr. Lomax, any comments on that?”</p>
+  </div>
+  <div class="turn lomax">
+    <div class="spk"><span class="who">Geoff Lomax</span><span class="ts">08:11</span></div>
+    <p class="tx">“Well, yes. So first of all, I’ve been to a lot of public meetings in Berkeley. And yes, there’s a lot of wonderful ideas out there. And everybody has their idea of what would make the City better. And some of these things would. But the problem is, again, you have to prioritize. And you have to align what the ask is to how you’re going to pay for it. And I just go back: when it comes to expensive bonds like this that are going to cost $600 million over the life, you will find they have these very specific characteristics. They’re for a very specified purpose. They serve a very compelling public need. And they’re durable. If you go and look at that list of things that come up in public meetings, it’s being everything to everybody. And we would all love to do that. But we just simply don’t have the resources. And we shouldn’t pay top dollar for things that aren’t essential and focused.”</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">09:15</span></div>
+    <p class="tx">“Thank you.”</p>
+  </div>
+  <div class="turn aud">
+    <div class="spk"><span class="who">Audience member 2</span><span class="ts">09:17</span></div>
+    <p class="tx">“In 2000, there was a task force that consisted of City staff and community members that produced a vision. And it was a vision that was implemented in 2015, which was specifically supposed to guide how infrastructure improvements would be proceeded with and dealt with by the City. So the first question is: has that plan—I guess it’s more for the mayor, but then a response from the opposition—how has that plan guided the choices that are in the $300 million bond measure? Has it or hasn’t it? And how has that happened? And secondly, what would the cost per household be of the measure? Thank you.”</p>
+  </div>
+  <div class="turn ishii">
+    <div class="spk"><span class="who">Adena Ishii</span><span class="ts">09:55</span></div>
+    <p class="tx">“So the—sorry, I’m looking at our campaign manager over there. <span id="t-10-04" class="anch"></span><mark class="hl">So yes, absolutely, Vision 2050 was taken into account when we came up with this infrastructure bond. I actually re-established that task force. We called it Realize Vision 2050. And that happened in the last year.</mark> And out of that reinvigoration of the task force, that’s where we came up with the idea that we needed to do the infrastructure bond now. One of the recommendations from the infrastructure bond was that we needed to find funding for the infrastructure projects. Another one was that we needed to make sure that the public knew that this was a major issue. And that was a part of why we’ve had so many public information sessions about this need, because we want the public to know about what’s going on. And so absolutely, that was a big part of it. And we have people who worked on the Vision 2050 and the Realize Vision 2050 task force who are supporting this as well. In fact, an op-ed just came out recently that said this infrastructure bond needs a plan, and there is one from Vision 2050. Thank you.”</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">11:07</span></div>
+    <p class="tx">“Mr. Lomax?”</p>
+  </div>
+  <div class="turn lomax">
+    <div class="spk"><span class="who">Geoff Lomax</span><span class="ts">11:09</span></div>
+    <p class="tx"><span id="t-11-09" class="anch"></span> “So thank you for that question. It’s got a very important answer. <mark class="hl">The costs are going to be sliding scale. This is why durability is absolutely critical. Newer residents who are paying more money to live in the City are going to take a much bigger hit than older residents, because the payment schedule is based on the value of where they’re living.</mark> So it’s hard to unpack that. I’m not going to try to do it in 40 seconds. But essentially, newer residents are going to pay a lot. Older residents typically pay less. That’s how these systems work. So durability is absolutely essential, so that the newer residents who are going to be in the City over a longer term truly derive those benefits. And again, I would say the list doesn’t reflect that in whole. Yes, there’s some fire in there. Why not just make it 100 percent fire? Do a program that will guarantee benefits to those residents—typically those residents are going to pay the most over the life of the debt cycle—so they’re getting bang for their buck, they’re getting value, and then we can measure it and say, ‘You got this. Thank you, and we’re going to try again in 2029.’”</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">12:18</span></div>
+    <p class="tx">“Okay, I’m going to ask Ms. Hammergren to make her question as brief as possible, give you each 30 seconds.”</p>
+  </div>
+  <div class="turn aud">
+    <div class="spk"><span class="who">Ms. Hammergren</span><span class="ts">12:23</span></div>
+    <p class="tx"><span id="t-12-23" class="anch"></span> <mark class="hl">“Okay, so the bond measure goes into the General Fund, and doesn’t that mean that no matter what promises you tell us and what’s on the list, the money can be used in any way since it’s in the General Fund?”</mark></p>
+  </div>
+  <div class="turn ishii">
+    <div class="spk"><span class="who">Adena Ishii</span><span class="ts">12:40</span></div>
+    <p class="tx"><span id="t-12-40" class="anch"></span> <mark class="hl">“Thank you for that question. So just like we did with Measure T1, we will have regular reports, there will be audits.</mark> This is something that we are taking very seriously because we understand that people are concerned about making sure the money is used. We understand that people are concerned about making sure the money goes where it’s supposed to go. <span id="t-12-57" class="anch"></span><mark class="hl">So absolutely, these projects are necessary, and in fact, our City staff have already done work to identify funding to leverage from this infrastructure bond, so it’s actually very essential that we continue to do the projects that we’ve already said that we’re doing, unless, of course, like I said, if it becomes infeasible or we aren’t able to leverage the funding that we need for it.</mark> So thank you.”</p>
+  </div>
+  <div class="turn lomax">
+    <div class="spk"><span class="who">Geoff Lomax</span><span class="ts">13:17</span></div>
+    <p class="tx"><span id="t-13-17" class="anch"></span> <mark class="hl">“Correct, the money goes into the General Fund, and it’s no disrespect for this Council.</mark> We have—you know, let’s just say they’re committed to whatever portion of that list they can fund. As we saw with T1, future councils may not share that same set of priorities, that same—because at the end of the day, these funds become a set of competing interests. <span id="t-13-41" class="anch"></span><mark class="hl">You look at that list, there’s no—it adds up to $300 million yesterday. It’s probably $350 million today. It’s probably going to be $400 million by the time the bonds are issued.</mark> That’s just—you said it—there’s inflation. The longer we wait, the more expensive these things get. There’s going to be a set of competing interests. Going back to my original point, that’s why the smart move is targeted bonding for very specific, narrow purposes. Targeted bonding, essential needs, and that’s how you get these things done, how you guarantee the results, and that’s why it’s worth paying the extraordinary cost that borrowing incurs when you do these sorts of things.”</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Kate Harrison</span><span class="ts">14:21</span></div>
+    <p class="tx">“Thank you so much, Mayor Ishii and Mr. Lomax, for joining us. Let’s give a round of applause.”</p>
+  </div>
+  <div class="note">
+    <p><strong>Corrections.</strong> If a passage is mistranscribed or a speaker is misattributed, say so and it will be corrected here with the change noted.</p>
+    <p><a href="measure-u-debate-fact-check.html">&larr; Back to the fact check</a></p>
+  </div>
+
+</div>
+
+<script>
+/* A link from the fact check lands mid-paragraph; flash the highlight so the reader
+   sees which sentence they were sent to rather than hunting for it. */
+(function () {
+  function flash() {
+    var el = document.getElementById(location.hash.slice(1));
+    if (!el) return;
+    var m = el.nextElementSibling && el.nextElementSibling.tagName === 'MARK'
+          ? el.nextElementSibling
+          : el.parentNode.querySelector('mark.hl');
+    if (!m) return;
+    m.classList.remove('flash');
+    void m.offsetWidth;
+    m.classList.add('flash');
+  }
+  if (location.hash) window.addEventListener('load', flash);
+  window.addEventListener('hashchange', flash);
+})();
+</script>
+</body>
+</html>
