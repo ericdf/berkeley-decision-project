@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fact-Checking Berkeley&rsquo;s Measure V Debate</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --r-supported:#1f6b45; --r-supported-bg:#eef7f1;
+  --r-context:var(--accent); --r-context-bg:var(--accent-soft);
+  --r-misleading:#a33208; --r-misleading-bg:#fdf0ea;
+  --r-incorrect:#8f1616; --r-incorrect-bg:#fbeaea;
+  --r-unsupported:#7a3ba0; --r-unsupported-bg:#f6eefb;
+  --r-analysis:#586074; --r-analysis-bg:#f1f3f6;
+  --logic:#334; --logic-bg:#eceef2;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331;
+    --r-supported:#5fc48d; --r-supported-bg:#12251b;
+    --r-misleading:#f08a5d; --r-misleading-bg:#2b1810;
+    --r-incorrect:#f2726f; --r-incorrect-bg:#2e1414;
+    --r-unsupported:#c99ae6; --r-unsupported-bg:#221630;
+    --r-analysis:#a4acbc; --r-analysis-bg:#20242e;
+    --logic:#b9c1d1; --logic-bg:#232935;
+  }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+  --r-supported:#5fc48d; --r-supported-bg:#12251b;
+  --r-misleading:#f08a5d; --r-misleading-bg:#2b1810;
+  --r-incorrect:#f2726f; --r-incorrect-bg:#2e1414;
+  --r-unsupported:#c99ae6; --r-unsupported-bg:#221630;
+  --r-analysis:#a4acbc; --r-analysis-bg:#20242e;
+  --logic:#b9c1d1; --logic-bg:#232935;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.8rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h3 { font-family: var(--sans); font-size: 1.02rem; font-weight: 700; line-height: 1.35;
+     margin: 1.9rem 0 .6rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--quote); }
+
+/* ---- disclosure ---- */
+.disclose { background: var(--accent-soft); border: 1px solid var(--accent);
+            border-radius: 5px; padding: 1rem 1.15rem; margin: 0 0 2.2rem;
+            font-family: var(--sans); font-size: .87rem; line-height: 1.6; }
+.disclose .lbl { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .14em;
+                 text-transform: uppercase; color: var(--accent); margin-bottom: .45rem; }
+.disclose p { margin-bottom: .6rem; }
+
+/* ---- rating key ---- */
+.key { border: 1px solid var(--rule); border-radius: 5px; background: var(--panel);
+       padding: 1.1rem 1.25rem; margin: 1.6rem 0 2.4rem; font-family: var(--sans); font-size: .84rem; }
+.key h3 { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+          color: var(--ink-2); margin: 0 0 .8rem; }
+.key dl { display: grid; grid-template-columns: max-content 1fr; gap: .55rem .85rem; align-items: baseline; }
+.key dd { color: var(--ink-2); line-height: 1.5; }
+
+/* ---- quote card ---- */
+/* The pull quote is the dominant object on the page; the annotation under it is
+   deliberately smaller and set in sans, so the reader's eye lands on what was said
+   before it lands on our verdict. */
+.item { padding: 2.6rem 0 0; border-top: 1px solid var(--rule); margin-top: 2.6rem; }
+.item:first-of-type { border-top: 0; margin-top: 1.2rem; padding-top: 0; }
+
+.meta { font-family: var(--sans); font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+        text-transform: uppercase; color: var(--ink-3); margin-bottom: 1rem; }
+.meta .nm { color: var(--ink); }
+.meta .ts { font-weight: 500; letter-spacing: .06em; }
+.meta .ts::before { content: "\00a0\00b7\00a0"; color: var(--ink-3); }
+
+blockquote.q { font-size: 1.5rem; line-height: 1.34; font-weight: 400; letter-spacing: -.011em;
+               color: var(--ink); text-wrap: pretty; margin: 0 0 1rem; }
+blockquote.q p { margin-bottom: .7rem; }
+blockquote.q p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .82rem; color: var(--ink-2); margin-bottom: 1.2rem; }
+
+/* ---- rating label ---- */
+.rating { display: inline-block; font-family: var(--sans); font-size: .84rem; font-weight: 800;
+          letter-spacing: .01em; padding: .3rem .6rem; border-radius: 3px; margin-bottom: .95rem; }
+.r-supported   { color: var(--r-supported);   background: var(--r-supported-bg); }
+.r-context     { color: var(--r-context);     background: var(--r-context-bg); }
+.r-misleading  { color: var(--r-misleading);  background: var(--r-misleading-bg); }
+.r-incorrect   { color: var(--r-incorrect);   background: var(--r-incorrect-bg); }
+.r-unsupported { color: var(--r-unsupported); background: var(--r-unsupported-bg); }
+.r-analysis    { color: var(--r-analysis);    background: var(--r-analysis-bg); }
+
+.finding { font-size: 1.02rem; line-height: 1.7; color: var(--ink); }
+.finding p { margin-bottom: .85rem; }
+.finding p:last-child { margin-bottom: 0; }
+.finding strong { font-weight: 700; }
+
+/* Reasoning is visually separate from the factual rating: a flag is never
+   evidence that a claim is false, and must not read as part of the verdict. */
+.reason { margin-top: 1rem; padding: .8rem .95rem; background: var(--logic-bg);
+          border-radius: 4px; font-family: var(--sans); font-size: .87rem;
+          line-height: 1.6; color: var(--ink-2); }
+.reason .lead { display: block; font-size: .63rem; font-weight: 800; letter-spacing: .13em;
+                text-transform: uppercase; color: var(--logic); margin-bottom: .3rem; }
+.reason strong { color: var(--ink); }
+
+.srcline a.tlink { color: var(--quote); white-space: nowrap; font-weight: 600; }
+.srcline { margin-top: .9rem; font-family: var(--sans); font-size: .76rem; color: var(--ink-3);
+           line-height: 1.55; }
+
+/* ---- disclosure blocks ---- */
+details.disc { margin: 1.5rem 0; border: 1px solid var(--rule); border-radius: 5px;
+               background: var(--panel); }
+details.disc > summary { cursor: pointer; padding: .8rem 1.1rem; font-family: var(--sans);
+                         font-size: .82rem; font-weight: 700; color: var(--ink-2);
+                         list-style: none; }
+details.disc > summary::-webkit-details-marker { display: none; }
+details.disc > summary::before { content: "\25B8"; display: inline-block; margin-right: .5rem;
+                                 transition: transform .15s; color: var(--ink-3); }
+details.disc[open] > summary::before { transform: rotate(90deg); }
+details.disc > summary:hover { color: var(--ink); }
+.disc-body { padding: 0 1.1rem 1.1rem; font-family: var(--sans); font-size: .84rem;
+             line-height: 1.62; color: var(--ink-2); }
+.disc-body p { margin-bottom: .75rem; }
+.disc-body strong { color: var(--ink); }
+
+/* ---- source list ---- */
+ol.srcs { font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--ink-2);
+          padding-left: 1.3rem; }
+ol.srcs li { margin-bottom: .7rem; }
+ol.srcs strong { color: var(--ink); }
+
+ul.pts { padding-left: 1.2rem; margin-bottom: 1.05rem; }
+ul.pts li { margin-bottom: .55rem; }
+
+.note { font-family: var(--sans); font-size: .8rem; color: var(--ink-3); line-height: 1.6;
+        border-top: 1px solid var(--rule); padding-top: 1.2rem; margin-top: 2.8rem; }
+.note p { margin-bottom: .7rem; }
+
+@media (max-width: 34rem) {
+  h1 { font-size: 1.85rem; }
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  .key dl { grid-template-columns: 1fr; gap: .15rem; }
+  .key dt { margin-top: .5rem; }
+  blockquote.q { font-size: 1.25rem; }
+}
+@media print {
+  .nav { display: none; }
+  body { background: #fff; }
+}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+  <div class="kicker">Fact check</div>
+  <h1>Fact-Checking Berkeley&rsquo;s Measure V Debate</h1>
+  <p class="standfirst">Mayor Adena Ishii and Eric Friedman debated Berkeley&rsquo;s proposed half-cent sales tax. We checked the consequential factual claims and the reasoning used to support them.</p>
+  <div class="byline">Berkeley Decision Project &middot; Wellstone Democratic Renewal Club debate, moderated by Soli Alpert &middot; Published September 3, 2026</div>
+
+  <div class="disclose">
+    <span class="lbl">Disclosure</span>
+    <p>This site is published by Eric Friedman, who argued against Measure V in this debate. He is one of the two people being fact-checked here.</p>
+    <p><strong>AI disclosure:</strong> AI tools assisted substantially with analysis and drafting. Eric Friedman selected the claims, supplied and reviewed the evidence, edited the analysis, and takes responsibility for the conclusions.</p>
+  </div>
+
+  <p>Rather than reproduce the entire debate, this article isolates the statements that carry factual or logical weight. The quotations remain in chronological order so readers can follow the argument. We check statements by both speakers. Policy judgments are not rated true or false merely because we agree or disagree with them.</p>
+
+  <p>Quotations are lightly edited from an automated transcript of the debate audio, correcting obvious transcription errors and punctuation. Substantive wording is preserved, and ellipses mark omitted material within a quote.</p>
+
+  <div class="key">
+    <h3>How to read the ratings</h3>
+    <dl>
+      <dt><span class="rating r-supported">Supported</span></dt>
+      <dd>The available record directly supports the material claim.</dd>
+      <dt><span class="rating r-context">Needs context</span></dt>
+      <dd>Substantially grounded, but missing context changes its significance.</dd>
+      <dt><span class="rating r-misleading">Misleading</span></dt>
+      <dd>Contains a factual basis but materially distorts scale, scope, chronology or category.</dd>
+      <dt><span class="rating r-incorrect">Incorrect</span></dt>
+      <dd>Contradicted by the available evidence or by the relevant definition.</dd>
+      <dt><span class="rating r-unsupported">Unsupported</span></dt>
+      <dd>The reviewed public record does not establish the claim. This is not the same as false.</dd>
+      <dt><span class="rating r-analysis">Analysis</span></dt>
+      <dd>A prediction, inference or normative judgment rather than a directly checkable fact.</dd>
+    </dl>
+    <p style="margin-top:.9rem;font-size:.83rem;color:var(--ink-2);line-height:1.55">Reasoning notes are separate from factual ratings. A statement can be factually true and still fail to support the conclusion it is offered for.</p>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">00:52</span></div>
+    <blockquote class="q">&ldquo;The City of Berkeley has been struggling with a budget deficit. We just closed a $30 million deficit in this last budget cycle. As you can imagine, the federal government has not been very kind to us recently. Between the federal government and the state government, we have unfortunately lost a lot of funding that normally comes down to the local level.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>The chronology matters. Berkeley&rsquo;s structural General Fund imbalance predates the recent federal and state funding pressures. The City Auditor described the structural deficit as a multi-year problem; the City Manager described it as persistent for many years; and Ishii herself had called it a <strong>&ldquo;longstanding structural deficit.&rdquo;</strong> Recent outside funding losses can worsen Berkeley&rsquo;s finances, but they do not explain the origin of the roughly $30 million structural gap.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>Placing the two statements back-to-back encourages a causal inference the chronology does not support. The newer funding pressure and the older structural imbalance should be analyzed separately.</div>
+    <div class="srcline">Sources: City Auditor, <em>Berkeley&rsquo;s Financial Condition (FY2016&ndash;FY2025)</em>; FY2027&ndash;FY2028 budget adoption record; Mayor&rsquo;s April 2026 budget message; 2026 General Obligation Bonds Official Statement. <a class="tlink" href="measure-v-debate-transcript.html#t0052">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">01:21</span></div>
+    <blockquote class="q">&ldquo;And what is the sales tax for, you may ask? It&rsquo;s for very essential public safety needs. So that includes police, fire, and also youth programming.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-incorrect">Incorrect</div>
+    <div class="finding">
+      <p>Measure V is a <strong>general tax</strong>, not a public-safety tax. The City Attorney&rsquo;s impartial analysis states its revenue &ldquo;would be placed into the General Fund and could be spent on any valid municipal purpose.&rdquo; The measure does not earmark revenue for police, fire, youth programming, or public safety generally, and it guarantees no particular staffing or service level.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>Ishii then argues that Berkeley should consider youth programming part of public safety. That may be a legitimate policy preference, but it is not a restriction contained in Measure V. Her own explanation illustrates the discretion built into a general tax: after voters approve the revenue, elected officials still decide which programs are &ldquo;essential,&rdquo; what counts as &ldquo;public safety,&rdquo; and what gets protected. The accountability issue is not whether youth programming has value; it is that the measure does not bind the City to the purpose Ishii describes.</div>
+    <div class="srcline">Sources: City Attorney&rsquo;s Impartial Analysis of Measure V; Measure V ordinance, June 16, 2026; Argument in Favor of Measure V. <a class="tlink" href="measure-v-debate-transcript.html#t0121">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">01:39</span></div>
+    <blockquote class="q">&ldquo;I know a lot of folks say, hey, sales tax, that&rsquo;s regressive. I have an issue with that. And to that, I would say &hellip; this half-cent increase would actually only just put us on par with Oakland, Hayward, Albany, and other cities within Alameda County.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-analysis">Analysis</div>
+    <div class="finding">
+      <p>Matching another city&rsquo;s tax rate does not answer whether a sales tax is regressive. A sales tax generally consumes a larger share of income for lower-income households, because they spend a larger share of their income on consumption.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>&ldquo;Other cities charge the same rate&rdquo; is a comparison of prevailing practice. It does not establish distributional fairness, affordability, the quantity or quality of services received, or whether Berkeley has exhausted better alternatives.</div>
+    <div class="srcline">Source: Tax Policy Center, <em>Who bears the burden of a national retail sales tax?</em> <a class="tlink" href="measure-v-debate-transcript.html#t0139">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">02:17</span></div>
+    <blockquote class="q">&ldquo;And it&rsquo;s supported by the entire City Council, Berkeley Firefighters Local 1227, Alameda Labor Council, AFSCME Council 57, Building Trades Council, League of Women Voters, our City Auditor, Jenny Wong, and former City Auditor, Ann-Marie Hogan, and Alameda County Treasurer, Hank Levy.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-analysis">Analysis</div>
+    <div class="finding">
+      <p>The endorsements are politically relevant and should be reported accurately. They do not themselves demonstrate that Berkeley needs this particular tax, that the tax amount follows from a demonstrated financing gap, or that expenditure-side alternatives were exhausted.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The status or number of endorsers cannot substitute for the underlying fiscal argument. Where an expert endorsement is offered as proof, the reasoning risks an <strong>appeal to authority</strong>. Where breadth of agreement is offered as proof, it risks an <strong>appeal to popularity</strong>.</div>
+    <div class="srcline">Sources: Argument in Favor and Rebuttal to Argument Against Measure V. <a class="tlink" href="measure-v-debate-transcript.html#t0217">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Eric Friedman</span><span class="ts">03:11</span></div>
+    <blockquote class="q">&ldquo;First, blaming Washington and Sacramento doesn&rsquo;t fit the timeline. The auditor calls Berkeley&rsquo;s deficit longstanding. Council said it knew the problem would recur, and the City&rsquo;s own bond disclosure to investors said federal impacts were still uncertain. The problem was already here.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Eric Friedman</div>
+    <div class="rating r-supported">Supported</div>
+    <div class="finding">
+      <p>The core chronology is supported. Berkeley had identified a recurring structural imbalance before the latest federal-policy changes, and contemporaneous bond disclosure said the City could not yet predict the full effect of federal changes. The statement does not mean federal or state actions are irrelevant to Berkeley&rsquo;s finances; it means they do not explain the pre-existing structural problem.</p>
+    </div>
+    <div class="srcline">Sources: City Auditor, <em>Berkeley&rsquo;s Financial Condition (FY2016&ndash;FY2025)</em>; April 2026 budget-balancing materials; 2026 General Obligation Bonds Official Statement. <a class="tlink" href="measure-v-debate-transcript.html#t0311">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Eric Friedman</span><span class="ts">04:28</span></div>
+    <blockquote class="q">&ldquo;Twice in May and in June, the manager gave us the answer: &lsquo;No alternatives were considered.&rsquo;&rdquo;</blockquote>
+    <div class="attrib">&mdash; Eric Friedman</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>The June 23 staff report does state, under <strong>&ldquo;Alternative Actions Considered&rdquo;</strong>: <strong>&ldquo;No alternative actions have been considered.&rdquo;</strong> But that phrase should not be inflated into a claim that nobody inside City government ever discussed another idea. Employees submitted alternatives, and at least one option &mdash; mandatory time off &mdash; was modeled. The more precise criticism is that the adopted-budget record did not present a systematic alternatives analysis showing which major options were evaluated, accepted or rejected, and why.</p>
+    </div>
+    <div class="srcline">Sources: 2026-06-23 Revised Agenda Packet; Measure V Public Records Act release; Employee Budget Survey Assertion Register. <a class="tlink" href="measure-v-debate-transcript.html#t0428">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">06:57</span></div>
+    <blockquote class="q">&ldquo;I think this audience really understands the impacts of Prop 13. I myself fought very strong for Prop 13 reform because we know that that has completely impacted the City&rsquo;s ability to raise the property taxes for corporations that have these massive properties throughout our cities around the State of California, preventing us from being able to have enough revenue that we need.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii, asked what alternative revenue measures Berkeley considered</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>Proposition 13 has constrained California property taxation since <strong>1978</strong>, and Ishii did participate in the League of Women Voters&rsquo; Prop 13 reform work. But that does not answer the moderator&rsquo;s immediate question: what alternative revenue measures Berkeley considered instead of a sales tax in 2026. Nor does a decades-old constraint explain why the City&rsquo;s longstanding structural deficit reached its current scale now.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>Prop 13 is relevant background to California municipal finance. It becomes a distraction when invoked as though it establishes that Measure V is the appropriate present remedy, or demonstrates that other options were exhausted. Ishii&rsquo;s personal advocacy also says nothing about whether that advocacy changed Berkeley&rsquo;s fiscal capacity.</div>
+    <div class="srcline">Sources: League of Women Voters Berkeley Albany Emeryville, board and Prop 13 Reform Team materials; California Legislative Analyst&rsquo;s Office on Proposition 13. <a class="tlink" href="measure-v-debate-transcript.html#t0657">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">07:19</span></div>
+    <blockquote class="q">&ldquo;We&rsquo;ve had to make massive cuts. &hellip; We have made devastating cuts to the City already.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>The City made real reductions, but <strong>&ldquo;massive&rdquo;</strong> and <strong>&ldquo;devastating&rdquo;</strong> are characterizations rather than defined budget measures. Berkeley&rsquo;s plan quantified General Fund reductions at about <strong>$29.3 million, or 10.3 percent of departmental and Charter Office expenditures</strong>, before positions and services were allocated to the proposed sales tax, and about <strong>$19.8 million, or 7.0 percent</strong>, after that allocation. The FY2027 Annual Appropriations Ordinance was about <strong>$922.3 million gross</strong> and <strong>$796.6 million net</strong> across all City funds.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The reductions should be described with a denominator. The citywide budget is not the correct denominator for a General Fund-only cut, but neither should readers be left with an adjective when the City has supplied the numbers.</div>
+    <div class="srcline">Sources: FY2027&ndash;FY2028 proposed budget presentation; FY2027 Annual Appropriations Ordinance; 2026-06-23 Revised Agenda Packet. <a class="tlink" href="measure-v-debate-transcript.html#t0719">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">07:26</span></div>
+    <blockquote class="q">&ldquo;What the opposition does not maybe understand is how painful it was to cut a number of different employees &mdash; over 100, I think nearly 180 employees that we had to cut in the City of Berkeley.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-misleading">Misleading</div>
+    <div class="finding">
+      <p>The roughly <strong>183</strong> figure referred principally to <strong>positions</strong>, not 183 people being laid off. A large majority of the affected positions were vacant. At the relevant stage, City records described about <strong>20 filled positions</strong> on the layoff list, with placement into vacancies expected to reduce actual layoffs to roughly <strong>14</strong>.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>Eliminating a vacant authorized position can reduce future service capacity and produce real workload consequences. But a vacant position is not an employee. Saying Berkeley &ldquo;cut nearly 180 employees&rdquo; materially overstates the number of people losing jobs.</div>
+    <div class="srcline">Sources: May 19, June 16 and June 23, 2026 budget and Council records. <a class="tlink" href="measure-v-debate-transcript.html#t0726">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">07:42</span></div>
+    <blockquote class="q">&ldquo;This is the right option. We&rsquo;ve absolutely looked at it and other options as well.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-unsupported">Unsupported by the public record</div>
+    <div class="finding">
+      <p>The reviewed record establishes that other ideas existed. What it does <strong>not</strong> provide is a public, systematic analysis showing which major options were evaluated, how much each would save or raise, why high-value employee proposals were rejected or omitted, and why the half-cent sales tax emerged as the best remaining choice. The June 23 adopted-budget report itself said <strong>&ldquo;No alternative actions have been considered.&rdquo;</strong></p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The assertion may describe internal conversations. Without the underlying analysis, it does not show the work necessary to support the conclusion that the sales tax was &ldquo;the right option.&rdquo;</div>
+    <div class="srcline">Sources: 2026-06-23 Revised Agenda Packet; Measure V Public Records Act release; Employee Budget Survey Assertion Register. <a class="tlink" href="measure-v-debate-transcript.html#t0742">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">08:35</span></div>
+    <blockquote class="q">&ldquo;This $10 million would close the current deficit gap that we&rsquo;re looking at.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>This is defensible only if <strong>&ldquo;current deficit gap&rdquo;</strong> means the roughly <strong>$9.6 million FY2028 election-contingent gap</strong> remaining after other cuts and one-time measures. Measure V&rsquo;s roughly $9&ndash;10 million annual revenue does not, by itself, close the original roughly <strong>$30 million structural deficit</strong> discussed throughout the debate.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The word <strong>&ldquo;deficit&rdquo;</strong> shifts between two different quantities: the original structural gap and the smaller residual gap left after the balancing plan. The sentence sounds much stronger when those two are not distinguished.</div>
+    <div class="srcline">Sources: 2026-06-23 Revised Agenda Packet; May&ndash;June 2026 Council budget records. <a class="tlink" href="measure-v-debate-transcript.html#t0835">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">09:36</span></div>
+    <blockquote class="q">&ldquo;Anyone has access to any of the information that we have in terms of our budget.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-misleading">Misleading</div>
+    <div class="finding">
+      <p>Core budget documents are public. But the statement is too broad. Material underlying information used in this fact check &mdash; including employee budget proposals and internal records concerning alternatives &mdash; had to be obtained through California Public Records Act requests. Those requests were still producing records around the time of the debate. The public budget also did not contain a complete disposition showing how employee ideas were evaluated.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>Publishing the adopted budget is not the same as publishing the analysis behind the choices. The dispute in the debate was about whether the City had <strong>shown its work</strong>, not whether a final budget document could be downloaded.</div>
+    <div class="srcline">Sources: Measure V Public Records Act release; Employee Budget Survey Assertion Register. <a class="tlink" href="measure-v-debate-transcript.html#t0936">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Eric Friedman</span><span class="ts">09:46</span></div>
+    <blockquote class="q">&ldquo;The revenue that we would see from the sales tax is somewhere between nine and ten million dollars. And so the gap is 30 and it&rsquo;s growing. &hellip; The City expenses can outgrow the consumption tax that that represents. So over time, this gap will reappear in a few years. We&rsquo;ll be back here having the same conversation.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Eric Friedman</div>
+    <div class="rating r-analysis">Analysis</div>
+    <div class="finding">
+      <p>The structural mechanism is sound: adding a recurring revenue stream does not guarantee structural balance if recurring expenditures continue growing faster than recurring revenues. Berkeley&rsquo;s own fiscal history documents that mismatch. The exact prediction that the gap will reappear <strong>&ldquo;in a few years&rdquo;</strong> is a forecast and cannot yet be rated as fact.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>This is the long-term-stability argument the moderator asked about. Measure V can close the smaller election-contingent gap without solving the underlying growth mismatch that produced the larger structural problem.</div>
+    <div class="srcline">Sources: City Auditor, <em>Berkeley&rsquo;s Financial Condition</em>; 2026-06-23 Revised Agenda Packet; May&ndash;June 2026 Council budget records. <a class="tlink" href="measure-v-debate-transcript.html#t0946">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Eric Friedman</span><span class="ts">10:16</span></div>
+    <blockquote class="q">&ldquo;Doing things like a ten to twelve percent cut across the board isn&rsquo;t a prioritization process. That&rsquo;s arithmetic. You say everything is equally important and then you cut ten to twelve percent.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Eric Friedman</div>
+    <div class="rating r-analysis">Analysis</div>
+    <div class="finding">
+      <p>This is a governance judgment, but the distinction is real. A uniform departmental reduction target is mathematically different from ranking services and programs by importance, effectiveness, cost-effectiveness or appropriate provider. The City made meaningful cuts; the question is whether the method constituted prioritization.</p>
+    </div>
+    <div class="srcline">Sources: 2026-06-23 Revised Agenda Packet; FY2027&ndash;FY2028 proposed budget presentation. <a class="tlink" href="measure-v-debate-transcript.html#t1016">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Eric Friedman</span><span class="ts">12:08</span></div>
+    <blockquote class="q">&ldquo;The City asked employees, what would they recommend? And employees had dozens of responses, and those appear nowhere in the budget that Mayor Ishii approved.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Eric Friedman</div>
+    <div class="rating r-context">Needs context</div>
+    <div class="finding">
+      <p>The employee survey produced <strong>59 responses</strong>. Forty-nine contained at least one cost-saving idea and 35 contained at least one revenue idea. Several distinctive or potentially high-value proposals do not appear in the reviewed balancing plan or Council transcript corpus. But <strong>&ldquo;those appear nowhere&rdquo;</strong> is too categorical, because some employee ideas overlapped with actions or discussions elsewhere.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The stronger claim is that the City did not publicly show which employee recommendations were accepted, rejected or costed, or why, and that several substantial proposals were not incorporated into the published balancing plan.</div>
+    <div class="srcline">Sources: Measure V Public Records Act release; Employee Budget Survey Assertion Register. <a class="tlink" href="measure-v-debate-transcript.html#t1208">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">12:21 &middot; closing</span></div>
+    <blockquote class="q">&ldquo;I have to say I&rsquo;m a bit disappointed that my opponent, I feel like, has shared some real misinformation here.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-analysis">Reasoning flaw: personal attack</div>
+    <div class="finding">
+      <p>Calling an opponent&rsquo;s statements <strong>&ldquo;misinformation&rdquo;</strong> does not establish that they are false. Ishii did immediately identify two factual disputes &mdash; whether employee suggestions were taken into account, and whether the sales tax would close the deficit &mdash; and those claims are checked on their merits above and below.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>This is best treated as personal attack or adversarial framing, not as a substitute for the factual rebuttal that follows. It is not a pure ad hominem fallacy if the speaker then addresses the disputed claims; the fallacy would arise only if the label itself were offered as a reason to reject the opponent&rsquo;s argument.</div>
+    <div class="srcline">Source: debate recording. <a class="tlink" href="measure-v-debate-transcript.html#t1221">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">12:27 &middot; closing</span></div>
+    <blockquote class="q">&ldquo;The City of Berkeley employees had made suggestions that the City did actually take into account. This $30 million budget deficit would be closed with this amount that we would be receiving through the sales tax. &hellip; I want to make sure folks know that&rsquo;s factual.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-misleading">Misleading</div>
+    <div class="finding">
+      <p>Both parts require qualification. Employees did submit suggestions, and at least some ideas were discussed or modeled. But the public record does not show a complete disposition of the higher-value proposals or demonstrate that they materially shaped the final plan. More importantly, Measure V is expected to raise roughly <strong>$9&ndash;10 million per year</strong>. It can cover the roughly <strong>$9.6 million residual FY2028 election-contingent gap</strong> after other balancing actions; it does not by itself equal or close a <strong>$30 million</strong> structural deficit.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The statement collapses the original structural gap and the smaller remaining ballot-dependent gap into one number.</div>
+    <div class="srcline">Sources: City Attorney&rsquo;s Impartial Analysis of Measure V; 2026-06-23 Revised Agenda Packet; Measure V Public Records Act release; May&ndash;June 2026 Council budget records. <a class="tlink" href="measure-v-debate-transcript.html#t1227">See in transcript &rarr;</a></div>
+  </div>
+
+  <div class="item">
+    <div class="meta"><span class="nm">Adena Ishii</span><span class="ts">12:43 &middot; closing</span></div>
+    <blockquote class="q">&ldquo;SEIU and AFSCME Local 1, who are our City employees, as well as our Berkeley firefighters are supporting this sales tax, along with our entire City Council &hellip; The fact that we agree on this, I think, shows the importance of why we really need it. &hellip; That&rsquo;s why we have also support from the League of Women Voters and our City Auditor, current and former.&rdquo;</blockquote>
+    <div class="attrib">&mdash; Mayor Adena Ishii</div>
+    <div class="rating r-analysis">Analysis</div>
+    <div class="finding">
+      <p>The support of unions, elected officials and auditors may be relevant to voters deciding whom they trust. It is not evidence that the contested fiscal claims are correct.</p>
+    </div>
+    <div class="reason"><span class="lead">Reasoning</span>The sentence <strong>&ldquo;the fact that we agree on this &hellip; shows &hellip; why we really need it&rdquo;</strong> is the clearest appeal to consensus in the debate. Agreement demonstrates agreement. It does not establish necessity, quantify the gap, prove the alternatives analysis, or make a general sales tax legally dedicated to the services named by its supporters.</div>
+    <div class="srcline">Sources: Argument in Favor and Rebuttal to Argument Against Measure V. <a class="tlink" href="measure-v-debate-transcript.html#t1243">See in transcript &rarr;</a></div>
+  </div>
+
+  <h2>What the checks show</h2>
+
+  <p>The debate contains several genuine agreements that should not be obscured. Berkeley has a structural fiscal problem. The City made real budget reductions. Measure V would raise real recurring General Fund revenue. The dispute is about what those facts prove.</p>
+
+  <p>The records reviewed here support five narrower conclusions.</p>
+
+  <ul class="pts">
+    <li><strong>The structural deficit predates the recent federal and state funding pressures invoked in the debate.</strong> Those pressures can make the problem worse; they did not create it.</li>
+    <li><strong>The &ldquo;nearly 180 employees&rdquo; description confuses positions with people.</strong> Most of the affected positions were vacant, and expected actual layoffs were far smaller.</li>
+    <li><strong>Measure V can cover the smaller ballot-contingent gap; it does not itself erase a roughly $30 million structural imbalance.</strong> The debate repeatedly moved between those two quantities.</li>
+    <li><strong>The City did not publicly demonstrate a comprehensive alternatives process.</strong> Employee ideas and some internal modeling existed, but the published record did not show a systematic disposition of the major alternatives or explain why the sales tax was superior.</li>
+    <li><strong>Endorsements are endorsements, not fiscal analysis.</strong> The repeated invocation of Council, unions, auditors and civic organizations cannot establish the tax&rsquo;s necessity or answer the objections about regressivity, prioritization and long-term structural balance.</li>
+  </ul>
+
+  <p>The strongest question left by the exchange is the one Friedman posed in his opening: <strong>what discipline will keep spending from outrunning the new revenue too?</strong></p>
+
+  <details class="disc">
+    <summary>Sources and method</summary>
+    <div class="disc-body">
+      <p>Every rating rests on a document named below, not on a summary of one. Corpus figures were re-derived on the publication date rather than copied forward.</p>
+      <ol class="srcs">
+        <li><strong>Debate recording.</strong> Audio transcript of the Wellstone Democratic Renewal Club Measure V debate, 13:34. Quotations lightly edited for punctuation and obvious transcription errors, including <em>Adena Ishii</em>, <em>Wellstone</em>, and the moderator&rsquo;s description of a sales tax as the most <em>regressive</em> form of municipal taxation, which the automated transcript rendered as &ldquo;progressive.&rdquo; The <a href="measure-v-debate-transcript.html">full transcript is published separately</a>.</li>
+        <li><strong>City Attorney&rsquo;s Impartial Analysis of Measure V.</strong> General-tax status, General Fund destination, &ldquo;any valid municipal purpose,&rdquo; 10.75 percent aggregate rate, $9&ndash;10 million annual estimate.</li>
+        <li><strong>Measure V ordinance</strong>, <em>Placing a Transactions and Use (Sales) General Tax Measure on the November 3, 2026 Ballot</em>, June 16, 2026.</li>
+        <li><strong>Argument in Favor of Measure V</strong> and <strong>Rebuttal to Argument Against Measure V</strong>, City Clerk filings, August 14 and August 20, 2026.</li>
+        <li><strong>City Auditor</strong>, <em>Berkeley&rsquo;s Financial Condition (FY2016&ndash;FY2025): Structural Deficit Poses Risk to Financial Sustainability</em>, April 2026.</li>
+        <li><strong>2026-06-23 Revised Agenda Packet &mdash; Council.</strong> Budget balancing strategy; one-time bridge resources; &ldquo;Alternative Actions Considered: No alternative actions have been considered.&rdquo;</li>
+        <li><strong>FY2027&ndash;FY2028 proposed budget presentation</strong> and <strong>FY2027 Annual Appropriations Ordinance.</strong> General Fund reduction plan of $29.3M / 10.3 percent before sales-tax allocation and $19.8M / 7.0 percent after; AAO totals of $922.3M gross and $796.6M net.</li>
+        <li><strong>May 19, June 16 and June 23, 2026 Council budget records.</strong> The 183-position plan; approximately 20 filled positions initially on the layoff list; roughly 14 expected layoffs after placement; approximately $9.4M FY2027 and $9.6M FY2028 election-contingent services.</li>
+        <li><strong>Berkeley Measure V Public Records Act release.</strong> Employee alternatives; mandatory-time-off modeling at roughly $633,649 per month, about $7.60 million per year.</li>
+        <li><strong>Employee Budget Survey Assertion Register.</strong> 59 responses recorded February 3 through March 13, 2026; 49 with a cost-saving idea, 35 with a revenue idea, 52 with either, 32 asking a question.</li>
+        <li><strong>Berkeley 2026 General Obligation Bonds Official Statement.</strong> Federal-policy and revenue uncertainty language contemporaneous with Measure V development.</li>
+        <li><strong>Tax Policy Center</strong>, <em>Who bears the burden of a national retail sales tax?</em></li>
+        <li><strong>League of Women Voters Berkeley Albany Emeryville</strong>, 2018&ndash;19 board materials and Prop 13 Reform Team pages.</li>
+        <li><strong>California Legislative Analyst&rsquo;s Office.</strong> Proposition 13 chronology and constraints.</li>
+      </ol>
+    </div>
+  </details>
+
+  <div class="note">
+    <p><strong>What this page does not cover.</strong> It checks the consequential claims made in one thirteen-minute debate. It is not an evaluation of Measure V, and a reader deciding how to vote needs the ballot materials and the City Attorney&rsquo;s impartial analysis. Silence here on a question is not a verdict on it.</p>
+    <p><strong>Corrections.</strong> If a finding is wrong, or a document says something other than what is reported here, say so and it will be corrected on the page with the change noted.</p>
+  </div>
+
+</div>
+
+<script>
+/* Print the audit trail: open every collapsed section for printing, restore afterward. */
+(function () {
+  var opened = [];
+  function expand() {
+    opened = [];
+    document.querySelectorAll('details.disc').forEach(function (d) {
+      if (!d.open) { opened.push(d); d.open = true; }
+    });
+  }
+  function restore() { opened.forEach(function (d) { d.open = false; }); opened = []; }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    var handler = function (e) { e.matches ? expand() : restore(); };
+    mq.addEventListener ? mq.addEventListener('change', handler) : mq.addListener(handler);
+  }
+  window.addEventListener('beforeprint', expand);
+  window.addEventListener('afterprint', restore);
+})();
+</script>
+</body>
+</html>

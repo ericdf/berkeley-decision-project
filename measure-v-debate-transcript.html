@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Measure V Debate: Full Transcript</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --r-supported:#1f6b45; --r-supported-bg:#eef7f1;
+  --r-context:var(--accent); --r-context-bg:var(--accent-soft);
+  --r-misleading:#a33208; --r-misleading-bg:#fdf0ea;
+  --r-incorrect:#8f1616; --r-incorrect-bg:#fbeaea;
+  --r-unsupported:#7a3ba0; --r-unsupported-bg:#f6eefb;
+  --r-analysis:#586074; --r-analysis-bg:#f1f3f6;
+  --logic:#334; --logic-bg:#eceef2;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331;
+    --r-supported:#5fc48d; --r-supported-bg:#12251b;
+    --r-misleading:#f08a5d; --r-misleading-bg:#2b1810;
+    --r-incorrect:#f2726f; --r-incorrect-bg:#2e1414;
+    --r-unsupported:#c99ae6; --r-unsupported-bg:#221630;
+    --r-analysis:#a4acbc; --r-analysis-bg:#20242e;
+    --logic:#b9c1d1; --logic-bg:#232935;
+  }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+  --r-supported:#5fc48d; --r-supported-bg:#12251b;
+  --r-misleading:#f08a5d; --r-misleading-bg:#2b1810;
+  --r-incorrect:#f2726f; --r-incorrect-bg:#2e1414;
+  --r-unsupported:#c99ae6; --r-unsupported-bg:#221630;
+  --r-analysis:#a4acbc; --r-analysis-bg:#20242e;
+  --logic:#b9c1d1; --logic-bg:#232935;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.8rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h3 { font-family: var(--sans); font-size: 1.02rem; font-weight: 700; line-height: 1.35;
+     margin: 1.9rem 0 .6rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--quote); }
+
+/* ---- disclosure ---- */
+.disclose { background: var(--accent-soft); border: 1px solid var(--accent);
+            border-radius: 5px; padding: 1rem 1.15rem; margin: 0 0 2.2rem;
+            font-family: var(--sans); font-size: .87rem; line-height: 1.6; }
+.disclose .lbl { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .14em;
+                 text-transform: uppercase; color: var(--accent); margin-bottom: .45rem; }
+.disclose p { margin-bottom: .6rem; }
+
+/* ---- rating key ---- */
+.key { border: 1px solid var(--rule); border-radius: 5px; background: var(--panel);
+       padding: 1.1rem 1.25rem; margin: 1.6rem 0 2.4rem; font-family: var(--sans); font-size: .84rem; }
+.key h3 { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+          color: var(--ink-2); margin: 0 0 .8rem; }
+.key dl { display: grid; grid-template-columns: max-content 1fr; gap: .55rem .85rem; align-items: baseline; }
+.key dd { color: var(--ink-2); line-height: 1.5; }
+
+/* ---- rating pill ---- */
+.pill { display: inline-block; font-family: var(--sans); font-size: .63rem; font-weight: 800;
+        letter-spacing: .1em; text-transform: uppercase; padding: .22rem .5rem;
+        border-radius: 3px; white-space: nowrap; border: 1px solid currentColor; }
+.p-supported   { color: var(--r-supported);   background: var(--r-supported-bg); }
+.p-context     { color: var(--r-context);     background: var(--r-context-bg); }
+.p-misleading  { color: var(--r-misleading);  background: var(--r-misleading-bg); }
+.p-unsupported { color: var(--r-unsupported); background: var(--r-unsupported-bg); }
+.p-analysis    { color: var(--r-analysis);    background: var(--r-analysis-bg); }
+
+/* ---- transcript ---- */
+.turn { margin: 1.9rem 0 0; }
+.spk { font-family: var(--sans); font-size: .7rem; font-weight: 800; letter-spacing: .12em;
+       text-transform: uppercase; margin-bottom: .4rem; }
+.spk .who { color: var(--ink); }
+.spk .ts { font-weight: 500; letter-spacing: .06em; color: var(--ink-3); }
+.spk .ts::before { content: "\00a0\00b7\00a0"; }
+.turn.mod .spk .who { color: var(--ink-3); }
+.tx { font-size: 1.03rem; line-height: 1.78; color: var(--ink); margin: 0;
+      padding-left: 1rem; border-left: 2px solid var(--rule); }
+.turn.mod .tx { color: var(--ink-2); font-size: .96rem; }
+
+/* Passages quoted on the fact-check page. The highlight is the reason this page
+   exists: a reader following a link should land on the sentence, not the minute. */
+mark.hl { background: var(--accent-soft); color: inherit;
+          box-shadow: inset 0 -2px 0 var(--accent); padding: .06em 0; }
+mark.hl:target, mark.hl.flash { animation: flash 1.6s ease-out; }
+@keyframes flash {
+  0%, 35% { background: var(--accent); color: var(--panel); }
+  100% { background: var(--accent-soft); color: inherit; }
+}
+:target { scroll-margin-top: 5.5rem; }
+
+.backlink { display: inline-block; font-family: var(--sans); font-size: .8rem;
+            font-weight: 700; color: var(--quote); text-decoration: none;
+            margin-bottom: 1.6rem; }
+.backlink:hover { text-decoration: underline; }
+
+/* ---- disclosure blocks ---- */
+details.disc { margin: 1.5rem 0; border: 1px solid var(--rule); border-radius: 5px;
+               background: var(--panel); }
+details.disc > summary { cursor: pointer; padding: .8rem 1.1rem; font-family: var(--sans);
+                         font-size: .82rem; font-weight: 700; color: var(--ink-2);
+                         list-style: none; }
+details.disc > summary::-webkit-details-marker { display: none; }
+details.disc > summary::before { content: "\25B8"; display: inline-block; margin-right: .5rem;
+                                 transition: transform .15s; color: var(--ink-3); }
+details.disc[open] > summary::before { transform: rotate(90deg); }
+details.disc > summary:hover { color: var(--ink); }
+.disc-body { padding: 0 1.1rem 1.1rem; font-family: var(--sans); font-size: .84rem;
+             line-height: 1.62; color: var(--ink-2); }
+.disc-body p { margin-bottom: .75rem; }
+.disc-body strong { color: var(--ink); }
+
+/* ---- source list ---- */
+ol.srcs { font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--ink-2);
+          padding-left: 1.3rem; }
+ol.srcs li { margin-bottom: .7rem; }
+ol.srcs strong { color: var(--ink); }
+
+ul.pts { padding-left: 1.2rem; margin-bottom: 1.05rem; }
+ul.pts li { margin-bottom: .55rem; }
+
+.note { font-family: var(--sans); font-size: .8rem; color: var(--ink-3); line-height: 1.6;
+        border-top: 1px solid var(--rule); padding-top: 1.2rem; margin-top: 2.8rem; }
+.note p { margin-bottom: .7rem; }
+
+@media (max-width: 34rem) {
+  h1 { font-size: 1.85rem; }
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  .key dl { grid-template-columns: 1fr; gap: .15rem; }
+  .key dt { margin-top: .5rem; }
+  blockquote.q { font-size: 1.25rem; }
+}
+@media print {
+  .nav { display: none; }
+  body { background: #fff; }
+}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+  <a class="backlink" href="measure-v-debate-fact-check.html">&larr; Back to the fact check</a>
+
+  <div class="kicker">Source document</div>
+  <h1>Measure V Debate: Full Transcript</h1>
+  <p class="standfirst">The complete Wellstone Democratic Renewal Club debate on Berkeley&rsquo;s Measure V, between Mayor Adena Ishii and Eric Friedman, moderated by Soli Alpert. Running time 13:34.</p>
+  <div class="byline">Berkeley Decision Project &middot; Published September 3, 2026</div>
+
+  <p>This is the evidentiary source for the <a href="measure-v-debate-fact-check.html">Measure V debate fact check</a>. Passages quoted there are <mark class="hl">highlighted</mark> below; following a &ldquo;See in transcript&rdquo; link from any fact-check card lands on the highlighted passage it evaluates.</p>
+
+  <p>The text is a machine transcription of the debate audio, corrected only for obvious transcription errors: <em>Adena Ishii</em> for &ldquo;Adina Ishii,&rdquo; <em>Wellstone</em> for &ldquo;Wellstown,&rdquo; <em>speaking against</em> for &ldquo;speaking a guest,&rdquo; <em>AFSCME Local 1</em> for &ldquo;ask me local one,&rdquo; <em>hot seat</em> for &ldquo;hot feet,&rdquo; and the moderator&rsquo;s description of a sales tax as the most <em>regressive</em> form of municipal taxation, which the transcription rendered as &ldquo;progressive.&rdquo; Speaker attributions were assigned by hand from the audio.</p>
+
+  <p>Nothing else has been smoothed. Repetitions, self-corrections and false starts appear as spoken, because the fact check quotes from this text and a reader checking a quote should find the same words. Where the speech is genuinely ambiguous it is left as transcribed rather than resolved.</p>
+
+  <div class="turn mod">
+    <div class="spk"><span class="who">Soli Alpert</span><span class="ts">00:00 &middot; opening setup</span></div>
+    <p class="tx">So we&rsquo;re discussing the Berkeley sales tax, which is a general tax, and we have Berkeley Mayor Adena Ishii speaking in favor, and we have Eric Friedman who&rsquo;s speaking against. And so we&rsquo;ll start off, you each have how many minutes? Let&rsquo;s do two minutes. Yeah, two minutes for opening. Sure. Would you like to go first, Eric? Pro first, and then con, and then we&rsquo;ll start the other way with the questions. Sure. Okay, that sounds good. Hello, everyone. Good afternoon. I know you&rsquo;ve been sitting here for a really long time, so thanks so much for your attention.</p>
+  </div>
+  <div class="turn ishii">
+    <div class="spk"><span class="who">Adena Ishii</span><span class="ts">00:38 &middot; opening statement</span></div>
+    <p class="tx">As was mentioned, my name is Adena Ishii. I&rsquo;m Mayor of the City of Berkeley, and also a Wellstone member. And I wanted to talk to you a bit about the sales tax. I&rsquo;m here in support of the sales tax. This is really an existential issue for us. <mark id="t0052" class="hl">The City of Berkeley has been struggling with a budget deficit. We just closed a $30 million deficit in this last budget cycle. As you can imagine, the federal government has not been very kind to us recently. Between the federal government and the state government, we have unfortunately lost a lot</mark> of funding that normally comes down to the local level. And it&rsquo;s very important to us that we have funding that stays locally in the City of Berkeley. Right now, this sales tax would be a half-cent sales tax, which will raise up to $10 million. <mark id="t0121" class="hl">And what is the sales tax for, you may ask? It&rsquo;s for very essential public safety needs. So that includes police, fire, and also youth programming. So I really think it&rsquo;s important that we consider youth programming a part of public safety in the City of Berkeley.</mark> <mark id="t0139" class="hl">So I know a lot of folks say, hey, sales tax, that&rsquo;s regressive. I have an issue with that. And to that, I would say it&rsquo;s important to know that this sales tax, this half-cent increase, would actually only just put us on par with Oakland, Hayward, Albany, and other cities within Alameda County.</mark> And, you know, that is, I think, really essential. We really need locally controlled revenue, as I said, that can be protected from state and federal takeaways. And it&rsquo;s really needed to stave off more additional cuts. I mean, we are in a crazy time where climate change is causing these massive wildfires. Our fire department, in particular, really needs to make sure it&rsquo;s fully funded. <mark id="t0217" class="hl">And it&rsquo;s supported by the entire City Council, Berkeley Firefighters Local 1227, Alameda Labor Council, AFSCME Council 57, Building Trades Council, League of Women Voters, our City Auditor, Jenny Wong, and former City Auditor, Ann-Marie Hogan, and Alameda County Treasurer, Hank Levy.</mark></p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Soli Alpert</span><span class="ts">02:34 &middot; transition</span></div>
+    <p class="tx">Thank you very much. And go ahead. You&rsquo;ll also have two minutes.</p>
+  </div>
+  <div class="turn ef">
+    <div class="spk"><span class="who">Eric Friedman</span><span class="ts">02:37 &middot; opening statement</span></div>
+    <p class="tx">Thank you. Hello, everyone. My name is Eric Friedman. The question before us is, should we accept a new regressive tax in the middle of an affordability crisis? Proponents, the mayor, call Measure V modest. But no expense is modest when you&rsquo;re staring at a Trump-era grocery bill. It comes out of the same wallet. It hits hardest for those least able to absorb it, and it makes Berkeley less affordable. So, before asking residents to pay more, the City must show this is the best option. It has not, and there are three reasons you should agree with me. <mark id="t0311" class="hl">First, blaming Washington and Sacramento doesn&rsquo;t fit the timeline. The auditor calls Berkeley&rsquo;s deficit longstanding. Council said it knew the problem would recur, and the City&rsquo;s own bond disclosure to investors said federal impacts were still uncertain. The problem was already here.</mark> Trump-era inflation is squeezing household budgets. Measure V makes Berkeley more expensive. Second, we used one-time fixes to buy time, not to align recurring expenses and revenues. Meanwhile, according to the City Auditor, budgeted headcount, the city grew roughly 30% over the last decade. So, before asking families to cancel pizza night, Madam Mayor, what discipline will keep spending from outrunning this new tax too? Third, where is the transparent process showing this tax is the best choice? Madam Mayor, your high school math teacher set the standard. Show your work. Yet, this morning, even the campaign&rsquo;s Learn More website was locked behind a password. What did you prioritize? Make more efficient? Redesign? Or do to grow the tax base? <mark id="t0428" class="hl">Twice in May and in June, the manager gave us the answer. No alternatives were considered.</mark> Had you done that work and shown us that work, I might be up here arguing the other side of the question. Thank you.</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Soli Alpert</span><span class="ts">04:42 &middot; transition</span></div>
+    <p class="tx">Thank you. I&rsquo;ll answer questions. The questions will probably give you the response opportunity.</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Soli Alpert</span><span class="ts">04:49 &middot; question to the opponent</span></div>
+    <p class="tx">So, the first question is for the opponents of the measure. I don&rsquo;t think there&rsquo;s any disagreement that without passing this measure, there will be a significant budget deficit. Currently, the council has indicated that they would have to cut police, fire and youth services. So, would you advocate for those cuts if this measure fails? Would you advocate for different cuts? Or do you have a different proposed revenue solution?</p>
+  </div>
+  <div class="turn ef">
+    <div class="spk"><span class="who">Eric Friedman</span><span class="ts">05:09 &middot; response</span></div>
+    <p class="tx">Right. So, I&rsquo;m an ordinary citizen and I don&rsquo;t have access to all of the information that the city manager has, the budget and the personnel. So, prescribing specific cuts is not something that I am in a position to be able to do. With that said, I do think we can replace opinions about what should or should not be cut with analysis. And what has failed to happen in this process is anything that would look like prioritization or efficiency redesign or a plan for growth. We&rsquo;ve gotten brute force across the workforce. Cut proposals and then a few other things sprinkled in. And it has not happened in a transparent fashion. I have had to pull documents with Public Records Act requests and they&rsquo;re still coming in because it takes that long to find out.</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Soli Alpert</span><span class="ts">05:53 &middot; follow-up</span></div>
+    <p class="tx">So, I&rsquo;m going to just push the question again because this tax will either pass or not pass in November. And come November there will be a budget deficit. So, do you have a proposed alternative set of cuts? Do you support these cuts or do you have a different revenue source?</p>
+  </div>
+  <div class="turn ef">
+    <div class="spk"><span class="who">Eric Friedman</span><span class="ts">06:06 &middot; response</span></div>
+    <p class="tx">Sure. So, council can always reopen the budget. We do repeat budget cycles through the year. And in fact, just this past December and November, Mayor Ishii&rsquo;s council pushed through $30 million in general funds and included things like pilot programs and other things which might not pass the priority test. And one of her colleagues on her finance committee said that there are a number of big ticket items in here that would benefit from transparency.</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Soli Alpert</span><span class="ts">06:36 &middot; question to the mayor</span></div>
+    <p class="tx">All right. Thank you. For the Mayor, I appreciate you brought up the issue around the progressive or regressive nature of a sales tax. That being said, a sales tax is the most regressive form of taxation available for a municipality. Are there alternative revenue measures that we have considered or should be considering going forward instead of sales taxes?</p>
+  </div>
+  <div class="turn ishii">
+    <div class="spk"><span class="who">Adena Ishii</span><span class="ts">06:56 &middot; response</span></div>
+    <p class="tx">Yeah, thank you so much. <mark id="t0657" class="hl">I mean, I think this audience really understands the impacts of Prop 13. I myself fought very strong for Prop 13 reform because we know that that has completely impacted the city&rsquo;s ability to raise the property taxes for corporations that have these massive properties throughout our cities around the state of California, preventing us from being able to have enough revenue that we need.</mark> <mark id="t0719" class="hl">And yes, of course, you know, we have looked at other taxing options and not only that, but we&rsquo;ve had to make massive cuts.</mark> <mark id="t0726" class="hl">I think that, you know, what my what the opposition does not maybe understand is how painful it was to cut a number of different employees over 100. I think nearly 180 employees that we had to cut in the city of Berkeley. We have made devastating cuts to the city already.</mark> And so what we&rsquo;re talking about are really core needs in our public safety. Absolutely essential. <mark id="t0742" class="hl">This is the right option. We&rsquo;ve absolutely looked at it and other options as well.</mark> And in terms of one time fixes, this is not a one time fix. The sales tax would be ongoing and would continue to bring in about $10 million each year. Thank you very much.</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Soli Alpert</span><span class="ts">08:00 &middot; question to both</span></div>
+    <p class="tx">This is a question for both the mayor and the opponents of the measure. Is this, would this sales tax be enough to provide long term budget stability? And if not, what other actions should or will the city council take to fully stabilize our budget going forward? Sorry, one more time. Yeah. So the question is, will measure, I keep forgetting the V, be enough to fully stabilize our budget going forward? And if not, what other steps should the city council take to stabilize the budget so that it is, we don&rsquo;t have to continue going through these cycles of cuts? Who would you like to go first? You can go first.</p>
+  </div>
+  <div class="turn ishii">
+    <div class="spk"><span class="who">Adena Ishii</span><span class="ts">08:35 &middot; response</span></div>
+    <p class="tx"><mark id="t0835" class="hl">So, yes, so this $10 million would close the current deficit gap that we&rsquo;re looking at. And that is really essential.</mark> That&rsquo;s what makes this so important for us to have. And, you know, what is important is that we&rsquo;re also continuing to look at the budget to see how can we be more efficient? Where else can we cut? What other grants can we apply for? And that&rsquo;s absolutely something that the city manager and I have been continuously working on to bring in more funding into the city of Berkeley. This is not just like we need this one time. We&rsquo;re not doing anything else. This is like our city staff are constantly out there looking for other sources of funding. We&rsquo;re constantly looking to see how we can be more efficient, things that we can cut. Really trying to push organizations who owe us funding to pay us the amount that they&rsquo;re supposed to be paying us. There are a number of different ways that we&rsquo;re looking to hold people accountable right now. And quite frankly, like as I said, the funding is essential to our basic city services. And yes, it&rsquo;s true, we can open the budget again. But it is it&rsquo;s important to know that we&rsquo;ve already made a ton of cuts. <mark id="t0936" class="hl">And I do just want to say that anyone has access to any of the information that we have in terms of our budget.</mark> So please go ahead.</p>
+  </div>
+  <div class="turn ef">
+    <div class="spk"><span class="who">Eric Friedman</span><span class="ts">09:44 &middot; response</span></div>
+    <p class="tx">Yeah. So a few things here. <mark id="t0946" class="hl">The revenue that we would see from the sales tax is somewhere between nine and ten million dollars. And so the gap is 30 and it&rsquo;s growing. I&rsquo;m not planning on buying twice as much toilet paper, which would be taxed by the sales tax. But the city expenses can outgrow the consumption tax that that represents. So over time, this gap will reappear in a few years. We&rsquo;ll be back here having the same conversation.</mark> As for measures that the mayor and council have taken to make other strategic interventions, <mark id="t1016" class="hl">doing things like a ten to twelve percent cut across the board isn&rsquo;t a prioritization process. That&rsquo;s arithmetic. You say everything is equally important and then you cut ten to twelve percent.</mark> The measure proposal says that public safety is the most important thing. It makes no sense then that fire would be on the chopping block. If it&rsquo;s the most important thing, why aren&rsquo;t you protecting it?</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Soli Alpert</span><span class="ts">10:45 &middot; closing setup</span></div>
+    <p class="tx">Alright. Do we have any folks who want to ask questions of the panelists? If not, we can go to closing statements. We&rsquo;ve got a couple more minutes. Sarah, are we good for... Great. Okay. So we&rsquo;ll, starting with the opponent, because you went first at the beginning, we&rsquo;ll go opponent, then proponents, one minute closing statement.</p>
+  </div>
+  <div class="turn ef">
+    <div class="spk"><span class="who">Eric Friedman</span><span class="ts">11:04 &middot; closing statement</span></div>
+    <p class="tx">Sure. Thank you all for your attention. So one of the claims that&rsquo;s in the argument for this measure is that we have to be on par with Albany. And what that fails to do is take a one-wallet look at this problem. So I&rsquo;ve asked the mayor in this conversation to show us her work. As it happens in December 2025, the city did show us their work. They looked at an equivalently valued home of equivalent size in Albany and in Oakland. And they told us that the property tax bill in Berkeley is $900 more than in Albany. And it&rsquo;s $1,500 more than in Oakland. And that, and the sales tax, and the other two measures that Berkeley has on the other three measures, excuse me, that Berkeley has on the ballot this month are not on the ballot in Albany and Oakland. So getting to par there doesn&rsquo;t really make sense. You cannot bundle the benefits and unbundle the cost and look at each of these separately. So that&rsquo;s a, that&rsquo;s a concern. I think, you know, there are a number of unexamined things. <mark id="t1208" class="hl">The city asked employees, what would they recommend? And employees had dozens of responses and those appear nowhere in the budget that Mary, she approved.</mark> Thank you.</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Soli Alpert</span><span class="ts">12:20 &middot; transition</span></div>
+    <p class="tx">Thank you.</p>
+  </div>
+  <div class="turn ishii">
+    <div class="spk"><span class="who">Adena Ishii</span><span class="ts">12:21 &middot; closing statement</span></div>
+    <p class="tx"><mark id="t1221" class="hl">You know, I have to say I&rsquo;m a bit disappointed that my opponent, I feel like, has shared some real misinformation here.</mark> <mark id="t1227" class="hl">And that the city of Berkeley employees had made suggestions that the city did actually take into account. This $30 million budget deficit would be closed with this amount that we would be receiving through the sales tax. So that&rsquo;s important information. I want to make sure folks know that&rsquo;s factual. <mark id="t1243" class="hl">And there&rsquo;s a reason that our city unions are also formally, they will hopefully soon be formally supporting this.</mark> But SEIU and AFSCME Local 1, who are our city employees, as well as our Berkeley firefighters are supporting this, this sales tax, along with our entire city council, which we know the Berkeley city council, we don&rsquo;t always agree on everything. The fact that we agree on this, I think shows the importance of why we really need it. And when we talk about the accountability and the way that we&rsquo;ve looked at the financial need for the city and ways that we can be more efficient, we are absolutely doing that. And that&rsquo;s why we have also support from the League of Women Voters and our city auditor, current and former.</mark> Thank you.</p>
+  </div>
+  <div class="turn mod">
+    <div class="spk"><span class="who">Soli Alpert</span><span class="ts">13:26 &middot; close</span></div>
+    <p class="tx">All right. Well, thank you both so much for being here. You&rsquo;re not out of the hot seat yet, though. We&rsquo;ve got one more tax. Thank you. And we will be moving on to our other Berkeley municipal revenue item.</p>
+  </div>
+  <div class="note">
+    <p><strong>Corrections.</strong> If a passage is mistranscribed or a speaker is misattributed, say so and it will be corrected here with the change noted.</p>
+    <p><a href="measure-v-debate-fact-check.html">&larr; Back to the fact check</a></p>
+  </div>
+
+</div>
+
+<script>
+/* A link from the fact check lands mid-paragraph; flash the highlight so the reader
+   sees which sentence they were sent to rather than hunting for it. */
+(function () {
+  function flash() {
+    var el = document.getElementById(location.hash.slice(1));
+    if (!el) return;
+    el.classList.remove('flash');
+    void el.offsetWidth;
+    el.classList.add('flash');
+  }
+  if (location.hash) window.addEventListener('load', flash);
+  window.addEventListener('hashchange', flash);
+})();
+</script>
+</body>
+</html>
