@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Hundred Empty Chairs</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; line-height: 1.35;
+     margin: 1.9rem 0 .7rem; color: var(--ink); }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Calendar placement is the whole argument on this page, so it gets a visual token rather
+   than being buried in a sentence. Consent and action are colored differently for the same
+   reason the bond page colors instrument type: the reader should be able to scan a column
+   and see the pattern before reading a word of it. */
+.cal { font-family: var(--sans); font-size: .7rem; font-weight: 700; white-space: nowrap;
+       letter-spacing: .06em; text-transform: uppercase; }
+.cal-c { color: var(--accent); }
+.cal-a { color: var(--quote); }
+.yr { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+      color: var(--ink-2); white-space: nowrap; }
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+/* Glossary. The argument turns on distinctions the City's own documents blur
+   (vacant vs eliminated, assumed vs actual savings), so the definitions sit at the
+   top of the page rather than in a footnote. Open by default; a reader who knows
+   the vocabulary can collapse it and it stays collapsed for the scroll. */
+.gloss { background: var(--panel); border: 1px solid var(--rule); border-radius: 5px;
+         padding: 1.05rem 1.15rem; margin: 0 0 2.2rem; font-family: var(--sans);
+         font-size: .84rem; line-height: 1.55; }
+.gloss > summary { cursor: pointer; font-family: var(--sans); font-size: .68rem; font-weight: 800;
+                   letter-spacing: .13em; text-transform: uppercase; color: var(--accent);
+                   list-style: none; }
+.gloss > summary::-webkit-details-marker { display: none; }
+.gloss > summary::after { content: " \25be"; }
+.gloss[open] > summary { margin-bottom: .85rem; }
+.gloss[open] > summary::after { content: " \25b4"; }
+.gloss dl { margin: 0; }
+.gloss dt { font-weight: 700; color: var(--ink); margin-top: .7rem; }
+.gloss dt:first-of-type { margin-top: 0; }
+.gloss dd { margin: .16rem 0 0; color: var(--ink-2); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head><body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Where Berkeley goes wrong</div>
+  <h1>One Hundred Empty Chairs</h1>
+  <p class="standfirst">A priority is something that changes where the next dollar and the next position go. Berkeley assigns each department a percentage instead &mdash; and then arithmetic, department boundaries and the accidental distribution of vacancies decide what survives.</p>
+  <div class="byline">A recurring pattern in Berkeley&rsquo;s budgeting &middot; September 2026</div>
+
+  <details class="gloss" open><summary>Quick glossary</summary>
+    <dl>
+      <dt>Vacancy / unoccupied position</dt>
+      <dd>A budgeted job with no employee currently in it.</dd>
+      <dt>Occupied position</dt>
+      <dd>A budgeted job currently held by an employee. City documents usually call these &ldquo;filled&rdquo; positions; this page says <em>occupied</em>, because that is the distinction that matters.</dd>
+      <dt>Eliminated position</dt>
+      <dd>A job removed from the City&rsquo;s authorized budget. An eliminated position may have been either occupied or unoccupied when it was cut.</dd>
+    </dl>
+    <p style="margin:.75rem 0 0"><a href="budgeting-vacancies.html">How Berkeley budgets vacancies &rarr;</a></p>
+  </details>
+
+  <p>Berkeley&rsquo;s FY2027&ndash;28 budget eliminates <strong>138 positions</strong>. One hundred of them were unoccupied.</p>
+
+  <p>Eliminating an unoccupied position produces real budget savings &mdash; the money comes off the top line and the appropriation is gone. But no employee stopped doing that job when the position was eliminated. Only <strong>38</strong> of the 138 were occupied. This is the City&rsquo;s own table:</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Status</th><th>Baseline FTE</th><th>Proposed reductions</th><th>After sales tax</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Unoccupied</strong></td><td class="amt">211.69</td><td class="amt"><strong>100</strong></td><td class="amt">126.69</td></tr>
+      <tr><td><strong>Occupied</strong></td><td class="amt">1,347.85</td><td class="amt"><strong>38</strong></td><td class="amt">1,327.85</td></tr>
+      <tr><td>Total</td><td class="amt">1,559.54</td><td class="amt">138</td><td class="amt">1,454.54</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>These are the figures if Measure V fails; passage restores 33 positions and brings the reduction to 105. Every count on this page is the without&#8209;the&#8209;tax scenario, which is the one the City used to describe the cuts.</p>
+
+  <p>The larger number is the one in circulation. Asked at an August 2026 debate whether Berkeley had considered alternatives to the Measure V sales tax, Mayor Adena Ishii answered:</p>
+
+  <blockquote>
+    <p>&ldquo;What my &mdash; what the opposition does not maybe understand is how painful it was to cut a number of different employees over 100. I think nearly 180 employees that we had to cut in the city of Berkeley.&rdquo;</p>
+    <div class="attrib">Mayor Adena Ishii, Measure V debate, August 2026</div>
+  </blockquote>
+
+  <p>Nearly 180 is the cumulative <em>position</em> count &mdash; the 138 in this budget plus 45 unoccupied positions held unfunded the cycle before. The City publishes that total and publishes the breakdown beside it: <strong>145 of those 183 positions were unoccupied</strong>. The word used at the debate was <em>employees</em>.</p>
+
+  <div class="pull">Nearly 180 employees, in a reduction the City&rsquo;s own tables show removed 38 occupied positions.</div>
+
+  <h2>The number is not the biggest problem</h2>
+
+  <p>How Berkeley decided what to cut is.</p>
+
+  <p>Departments were assigned percentage reduction targets. A department carrying vacancies could meet much of its target by deleting empty positions. A department that happened to be fully staffed had no such option and had to eliminate jobs people held. The City Manager&rsquo;s Office describes the consequence in its own budget submission:</p>
+
+  <blockquote>
+    <p>&ldquo;Because four vacant positions were removed during the FY 2026 Mid&#8209;Biennial Budget Update, meeting the new reduction target required eliminating not only vacant positions but additional filled positions.&rdquo;</p>
+    <div class="attrib">Proposed FY 2027 and FY 2028 Biennial Budget, May 19, 2026</div>
+  </blockquote>
+
+  <p>Read what the office is saying about its own exposure. It reached occupied positions because it had already spent its vacancies &mdash; not because anyone examined its work and concluded that work elsewhere in the City mattered more. A target is a number handed down. Nothing in it says what the office does.</p>
+
+  <p>A department that happened to be carrying vacancies had more room to absorb its target without cutting occupied positions. A department that did not, did not.</p>
+
+  <div class="pull">A uniform percentage does not decide what matters.</div>
+
+  <h2>What a priority would have changed</h2>
+
+  <p>An organization that knows what matters can act on it. It can protect its highest&#8209;value work and cut lower&#8209;value work more deeply. It can move people and money toward the things it says come first. It can explain why one function should grow while another shrinks.</p>
+
+  <p>Take the simplest case. One department is at capacity doing work the City cannot go without; another has carried four unfilled positions for months. Those four chairs are authorized capacity Berkeley already has. A process that began by ranking the work could have moved one &mdash; staffing the pressing need by giving up an unfilled position somewhere less pressing, and cutting nobody.</p>
+
+  <p>An across&#8209;the&#8209;board reduction cannot produce that result, because it never compares the two departments. It asks each one separately what it can cut from what it controls, so a vacancy is only ever an asset to the department that happens to hold it. An empty chair in one part of the organization and an unmet staffing need in another should at least trigger a cross&#8209;department comparison. An across&#8209;the&#8209;board process does not naturally produce one.</p>
+
+  <h2>The organization chart is doing the ranking</h2>
+
+  <p>This is the part worth sitting with. A percentage target takes the existing structure as given and distributes reductions across it. Every department survives; every department shrinks; the boundaries between them are the one thing the exercise never questions.</p>
+
+  <p>So the chart ends up performing the function a priority system is supposed to perform. What gets protected is whatever sits inside a department with slack, and what gets cut is whatever sits inside a department without it. That is a ranking &mdash; it is just not one anybody chose, and it does not correspond to any statement Berkeley has made about what it values.</p>
+
+  <p>It also puts every department in the same position: able to examine only its own budget, unable to ask whether two functions should be combined, whether two units could share space or management, or whether capacity should move across a boundary. <a href="every-department-for-itself.html">One four&#8209;person office ran into exactly that wall</a>, and its answer shows what the method cannot reach.</p>
+
+  <h2>Berkeley studied this and was warned</h2>
+
+  <p>In 2013 the City Auditor&rsquo;s office asked the Goldman School of Public Policy for alternatives to what Berkeley was already doing &mdash; in the Auditor&rsquo;s own words, its &ldquo;modified &lsquo;across the board&rsquo; approach to General Fund budgeting.&rdquo; The study described the mechanism and judged it:</p>
+
+  <blockquote>
+    <p>&ldquo;the City Manager asks each department to make the same percentage reduction from the prior year&rsquo;s baseline&hellip; From this baseline, the City Manager adjusts the final funding amount, based on a process and criteria that do not appear in the Budget Documents, and are essentially invisible to the public.&rdquo;</p>
+    <p>Across&#8209;the&#8209;board cuts are &ldquo;ill equipped to address major structural changes.&rdquo;</p>
+    <div class="attrib"><em>Berkeley Based Budgeting</em>, Goldman School of Public Policy, May 29, 2013, transmitted to Council by City Auditor Ann-Marie Hogan, April 1, 2014</div>
+  </blockquote>
+
+  <p>The study was never City policy and Berkeley was free to reject it. What it establishes is that the City examined this exact method, on its own initiative, and was told what it is bad at. Thirteen years later Berkeley faced a structural deficit and reached for substantially the same method.</p>
+
+  <h2>The revealing number</h2>
+
+  <p>It is not 138, and it is not nearly 180.</p>
+
+  <div class="pull">It is 100.</div>
+
+  <p>One hundred unoccupied positions is the measure of how much of the reduction could be absorbed without deciding which occupied work mattered least. And the way those vacancies determined which departments had to go further is the measure of what replaced deciding.</p>
+
+  <p>Berkeley says it has priorities. A priority should change where the next dollar and the next position go. When every department receives a percentage instead, the organization chart is functioning as the priority system &mdash; and <strong>Berkeley is cutting by arithmetic because it has not done the harder work of deciding what is important.</strong></p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p><em>Proposed FY 2027 and FY 2028 Biennial Budget</em>, City Council Item 21, May 19, 2026 &mdash; position summary tables and the occupied/unoccupied breakdown, p. 9; cumulative reduction figures (45 + 138); City Manager&rsquo;s Office reduction narrative. Archived in this project&rsquo;s source registry.</p>
+    <p>Mayor Ishii&rsquo;s remarks are from the recorded Measure V debate, August 2026 &mdash; see the <a href="measure-v-debate-transcript.html">transcript</a> and <a href="measure-v-debate-fact-check.html">statement-by-statement review</a>.</p>
+    <p><em>Berkeley Based Budgeting: Recommendations for Implementing Priority-Based Budgeting in the City of Berkeley</em>, Goldman School of Public Policy, May 29, 2013; transmitted to Council on the Information Calendar by City Auditor Ann-Marie Hogan, April 1, 2014.</p>
+    <h3>A note on method</h3>
+    <p>Position figures are as printed in the proposed budget and are stated there to be as of April 6, 2026. Eliminating an unoccupied position produces real budget savings; what it does not produce is a reduction in staff or services. This page makes no claim about how many employees ultimately separated from City employment, a figure it has not sought. The two departments in &ldquo;What a priority would have changed&rdquo; are an illustration of the alternative method, not a description of named departments.</p>
+    <h3>Related</h3>
+    <p><a href="budgeting-vacancies.html">How Berkeley budgets vacancies</a> &mdash; the vocabulary and mechanics behind these numbers &middot;
+    <a href="every-department-for-itself.html">Every department for itself</a> &mdash; the method applied to one small office &middot;
+    <a href="public-safety-budget.html">Cutting without prioritizing</a> &mdash; the method applied to Fire, Police and crisis response</p>
+    <p><a href="crayon-box.html">The crayon box</a> &middot;
+    <a href="measuring-nothing.html">You can&rsquo;t prioritize what you can&rsquo;t measure</a> &middot;
+    <a href="hidden-budget-cycle.html">Berkeley&rsquo;s hidden budget cycle</a> &middot;
+    <a href="framework.html">The Berkeley Budget Framework</a> &middot;
+    <a href="index.html">Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

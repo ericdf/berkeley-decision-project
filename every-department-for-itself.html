@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Every Department for Itself</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; line-height: 1.35;
+     margin: 1.9rem 0 .7rem; color: var(--ink); }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Calendar placement is the whole argument on this page, so it gets a visual token rather
+   than being buried in a sentence. Consent and action are colored differently for the same
+   reason the bond page colors instrument type: the reader should be able to scan a column
+   and see the pattern before reading a word of it. */
+.cal { font-family: var(--sans); font-size: .7rem; font-weight: 700; white-space: nowrap;
+       letter-spacing: .06em; text-transform: uppercase; }
+.cal-c { color: var(--accent); }
+.cal-a { color: var(--quote); }
+.yr { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+      color: var(--ink-2); white-space: nowrap; }
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+/* Glossary. The argument turns on distinctions the City's own documents blur
+   (vacant vs eliminated, assumed vs actual savings), so the definitions sit at the
+   top of the page rather than in a footnote. Open by default; a reader who knows
+   the vocabulary can collapse it and it stays collapsed for the scroll. */
+.gloss { background: var(--panel); border: 1px solid var(--rule); border-radius: 5px;
+         padding: 1.05rem 1.15rem; margin: 0 0 2.2rem; font-family: var(--sans);
+         font-size: .84rem; line-height: 1.55; }
+.gloss > summary { cursor: pointer; font-family: var(--sans); font-size: .68rem; font-weight: 800;
+                   letter-spacing: .13em; text-transform: uppercase; color: var(--accent);
+                   list-style: none; }
+.gloss > summary::-webkit-details-marker { display: none; }
+.gloss > summary::after { content: " \25be"; }
+.gloss[open] > summary { margin-bottom: .85rem; }
+.gloss[open] > summary::after { content: " \25b4"; }
+.gloss dl { margin: 0; }
+.gloss dt { font-weight: 700; color: var(--ink); margin-top: .7rem; }
+.gloss dt:first-of-type { margin-top: 0; }
+.gloss dd { margin: .16rem 0 0; color: var(--ink-2); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head><body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">See it applied</div>
+  <h1>Every Department for Itself</h1>
+  <p class="standfirst">Berkeley told a four&#8209;person office to cut ten percent. Its largest controllable cost is a lease for space built for seven people. Whether that space could be shared, swapped or given up is not a question the office is able to answer &mdash; and the budget process asked no one else.</p>
+  <div class="byline">A worked example of <a href="empty-chairs.html">across&#8209;the&#8209;board budgeting</a> &middot; September 2026</div>
+
+  <h2>The office</h2>
+
+  <p>The Office of the Director of Police Accountability is Berkeley&rsquo;s civilian police oversight office. It staffs the Police Accountability Board, investigates complaints against the Police Department, and has <strong>four positions</strong>.</p>
+
+  <p>It leases 1900 Addison Street at <strong>$170,386</strong> in FY2027 and <strong>$173,794</strong> in FY2028. In the FY2027&ndash;28 budget process it was asked, like every other department, to identify reductions of 10 to 12.5 percent.</p>
+
+  <h2>What it found, and what it left alone</h2>
+
+  <p>The office reviewed its budget and reported a maximum reduction of <strong>5.6 percent &mdash; $71,708</strong> &mdash; achievable &ldquo;without compromising the funding of services that support core functions or requiring staff layoffs.&rdquo; Beyond that, it said, further cuts would require eliminating staff. Its proposed reductions include:</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Reduction</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Miscellaneous professional services</td><td class="amt">$30,000</td></tr>
+      <tr><td>Annual civilian&#8209;oversight conference (NACOLE) for staff and Board members</td><td class="amt">$26,444</td></tr>
+      <tr><td>Technology cost allocation</td><td class="amt">$23,402</td></tr>
+      <tr><td>Office supplies, postage, miscellaneous services</td><td class="amt">$9,411</td></tr>
+      <tr><td><strong>Lease, 1900 Addison Street</strong></td><td class="amt"><strong>&mdash;</strong></td></tr>
+    </tbody>
+  </table></div>
+
+  <p>The training budget for police oversight is on the table. The lease, which costs more than all the proposed reductions combined, is not.</p>
+
+  <p>Not because the office failed to notice it. The same submission diagnoses the problem precisely: the premises were acquired with the expectation of supporting &ldquo;approximately six to seven full&#8209;time employees, along with cohorts of interns,&rdquo; the office now operates with fewer, Police Accountability Board meetings are the only commission meetings consistently held there, and &ldquo;the current utilization of the premises does not fully align with the scale of the leased footprint.&rdquo;</p>
+
+  <p>Then it explains why the item stays: the lease is &ldquo;not subject to reduction without renegotiation or termination of the agreement.&rdquo;</p>
+
+  <p>That sentence is true of every lease ever signed, and it is not an analysis. Renegotiation and termination are the two things one does about a lease; naming them is not the same as pricing them. No sublease estimate appears, no termination figure, no proposal to share the space, no comparison against what the remaining term costs. The office identified its largest controllable expense, described in its own words why the space no longer fits, and then declined to examine the only item on its budget large enough to close the gap.</p>
+
+  <p>Consider the counterfactual. Had relocating or sharing produced the better outcome <em>for this office</em> &mdash; more usable space, a shorter commute for the Board, lower cost with the savings retained &mdash; the analysis would have appeared. The lease is untouchable because giving up space is a loss the office absorbs and a saving the City banks.</p>
+
+  <p>The instruction set those incentives. Asked to find a percentage inside its own budget, a department finds it where the cost falls somewhere else &mdash; here, on training for civilian police oversight rather than on the office&rsquo;s own footprint.</p>
+
+  <h2>The questions that were out of reach</h2>
+
+  <p>Consider what someone would need to know to answer whether Berkeley should keep paying $170,386 a year for this space:</p>
+
+  <ul style="margin:0 0 1.05rem 1.2rem">
+    <li>Is another City unit&rsquo;s lease expiring, and could that unit move in here?</li>
+    <li>Is there City&#8209;owned space that could house four people and a monthly public meeting?</li>
+    <li>Could this office share administrative or technology overhead with another small unit?</li>
+    <li>What would termination or sublease actually cost, against what the remaining term costs?</li>
+    <li>Is the City&rsquo;s overall leased footprint sized for the workforce it now has?</li>
+  </ul>
+
+  <p>Every one of those requires a view across departments. None is answerable from inside a four&#8209;person office, and none was assigned to anyone who had that view. The budget instruction was a percentage, sent to each department separately, asking what it could cut from what it controls.</p>
+
+  <div class="pull">The method sent the question to the one party structurally unable to answer it.</div>
+
+  <h2>What the process could produce, and what it could not</h2>
+
+  <p>The same budget shows that consolidation was available as an idea. The Fire Department proposed <strong>consolidating the Wildland Urban Interface and Fire Prevention divisions</strong>, shifting management from a Fire Marshal to an Assistant Fire Chief and eliminating the Fire Marshal position &mdash; a genuine structural change, with consequences the department documented candidly.</p>
+
+  <p>But notice its shape. Two divisions of the same department, merged under one manager, proposed by that department. That is what a department can do when it is told to find a percentage: reorganize inside its own boundary.</p>
+
+  <p>Nothing in the FY2027&ndash;28 process proposes consolidating anything <em>across</em> departments &mdash; not space, not management, not administrative functions, not technology. No step in the process asks the question, and no participant is positioned to raise it.</p>
+
+  <h2>The floor nobody located</h2>
+
+  <p>There is a second thing a percentage cannot see, and this office illustrates it.</p>
+
+  <p>A function reduced far enough stops being a function. Cut a program by a tenth and it delivers somewhat less; cut it repeatedly and at some point it delivers a name, a supervisor and a line in the budget. Nothing in a percentage target says where that floor sits, because the target was never derived from what the program does.</p>
+
+  <p>The office says its floor is 5.6 percent &mdash; beyond that, positions go. Berkeley asked for 10 to 12.5. Nobody in the process is charged with deciding whether civilian police oversight at four positions minus one is still civilian police oversight, or whether the City would rather protect this function fully and find the money somewhere it matters less.</p>
+
+  <p>And every department carries overhead sized for the organization it used to be: managers, space, technology allocations, support functions. Shrink the work and the overhead does not shrink with it. Past a certain point the sensible answer is not a smaller version of the same department but a differently shaped one &mdash; two units under one manager, two teams in one office. A uniform percentage cannot propose that, because it holds the shape of the organization fixed and varies only the size.</p>
+
+  <h2>What a different method would have asked</h2>
+
+  <p>None of this establishes that Berkeley could have saved the lease cost, or that this office should have been protected, or that any particular consolidation would work. Those are conclusions the record does not support and this page does not draw. Nor is the point that this office behaved worse than any other &mdash; it behaved exactly as the instruction rewarded, which is why the instruction is the subject.</p>
+
+  <p>What it establishes is that the questions were never asked, and that the process was not built to ask them. A prioritization review would have started somewhere else: what does the City most need to do, what does each function cost to do properly, and where is the same money buying less? Those questions produce answers a percentage target cannot &mdash; including the answer that a small office should be left alone and the savings found where the work matters less.</p>
+
+  <p>Berkeley instead asked fourteen departments the same question separately, and got fourteen answers about what each could cut from what it already controlled. <a href="empty-chairs.html">The pattern that produces</a> is the subject of the companion essay. This is what it looks like in one office.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p><em>Proposed FY 2027 and FY 2028 Biennial Budget</em>, City Council Item 21, May 19, 2026 &mdash; Office of the Director of Police Accountability budget submission: maximum reduction of 5.6% ($71,708); itemized reductions including miscellaneous professional services ($30,000), NACOLE conference ($26,444.40), technology cost allocation ($23,402) and office supplies and postage ($9,411); lease costs of $170,386.32 (FY2027) and $173,794.08 (FY2028); the lease-related constraint passage and the remaining gap of approximately $57,000 to $95,000. Fire Department submission &mdash; consolidation of the Wildland Urban Interface and Fire Prevention divisions and elimination of a vacant Fire Marshal position. Archived in this project&rsquo;s source registry.</p>
+    <h3>A note on method</h3>
+    <p>Figures are as printed in the proposed budget, which states its analysis is as of April 6, 2026. Whether the lease could have been reduced, sublet or terminated at a net saving is unknown; no such analysis exists in the record, which is the point. The office answered the question it was asked, within the boundary it was given. The reductions listed are those proposed in the department&rsquo;s submission; the adopted budget may differ.</p>
+    <h3>Related</h3>
+    <p><a href="empty-chairs.html">One Hundred Empty Chairs</a> &mdash; the pattern this case illustrates &middot;
+    <a href="budgeting-vacancies.html">How Berkeley budgets vacancies</a> &middot;
+    <a href="public-safety-budget.html">Cutting without prioritizing</a> &middot;
+    <a href="crayon-box.html">The crayon box</a> &middot;
+    <a href="index.html">Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

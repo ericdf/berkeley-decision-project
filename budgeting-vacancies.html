@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Berkeley Budgets Vacancies</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; line-height: 1.35;
+     margin: 1.9rem 0 .7rem; color: var(--ink); }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Calendar placement is the whole argument on this page, so it gets a visual token rather
+   than being buried in a sentence. Consent and action are colored differently for the same
+   reason the bond page colors instrument type: the reader should be able to scan a column
+   and see the pattern before reading a word of it. */
+.cal { font-family: var(--sans); font-size: .7rem; font-weight: 700; white-space: nowrap;
+       letter-spacing: .06em; text-transform: uppercase; }
+.cal-c { color: var(--accent); }
+.cal-a { color: var(--quote); }
+.yr { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+      color: var(--ink-2); white-space: nowrap; }
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+/* Glossary. The argument turns on distinctions the City's own documents blur
+   (vacant vs eliminated, assumed vs actual savings), so the definitions sit at the
+   top of the page rather than in a footnote. Open by default; a reader who knows
+   the vocabulary can collapse it and it stays collapsed for the scroll. */
+.gloss { background: var(--panel); border: 1px solid var(--rule); border-radius: 5px;
+         padding: 1.05rem 1.15rem; margin: 0 0 2.2rem; font-family: var(--sans);
+         font-size: .84rem; line-height: 1.55; }
+.gloss > summary { cursor: pointer; font-family: var(--sans); font-size: .68rem; font-weight: 800;
+                   letter-spacing: .13em; text-transform: uppercase; color: var(--accent);
+                   list-style: none; }
+.gloss > summary::-webkit-details-marker { display: none; }
+.gloss > summary::after { content: " \25be"; }
+.gloss[open] > summary { margin-bottom: .85rem; }
+.gloss[open] > summary::after { content: " \25b4"; }
+.gloss dl { margin: 0; }
+.gloss dt { font-weight: 700; color: var(--ink); margin-top: .7rem; }
+.gloss dt:first-of-type { margin-top: 0; }
+.gloss dd { margin: .16rem 0 0; color: var(--ink-2); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head><body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Explainer</div>
+  <h1>How Berkeley Budgets Vacancies</h1>
+  <p class="standfirst">An empty job costs nothing to leave empty, which makes vacancies useful to a city closing a deficit. Berkeley uses them in two different ways, and the difference between those ways explains most of what is confusing about its budget documents.</p>
+  <div class="byline">Vocabulary and mechanics behind <a href="empty-chairs.html">One Hundred Empty Chairs</a> &middot; September 2026</div>
+
+  <h2>The words</h2>
+
+  <details class="gloss" open><summary>Quick glossary</summary>
+    <dl>
+      <dt>Vacancy / unoccupied position</dt>
+      <dd>A budgeted job with no employee currently in it. The position exists, is authorized, and normally carries an appropriation &mdash; money set aside to pay whoever fills it.</dd>
+      <dt>Occupied position</dt>
+      <dd>A budgeted job currently held by an employee. City documents usually say &ldquo;filled.&rdquo; These pages say <em>occupied</em>, because the distinction between a job and a person is exactly what tends to get lost.</dd>
+      <dt>Eliminated position</dt>
+      <dd>A job removed from the City&rsquo;s authorized budget. An eliminated position may have been occupied or unoccupied when it was cut, and the two produce very different consequences.</dd>
+      <dt>Target savings</dt>
+      <dd>Savings assumed in the budget before the year begins. Berkeley reduces departmental personnel budgets on the assumption that some positions will sit empty for part of the year. The reduction is booked whether or not any particular position is empty on the day the budget is adopted. <em>Berkeley&rsquo;s own phrase is &ldquo;assumed salary savings materializing from vacant positions&rdquo;; &ldquo;target savings&rdquo; is this page&rsquo;s shorthand.</em></dd>
+      <dt>Actual salary savings</dt>
+      <dd>Savings that materialize during the year because personnel spending comes in under budget &mdash; principally because positions stood empty for some period. A resignation, retirement, promotion or death can produce salary savings even though the position remains authorized and is eventually refilled.</dd>
+    </dl>
+  </details>
+
+  <h2>Two different things that both look like cutting a job</h2>
+
+  <p><strong>Eliminating a vacancy</strong> removes the position from the budget. The appropriation goes with it, the job no longer exists, and the saving continues every year afterward. It is a structural reduction: real money, permanently out of the base. What it does not do is displace anyone, because nobody was in the chair.</p>
+
+  <p><strong>Assuming a vacancy stays vacant</strong> leaves the position in the budget, funded and authorized, and simply predicts that it will not be filled for some period. The saving is real if the prediction holds and disappears if it does not. It buys one year. The following July the position is still there and the same prediction has to be made again.</p>
+
+  <p>Both appear in a budget as savings. Only the first changes what the City is authorized to do.</p>
+
+  <div class="pull">Eliminating a vacancy is a decision. Assuming one is a forecast.</div>
+
+  <p>The second is where most of the confusion lives, because target savings are not attached to specific chairs. The City does not designate which positions will stay empty; it reduces personnel budgets by an amount and lets ordinary turnover produce it. That is why a department can be fully staffed on July 1 and still be carrying a savings target, and why a department can leave three jobs empty all year without anyone recording a decision to do so.</p>
+
+  <h2>Berkeley used to publish the number</h2>
+
+  <p>How much does the budget assume it will save this way? Berkeley used to say.</p>
+
+  <p>The FY2023&ndash;2024 budget put assumed salary savings from vacancies at approximately <strong>$10 million in FY2023 and $7.5 million in FY2024</strong>. Two years earlier the Police Department alone carried a salary savings deferral target of <strong>$8,286,289</strong>, deducted at the start of FY2021, against a department funded for roughly 154 positions while about 173 were occupied.</p>
+
+  <p>The same FY2023&ndash;2024 budget named the risk in its own conclusion:</p>
+
+  <blockquote>
+    <p>&ldquo;maintaining salary savings due to vacancies is not sustainable over the long-term&hellip;&rdquo;</p>
+    <div class="attrib">City of Berkeley, FY2023&ndash;FY2024 Adopted Biennial Budget</div>
+  </blockquote>
+
+  <p>The FY2025&ndash;2026 budget lists the mechanism first among the four one&#8209;time measures used to balance &mdash; an &ldquo;increase in assumed salary savings materializing from vacant positions&rdquo; &mdash; without saying how large the increase was or what the total came to. The proposed FY2027&ndash;2028 budget does not list it among its own measures at all; the phrase appears once in 114 pages, inside a footnote quoting the previous budget.</p>
+
+  <p>So the disclosure moved from a dollar figure, to a direction of travel, to a citation of an older document. A reader in 2023 could tell how much of the budget rested on positions going unfilled. A reader in 2026 cannot.</p>
+
+  <h2>A vacancy is not necessarily available forever</h2>
+
+  <p>There is a second claim on the same empty chairs, and it comes from the City&rsquo;s labor agreements.</p>
+
+  <p>Under Section 56 of Berkeley&rsquo;s agreement with SEIU Local 1021, the moment a layoff becomes possible the City Manager must <strong>freeze vacancies city&#8209;wide</strong> in classifications related to those targeted, so they remain available for displaced employees. Employees then have <strong>retreat rights</strong> &mdash; the contract describes this as an &ldquo;offer to bump another employee&rdquo; &mdash; into lower classifications in their own series, and &sect;56.4.4 addresses the vacancy case directly: &ldquo;if a vacancy exists in a classification to which an employee is entitled to retreat, the Director of Human Resources shall discuss the options with the employee.&rdquo;</p>
+
+  <p>Where retreat does not reach, a <strong>Flexible Placement Program</strong> does:</p>
+
+  <blockquote>
+    <p>&ldquo;the Human Resources Department will review and identify the frozen vacant classifications into which employees ultimately targeted for layoff may be placed <strong>on the basis of total experience and education</strong>. In making this decision, a waiver of minimum qualification standards and/or the substitution of related experience and education may be made, with an understanding&hellip; that adequate supervised on-the-job training which can be completed within no more than six (6) months will be provided&hellip;&rdquo;</p>
+    <div class="attrib">SEIU Local 1021 Community Services &amp; PTRLA, Memorandum Agreement 2024&ndash;2027, &sect;56.6.2</div>
+  </blockquote>
+
+  <p>The contract also requires that every layoff notice sent to the union include &ldquo;a list of all vacancies which are authorized for filling.&rdquo;</p>
+
+  <p>This is deliberately generous and there is a good reason for it. A city that displaces an experienced employee and holds an opening they could do after six months of training has an obvious interest in making that match.</p>
+
+  <p>But it means a funded vacancy is doing two jobs at once. While it sits empty it contributes to target savings. If a layoff occurs, the same vacancy may be frozen and offered to a displaced employee &mdash; and once occupied, it stops contributing.</p>
+
+  <div class="pull">The budget expects the chair to stay empty. The labor agreement may require it to be offered to someone.</div>
+
+  <p>How Berkeley reconciles those two uses is not established by the documents reviewed here. The budget does not say how large the target is, whether it is set with expected placements netted out, or how a shortfall is absorbed if placements exceed what was assumed. Those are answerable questions and the City can answer them. Nothing in the public record reviewed for this page does.</p>
+
+  <h2>Why any of this matters</h2>
+
+  <p>Three practical consequences follow from the vocabulary.</p>
+
+  <p><strong>A headcount reduction is not a count of people.</strong> Eliminating 138 positions and displacing 138 employees are different events, and a budget table showing the first says nothing about the second.</p>
+
+  <p><strong>A department&rsquo;s vacancy count shapes how a percentage target lands on it.</strong> Which is the subject of <a href="empty-chairs.html">One Hundred Empty Chairs</a>: when every department is handed the same percentage, the ones carrying empty chairs have somewhere to put the cut and the ones at full staff do not.</p>
+
+  <p><strong>Relying on vacancies is a way of not choosing.</strong> Berkeley said so itself in 2023 &mdash; not sustainable over the long term &mdash; and has continued to rely on it while disclosing less about how much.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p><em>City of Berkeley FY2023&ndash;FY2024 Adopted Biennial Budget</em> &mdash; assumed salary savings of approximately $10 million (FY2023) and $7.5 million (FY2024); the &ldquo;not sustainable over the long-term&rdquo; conclusion. <em>FY2025&ndash;FY2026 Adopted Biennial Budget</em>, budget message p. 9 &mdash; the four one-time balancing measures. <em>Proposed FY 2027 and FY 2028 Biennial Budget</em>, May 19, 2026 &mdash; footnote 1, quoting the prior budget&rsquo;s list. FY2021 Police salary savings deferral target from the City&rsquo;s FY2021 year-end and FY2022 first-quarter budget update. All archived in this project&rsquo;s source registry.</p>
+    <p><em>Memorandum Agreement between the City of Berkeley and SEIU Local 1021, Community Services &amp; Part-Time Recreation Leaders Association, 2024&ndash;2027</em> &mdash; Section 56 (Layoff): &sect;56.1.2 vacancy freeze, &sect;56.4 retreat rights, &sect;56.4.4 retreat into an existing vacancy, &sect;56.5.3 vacancy list to the union, &sect;56.6.2 Flexible Placement Program.</p>
+    <h3>A note on method</h3>
+    <p>&ldquo;Target savings&rdquo; and &ldquo;actual salary savings&rdquo; are this page&rsquo;s labels for a distinction Berkeley&rsquo;s documents make without naming; the City&rsquo;s own phrase is &ldquo;assumed salary savings materializing from vacant positions.&rdquo; The layoff provisions quoted are from one bargaining unit&rsquo;s agreement; other units have their own, which have not been reviewed here. This page does not estimate how many employees were placed into vacancies, how many separated, or what either did to the City&rsquo;s salary savings &mdash; the accounting treatment cannot be established from the public documents reviewed, and that is stated above rather than filled in with an assumption.</p>
+    <h3>Related</h3>
+    <p><a href="empty-chairs.html">One Hundred Empty Chairs</a> &middot;
+    <a href="every-department-for-itself.html">Every department for itself</a> &middot;
+    <a href="public-safety-budget.html">Cutting without prioritizing</a> &middot;
+    <a href="hidden-budget-cycle.html">Berkeley&rsquo;s hidden budget cycle</a> &middot;
+    <a href="index.html">Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
