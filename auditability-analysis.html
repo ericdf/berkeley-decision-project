@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berkeley Ballot Measures Need an Independent Auditor’s Analysis</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; line-height: 1.35;
+     margin: 1.9rem 0 .7rem; color: var(--ink); }
+p { margin-bottom: 1.05rem; }
+ul { margin: 0 0 1.05rem 1.3rem; }
+li { margin-bottom: .4rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head><body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">See it applied</div>
+  <h1>Berkeley Ballot Measures Need an Independent Auditor&rsquo;s Analysis</h1>
+  <p class="standfirst">The City Attorney explains what a measure legally does. The City Auditor should explain what its accountability promises can prove.</p>
+  <div class="byline">A proposal for the ballot process &middot; September 2026</div>
+
+  <p>Berkeley tax and bond measures routinely promise independent audits. The phrase sounds like a guarantee of accountability. But it tells voters only who will check&mdash;not what the auditor can determine.</p>
+
+  <p>An audit might trace where the money went, confirm that expenditures were legally permissible, or evaluate whether spending produced the results presented to voters. Those are different levels of assurance, yet ballot arguments collapse them into one reassuring word: <em>audit</em>.</p>
+
+  <p>Berkeley should make that word mean something specific. Every proposed ballot measure whose promises depend on future City implementation should receive a short, standardized auditability analysis from the City Auditor.</p>
+
+  <h2>A familiar model</h2>
+
+  <p>The ballot process already provides a model. The City Attorney prepares an impartial analysis explaining what a measure legally does. The City Auditor should prepare a parallel analysis explaining the reach and limits of its promised audits. Both would accompany the official ballot materials without recommending how anyone should vote.</p>
+
+  <p>The Auditor&rsquo;s analysis should answer four questions.</p>
+
+  <h2>1. What is actually promised?</h2>
+
+  <p>Campaigns often name projects, services, and benefits that are not binding commitments. The analysis should distinguish legal requirements from amendable plans, examples of possible spending, and campaign statements that create no obligation.</p>
+
+  <p>Voters should know which promises will remain enforceable after Election Day.</p>
+
+  <h2>2. How would delivery be measured?</h2>
+
+  <p>If a measure promises results, it should identify the evidence needed to evaluate them: starting conditions, expected quantities or service levels, completion dates, cost assumptions, and outcome measures.</p>
+
+  <p>Long-term programs need flexibility. But the City can permit substitutions while requiring disclosure of material changes and an explanation of how the revised plan advances the same voter-approved results.</p>
+
+  <p>Without a durable baseline, the government can redefine success after the money has been authorized.</p>
+
+  <h2>3. What can the audit conclude?</h2>
+
+  <p>The analysis should state whether the audit will examine:</p>
+
+  <ul>
+    <li><strong>financial accounting:</strong> where the money went;</li>
+    <li><strong>legal compliance:</strong> whether it was spent for an authorized purpose; or</li>
+    <li><strong>performance:</strong> what the spending accomplished, at what cost, and on what schedule.</li>
+  </ul>
+
+  <p>All three are valuable. But an accounting or compliance audit should not be presented as if it guarantees performance.</p>
+
+  <p>For example, a general-tax audit may verify lawful General Fund spending. It cannot prove that a fire station remained open unless the measure requires that result. A bond audit may verify eligible capital spending without establishing that projects emphasized before the election were completed.</p>
+
+  <p>These limitations do not dictate a vote. They tell voters what protection the audit language does&mdash;and does not&mdash;provide.</p>
+
+  <h2>4. Can the Auditor perform the work?</h2>
+
+  <p>Meaningful auditing requires authority, reliable data, expertise, staff time, and funding. The analysis should identify who will conduct the audit, how often, what records must be maintained, and whether the responsible office can evaluate performance.</p>
+
+  <p>It should also explain what happens after a shortfall is found. A recommendation without a deadline, a responsible party, and public follow-up may document a problem without producing a correction.</p>
+
+  <h2>Professional standards already exist</h2>
+
+  <p>The Auditor would not need to invent professional criteria. Public-finance and government-auditing organizations publish authoritative guidance. In a City-commissioned analysis, for example, the Government Finance Officers Association recommended that Berkeley require recurring revenues to equal or exceed recurring expenditures&mdash;a recommendation the City Auditor later repeated.</p>
+
+  <p>An auditability analysis should identify applicable professional benchmarks and disclose when a measure&rsquo;s design does not incorporate them. It need not declare the measure unworthy; it should make the limitation visible.</p>
+
+  <h2>Improve measures before the election</h2>
+
+  <p>The Auditor should apply a standard template early enough for measure sponsors to correct deficiencies. A final version should appear beside the City Attorney&rsquo;s impartial analysis.</p>
+
+  <p>This would improve measures rather than merely criticize them afterward. Councilmembers would know what must be defined, campaigns could describe audit protections accurately, the Auditor could identify resource needs, and voters could distinguish permissible spending from demonstrated results.</p>
+
+  <p>Most importantly, the analysis would remain separate from any personal endorsement. An auditor may believe a tax or bond is urgently needed while still explaining that its public promises are not binding or its results cannot be measured. Professional review should clarify the choice, not make it for the voter.</p>
+
+  <p>Berkeley already asks voters to trust independent audits. It should tell them what that trust buys.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p>City Auditor, <em>Berkeley&rsquo;s Financial Condition (FY 2016&ndash;FY 2025): Structural Deficit Poses Risk to Financial Sustainability</em>, April 2026 &mdash; the Government Finance Officers Association recommendation, from a 2022 City-commissioned risk analysis, that the City adopt a policy committing to a structurally balanced budget where recurring revenues equal or exceed recurring expenditures; and Recommendation 2.1, that City management propose a fiscal policy to Council to assess whether recurring revenues and recurring expenditures are balanced. <a href="https://berkeleyca.gov/sites/default/files/2026-04/2026-04-28%20Item%2009%20Berkeley%E2%80%99s%20Financial%20Condition%20%28FY%202016-FY%202025%29.pdf">Report</a>.</p>
+    <p>City Attorney&rsquo;s impartial analysis of Measure V, November 2026 ballot &mdash; a general tax, the revenue &ldquo;placed into the General Fund and could be spent on any valid municipal purpose,&rdquo; with proceeds &ldquo;subject to the same independent annual audit requirements as other general fund revenue.&rdquo;</p>
+    <h3>Related</h3>
+    <p><a href="quiz-auditwashing.html">Auditwashing: audited for what?</a> &mdash; the same distinction as a quiz &middot;
+    <a href="measure-v-debate-fact-check.html">Fact-checking the Measure V debate</a> &middot;
+    <a href="measure-u-is-t1-again.html">Measure U Is T1 Again</a> &middot;
+    <a href="index.html">Decision Project home</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
