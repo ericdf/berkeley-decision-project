@@ -83,6 +83,75 @@ tbody tr:last-child td { border-bottom: 0; }
 .pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
         font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
 
+
+/* Floated pull quotes. Marked in the source copy with <!-- PULLQUOTE RIGHT|LEFT -->.
+   Only a few per article: they are meant to be strong visual interruptions, not a
+   container for every quotation. Ordinary source quotes stay as .pull or inline. */
+.pq { background: var(--accent-soft); border: 1px solid var(--rule);
+      border-left: 4px solid var(--accent); border-radius: 4px;
+      padding: 1.05rem 1.15rem; margin: .4rem 0 1.1rem; }
+.pq p { font-size: 1.16rem; font-weight: 600; line-height: 1.4; color: var(--ink);
+        margin: 0 0 .55rem; }
+.pq p:last-of-type { margin-bottom: 0; }
+.pq .who { font-family: var(--sans); font-size: .74rem; font-weight: 600;
+           letter-spacing: .02em; color: var(--ink-3); margin-top: .7rem; }
+@media (min-width: 720px) {
+  .pq { width: 43%; margin: .3rem 0 1rem; }
+  .pq-r { float: right; margin-left: 1.6rem; }
+  .pq-l { float: left;  margin-right: 1.6rem; }
+}
+@media (max-width: 719px) {
+  .pq { width: 100%; float: none !important; margin: 1.4rem 0; }
+  .pq p { font-size: 1.06rem; }
+}
+.clr { clear: both; }
+
+
+/* Floated pull quotes. Marked in the source copy with <!-- PULLQUOTE RIGHT|LEFT -->.
+   Only a few per article: they are meant to be strong visual interruptions, not a
+   container for every quotation. Ordinary source quotes stay as .pull or inline. */
+.pq { background: var(--accent-soft); border: 1px solid var(--rule);
+      border-left: 4px solid var(--accent); border-radius: 4px;
+      padding: 1.05rem 1.15rem; margin: .4rem 0 1.1rem; }
+.pq p { font-size: 1.16rem; font-weight: 600; line-height: 1.4; color: var(--ink);
+        margin: 0 0 .55rem; }
+.pq p:last-of-type { margin-bottom: 0; }
+.pq .who { font-family: var(--sans); font-size: .74rem; font-weight: 600;
+           letter-spacing: .02em; color: var(--ink-3); margin-top: .7rem; }
+@media (min-width: 720px) {
+  .pq { width: 43%; margin: .3rem 0 1rem; }
+  .pq-r { float: right; margin-left: 1.6rem; }
+  .pq-l { float: left;  margin-right: 1.6rem; }
+}
+@media (max-width: 719px) {
+  .pq { width: 100%; float: none !important; margin: 1.4rem 0; }
+  .pq p { font-size: 1.06rem; }
+}
+.clr { clear: both; }
+
+
+/* Floated pull quotes. Marked in the source copy with <!-- PULLQUOTE RIGHT|LEFT -->.
+   Only a few per article: they are meant to be strong visual interruptions, not a
+   container for every quotation. Ordinary source quotes stay as .pull or inline. */
+.pq { background: var(--accent-soft); border: 1px solid var(--rule);
+      border-left: 4px solid var(--accent); border-radius: 4px;
+      padding: 1.05rem 1.15rem; margin: .4rem 0 1.1rem; }
+.pq p { font-size: 1.16rem; font-weight: 600; line-height: 1.4; color: var(--ink);
+        margin: 0 0 .55rem; }
+.pq p:last-of-type { margin-bottom: 0; }
+.pq .who { font-family: var(--sans); font-size: .74rem; font-weight: 600;
+           letter-spacing: .02em; color: var(--ink-3); margin-top: .7rem; }
+@media (min-width: 720px) {
+  .pq { width: 43%; margin: .3rem 0 1rem; }
+  .pq-r { float: right; margin-left: 1.6rem; }
+  .pq-l { float: left;  margin-right: 1.6rem; }
+}
+@media (max-width: 719px) {
+  .pq { width: 100%; float: none !important; margin: 1.4rem 0; }
+  .pq p { font-size: 1.06rem; }
+}
+.clr { clear: both; }
+
 .beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
         padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
 .beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
@@ -104,182 +173,183 @@ footer a { color: var(--quote); }
   .nav a { padding: 8px 16px; }
 }
 </style>
-</head>
-<body>
+</head><body>
 <div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
 
 <div class="wrap">
 
   <div class="kicker">Analysis</div>
   <h1>Where Did $300 Million Come From, Anyway?</h1>
-  <p class="standfirst">Berkeley chose the size of Measure U before it finished choosing the projects. When $300 million polled no worse than $200 million, councilmembers treated that as a reason to take the higher amount.</p>
-  <div class="byline">An argument about how the amount was chosen &middot; September 2026</div>
+  <p class="standfirst">Berkeley chose the size of Measure U before it finished choosing the projects. When $300 million polled no worse than $200 million, Councilmembers treated that as a reason to take the higher amount.</p>
+  <div class="byline">How the amount was chosen &middot; September 2026</div>
 
-  <p>Berkeley did not arrive at $300 million by naming a priority set of projects, pricing them, subtracting available resources, and borrowing the resulting gap. The City established a $300 million framework, tested whether voters would accept $200 million or $300 million, found no measurable polling penalty for the higher amount, and then chose $300 million while the project portfolio was still being refined.</p>
 
-  <p>There is a science to this. Define the work. Price it. Identify existing resources. Calculate the gap. Match debt to the assets being financed. Then ask voters to approve that amount. Staff had a great deal to work with: infrastructure studies, project concepts, bonding capacity information, tax-rate comparisons, and a backlog the City puts above $1.5&nbsp;billion. The failure is narrower than an absence of analysis, and more consequential. The record does not show those inputs producing a bottom-up calculation that equals $300&nbsp;million.</p>
+  <p>A sound capital plan starts with the work. Name the projects. Rank them. Price them. Count grants and other available resources. Calculate the remaining gap. Then decide how much to borrow.</p>
 
-  <h2>Two different questions</h2>
+  <p>Berkeley&rsquo;s record shows a different sequence.</p>
 
-  <p>A capital plan answers one question: what must Berkeley borrow to finance the prioritized work it has decided should be done? A campaign answers another: how much borrowing will voters tolerate?</p>
+  <p>The City had a large infrastructure backlog and plenty of candidate projects. But the record does not show those projects and resources producing a bottom-up calculation that happened to equal $300&nbsp;million. Instead, $300&nbsp;million became the working envelope first. Staff tested whether voters would accept it, Council saw no polling penalty compared with $200&nbsp;million, and the project list continued to be refined afterward.</p>
 
-  <p>The first should determine the amount. On March 17, 2026, the second did much of the work &mdash; and the evidence is not commentary from opponents, but what councilmembers and staff said in open session that evening.</p>
+  <h2>The number came first</h2>
 
-  <h2>The envelope came first</h2>
+  <p>The process began much more narrowly.</p>
 
-  <p>Berkeley began narrower. A June 17, 2025 referral on fire facility revenue measures contemplated &ldquo;community polling to help set priorities for a bond initiative that will exclusively pay for remodeling or replacement of fire facilities.&rdquo; A fire bond, priced to fire needs.</p>
+  <p>In June 2025, Councilmember Terry Taplin and colleagues asked staff to examine a revenue measure for Fire Department facilities. The referral contemplated polling for a bond that would <strong>&ldquo;exclusively pay for remodeling or replacement of fire facilities.&rdquo;</strong></p>
 
-  <p>By March 2026 that had become one of three buckets inside a fixed total. The City&rsquo;s own presentation that night carried the six criteria staff used to evaluate candidate projects &mdash; health and safety, infrastructure resilience, community use and equity, climate resilience, deliverability and readiness, external funding potential &mdash; and a footnote directly beneath them:</p>
+  <p>By March 2026, fire had become one of three broad categories:</p>
 
-  <div class="pull">&ldquo;Applied within a $100M per-category cap ($300M total).&rdquo;
-    <div class="attrib">City of Berkeley, Special Meeting Item 1 presentation, March 17, 2026</div></div>
+  <ul>
+    <li>Community Facilities &amp; Quality of Life</li>
+    <li>Public Safety</li>
+    <li>Critical Infrastructure &amp; Accessibility</li>
+  </ul>
 
-  <p>The three categories were Community Facilities &amp; Quality of Life, Public Safety, and Critical Infrastructure &amp; Accessibility. Projects were scored against criteria inside a $300&nbsp;million envelope. The scoring did not produce the envelope.</p>
+  <p>The City&rsquo;s March 17 presentation explained that projects were being evaluated under six criteria, then added an important constraint:</p>
 
-  <h2><span class="when">March 17, 2026</span>&ldquo;How far can we take this?&rdquo;</h2>
+  <div class="pull">&ldquo;Applied within a $100M per-category cap ($300M total).&rdquo;</div>
 
-  <p>Councilmember Shoshana O&rsquo;Keefe opened by asking a taxpayer question. If both the bond and the sales tax passed, how would the burden on Berkeley residents compare with neighboring cities?</p>
+  <p>The projects were being sorted inside a $300&nbsp;million envelope. The completed project list did not first produce the $300&nbsp;million figure.</p>
 
-  <p>Staff answered:</p>
+  <p><a href="https://berkeleyca.gov/sites/default/files/documents/2025-06-17%20Item%2028%20Fire%20Facility%20Revenue%20Measures.pdf">June 17, 2025 Fire Facility Revenue Measures</a></p>
 
-  <div class="pull">&ldquo;So we haven&rsquo;t, completed an analysis of&hellip;&rdquo;
-    <div class="attrib">City staff, March 17, 2026</div></div>
+  <p><a href="https://berkeleyca.gov/sites/default/files/2026-03/2026-03-17%20Special%20Item%2001%20Presentation%20and%20Discussion.pdf">March 17, 2026 presentation and survey materials</a></p>
 
-  <p>What followed was a partial substitute: Berkeley is roughly in line with Oakland and Albany on sales tax; the $300&nbsp;million bond works out to about $22 per $100,000 of assessed value, around $100 a year for a median home assessed at $550,000. Useful figures. Not the comparison that had been asked for.</p>
+  <div class="pq pq-r">
+    <p>&ldquo;What&rsquo;s the&hellip; how far can we take this?&rdquo;</p>
+    <div class="who">&mdash; Councilmember Shoshana O&rsquo;Keefe, March 17, 2026</div>
+  </div>
 
-  <p>O&rsquo;Keefe then asked a second question.</p>
+  <h2>What the poll actually showed</h2>
 
-  <div class="pull">&ldquo;Given that the support didn&rsquo;t really change, or even arguably went up when we went from 200 to 300 million, I was wondering if a higher number was considered, or will be considered. Just, you know, what&rsquo;s the&hellip; how far can we take this?&rdquo;
-    <div class="attrib">Councilmember Shoshana O&rsquo;Keefe, March 17, 2026 &mdash; PULL QUOTE</div></div>
+  <p>The February survey did not ask voters to choose between a $200&nbsp;million bond and a $300&nbsp;million bond.</p>
 
-  <p>The burden analysis was unfinished. The polling was not. Within a minute of being told the City could not yet say what the combined burden would be, the live question became how much more voters might absorb. Voter tolerance had become a sizing variable.</p>
+  <p>It used a split sample. One group heard a broad $300&nbsp;million bond description. Another group heard a broad $200&nbsp;million version. Both included fire and emergency facilities, parks and recreation, climate resilience, public buildings, and other infrastructure.</p>
 
-  <h2>&ldquo;It&rsquo;s not like a science&rdquo;</h2>
-
-  <p>O&rsquo;Keefe asked one more thing: how had the City arrived at $300&nbsp;million in the first place? She said she did not need an extensive answer. She got a short one.</p>
-
-  <div class="pull">&ldquo;I mean, if you all want us to test at a higher rate, we certainly could. We felt like&hellip; $300 million was&hellip; It felt like a lot. And also, you know, when you think about $22 per $100,000 of assessed value, that seems kind of a reasonable amount.&rdquo;
-    <p style="margin-top:.7rem">&ldquo;There&rsquo;s&hellip; it&rsquo;s not like a science.&rdquo;</p>
-    <div class="attrib">City staff, March 17, 2026, answering how $300 million was selected &mdash; PULL QUOTE</div></div>
-
-  <p>Measure U authorizes $100&nbsp;million to be issued every five years beginning in 2027 &mdash; three tranches over a decade &mdash; each repaid over roughly thirty years, with the last payments falling around 2067. That is a forty-year taxpayer obligation, and the City&rsquo;s own account of how its size was set is that the figure felt like a lot and the resulting rate seemed reasonable. &ldquo;It felt like a lot&rdquo; is not a substitute for naming the projects, pricing them, subtracting available resources, and borrowing the difference.</p>
-
-  <h2>What the poll established, and what it did not</h2>
-
-  <p>The February survey used a split sample. One group heard a broad $300&nbsp;million bond description at an estimated $22.14 per $100,000 of assessed value. A separate group heard a broad $200&nbsp;million description at approximately $18.47. Both descriptions bundled fire and emergency facilities, parks and recreation, climate resilience, and public buildings.</p>
+  <p>The results were nearly identical:</p>
 
   <div class="tw"><table>
-    <thead><tr><th>Version tested</th><th class="amt">Estimated rate per $100,000</th><th class="amt">Voting yes</th></tr></thead>
+    <thead><tr><th>Version tested</th><th class="amt">Estimated annual rate per $100,000 assessed value</th><th class="amt">Support</th></tr></thead>
     <tbody>
-      <tr><td>$300 million bond</td><td class="amt">$22.14</td><td class="amt">71%</td></tr>
-      <tr><td>$200 million bond</td><td class="amt">$18.47</td><td class="amt">70%</td></tr>
+      <tr><td>$300 million</td><td class="amt">$22.14</td><td class="amt">71%</td></tr>
+      <tr><td>$200 million</td><td class="amt">$18.47</td><td class="amt">70%</td></tr>
     </tbody>
   </table></div>
 
-  <p>Pollster David Mermin of Lake Research Partners described the result plainly: &ldquo;this is well within the margin of error. As far as we know, there&rsquo;s essentially no difference here.&rdquo;</p>
+  <p>Pollster David Mermin told Council the difference was within the margin of error: there was essentially no measurable difference in support.</p>
 
-  <p>No respondent was asked to choose $300&nbsp;million over $200&nbsp;million. The survey established that researchers could not detect a meaningful difference in support between two separately tested broad packages at the two stated rates. The principal amount differed by 50 percent. The rate shown to voters differed by about $3.67 per $100,000.</p>
+  <p>That finding had a narrow meaning. The poll could not detect a support penalty for the larger amount at the tax rates presented.</p>
 
-  <p>The experiment measured reaction to that rate difference. It did not ask whether Berkeley should assume an additional $100&nbsp;million in debt because the larger authorization was itself warranted.</p>
+  <p>It did <strong>not</strong> show that voters preferred $300&nbsp;million. No voter was asked to make that choice.</p>
 
-  <h2>The decision rule</h2>
+  <p>The survey did ask voters which projects they cared about. That information could help prioritize a capital program. But Council did not take the highest-ranked projects, price a priority package, subtract existing resources, and let that calculation determine the bond amount.</p>
 
-  <p>When O&rsquo;Keefe asked whether a higher number could work, Mermin gave the answer polling can give. Support ordinarily declines as the tax amount rises, he said, and Berkeley&rsquo;s numbers sat only a few points above the two-thirds threshold. Then:</p>
+  <p>For the amount decision, the striking result was simpler: $300&nbsp;million did not poll worse than $200&nbsp;million.</p>
 
-  <div class="pull">&ldquo;since this is just a few points above the threshold, even though there does appear to be an appetite for this higher level, $300 million over $200 million. There&rsquo;s certainly clear recommendation here that $300 million would be fine.&rdquo;
-    <div class="attrib">David Mermin, Lake Research Partners, March 17, 2026 &mdash; PULL QUOTE</div></div>
+  <h2>&ldquo;How far can we take this?&rdquo;</h2>
 
-  <p>He was answering the question he was hired to answer: what amount appears electorally viable. Nobody in the exchange answered the other one &mdash; what amount does the prioritized capital plan require. Two councilmembers then stated the sizing rule directly. Councilmember Rashi Kesarwani:</p>
+  <p>The March 17 discussion makes the decision rule unusually visible.</p>
 
-  <div class="pull">&ldquo;you know, given the polling that 200 million polls the same as 300 million, I think we should pursue the higher number&rdquo;
-    <div class="attrib">Councilmember Rashi Kesarwani, March 17, 2026 &mdash; PULL QUOTE</div></div>
+  <p>O&rsquo;Keefe first asked how the proposed bond and sales tax, taken together, would affect Berkeley taxpayers compared with neighboring cities.</p>
 
-  <p>She went on to raise affordability in the same breath, noting the rate per $100,000 was roughly in line with past authorizations and asking staff to bring back a historical rate table &ldquo;so that we can continue to remind ourselves and the community where we are with costs.&rdquo; Her argument was that Berkeley&rsquo;s backlog makes unused bonding capacity expensive in its own way. The reason she gave for preferring $300&nbsp;million to $200&nbsp;million was that $300&nbsp;million polled the same.</p>
+  <p>Staff replied that it had <strong>not completed that analysis</strong>.</p>
 
-  <p>Councilmember Mark Humbert reached the same place independently:</p>
+  <p>Staff did provide pieces of the picture: the proposed bond rate, an example based on a median assessed value, and comparisons with nearby sales-tax rates. But Council did not yet have a completed cumulative household-burden analysis.</p>
 
-  <div class="pull">&ldquo;I would be in favor of the 300 rather than the 200, since there&rsquo;s not a statistical significance as between them.&rdquo;
-    <div class="attrib">Councilmember Mark Humbert, March 17, 2026 &mdash; PULL QUOTE</div></div>
+  <p>The conversation then returned to the poll.</p>
 
-  <p>A statistically insignificant difference means the survey did not establish a meaningful difference in voter support. It supplies no financial reason to borrow the larger amount. Preferring the larger amount was a policy judgment laid on top of a null result.</p>
+  <p>O&rsquo;Keefe asked:</p>
 
-  <h2>What the poll never tested</h2>
+  <div class="pull">&ldquo;Given that the support didn&rsquo;t really change, or even arguably went up when we went from 200 to 300 million, I was wondering if a higher number was considered, or will be considered. Just, you know, what&rsquo;s the&hellip; how far can we take this?&rdquo;</div>
 
-  <p>The survey did ask voters about priorities, and it asked carefully. Respondents ranked broad needs and rated specific project types. Renovating the 911 dispatch center came first. Replacing fire stations and repairing sidewalks and curb ramps tied for second. Park restrooms followed.</p>
+  <p>That question gets to the heart of the process. Once $300&nbsp;million appeared to carry no electoral penalty, the next question became whether the City could go higher.</p>
 
-  <p>That makes the gap sharper rather than softer. Berkeley knew what voters valued most, and those priorities were never converted into a defined, costed package whose financing gap set the bond amount. Priority research asks which projects voters value. Debt sizing asks what the prioritized work costs after other resources are counted. The survey did the first. The record does not show it producing $300&nbsp;million through the second.</p>
+  <h2>&ldquo;It felt like a lot&rdquo;</h2>
 
-  <p>Three alternatives went untested. The original fire-focused concept was never run against the broad bond. Neither was a smaller bond built only from the highest-ranked projects. Neither was an amount derived from a costed priority set. The poll therefore cannot show that voters preferred the broad $300&nbsp;million portfolio to any of them.</p>
+  <p>O&rsquo;Keefe then asked how staff had arrived at $300&nbsp;million in the first place.</p>
 
-  <p>Mermin himself cautioned against reading the priority results as a mandate for breadth, and explained why narrow framings tested worse: &ldquo;when we got very narrow as to, we&rsquo;re gonna fix, we&rsquo;re gonna provide dog parks, people are like&hellip; fine, but that is not my highest priority.&rdquo; His advice was to keep the list broad and describe the popular items &mdash; &ldquo;that doesn&rsquo;t mean you can only do the three things that voters care most about.&rdquo; That is sound campaign counsel. It is not a capital-planning method.</p>
+  <p>The answer should stop any reader who thinks the number emerged from a capital-financing formula.</p>
 
-  <h2>Where was the household calculation?</h2>
+  <div class="pq pq-l">
+    <p>&ldquo;$300 million was&hellip; It felt like a lot.&rdquo;</p>
+    <p>&ldquo;$22 per $100,000 of assessed value, that seems kind of a reasonable amount.&rdquo;</p>
+    <p>&ldquo;There&rsquo;s&hellip; it&rsquo;s not like a science.&rdquo;</p>
+    <div class="who">&mdash; City staff, March 17, 2026</div>
+  </div>
 
-  <p>Councilmembers raised affordability on March 17. Mayor Adena Ishii asked staff what the new bond would mean on top of existing obligations, so residents could understand what would appear on their property-tax bills. Staff&rsquo;s answer is worth reading closely. The $22.14 figure, they explained, &ldquo;represents the new bond.&rdquo; Then:</p>
+  <p>There is a discipline for sizing long-term debt.</p>
 
-  <div class="pull">&ldquo;When we look in totality and include existing authorizations, don&rsquo;t quote me specifically, but the total assessment rate would be, on average, about $44 per $100,000, and I can be more precise when we come back to the Council, but that was about the number.&rdquo;
-    <div class="attrib">City staff, March 17, 2026</div></div>
+  <p>Define the work. Price it. Identify grants and existing resources. Calculate the financing gap. Match the debt term to the useful life of the assets. Then ask voters to approve the result.</p>
 
-  <p>Roughly double the figure voters were shown for Measure U alone, hedged against precise quotation, on the night Council settled on the amount.</p>
+  <p>&ldquo;It felt like a lot&rdquo; and &ldquo;that seems kind of a reasonable amount&rdquo; describe judgment about political and taxpayer tolerance. They do not explain why the City needed exactly $300&nbsp;million of new borrowing.</p>
 
-  <p>The City&rsquo;s own later analysis fills in part of the picture. Berkeley&rsquo;s existing bond debt service is projected to require an average tax of approximately $30.79 per $100,000 of assessed value over the next thirty years, 2027 through 2056 &mdash; before Measure U is added, and on a timeline that ends a decade before Measure U&rsquo;s final payments.</p>
+  <p>That matters because Measure U creates a tax burden extending for decades. The final financing assumptions contemplate multiple bond issuances over time, with repayment stretching roughly forty years from the first issuance to the last scheduled payments.</p>
 
-  <p>Household burden was raised. It was not developed into a comparable decision framework for $200&nbsp;million against $300&nbsp;million. Council had polling results for the two borrowing amounts before it had a completed cumulative burden analysis.</p>
+  <p><a href="https://berkeleyca.gov/sites/default/files/2026-06/2026-06-16%20Item%2038%20Placing%20a%20General%20Obligation%20Bond%20Measure.pdf">June 16, 2026 final Measure U staff report</a></p>
 
-  <p>Absent from the amount decision: representative annual household-dollar impacts at different assessed values; explicit treatment of homeowners with recently reset assessments against long-held properties; a cumulative view of existing City property-tax obligations; the Measure FF burden voters approved in 2024 as part of the baseline; the 0.5 percent sales tax being weighed at the same meeting; and the final tranche of the previous infrastructure bond, still unissued.</p>
+  <h2>Council made the inference explicit</h2>
 
-  <p>None of these necessarily dictates a smaller bond. All belong in the analysis before polling tolerance becomes a reason to choose the larger amount.</p>
+  <p>Councilmember Rashi Kesarwani put the logic plainly:</p>
 
-  <h2>The previous bond was not finished</h2>
+  <div class="pull">&ldquo;Given the polling that 200 million polls the same as 300 million, I think we should pursue the higher number.&rdquo;</div>
 
-  <p>On June 30, 2026, Council authorized $20&nbsp;million in general obligation bonds, Series C, which the staff report calls &ldquo;the third and final series of bonds related to&rdquo; the 2016 Measure T1 authorization. Those proceeds are expected to support projects through fiscal year 2028&ndash;29.</p>
+  <p>Councilmember Mark Humbert independently made the same move.</p>
 
-  <p>In March, Council was weighing a new $300&nbsp;million authorization while the last $20&nbsp;million of the previous $100&nbsp;million infrastructure bond had not yet been issued. That is not double-counting and nothing about it is improper. It is a fact about sequencing and cumulative household burden, and it was available.</p>
+  <div class="pq pq-r">
+    <p>&ldquo;I would be in favor of the 300 rather than the 200, since there&rsquo;s not a statistical significance as between them.&rdquo;</p>
+    <div class="who">&mdash; Councilmember Mark Humbert, March 17, 2026</div>
+  </div>
 
-  <h2>Who argues the other side?</h2>
+  <p>&ldquo;No statistically significant difference&rdquo; means the poll did not establish a meaningful difference between the two support levels.</p>
 
-  <p>The March 17 record contains developed advocacy for infrastructure investment, project categories, grant leverage, use of bonding capacity, the backlog, and electoral viability. Each has an institutional voice and a professional answering for it.</p>
+  <p>It does not provide a financial reason to borrow the larger amount.</p>
 
-  <p>The financing side has no equivalent. Who asks what the smallest responsible authorization is? Who starts with household burden and works backward? Who argues that unused borrowing capacity can remain unused until a defined project need justifies it?</p>
+  <p>The preference for $300&nbsp;million was a policy judgment Councilmembers added to the polling result.</p>
 
-  <p>The record gives institutional voice to the City&rsquo;s appetite for capital. It does not show an equally developed test for minimizing the burden imposed to finance it.</p>
+  <div class="clr"></div>
+
+  <h2>The taxpayer calculation lagged behind</h2>
+
+  <p>Councilmembers did raise affordability.</p>
+
+  <p>O&rsquo;Keefe asked about the combined tax burden. Mayor Adena Ishii later asked staff to explain what residents would actually see on their property-tax bills after adding the new bond to existing bond charges.</p>
+
+  <p>The answers were still provisional.</p>
+
+  <p>At the same time, Berkeley was carrying other recently approved or already-authorized obligations. Measure FF had just added a new parcel tax. Council was considering a new sales tax. And the final $20&nbsp;million tranche of the previous Measure T1 infrastructure bond had not yet been issued; Council would authorize that final T1 series on June 30, 2026, with delivery anticipated in August.</p>
+
+  <p><a href="https://berkeleyca.gov/sites/default/files/2026-06/2026-06-30%20Item%2044%20Issuance%20of%2020%2C000%2C000%20in%20General.pdf">June 30, 2026 final T1 bond issuance</a></p>
+
+  <p>The record gives far more developed attention to how much bonding capacity the City could use than to a single cumulative household calculation showing how the new obligation sat on top of the others.</p>
 
   <h2>Then the projects followed the amount</h2>
 
-  <p>The sequence appears in the City&rsquo;s own agenda language.</p>
+  <p>The chronology after March is especially telling.</p>
 
-  <p>On <strong>March 17, 2026</strong>, the City Manager asked Council to direct preparation of draft ballot language for a potential $300&nbsp;million general obligation bond, and to authorize a second community survey testing refined language for a $300&nbsp;million bond.</p>
+  <p>On March 17, staff asked Council for direction to prepare ballot language for a <strong>$300 million</strong> bond.</p>
 
-  <p>On <strong>May 19, 2026</strong>, Council was asked to do two things: &ldquo;Affirm the direction&rdquo; to prepare the $300&nbsp;million measure, and &ldquo;Provide input on the list of infrastructure projects for the $300 million General Obligation bond.&rdquo; Staff that evening described a list that had reached about $430&nbsp;million and needed scaling back &ldquo;to meet our $300 million.&rdquo; King Pool went from $25&nbsp;million to $5&nbsp;million.</p>
+  <p>By May 19, the agenda asked Council to do two things:</p>
 
-  <p>On <strong>June 16, 2026</strong>, Council placed a $300&nbsp;million bond on the November ballot, nine votes to none.</p>
+  <ol>
+    <li><strong>Affirm</strong> the direction to prepare the $300 million measure.</li>
+    <li><strong>Provide input on the list of infrastructure projects for the $300 million bond.</strong></li>
+  </ol>
 
-  <p>Affirm the amount, then continue working on the projects, then scale the projects to fit. The $430&nbsp;million list is the clearest evidence that the envelope governed: a portfolio assembled from eight district meetings and ten commission presentations had to lose $130&nbsp;million to fit a number chosen in March.</p>
+  <p>The order is right there in the City&rsquo;s own agenda: affirm the amount, then keep working on the projects.</p>
 
-  <h2>The calculation that should exist</h2>
+  <p><a href="https://berkeleyca.gov/city-council-special-meeting-eagenda-may-19-2026">May 19, 2026 Council agenda</a></p>
 
-  <p>A city does not need polling to tell it how much infrastructure costs. It needs a capital plan. Name the projects. Rank them. Price them. Count existing resources. Calculate the gap. Match the debt to the assets. Then ask voters whether they will pay for it.</p>
+  <p>On June 16, Council placed the $300&nbsp;million measure on the ballot.</p>
 
-  <p>Berkeley&rsquo;s record shows a different sequence. The City learned that voters appeared willing to tolerate $300&nbsp;million, chose $300&nbsp;million, and kept refining what the $300&nbsp;million would buy.</p>
+  <p>Berkeley has more infrastructure need than $300&nbsp;million could ever satisfy. That makes prioritization more important, not less.</p>
 
-  <p>One question remains unanswered in the public record: what calculation turns Berkeley&rsquo;s prioritized projects, their costs, existing resources, and the alternatives into exactly $300&nbsp;million of new borrowing?</p>
+  <p>A capital plan should be able to answer one basic question:</p>
 
-  <div class="beat">
-    <div class="beat-h">Sources</div>
-    <p><strong>Fire-only origin.</strong> Fire Facility Revenue Measures, Council item, June 17, 2025: <a href="https://berkeleyca.gov/sites/default/files/documents/2025-06-17%20Item%2028%20Fire%20Facility%20Revenue%20Measures.pdf">Item 28</a>.</p>
-    <p><strong>First survey and the March 17 decision.</strong> <a href="https://berkeleyca.gov/city-council-special-meeting-eagenda-march-17-2026">Special meeting eAgenda, March 17, 2026</a>; <a href="https://berkeleyca.gov/sites/default/files/2026-03/2026-03-17%20Special%20Item%2001%20Presentation%20and%20Discussion.pdf">Item 1 report</a>; <a href="https://berkeleyca.gov/sites/default/files/2026-03/2026-03-17%20Special%20Item%2001%20Presentation%20and%20Discussion%20-%20Pres.pdf">Item 1 presentation</a>, source of the &ldquo;$100M per-category cap ($300M total)&rdquo; footnote. Spoken quotations are from the meeting captioning transcript for March 17, 2026, obtained from the City Clerk.</p>
-    <p><strong>Second survey and project refinement.</strong> <a href="https://berkeleyca.gov/city-council-special-meeting-eagenda-may-19-2026">Special meeting eAgenda, May 19, 2026</a>; <a href="https://berkeleyca.gov/sites/default/files/2026-05/May192026_Community%20Survey%20Results_Presentation%20(8).pdf">survey results presentation</a>. Source of the &ldquo;affirm the direction&rdquo; and &ldquo;provide input on the list&rdquo; language, the $22.14 average rate, the $100 million every five years issuance assumption, and the $30.79 existing debt service figure.</p>
-    <p><strong>Final Measure U action.</strong> <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-june-16-2026">Regular meeting eAgenda, June 16, 2026</a>; <a href="https://berkeleyca.gov/sites/default/files/2026-06/2026-06-16%20Item%2038%20Placing%20a%20General%20Obligation%20Bond%20Measure.pdf">Item 38</a>.</p>
-    <p><strong>Final Measure T1 issuance.</strong> <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-june-30-2026">Regular meeting eAgenda, June 30, 2026</a>; <a href="https://berkeleyca.gov/sites/default/files/2026-06/2026-06-30%20Item%2044%20Issuance%20of%2020%2C000%2C000%20in%20General.pdf">Item 44</a>.</p>
-  </div>
+  <div class="pull">What calculation turns Berkeley&rsquo;s prioritized projects, credible costs, existing resources, and alternatives into exactly $300&nbsp;million of new borrowing?</div>
 
-  <div class="beat">
-    <div class="beat-h">A note on method</div>
-    <p>This page is about how the amount was chosen. Other questions about Measure U &mdash; what the project list commits Berkeley to, how T1 and Measure FF money moved, street paving, and the oversight provisions &mdash; are treated separately. Figures are as stated in the documents cited; where a staff figure was given with a caution against precise quotation, that caution is quoted alongside it. No claim is made here about motive, and this page makes no voting recommendation.</p>
-  </div>
+  <p>The public record shows something else: the City found an amount voters appeared willing to tolerate, chose the larger amount when it polled no worse, and continued refining what the money would buy.</p>
 
   <h2>Related</h2>
-  <p><a href="measure-u-is-t1-again.html">Is Measure U T1 Again?</a> &middot; <a href="crayon-box.html">The Crayon Box</a> &middot; <a href="hidden-budget-cycle.html">The Hidden Budget Cycle</a> &middot; <a href="framework.html">The Berkeley Budget Framework</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
+  <p><a href="measure-u-is-t1-again.html">Measure U Is T1 Again</a> &middot; <a href="crayon-box.html">The Crayon Box</a> &middot; <a href="framework.html">The Berkeley Budget Framework</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
 
 </div>
 </body>

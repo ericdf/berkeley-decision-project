@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red-Team the Ballot Measure</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* The year column is load-bearing on this page: the argument is about elapsed time between
+   a one-time appropriation and the recurring obligation it created, so dates are set in
+   tabular numerals and given their own emphasis rather than being buried in prose. */
+.yr { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+      color: var(--accent); white-space: nowrap; }
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+
+/* Floated pull quotes. Marked in the source copy with <!-- PULLQUOTE RIGHT|LEFT -->.
+   Only a few per article: they are meant to be strong visual interruptions, not a
+   container for every quotation. Ordinary source quotes stay as .pull or inline. */
+.pq { background: var(--accent-soft); border: 1px solid var(--rule);
+      border-left: 4px solid var(--accent); border-radius: 4px;
+      padding: 1.05rem 1.15rem; margin: .4rem 0 1.1rem; }
+.pq p { font-size: 1.16rem; font-weight: 600; line-height: 1.4; color: var(--ink);
+        margin: 0 0 .55rem; }
+.pq p:last-of-type { margin-bottom: 0; }
+.pq .who { font-family: var(--sans); font-size: .74rem; font-weight: 600;
+           letter-spacing: .02em; color: var(--ink-3); margin-top: .7rem; }
+@media (min-width: 720px) {
+  .pq { width: 43%; margin: .3rem 0 1rem; }
+  .pq-r { float: right; margin-left: 1.6rem; }
+  .pq-l { float: left;  margin-right: 1.6rem; }
+}
+@media (max-width: 719px) {
+  .pq { width: 100%; float: none !important; margin: 1.4rem 0; }
+  .pq p { font-size: 1.06rem; }
+}
+.clr { clear: both; }
+
+
+/* Floated pull quotes. Marked in the source copy with <!-- PULLQUOTE RIGHT|LEFT -->.
+   Only a few per article: they are meant to be strong visual interruptions, not a
+   container for every quotation. Ordinary source quotes stay as .pull or inline. */
+.pq { background: var(--accent-soft); border: 1px solid var(--rule);
+      border-left: 4px solid var(--accent); border-radius: 4px;
+      padding: 1.05rem 1.15rem; margin: .4rem 0 1.1rem; }
+.pq p { font-size: 1.16rem; font-weight: 600; line-height: 1.4; color: var(--ink);
+        margin: 0 0 .55rem; }
+.pq p:last-of-type { margin-bottom: 0; }
+.pq .who { font-family: var(--sans); font-size: .74rem; font-weight: 600;
+           letter-spacing: .02em; color: var(--ink-3); margin-top: .7rem; }
+@media (min-width: 720px) {
+  .pq { width: 43%; margin: .3rem 0 1rem; }
+  .pq-r { float: right; margin-left: 1.6rem; }
+  .pq-l { float: left;  margin-right: 1.6rem; }
+}
+@media (max-width: 719px) {
+  .pq { width: 100%; float: none !important; margin: 1.4rem 0; }
+  .pq p { font-size: 1.06rem; }
+}
+.clr { clear: both; }
+
+
+/* Floated pull quotes. Marked in the source copy with <!-- PULLQUOTE RIGHT|LEFT -->.
+   Only a few per article: they are meant to be strong visual interruptions, not a
+   container for every quotation. Ordinary source quotes stay as .pull or inline. */
+.pq { background: var(--accent-soft); border: 1px solid var(--rule);
+      border-left: 4px solid var(--accent); border-radius: 4px;
+      padding: 1.05rem 1.15rem; margin: .4rem 0 1.1rem; }
+.pq p { font-size: 1.16rem; font-weight: 600; line-height: 1.4; color: var(--ink);
+        margin: 0 0 .55rem; }
+.pq p:last-of-type { margin-bottom: 0; }
+.pq .who { font-family: var(--sans); font-size: .74rem; font-weight: 600;
+           letter-spacing: .02em; color: var(--ink-3); margin-top: .7rem; }
+@media (min-width: 720px) {
+  .pq { width: 43%; margin: .3rem 0 1rem; }
+  .pq-r { float: right; margin-left: 1.6rem; }
+  .pq-l { float: left;  margin-right: 1.6rem; }
+}
+@media (max-width: 719px) {
+  .pq { width: 100%; float: none !important; margin: 1.4rem 0; }
+  .pq p { font-size: 1.06rem; }
+}
+.clr { clear: both; }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head><body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Proposal</div>
+  <h1>Red-Team the Ballot Measure</h1>
+  <p class="standfirst">Before Berkeley asks voters to approve a tax or bond, give an independent reviewer one job: try to find ways the measure&rsquo;s promises can fail while everyone still follows the written rules.</p>
+  <div class="byline">A proposal for pre-ballot review &middot; September 2026</div>
+
+
+  <p>That is &ldquo;red teaming&rdquo; in plain English.</p>
+
+  <p>A red team is a skeptical reviewer whose job is to try to break a system before the public has to rely on it.</p>
+
+  <p>Cybersecurity teams do this before attackers find the weakness. AI developers do it before releasing a model. The same idea belongs in ballot-measure design.</p>
+
+  <p>The reviewer asks:</p>
+
+  <div class="pull">Assume everyone follows the measure exactly as written. Can the promised result still fail?</div>
+
+  <p>That question would have caught the Measure FF problem before the election.</p>
+
+  <h2>FF had a safeguard. It also had a hole.</h2>
+
+  <p>Measure FF was designed to add substantial new funding for streets and sidewalks.</p>
+
+  <p>Its ballot language said the new tax would be available <strong>&ldquo;provided other funding for street maintenance is maintained.&rdquo;</strong></p>
+
+  <p>The measure backed that promise with a $15.3&nbsp;million maintenance-of-effort floor for qualifying non-FF street funding.</p>
+
+  <p>A red-team reviewer should immediately have asked:</p>
+
+  <div class="pull">What happens to street money already committed above the $15.3&nbsp;million floor?</div>
+
+  <p>The answer became clear the following year.</p>
+
+  <p>Berkeley removed the remaining $3.95&nbsp;million Measure T1 street allocation because:</p>
+
+  <div class="pull">&ldquo;Other funding was identified so existing T1 funds could be reallocated.&rdquo;</div>
+
+  <p>The safeguard protected the recurring floor.</p>
+
+  <p>It did not protect the supplemental T1 money.</p>
+
+  <p>Nobody needed to evade FF. The gap was already in the design.</p>
+
+  <p><a href="fungibility-isnt-fun.html">See the full case study: <strong>Fungibility Isn&rsquo;t Fun</strong></a></p>
+
+  <h2>Find the loophole while the text can still change</h2>
+
+  <p>Most public oversight comes after adoption.</p>
+
+  <p>Auditors check whether money was accounted for properly and spent on legal purposes. Oversight committees review expenditures. Financial reports track implementation.</p>
+
+  <p>Those are necessary.</p>
+
+  <p>But a poorly designed promise can survive every one of those checks.</p>
+
+  <p>A red-team review happens earlier, while Council can still change the measure.</p>
+
+  <p>The assignment is adversarial in the useful sense of the word: look for failure modes, unintended incentives, vague promises, weak baselines, and legal ways for the outcome to drift away from what voters think they are approving.</p>
+
+  <div class="pq pq-r">
+    <p>Auditing asks whether the rules were followed. Red-teaming asks whether the rules are strong enough to produce the promised result.</p>
+  </div>
+
+  <h2>What should the reviewer try to break?</h2>
+
+  <p>The review does not need to become a hundred-page exercise. A short set of recurring tests would catch many problems.</p>
+
+  <h3>1. Can the new money replace old money?</h3>
+
+  <p>List every existing source already funding the same purpose:</p>
+
+  <ul>
+    <li>recurring General Fund or special-fund money;</li>
+    <li>grants;</li>
+    <li>existing bond allocations;</li>
+    <li>one-time appropriations;</li>
+    <li>adopted capital commitments.</li>
+  </ul>
+
+  <p>Then ask which of those sources can legally be reduced after the new measure passes.</p>
+
+  <p>Publish the gross new revenue and the expected <strong>net</strong> increase.</p>
+
+  <p>The FF/T1 case shows why this belongs in every review.</p>
+
+  <h3>2. Can advertised projects disappear?</h3>
+
+  <p>If voters are shown recognizable projects, identify how much legal discretion the City retains after passage.</p>
+
+  <p>Can a project be:</p>
+
+  <ul>
+    <li>removed;</li>
+    <li>reduced;</li>
+    <li>changed from construction to design;</li>
+    <li>delayed indefinitely;</li>
+    <li>replaced with another eligible project?</li>
+  </ul>
+
+  <p>If so, say that plainly before the vote.</p>
+
+  <p>Require a public reprioritization process when a major project is removed or replaced.</p>
+
+  <h3>3. Can the audit prove the promise?</h3>
+
+  <p>A measure may promise &ldquo;accountability,&rdquo; &ldquo;safety,&rdquo; &ldquo;infrastructure improvements,&rdquo; or &ldquo;independent audits.&rdquo;</p>
+
+  <p>The reviewer should ask what an auditor will actually be able to prove later.</p>
+
+  <p>A useful promise needs a baseline, an output, or another observable standard.</p>
+
+  <p>&ldquo;Money was spent legally&rdquo; is easy to audit.</p>
+
+  <p>&ldquo;Voters received the result they were shown&rdquo; often is not.</p>
+
+  <p>This is the subject of the companion proposal:</p>
+
+  <p><a href="https://ericdf.github.io/berkeley-decision-project/auditability-analysis.html"><strong>Berkeley Ballot Measures Need an Auditor&rsquo;s Analysis</strong></a></p>
+
+  <h3>4. Does long-term debt finance long-lived assets?</h3>
+
+  <p>For a bond, show:</p>
+
+  <ul>
+    <li>expected useful life of each major asset or component;</li>
+    <li>expected debt maturity;</li>
+    <li>maintenance required to achieve that useful life;</li>
+    <li>future replacement costs.</li>
+  </ul>
+
+  <p>Berkeley&rsquo;s own debt policy says debt terms should be matched to asset lives whenever practicable.</p>
+
+  <p>The red-team question is simple:</p>
+
+  <div class="pull">Will taxpayers still be paying after the thing they bought has worn out?</div>
+
+  <p><a href="https://berkeleyca.gov/sites/default/files/2022-01/Debt-Management-And-Disclosure-Policy.pdf">Berkeley Debt Management and Disclosure Policy</a></p>
+
+  <h3>5. What does the household already pay?</h3>
+
+  <p>Every new measure is presented separately.</p>
+
+  <p>Households pay them together.</p>
+
+  <p>A pre-ballot review should show how the new obligation sits on top of:</p>
+
+  <ul>
+    <li>existing City taxes;</li>
+    <li>overlapping county and regional taxes;</li>
+    <li>outstanding local bond debt;</li>
+    <li>previously authorized debt that has not yet been fully issued;</li>
+    <li>other measures on the same ballot.</li>
+  </ul>
+
+  <p>That does not decide whether the burden is acceptable.</p>
+
+  <p>It gives voters the information needed to decide for themselves.</p>
+
+  <h2>Give the job to someone independent</h2>
+
+  <p>Berkeley already has an independently elected City Auditor.</p>
+
+  <p>That office is the natural institutional home for this kind of skeptical review.</p>
+
+  <p>The City Attorney already provides a legal analysis of ballot measures. The Auditor could provide a different function: test whether the design can deliver and verify the promises Council is putting before voters.</p>
+
+  <p>The review should happen <strong>before Council places the measure on the ballot</strong>, while the language can still be fixed.</p>
+
+  <p>The Auditor would need access to:</p>
+
+  <ul>
+    <li>draft measure text;</li>
+    <li>financial models;</li>
+    <li>project lists and cost assumptions;</li>
+    <li>baseline funding data;</li>
+    <li>proposed audit and oversight provisions;</li>
+    <li>expected debt schedules.</li>
+  </ul>
+
+  <p>The result should be public and advisory.</p>
+
+  <p>Council would still decide policy. Voters would still decide the measure.</p>
+
+  <p>They would simply see the failure modes before making that decision.</p>
+
+  <h2>A short public document is enough</h2>
+
+  <p>Call it a <strong>Ballot Measure Adversarial Review</strong>.</p>
+
+  <p>For each major promise, show:</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Question</th><th>Review</th></tr></thead>
+    <tbody>
+      <tr><td>What is being promised?</td><td>The claim voters are being asked to rely on</td></tr>
+      <tr><td>How can it fail while the rules are followed?</td><td>The loophole or failure mode</td></tr>
+      <tr><td>What safeguard exists?</td><td>Current protection</td></tr>
+      <tr><td>What remains exposed?</td><td>Residual risk</td></tr>
+      <tr><td>How can the language be fixed?</td><td>Specific design change</td></tr>
+      <tr><td>Can the promise be audited later?</td><td>Yes, no, or only partially</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>This is not another campaign argument.</p>
+
+  <p>It is quality control.</p>
+
+  <h2>The Auditor&rsquo;s Analysis and red-team review fit together</h2>
+
+  <p>The Berkeley Decision Project has already proposed an independent Auditor&rsquo;s Analysis for ballot measures.</p>
+
+  <p>The two ideas solve adjacent problems.</p>
+
+  <p><strong>Red-team review</strong> asks, before adoption:</p>
+
+  <div class="pull">How can this promise fail while everyone follows the rules?</div>
+
+  <p><strong>Auditor&rsquo;s Analysis</strong> asks:</p>
+
+  <div class="pull">If the measure passes, will an independent auditor later be able to tell whether the promise was kept?</div>
+
+  <p>Together they create a pre-ballot accountability check that Berkeley&rsquo;s current process lacks.</p>
+
+  <p>The FF/T1 experience shows why it matters. FF actually contained an anti-supplanting safeguard. The weakness was subtler: the safeguard protected a narrow baseline while leaving previously committed supplemental funding exposed.</p>
+
+  <p>A skeptical reviewer could have spotted that in a paragraph.</p>
+
+  <p>The best time to discover how a ballot promise can fail is before voters make it law.</p>
+
+  <h2>Related</h2>
+  <p><a href="fungibility-isnt-fun.html">Fungibility Isn&rsquo;t Fun</a> &middot; <a href="why-300m.html">Where Did $300 Million Come From, Anyway?</a> &middot; <a href="show-your-work.html">Show Your Work</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
+
+</div>
+</body>
+</html>

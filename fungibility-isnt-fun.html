@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fungibility Isn&rsquo;t Fun</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* The year column is load-bearing on this page: the argument is about elapsed time between
+   a one-time appropriation and the recurring obligation it created, so dates are set in
+   tabular numerals and given their own emphasis rather than being buried in prose. */
+.yr { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 700;
+      color: var(--accent); white-space: nowrap; }
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+
+/* Floated pull quotes. Marked in the source copy with <!-- PULLQUOTE RIGHT|LEFT -->.
+   Only a few per article: they are meant to be strong visual interruptions, not a
+   container for every quotation. Ordinary source quotes stay as .pull or inline. */
+.pq { background: var(--accent-soft); border: 1px solid var(--rule);
+      border-left: 4px solid var(--accent); border-radius: 4px;
+      padding: 1.05rem 1.15rem; margin: .4rem 0 1.1rem; }
+.pq p { font-size: 1.16rem; font-weight: 600; line-height: 1.4; color: var(--ink);
+        margin: 0 0 .55rem; }
+.pq p:last-of-type { margin-bottom: 0; }
+.pq .who { font-family: var(--sans); font-size: .74rem; font-weight: 600;
+           letter-spacing: .02em; color: var(--ink-3); margin-top: .7rem; }
+@media (min-width: 720px) {
+  .pq { width: 43%; margin: .3rem 0 1rem; }
+  .pq-r { float: right; margin-left: 1.6rem; }
+  .pq-l { float: left;  margin-right: 1.6rem; }
+}
+@media (max-width: 719px) {
+  .pq { width: 100%; float: none !important; margin: 1.4rem 0; }
+  .pq p { font-size: 1.06rem; }
+}
+.clr { clear: both; }
+
+
+/* Floated pull quotes. Marked in the source copy with <!-- PULLQUOTE RIGHT|LEFT -->.
+   Only a few per article: they are meant to be strong visual interruptions, not a
+   container for every quotation. Ordinary source quotes stay as .pull or inline. */
+.pq { background: var(--accent-soft); border: 1px solid var(--rule);
+      border-left: 4px solid var(--accent); border-radius: 4px;
+      padding: 1.05rem 1.15rem; margin: .4rem 0 1.1rem; }
+.pq p { font-size: 1.16rem; font-weight: 600; line-height: 1.4; color: var(--ink);
+        margin: 0 0 .55rem; }
+.pq p:last-of-type { margin-bottom: 0; }
+.pq .who { font-family: var(--sans); font-size: .74rem; font-weight: 600;
+           letter-spacing: .02em; color: var(--ink-3); margin-top: .7rem; }
+@media (min-width: 720px) {
+  .pq { width: 43%; margin: .3rem 0 1rem; }
+  .pq-r { float: right; margin-left: 1.6rem; }
+  .pq-l { float: left;  margin-right: 1.6rem; }
+}
+@media (max-width: 719px) {
+  .pq { width: 100%; float: none !important; margin: 1.4rem 0; }
+  .pq p { font-size: 1.06rem; }
+}
+.clr { clear: both; }
+
+
+/* Floated pull quotes. Marked in the source copy with <!-- PULLQUOTE RIGHT|LEFT -->.
+   Only a few per article: they are meant to be strong visual interruptions, not a
+   container for every quotation. Ordinary source quotes stay as .pull or inline. */
+.pq { background: var(--accent-soft); border: 1px solid var(--rule);
+      border-left: 4px solid var(--accent); border-radius: 4px;
+      padding: 1.05rem 1.15rem; margin: .4rem 0 1.1rem; }
+.pq p { font-size: 1.16rem; font-weight: 600; line-height: 1.4; color: var(--ink);
+        margin: 0 0 .55rem; }
+.pq p:last-of-type { margin-bottom: 0; }
+.pq .who { font-family: var(--sans); font-size: .74rem; font-weight: 600;
+           letter-spacing: .02em; color: var(--ink-3); margin-top: .7rem; }
+@media (min-width: 720px) {
+  .pq { width: 43%; margin: .3rem 0 1rem; }
+  .pq-r { float: right; margin-left: 1.6rem; }
+  .pq-l { float: left;  margin-right: 1.6rem; }
+}
+@media (max-width: 719px) {
+  .pq { width: 100%; float: none !important; margin: 1.4rem 0; }
+  .pq p { font-size: 1.06rem; }
+}
+.clr { clear: both; }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head><body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Analysis</div>
+  <h1>Fungibility Isn&rsquo;t Fun</h1>
+  <p class="standfirst">Berkeley voters had every reason to understand Measure FF as an addition to the money already going to streets and sidewalks. What happened instead shows why &ldquo;new revenue&rdquo; and &ldquo;new spending&rdquo; are not the same thing.</p>
+  <div class="byline">How a dedicated tax can produce less new spending than its headline &middot; September 2026</div>
+
+  <p>Berkeley&rsquo;s streets and sidewalks were already visibly neglected. Measure T1 had money programmed for paving, and the City had other existing street funding. Then Measure FF came along promising roughly $15&nbsp;million a year for streets, sidewalks, safety, and related improvements.</p>
+
+  <p>A voter could reasonably have pulled the lever with something close to relief: <strong>at last, the meager existing investment would be joined by a substantial new stream of money.</strong></p>
+
+  <p>Or would it?</p>
+
+  <p>Within a year, Berkeley removed the remaining <strong>$3.95 million of Measure T1 street funding</strong> because, in staff&rsquo;s words, <strong>&ldquo;other funding was identified.&rdquo;</strong></p>
+
+  <p>The other funding was Measure FF.</p>
+
+  <div class="pq pq-r">
+    <p>&ldquo;Other funding was identified so existing T1 funds could be reallocated.&rdquo;</p>
+    <div class="who">&mdash; City staff, September 2025</div>
+  </div>
+
+  <p>The new FF money stayed dedicated to its promised purposes. But some of the money that had already been headed to streets did not stay there.</p>
+
+  <p>That is the central problem.</p>
+
+  <p>When voters approve a new tax for something the City already funds, they naturally want to know how much <strong>more</strong> that service will receive. A $15&nbsp;million tax sounds like $15&nbsp;million of additional investment. But if the arrival of the new money frees old money to be spent elsewhere, the net increase can be smaller than the headline number.</p>
+
+  <p>Berkeley even tried to prevent this. Measure FF said its tax would be available only <strong>&ldquo;provided other funding for street maintenance is maintained,&rdquo;</strong> and it included a formal maintenance-of-effort requirement.</p>
+
+  <p>The safeguard still left a hole large enough for the remaining T1 street allocation to pass through.</p>
+
+  <p><a href="https://berkeleyca.gov/sites/default/files/documents/2025-09-16%20Item%2010%20Updates%20to%20the%20Measure%20T1%20Project%20List.pdf">September 16, 2025 T1 project-list update</a> &middot; <a href="https://berkeleyca.gov/your-government/our-work/bond-revenue-measures/measure-ff-sidewalk-and-street-repairs-parcel">Measure FF official page</a> &middot; <a href="https://acvote.alamedacountyca.gov/acvote-assets/02_election_information/PDFs/20241105/en/Voter%20Information%20Guide/Composite_Voter_Information_Guide.pdf">Official 2024 voter guide</a></p>
+
+  <div class="clr"></div>
+
+  <h2>Before FF, the City counted both</h2>
+
+  <p>Measure T1 was Berkeley&rsquo;s 2016 $100&nbsp;million infrastructure bond. Its later Phase 2 project process programmed about $6.75&nbsp;million for streets.</p>
+
+  <p>Council reduced that allocation by $2.8&nbsp;million in 2023, leaving roughly $3.95&nbsp;million.</p>
+
+  <p>Then voters approved Measure FF in November 2024.</p>
+
+  <p>One month later, a City audit-status report was still counting both sources for FY2025&ndash;26:</p>
+
+  <p><strong>$3.95 million of remaining T1 street money</strong><br>
+  <strong>plus</strong><br>
+  <strong>the newly approved Measure FF revenue</strong></p>
+
+  <p>That is the additive picture a voter would naturally expect.</p>
+
+  <p>Nine months later, the T1 contribution was gone.</p>
+
+  <p><a href="https://berkeleyca.gov/sites/default/files/documents/2024-12-10%20Item%2024%20Audit%20Status%20Reports%20Fleet%20Replacement.pdf">December 10, 2024 audit-status report</a></p>
+
+  <h2>Dedicated does not automatically mean additional</h2>
+
+  <p>Suppose a program has:</p>
+
+  <p><strong>$15.3M recurring funding</strong><br>
+  + <strong>$3.95M supplemental funding</strong><br>
+  = <strong>$19.25M</strong></p>
+
+  <p>Then voters approve a new $15M tax.</p>
+
+  <p>If all the old money stays:</p>
+
+  <p><strong>$19.25M + $15M = $34.25M</strong></p>
+
+  <p>If the $3.95M supplement is removed:</p>
+
+  <p><strong>$15.3M + $15M = $30.3M</strong></p>
+
+  <p>The new tax still generated $15&nbsp;million.</p>
+
+  <p>But the net increase over the previous funding level is only $11.05&nbsp;million.</p>
+
+  <p>That simplified example is not Berkeley&rsquo;s exact annual paving budget. It shows the accounting problem.</p>
+
+  <p>A voter hears &ldquo;$15 million in new revenue&rdquo; and reasonably asks how much <strong>more</strong> the service will receive.</p>
+
+  <p>That answer depends on what happens to the money that was already there.</p>
+
+  <h2>FF tried to prevent this</h2>
+
+  <p>This is what makes the example more important.</p>
+
+  <p>FF anticipated the danger of supplanting. It included a maintenance-of-effort rule precisely so the City could not simply approve a new street tax and then slash its existing street budget.</p>
+
+  <p>But the rule protected a floor: at least $15.3&nbsp;million of qualifying non-FF street-maintenance funding.</p>
+
+  <p>T1 sat above that floor as supplemental, one-time capital funding.</p>
+
+  <p>Berkeley&rsquo;s own capital plan had described bond money such as T1 as funding that <strong>supplemented</strong> recurring street sources.</p>
+
+  <p>So the City could satisfy FF&rsquo;s maintenance-of-effort test while removing the separate T1 contribution.</p>
+
+  <h3>What FF protected</h3>
+
+  <p><strong>The recurring non-FF street-funding floor</strong></p>
+
+  <h3>What it left exposed</h3>
+
+  <p><strong>Supplemental street money already programmed above that floor</strong></p>
+
+  <p>That is why the ballot phrase <strong>&ldquo;provided other funding for street maintenance is maintained&rdquo;</strong> deserves more scrutiny than it received.</p>
+
+  <p>The rule protected a defined baseline. It did not protect every dollar a voter could reasonably understand &ldquo;other funding&rdquo; to include.</p>
+
+  <h2>An audit can miss this entirely</h2>
+
+  <p>FF has real accountability machinery: dedicated accounts, reporting, oversight, and City Auditor review.</p>
+
+  <p>Those controls can establish that FF money itself went where the measure required.</p>
+
+  <p>But consider two different questions:</p>
+
+  <p><strong>Did Berkeley spend every FF dollar on an eligible FF purpose?</strong></p>
+
+  <p>and</p>
+
+  <p><strong>How much more did Berkeley spend on those purposes after FF arrived?</strong></p>
+
+  <p>The first is a fund-compliance question.</p>
+
+  <p>The second requires looking outside the FF fund to see what happened to every other source.</p>
+
+  <p>A perfectly clean FF audit could coexist with a large substitution elsewhere.</p>
+
+  <div class="pq pq-l">
+    <p>Earmarking controls the new dollar. Anti-supplanting controls the old dollar.</p>
+  </div>
+
+  <p>That distinction should matter every time Berkeley proposes a dedicated tax.</p>
+
+  <div class="clr"></div>
+
+  <h2>What voters should be shown</h2>
+
+  <p>Every new revenue measure should come with a simple gross-to-net table:</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Question</th><th>What voters should see</th></tr></thead>
+    <tbody>
+      <tr><td>What was already being spent?</td><td>Recurring baseline from every source</td></tr>
+      <tr><td>What supplemental money was already committed?</td><td>Bonds, grants, one-time appropriations, adopted capital allocations</td></tr>
+      <tr><td>What will the new measure generate?</td><td>Gross new revenue</td></tr>
+      <tr><td>What old funding can disappear?</td><td>Every source legally available for reduction or reallocation</td></tr>
+      <tr><td>What actually remains after substitutions?</td><td>Net-new resources</td></tr>
+      <tr><td>Where does displaced money go?</td><td>Destination of every material reallocation</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>That would have made the FF/T1 interaction visible before the T1 money moved.</p>
+
+  <p>A dedicated tax tells you where the new money must go.</p>
+
+  <p>It does not tell you whether the old money will stay there.</p>
+
+  <p><strong>Next:</strong> <a href="red-team-ballot-measures.html">Red-Team the Ballot Measure</a> &mdash; how to find these loopholes before an election instead of after one.</p>
+
+  <h2>Related</h2>
+  <p><a href="red-team-ballot-measures.html">Red-Team the Ballot Measure</a> &middot; <a href="why-300m.html">Where Did $300 Million Come From, Anyway?</a> &middot; <a href="crayon-box.html">The Crayon Box</a> &middot; <a href="index.html">Berkeley Decision Project home</a></p>
+
+</div>
+</body>
+</html>
