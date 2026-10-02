@@ -6,9 +6,8 @@
 <script>document.documentElement.classList.add('js');</script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-/* Layout: an article column; on wide screens each sequence becomes a two-column scrollytelling
-   block (narrative left, sticky flowchart stage right). The stage is a visual mirror of the
-   in-text nodes; the in-text nodes carry the content for every reader. */
+/* Layout: one article column. The opening flowchart reveals step by step as the reader scrolls;
+   without JavaScript every step is visible. */
 :root {
   --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
   --rule:#e0e4ea; --rule-soft:#eef1f5;
@@ -86,7 +85,7 @@ p:last-child { margin-bottom: 0; }
 .src { font-family: var(--sans); font-size: .72rem; color: var(--ink-3); margin-top: .6rem; line-height: 1.5; }
 
 .stop { margin: 1rem 0 2.6rem; text-align: center; }
-.stop .word { font-family: var(--sans); font-weight: 900; font-size: clamp(3.2rem, 14vw, 6rem); letter-spacing: .08em;
+.stop .word { font-family: var(--sans); font-weight: 900; font-size: clamp(2.2rem, 8vw, 3.6rem); letter-spacing: .01em; text-wrap: balance;
   color: var(--gate); line-height: 1; border-top: 6px solid var(--gate); border-bottom: 6px solid var(--gate);
   display: inline-block; padding: .4rem 1.2rem; }
 .stop .q { font-family: var(--sans); font-size: 1.3rem; font-weight: 700; line-height: 1.4; margin-top: 1.6rem; text-wrap: balance; }
@@ -96,66 +95,32 @@ p:last-child { margin-bottom: 0; }
 .thesis { font-family: var(--sans); font-size: clamp(1.4rem, 4.2vw, 1.9rem); font-weight: 800; line-height: 1.3;
   text-wrap: balance; text-align: center; margin: 2.4rem 0; padding: 1.6rem 1rem; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
 
-/* ---- comparison ---- */
-.compare { display: grid; grid-template-columns: 1fr; gap: 1.4rem; margin: 1.4rem 0; }
-@media (min-width: 760px) { .compare { grid-template-columns: 1fr 1fr; } }
-.col { min-width: 0; background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.1rem; }
-.col h3 { font-family: var(--sans); font-size: .74rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .8rem; }
-.col.actual h3 { color: var(--ink); } .col.should h3 { color: var(--gate); }
-.col ol { list-style: none; display: flex; flex-direction: column; gap: .2rem; font-family: var(--sans); font-size: .95rem; }
-.col li { padding: .45rem .6rem; border-radius: 4px; background: var(--ground); }
-.col li + li::before { content: "↓"; display: block; color: var(--ink-3); font-size: .8rem; margin: -.3rem 0 .15rem; }
-.col.should li:last-child { background: var(--gate-soft); font-weight: 700; }
-.col.actual li.amt { font-weight: 800; }
-
-/* ---- audit ---- */
-.checks { list-style: none; font-family: var(--sans); margin: 1rem 0; border: 1px solid var(--rule); border-radius: 6px; background: var(--panel); }
-.checks li { display: grid; grid-template-columns: 1fr auto; gap: .2rem 1rem; padding: .7rem 1rem; border-bottom: 1px solid var(--rule-soft); }
-.checks li:last-child { border-bottom: 0; }
-.checks .no { font-weight: 900; color: var(--gate); letter-spacing: .06em; }
-.checks .why { grid-column: 1 / -1; font-size: .78rem; color: var(--ink-2); }
-.two { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1.2rem 0; }
-@media (min-width: 680px) { .two { grid-template-columns: 1fr 1fr; } }
-.two > div { min-width: 0; border-radius: 6px; padding: 1rem 1.1rem; font-family: var(--sans); }
-.two h3 { font-size: .74rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; margin-bottom: .5rem; }
-.two .can { background: var(--panel); border: 1px solid var(--rule); }
-.two .cannot { background: var(--gate-soft); border: 2px solid var(--gate); }
-.two .cannot h3 { color: var(--gate); }
+/* ---- questions ---- */
+.qs { list-style: none; counter-reset: q; display: flex; flex-direction: column; gap: 1.6rem; margin: 1.2rem 0 1rem; }
+.qs > li { counter-increment: q; background: var(--panel); border: 1px solid var(--rule); border-left: 4px solid var(--gate); border-radius: 6px; padding: 1.1rem 1.2rem; }
+.qs .qq { font-family: var(--sans); font-size: 1.22rem; font-weight: 800; line-height: 1.35; text-wrap: balance; margin-bottom: .8rem; }
+.qs .qq::before { content: counter(q) ". "; color: var(--gate); }
+.qs .rec, .qs .ins { font-size: 1rem; }
+.qs .ins { font-weight: 600; color: var(--ink); }
+.qs .tag { display: block; font-family: var(--sans); font-size: .62rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .2rem; }
+.qs .ins .tag { color: var(--gate); }
 .final { font-family: var(--sans); font-size: clamp(1.3rem, 3.6vw, 1.7rem); font-weight: 800; line-height: 1.35; text-wrap: balance;
   background: var(--ink); color: var(--ground); border-radius: 6px; padding: 1.6rem 1.4rem; margin: 2.4rem 0 1.4rem; }
 .sources { font-family: var(--sans); font-size: .8rem; color: var(--ink-2); line-height: 1.55; }
 .sources li { margin: 0 0 .5rem 1.1rem; }
 .related a { margin-right: .9rem; }
 
-/* ---- scrollytelling (JS only; without JS everything above is the page) ---- */
-.scrolly { position: relative; }
-.stage { display: none; }
-@media (min-width: 960px) {
-  .js .scrolly { display: grid; grid-template-columns: minmax(0, 38%) minmax(0, 62%); gap: 2.4rem; align-items: start; }
-  .js .scrolly .stage { display: block; position: sticky; top: 5rem; max-height: calc(100vh - 6rem); overflow: hidden; }
-  .js .scrolly .flow .node { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .js .scrolly .flow .step::before { display: none; }
-  .js .scrolly .flow .step { padding: 0 0 55vh; }
-  .js .scrolly .flow .step:last-child { padding-bottom: 25vh; }
-  .js .scrolly .flow .narr { font-size: 1.02rem; }
-  .stage .s-node { opacity: .14; transform: translateY(6px); transition: opacity .35s ease, transform .35s ease; margin-bottom: .5rem; }
-  .stage .s-node.on { opacity: 1; transform: none; }
-  .stage .s-node.current .node { box-shadow: 0 0 0 3px var(--accent); }
-  .stage .s-node .node { padding: .65rem .9rem; }
-  .stage .s-node .note, .stage .s-node .src, .stage .s-node .stats { display: none; }
-  .stage .s-node.current .note, .stage .s-node.current .stats { display: block; }
-  .stage .s-node.current .stats { display: grid; }
-  .stage .arrow { text-align: center; color: var(--ink-3); font-family: var(--sans); font-size: .9rem; line-height: 1; margin: -.15rem 0 .35rem; }
-}
-.narr { display: none; }
-@media (min-width: 960px) { .js .scrolly .narr { display: block; } }
-@media (max-width: 959px) {
-  .js .flow .step { opacity: 0; transform: translateY(10px); transition: opacity .4s ease, transform .4s ease; }
-  .js .flow .step.on { opacity: 1; transform: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .stage .s-node, .js .flow .step { transition: none !important; transform: none !important; }
-}
+/* ---- progressive reveal (JS only; without JS every step is visible) ---- */
+.js .flow .step { opacity: 0; transform: translateY(10px); transition: opacity .4s ease, transform .4s ease; }
+.js .flow .step.on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .js .flow .step { transition: none !important; transform: none !important; } }
+/* ---- "needs" note: a button, usable by keyboard and touch; the note is visible without JS ---- */
+.tip { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer;
+  text-decoration: underline dotted var(--accent); text-underline-offset: .2em; }
+.tip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.tipbox { font-family: var(--sans); font-size: .86rem; line-height: 1.5; color: var(--ink-2); background: var(--accent-soft);
+  border: 1px solid var(--accent); border-radius: 4px; padding: .6rem .75rem; margin-top: .55rem; }
+.js .tipbox[hidden] { display: none; }
 </style>
 </head><body>
 <div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
@@ -170,16 +135,16 @@ p:last-child { margin-bottom: 0; }
 <!-- ============ PHASE A: the process Berkeley followed ============ -->
 <div class="wrap" style="padding-bottom:0;padding-top:0"><h2 id="a-h">What happened</h2></div>
 <section class="wide" aria-labelledby="a-h">
-  <div class="scrolly" data-seq="a">
+  <div class="scrolly" data-seq="a" style="max-width:37.5rem;margin:0 auto">
     <ol class="flow">
       <li class="step">
         <div class="when">The starting point</div>
         <div class="node observed"><span class="label">Observed</span>
-          <div class="head">Infrastructure needs of more than $1.5 billion</div>
+          <div class="head">Infrastructure <button type="button" class="tip" aria-expanded="false" aria-controls="needs-tip">&ldquo;needs&rdquo;</button> of more than $1.5 billion</div>
+          <p class="tipbox" id="needs-tip" role="note">Why the quotes? The $1.5 billion figure combines different kinds of projects under one &lsquo;need&rsquo; label&mdash;including repair and replacement needs, desired improvements, and unfinished work. Being in an infrastructure backlog does not by itself establish that a project is necessary, high-value, or appropriate for long-term debt.</p>
           <div class="note"><p>The City estimates its long-term infrastructure needs exceed $1.5&nbsp;billion. Any bond will cover a fraction of that, which makes choosing what to fund the central decision.</p></div>
           <div class="src">March 17, 2026 staff report, p.&nbsp;3</div>
         </div>
-        <p class="narr">Berkeley&rsquo;s backlog is far larger than any bond. That makes the first question which work to fund, and how much of it.</p>
       </li>
 
       <li class="step">
@@ -190,7 +155,6 @@ p:last-child { margin-bottom: 0; }
           <p>The figure came with a tax-rate case: combined with existing bonds, an average rate of $44 per $100,000 of assessed value, &ldquo;less than the historical average tax rate.&rdquo;</p></div>
           <div class="src">December 2, 2025 work session, Special Item 2 staff report, pp.&nbsp;2, 5</div>
         </div>
-        <p class="narr">The amount arrives first, in the first sentence of the first recommendation, justified by what the tax rate can bear.</p>
       </li>
 
       <li class="step">
@@ -199,7 +163,6 @@ p:last-child { margin-bottom: 0; }
           <blockquote><p>&ldquo;This does tell us that we&rsquo;ve probably under-leveraged our bond capacity over time, so there&rsquo;s more room.&rdquo;</p></blockquote>
           <figcaption>Councilmember Brent Blackaby, December 2, 2025 work session, 00:41:48 (City captions, p.&nbsp;27)</figcaption>
         </figure>
-        <p class="narr">Councilmember Blackaby reads the tax-rate chart as headroom.</p>
       </li>
 
       <li class="step">
@@ -214,7 +177,6 @@ p:last-child { margin-bottom: 0; }
           </div>
           <div class="src">March 17, 2026 staff report, pp.&nbsp;2, 19 (survey presentation)</div>
         </div>
-        <p class="narr">The larger bond polls no worse than the smaller one, and holds up better under argument.</p>
       </li>
 
       <li class="step">
@@ -225,7 +187,6 @@ p:last-child { margin-bottom: 0; }
           <figcaption class="who">Lake Research Partners, survey presentation in the March 17, 2026 Council packet, p.&nbsp;19</figcaption>
           <div class="note"><p>No penalty for the larger number was read as the reason to ask for it.</p></div>
         </figure>
-        <p class="narr">The pollster&rsquo;s conclusion: a larger number that costs no support is a number to put on the ballot.</p>
       </li>
 
       <li class="step">
@@ -234,7 +195,6 @@ p:last-child { margin-bottom: 0; }
           <blockquote><p>&ldquo;Given that the support didn&rsquo;t really change, or even arguably went up when we went from 200 to 300 million, I was wondering if a higher number was considered, or will be considered. &hellip; How far can we take this?&rdquo;</p></blockquote>
           <figcaption>Councilmember Shoshana O&rsquo;Keefe, March 17, 2026 special meeting, 00:47:45 (City captions, p.&nbsp;35)</figcaption>
         </figure>
-        <p class="narr">Councilmember O&rsquo;Keefe takes the survey result to its next step.</p>
       </li>
 
       <li class="step">
@@ -245,7 +205,6 @@ p:last-child { margin-bottom: 0; }
           <p>&ldquo;&hellip;it&rsquo;s not like a science.&rdquo;</p></blockquote>
           <figcaption>City staff, asked how the $300 million was chosen, March 17, 2026 (City captions, p.&nbsp;36)</figcaption>
         </figure>
-        <p class="narr">Asked where $300 million came from, staff answer with how it feels and what it costs per $100,000.</p>
       </li>
 
 
@@ -256,153 +215,46 @@ p:last-child { margin-bottom: 0; }
           <div class="note"><p>Council unanimously directs ballot language &ldquo;for a potential $300 million General Obligation bond measure,&rdquo; and on June 16 places it on the ballot. Measure U&rsquo;s text: &ldquo;The estimated cost of the Improvements to be funded by the Bonds is $300,000,000.&rdquo;</p></div>
           <div class="src">March 17, 2026 staff report, p.&nbsp;1; annotated agenda, March 17, 2026; Measure U full text, &sect;3</div>
         </div>
-        <p class="narr">The amount proposed in December is the amount on the ballot.</p>
       </li>
     </ol>
-    <div class="stage" aria-hidden="true"></div>
   </div>
 </section>
 
 <div class="wrap">
-  <div class="stop" role="separator" aria-label="Stop">
-    <div class="word">STOP.</div>
+  <div class="stop" role="separator" aria-label="What&rsquo;s wrong with this picture?">
+    <div class="word">What&rsquo;s wrong with this picture?</div>
     <p class="q">Before deciding how much Berkeley should borrow, what had the City established it should buy and can deliver?</p>
   </div>
 </div>
 
-<!-- ============ PHASE C: the missing decision gates ============ -->
-<div class="wrap" style="padding-bottom:0;padding-top:0"><h2 id="c-h">The questions that should set the amount</h2></div>
-<section class="wide" aria-labelledby="c-h">
-  <div class="scrolly" data-seq="c">
-    <ol class="flow">
-      <li class="step">
-        <div class="node gate"><span class="label">Decision gate 1 &middot; input</span>
-          <div class="head">What outcomes have the highest public value?</div>
-          <div class="note"><p>A large backlog does not make every capital expenditure equally valuable. The first task is to identify the outcomes worth buying.</p></div>
-          <div class="src">On the record: the City&rsquo;s Parks, Recreation and Waterfront Commission told Council the staff report shows &ldquo;no scoring, no weighting, no documented analysis,&rdquo; and that the director confirmed &ldquo;there was no formal scoring system&rdquo; (April 14, 2026 report, p.&nbsp;5).</div>
-        </div>
-        <p class="narr">First, decide what is worth buying.</p>
-      </li>
-      <li class="step">
-        <div class="node gate"><span class="label">Decision gate 2 &middot; input</span>
-          <div class="head">Which of those outcomes can Berkeley actually deliver?</div>
-          <div class="note"><p>Delivery capacity belongs in the investment decision. A desirable project the City cannot reliably execute is not a deliverable outcome.</p></div>
-        </div>
-        <p class="narr">Then, what the City can actually build.</p>
-      </li>
-      <li class="step">
-        <div class="node gate"><span class="label">Decision gate 3 &middot; input</span>
-          <div class="head">Which outcomes will Berkeley commit to delivering?</div>
-          <div class="note"><p>Example projects and broad eligible categories are not commitments. A commitment is what survives the vote.</p></div>
-        </div>
-        <p class="narr">Then, what it will commit to.</p>
-      </li>
-      <li class="step">
-        <div class="node gate"><span class="label">Decision gate 4 &middot; input</span>
-          <div class="head">Are the benefits durable enough to justify the expense and duration of the debt?</div>
-          <div class="note"><p>Long-lived borrowing should buy benefits that last about as long as the burden it places on future taxpayers.</p></div>
-        </div>
-        <p class="narr">Then, whether the benefits outlast the debt.</p>
-      </li>
-      <li class="step">
-        <div class="node gate"><span class="label">Decision gate 5 &middot; input</span>
-          <div class="head">What will those committed outcomes cost?</div>
-          <div class="note"><p>Price the defined portfolio after deciding what is valuable, deliverable and worth committing to.</p></div>
-          <div class="src">On the record: Berkeley&rsquo;s March 17 presentation scored candidate projects &ldquo;within a $100M per-category cap ($300M total)&rdquo; (March 17, 2026 staff report, p.&nbsp;81).</div>
-        </div>
-        <p class="narr">Then, what that portfolio costs.</p>
-      </li>
-      <li class="step">
-        <div class="node output"><span class="label">Output</span>
-          <div class="head">How much should Berkeley borrow?</div>
-          <div class="note"><p><strong>The bond amount should be the output of this process, not an input to it.</strong></p></div>
-        </div>
-        <p class="narr">Only then, the amount.</p>
-      </li>
-    </ol>
-    <div class="stage" aria-hidden="true"></div>
-  </div>
-</section>
-
+<!-- ============ The questions that should have set the amount ============ -->
 <div class="wrap">
-  <p class="principle">The bond amount should be the output of this process, not an input to it.</p>
+  <h2 id="q-h">Three questions, and what the answers would have shown</h2>
+  <ol class="qs">
+    <li>
+      <p class="qq">Which items are actually needs &mdash; and which outcomes have the highest public value?</p>
+      <p class="rec"><span class="tag">The record</span>The City&rsquo;s Parks, Recreation and Waterfront Commission told Council the project list&rsquo;s staff report shows &ldquo;no scoring, no weighting, no documented analysis,&rdquo; and that the director confirmed &ldquo;there was no formal scoring system.&rdquo; Staff&rsquo;s March 17 presentation scored candidate projects &ldquo;within a $100M per-category cap ($300M total).&rdquo;</p>
+      <p class="ins"><span class="tag">The insight</span>A $1.5 billion backlog mixes repairs that cannot wait with improvements people want and old promises not yet kept. Listing it is not prioritizing it. And with no ranking, $300 million was a container the projects were fitted into, never an amount derived from the outcomes worth buying.</p>
+      <p class="src">Parks, Recreation and Waterfront Commission report, April 14, 2026, p.&nbsp;5; March 17, 2026 staff report, p.&nbsp;81</p>
+    </li>
+    <li>
+      <p class="qq">What evidence showed that Berkeley could successfully deliver a $300 million capital program?</p>
+      <p class="rec"><span class="tag">The record</span>The City Auditor found that Berkeley paved zero streets in 2018 because construction bids went out too late, despite $8.6 million set aside for repairs. Public Works has had three directors since 2020: Liam Garland (2020, resigned November 2023), then an interim period, Terrance Davis (effective April 15, 2024) and Jamie Parks (effective August 17, 2026). And on May 19, asked by Councilmember Blackaby &ldquo;How would you staff it and organize it?&rdquo;, the City Manager said &ldquo;&hellip;we haven&rsquo;t come up with exactly what the staffing model would look like, but we&rsquo;ve built in the additional costs to add staff to run the measure.&rdquo;</p>
+      <p class="ins"><span class="tag">The insight</span>Before authorizing a capital program three times the size of T1, Council had reason to test the City&rsquo;s execution capacity. The record instead showed management turnover, a documented delivery failure, and a staffing model still being worked out.</p>
+      <p class="src">City Auditor, <em>Rocky Road</em>, November 2020; City Manager&rsquo;s Public Works leadership announcement, November 9, 2023; Council Item 13, March 26, 2024; Council Item 7, July 14, 2026; City captions, May 19, 2026, pp.&nbsp;62&ndash;63, 01:30:27&ndash;01:31:45</p>
+    </li>
+    <li>
+      <p class="qq">If the bond moves employees off the General Fund, what happens to the work they&rsquo;re doing now?</p>
+      <p class="rec"><span class="tag">The record</span>On March 17 the City Manager said part of the deficit challenge &ldquo;includes shifting a lot of people off of general fund and into special funds,&rdquo; and that with more special-fund dollars from the bond &ldquo;we would be able to, you know, offset some of those staff challenges.&rdquo; The next words on the record: &ldquo;Great, thank you, that&rsquo;s really helpful.&rdquo; The budget presented May 19 had Public Works &ldquo;shifting the costs of 51 additional positions to other eligible funds.&rdquo;</p>
+      <p class="ins"><span class="tag">The insight</span>If those employees keep doing the work they do now, the bond is spending capital dollars to avoid General Fund cuts the deficit requires.</p>
+      <p class="src">City captions, March 17, 2026, p.&nbsp;32, 00:44:28; Proposed FY 2027 &amp; FY 2028 Biennial Budget, May 19, 2026, Item 21, pp.&nbsp;41&ndash;42</p>
+    </li>
+  </ol>
 
-  <!-- ============ PHASE D: comparison ============ -->
-  <h2>Two sequences</h2>
-</div>
-<div class="wide" style="max-width:52rem">
-  <div class="compare">
-    <div class="col actual">
-      <h3>What happened</h3>
-      <ol>
-        <li>Infrastructure needs</li>
-        <li>Propose &ldquo;up to $300 million&rdquo; at a tolerable tax rate</li>
-        <li>Test what voters might tolerate: $200M vs. $300M</li>
-        <li>&ldquo;No reason to not put the higher $300m amount on the ballot&rdquo;</li>
-        <li>&ldquo;How far can we take this?&rdquo;</li>
-        <li class="amt">$300 million</li>
-        <li>Broad authorization</li>
-      </ol>
-    </div>
-    <div class="col should">
-      <h3>What should determine the bond</h3>
-      <ol>
-        <li>Infrastructure needs</li>
-        <li>Identify highest-value outcomes</li>
-        <li>Test delivery capacity</li>
-        <li>Choose outcomes Berkeley will commit to</li>
-        <li>Match benefit durability to debt</li>
-        <li>Price the committed outcomes</li>
-        <li>Determine required borrowing</li>
-      </ol>
-    </div>
-  </div>
 </div>
 
 <div class="wrap">
   <p class="thesis">The process discovered how much voters might tolerate before establishing what Berkeley should buy and can deliver.</p>
-
-  <!-- ============ AUDIT / OVERSIGHT ============ -->
-  <h2>The oversight comes after the decision</h2>
-  <p>Measure U promises accountability: annual reports, commission oversight and audits. All of it sits downstream of the amount.</p>
-</div>
-<section class="wide" aria-label="Oversight sequence">
-  <div class="scrolly" data-seq="d">
-    <ol class="flow">
-      <li class="step"><div class="node big" style="padding:1rem"><div class="head" style="font-size:1.8rem">$300 million</div></div><p class="narr">The amount, fixed first.</p></li>
-      <li class="step"><div class="node observed"><span class="label">Observed</span><div class="head">Broad authorization</div>
-        <div class="note"><p>The improvements &ldquo;include, but are not limited to&rdquo; seven categories, from fire facilities to &ldquo;other City infrastructure.&rdquo;</p></div>
-        <div class="src">Measure U full text, &sect;2, p.&nbsp;3</div></div><p class="narr">Spent on categories, not a list.</p></li>
-      <li class="step"><div class="node observed"><span class="label">Observed</span><div class="head">Reports and oversight</div>
-        <div class="note"><p>An annual status report from the City Manager; annual reports and recommendations from two commissions.</p></div>
-        <div class="src">Measure U full text, &sect;6(E)&ndash;(F), p.&nbsp;4</div></div><p class="narr">Reports arrive every year.</p></li>
-      <li class="step"><div class="node observed"><span class="label">Observed</span><div class="head">Audit</div>
-        <div class="note"><p>The City Auditor reviews expenditures at least once every three years &ldquo;to confirm that Bond expenditures are consistent with the intent of this Measure.&rdquo;</p></div>
-        <div class="src">Measure U full text, &sect;6(G), p.&nbsp;5</div></div><p class="narr">An audit every three years.</p></li>
-    </ol>
-    <div class="stage" aria-hidden="true"></div>
-  </div>
-</section>
-
-<div class="wrap">
-  <h2>But what is the audit measuring against?</h2>
-  <ul class="checks">
-    <li><span>Binding project commitments?</span><span class="no">NO</span><span class="why">Improvements &ldquo;include, but are not limited to&rdquo; categories (&sect;2).</span></li>
-    <li><span>Required quantities?</span><span class="no">NO</span><span class="why">The measure names no quantity of anything to be built or repaired.</span></li>
-    <li><span>Delivery deadlines?</span><span class="no">NO</span><span class="why">Improvements &ldquo;will be completed as needed&rdquo; (&sect;2).</span></li>
-    <li><span>Guaranteed completion?</span><span class="no">NO</span><span class="why">&ldquo;The City Council cannot guarantee that the Bonds will provide sufficient funds to allow completion of all needed Improvements&rdquo; (&sect;2).</span></li>
-    <li><span>Binding delivery outcomes?</span><span class="no">NO</span><span class="why">Voters approve purposes in broad categories (&sect;2); the measure specifies no delivery outcome against which to hold the City.</span></li>
-  </ul>
-
-  <p>The reports the measure requires are information delivered to Council. None obliges Council to decide anything when a project slips, shrinks or disappears. That is reporting, not an enforceable delivery guarantee.</p>
-
-  <div class="two">
-    <div class="can"><h3>The audit can ask</h3><p>Was the money spent consistently with Measure U&rsquo;s authorized purposes?</p></div>
-    <div class="cannot"><h3>The audit cannot enforce a promise that doesn&rsquo;t exist</h3><p>Measure U does not give the Auditor a binding baseline of particular projects, quantities, deadlines, or guaranteed outcomes against which to measure delivery.</p></div>
-  </div>
-
-  <p class="principle">A robust process for auditing spending is not a substitute for a robust process for deciding what taxpayers are buying.</p>
-  <p>Define the outcomes first. Establish that Berkeley can deliver them. Commit to them. Price them. Then determine how much to borrow.</p>
 
   <p class="final">Start with what is worth delivering. Commit to it. Price it. Then decide how much to borrow.</p>
 
@@ -414,63 +266,37 @@ p:last-child { margin-bottom: 0; }
     <li>City Manager, <em>Discussion Regarding Potential Ballot Measures for the November 3, 2026, General Municipal Election</em>, December 2, 2025 work session, Special Item 2, pp. 2, 5. <a href="https://berkeleyca.gov/sites/default/files/documents/2025-12-02%20Special%20Item%2002%20Discussion%20Regarding%20Potential%20Ballot.pdf">City PDF</a></li>
     <li>City of Berkeley, captioned transcript of the December 2, 2025 meetings (Zoom captions as published by the City), p. 27, 00:41:48. Speaker identified from the Mayor&rsquo;s call to Councilmember Blackaby immediately before.</li>
     <li>City Manager, <em>Presentation and Discussion of Community Survey Results and Direction Regarding Potential Ballot Measures</em>, March 17, 2026 special meeting, Item 1: recommendation (p. 1), summary (p. 2), needs estimate (p. 3), Lake Research Partners survey presentation (p. 19), staff presentation on project criteria (p. 81). <a href="https://berkeleyca.gov/sites/default/files/2026-03/2026-03-17%20Special%20Item%2001%20Presentation%20and%20Discussion.pdf">City PDF</a></li>
-    <li>City of Berkeley, captioned transcript of the March 17, 2026 special meeting: pp. 35&ndash;36 (00:47:45&ndash;00:49:40). Councilmember O&rsquo;Keefe identified from the Mayor&rsquo;s call immediately before her questions; staff speaker not named in the captions.</li>
+    <li>City of Berkeley, captioned transcript of the March 17, 2026 special meeting: p. 32 (00:44:28; City Manager), pp. 35&ndash;36 (00:47:45&ndash;00:49:40). Councilmember O&rsquo;Keefe identified from the Mayor&rsquo;s call immediately before her questions; staff speaker not named in the captions.</li>
     <li>Parks, Recreation and Waterfront Commission, <em>Bond Measure Subcommittee &mdash; Final Report</em>, Council information calendar, April 14, 2026, Item 22, p. 5. <a href="https://berkeleyca.gov/sites/default/files/2026-04/2026-04-14%20Item%2022%20Bond%20Measure%20Subcommittee%20%E2%80%94%20Final%20Report.pdf">City PDF</a></li>
+    <li>City Manager, <em>Proposed FY 2027 &amp; FY 2028 Biennial Budget</em>, May 19, 2026, Item 21, pp. 41&ndash;42 (Public Works cost shifting).</li>
+    <li>City Auditor, <em>Rocky Road: Berkeley Streets at Risk and Significantly Underfunded</em>, November 2020. <a href="https://berkeleyca.gov/sites/default/files/2022-01/Rocky-Road-Berkeley-Streets-at-Risk-and-SignificantlyUnderfunded.pdf">City PDF</a></li>
+    <li>City Manager, Public Works Leadership Announcement, November 9, 2023. <a href="https://berkeleyca.gov/sites/default/files/documents/2023-11-09%20Public%20Works%20Leadership%20Announcement.pdf">City PDF</a></li>
+    <li>City Manager, <em>Appointment of Director of Public Works</em>, Council consent calendar, March 26, 2024, Item 13 (Terrance Davis, effective April 15, 2024). <a href="https://berkeleyca.gov/sites/default/files/documents/2024-03-26%20Item%2013%20Appointment%20of%20Director%20of%20Public%20Works.pdf">City PDF</a></li>
+    <li>City Manager, <em>Appointment of Director of Public Works</em>, Council consent calendar, July 14, 2026, Item 7 (James &ldquo;Jamie&rdquo; Parks, effective August 17, 2026). <a href="https://berkeleyca.gov/sites/default/files/2026-07/2026-07-14%20Item%2007%20Appointment%20of%20Director%20of%20PW.pdf">City PDF</a></li>
+    <li>City of Berkeley, captioned transcript of the May 19, 2026 special and regular meetings, pp. 62&ndash;63, 01:30:27&ndash;01:31:45. Councilmember Blackaby identified from the Chair&rsquo;s call at 01:27:45; the question was addressed to the City Manager.</li>
     <li>Annotated agenda, City Council special meeting, March 17, 2026, Item 1: &ldquo;M/S/C (Ishii/Taplin) to approve the recommendation. Vote: All Ayes.&rdquo;</li>
     <li>Council placement of Measures U and V on the November 3, 2026 ballot, June 16, 2026 (unanimous), from the annotated agenda and the City Clerk&rsquo;s record.</li>
-    <li>Measure U, full text (Resolution placing the General Obligation Bond on the November 3, 2026 ballot), &sect;&sect;2, 3, 6. <a href="https://berkeleyca.gov/sites/default/files/Berkeley_Bond%20Measure%20-%20Full%20Text.pdf">City PDF</a></li>
+    <li>Measure U, full text (Resolution placing the General Obligation Bond on the November 3, 2026 ballot), &sect;3. <a href="https://berkeleyca.gov/sites/default/files/Berkeley_Bond%20Measure%20-%20Full%20Text.pdf">City PDF</a></li>
   </ul>
 </div>
 
-<script type="application/json" id="evidence">
-{"page":"how-berkeley-got-to-300m","verified":"2026-10-02","quotes":[
- {"id":"blackaby-under-leveraged","speaker":"Councilmember Brent Blackaby","date":"2025-12-02","timestamp":"00:41:48","source":"City captions, Dec 2 2025, p.27","text":"This does tell us that we've probably under-leveraged our bond capacity over time, so there's more room."},
- {"id":"lrp-no-reason","speaker":"Lake Research Partners","date":"2026-03-17","source":"March 17 2026 staff report, p.19","text":"Support is statistically the same between the two versions, indicating that there is no reason to not put the higher $300m amount on the ballot."},
- {"id":"okeefe-how-far","speaker":"Councilmember Shoshana O'Keefe","date":"2026-03-17","timestamp":"00:47:45","source":"City captions, Mar 17 2026, p.35","text":"Given that the support didn't really change, or even arguably went up when we went from 200 to 300 million, I was wondering if a higher number was considered, or will be considered. … How far can we take this?"},
- {"id":"staff-felt-like-a-lot","speaker":"City staff","date":"2026-03-17","source":"City captions, Mar 17 2026, p.36","text":"$300 million was… It felt like a lot."},
- {"id":"prw-no-scoring","speaker":"Parks, Recreation and Waterfront Commission","date":"2026-04-14","source":"PRW Bond Measure Subcommittee Final Report, p.5","text":"the staff report does not document how the criteria were applied — no scoring, no weighting, no documented analysis … The PRW Director confirmed in discussions with the subcommittee that there was no formal scoring system."},
- {"id":"cap-300m-total","speaker":"City staff presentation","date":"2026-03-17","source":"March 17 2026 staff report, p.81","text":"Applied within a $100M per-category cap ($300M total)."}
-],
-"survey":{"fielded":"2026-02-19/2026-02-23","n":500,"yes_300m":71,"yes_200m":70,"after_args_300m":72,"after_args_200m":63,"after_args_combined":67}}
-</script>
+<script type="application/json" id="evidence">{"page": "how-berkeley-got-to-300m", "verified": "2026-10-02", "quotes": [{"id": "blackaby-under-leveraged", "speaker": "Councilmember Brent Blackaby", "date": "2025-12-02", "timestamp": "00:41:48", "source": "City captions, Dec 2 2025, p.27", "text": "This does tell us that we've probably under-leveraged our bond capacity over time, so there's more room."}, {"id": "lrp-no-reason", "speaker": "Lake Research Partners", "date": "2026-03-17", "source": "March 17 2026 staff report, p.19", "text": "Support is statistically the same between the two versions, indicating that there is no reason to not put the higher $300m amount on the ballot."}, {"id": "okeefe-how-far", "speaker": "Councilmember Shoshana O'Keefe", "date": "2026-03-17", "timestamp": "00:47:45", "source": "City captions, Mar 17 2026, p.35", "text": "Given that the support didn't really change, or even arguably went up when we went from 200 to 300 million, I was wondering if a higher number was considered, or will be considered. … How far can we take this?"}, {"id": "staff-felt-like-a-lot", "speaker": "City staff", "date": "2026-03-17", "source": "City captions, Mar 17 2026, p.36", "text": "$300 million was… It felt like a lot."}, {"id": "prw-no-scoring", "speaker": "Parks, Recreation and Waterfront Commission", "date": "2026-04-14", "source": "PRW Bond Measure Subcommittee Final Report, p.5", "text": "the staff report does not document how the criteria were applied — no scoring, no weighting, no documented analysis … The PRW Director confirmed in discussions with the subcommittee that there was no formal scoring system."}, {"id": "cap-300m-total", "speaker": "City staff presentation", "date": "2026-03-17", "source": "March 17 2026 staff report, p.81", "text": "Applied within a $100M per-category cap ($300M total)."}, {"id": "blackaby-staff-organize", "speaker": "Councilmember Brent Blackaby", "date": "2026-05-19", "timestamp": "01:30:27", "source": "City captions, May 19 2026, pp.62-63", "text": "How would you staff it and organize it?"}, {"id": "cm-staffing-model", "speaker": "City Manager", "date": "2026-05-19", "source": "City captions, May 19 2026, pp.62-63", "text": "We haven't come up with exactly what the staffing model would look like."}, {"id": "cm-gf-shift", "speaker": "City Manager", "date": "2026-03-17", "timestamp": "00:44:28", "source": "City captions, Mar 17 2026, p.32", "text": "includes shifting a lot of people off of general fund and into special funds"}, {"id": "pw-51-positions", "speaker": "Proposed FY2027-28 budget", "date": "2026-05-19", "source": "Item 21, pp.41-42", "text": "shifting the costs of 51 additional positions to other eligible funds"}], "survey": {"fielded": "2026-02-19/2026-02-23", "n": 500, "yes_300m": 71, "yes_200m": 70, "after_args_300m": 72, "after_args_200m": 63, "after_args_combined": 67}}</script>
 <script>
 (() => {
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const wide = window.matchMedia('(min-width: 960px)');
-  document.querySelectorAll('.scrolly').forEach(sc => {
-    const steps = [...sc.querySelectorAll('.flow > .step')];
-    const stage = sc.querySelector('.stage');
-    // Build the stage once: a visual mirror of each step's node, hidden from assistive tech.
-    steps.forEach((st, i) => {
-      if (i) { const a = document.createElement('div'); a.className = 'arrow'; a.textContent = '↓'; a.dataset.i = i; stage.appendChild(a); }
-      const n = document.createElement('div'); n.className = 's-node'; n.dataset.i = i;
-      const node = st.querySelector('.node'); if (node) n.appendChild(node.cloneNode(true));
-      stage.appendChild(n);
-    });
-    const setActive = (k) => {
-      stage.querySelectorAll('.s-node').forEach(n => { const i = +n.dataset.i; n.classList.toggle('on', i <= k); n.classList.toggle('current', i === k); });
-      stage.querySelectorAll('.arrow').forEach(a => a.style.opacity = (+a.dataset.i <= k) ? 1 : .14);
-      const cur = stage.querySelector('.s-node.current');
-      if (cur && wide.matches) {
-        const top = cur.offsetTop - stage.clientHeight * 0.35;
-        stage.scrollTo({ top: Math.max(0, top), behavior: reduce ? 'auto' : 'smooth' });
-      }
-    };
-    setActive(0);
-    if (!('IntersectionObserver' in window)) { steps.forEach(s => s.classList.add('on')); setActive(steps.length - 1); return; }
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('on');
-          setActive(steps.indexOf(e.target));
-        }
-      });
-    }, { rootMargin: '-40% 0px -45% 0px' });
-    steps.forEach(s => io.observe(s));
-    // On narrow screens reveal each step as it enters view.
-    const io2 = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }), { rootMargin: '0px 0px -10% 0px' });
-    steps.forEach(s => io2.observe(s));
-  });
+  const tip = document.querySelector('.tip'), box = document.getElementById('needs-tip');
+  if (tip && box) {
+    box.hidden = true;
+    const set = open => { box.hidden = !open; tip.setAttribute('aria-expanded', String(open)); };
+    tip.addEventListener('click', () => set(box.hidden));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') set(false); });
+  }
+  const steps = [...document.querySelectorAll('.flow > .step')];
+  // Steps already on screen at load are shown at once, without animation.
+  steps.forEach(s => { if (s.getBoundingClientRect().top < window.innerHeight * 0.95) { s.style.transition = 'none'; s.classList.add('on'); } });
+  if (!('IntersectionObserver' in window)) { steps.forEach(s => s.classList.add('on')); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }),
+    { rootMargin: '0px 0px -10% 0px' });
+  steps.forEach(s => io.observe(s));
 })();
 </script>
 </body>
