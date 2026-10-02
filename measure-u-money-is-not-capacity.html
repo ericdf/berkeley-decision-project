@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Capital Bond for a Payroll Problem?</title>
+<meta name="description" content="Measure U's working plan sets aside $40.5 million for staffing. Voters haven't been shown how much of that $40.5 million buys new capacity, and how much just moves payroll off a General Fund that can't pay for it.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.subtitle { font-family: var(--sans); font-size: 1rem; font-weight: 600; color: var(--accent); margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+a { color: var(--quote); }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; scroll-margin-top: 4rem; }
+p { margin-bottom: 1.05rem; }
+strong { font-weight: 700; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+.verdict { font-weight: 800; white-space: nowrap; }
+
+.back { font-family: var(--sans); font-size: .8rem; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h2 { font-size: .95rem; margin: 0 0 .6rem; }
+footer ul { margin-left: 1.1rem; }
+footer li { margin-bottom: .55rem; }
+footer p { margin-bottom: .8rem; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head><body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+<div class="wrap">
+  <div class="kicker">Analysis &middot; Measure U</div>
+  <h1>A Capital Bond for a Payroll Problem?</h1>
+  <p class="subtitle">Money Is Not Capacity: Measure U&rsquo;s $40 Million Staffing Line</p>
+  <p class="standfirst"><strong>Berkeley&rsquo;s working plan for Measure U sets aside $40.5&nbsp;million for staffing and implementation. The City developed the allowance while confronting a persistent General Fund deficit and before it had decided what the staffing model would be. Voters haven&rsquo;t been shown how much of that $40.5&nbsp;million buys new capacity, and how much just moves payroll off a General Fund that can&rsquo;t pay for it.</strong></p>
+  <div class="byline">Measure U staffing &middot; October 2026 &middot; <a href="quiz-u-money-is-not-capacity.html">Take the quiz</a></div>
+
+  <h2 id="the-rule">The rule is simple</h2>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Practice</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td class="verdict">OK</td><td>An employee spends 30% of their time on Measure U projects; 30% of their cost is charged to U.</td><td>The bond pays for the work actually performed for the bond program.</td></tr>
+      <tr><td class="verdict">OK</td><td>An existing employee moves substantially onto U work, and the City documents who takes over their previous work.</td><td>The staffing plan shows where the additional capacity comes from.</td></tr>
+      <tr><td class="verdict">NOT OK</td><td>An employee is charged 100% to U while continuing to spend substantial time on unrelated City work.</td><td>The bond pays for work it did not receive, while the underlying General Fund workload remains.</td></tr>
+      <tr><td class="verdict">NOT ENOUGH</td><td>The City budgets $40.5M for &ldquo;staffing and implementation&rdquo; without showing staff assignments and time allocation.</td><td>The auditor&mdash;and therefore voters&mdash;cannot determine what work the bond actually paid for or how much additional capacity it bought.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="why-this-matters">Why this deserves scrutiny</h2>
+  <p>Berkeley&rsquo;s proposed FY&nbsp;2027&ndash;2028 budget says the City has faced a &ldquo;persistent General Fund structural deficit for many years&rdquo; and identifies rising personnel costs as one cause. Measure U itself recites projected General Fund deficits of $31&nbsp;million in FY&nbsp;2027 and $29&nbsp;million in FY&nbsp;2028.</p>
+
+  <p>On March 17, Councilmember Shoshana O&rsquo;Keefe asked how the proposed ballot measures would address the structural deficit. The City Manager&rsquo;s answer connected the infrastructure bond directly to Public Works staffing:</p>
+  <blockquote>
+    <p>&ldquo;[P]art of our budget deficit challenge in public works includes shifting a lot of people off of general fund and into special funds. And so&hellip; if we add more special fund dollars through this measure&hellip; we would be able to&hellip; offset some of those staff challenges.&rdquo;</p>
+    <div class="attrib">City Manager, March 17, 2026 special meeting, 00:44:27&ndash;00:44:59 (City captions)</div>
+  </blockquote>
+
+  <p>That puts the burden on the City: before voters approve $40.5&nbsp;million for staffing, it should show that the money buys new delivery capacity rather than carrying the payroll the General Fund can no longer afford.</p>
+
+  <p>Two months later, the working framework assigned <strong>$40.5&nbsp;million</strong> to staffing and implementation. Councilmember Brent Blackaby asked how the City would staff and organize the program. The City Manager answered:</p>
+  <blockquote>
+    <p>&ldquo;[W]e haven&rsquo;t come up with exactly what the staffing model would look like, but we&rsquo;ve built in the additional costs to add staff to run the measure&hellip;. We haven&rsquo;t just made that decision yet&hellip;.&rdquo;</p>
+    <div class="attrib">City Manager, May 19, 2026 special meeting, 01:31:12&ndash;01:31:45 (City captions)</div>
+  </blockquote>
+
+  <div class="pull">The $40.5&nbsp;million was in the framework. The staffing model it would pay for was not.</div>
+
+  <p>Moving existing payroll onto a temporary bond can make the General Fund deficit smaller on paper without rightsizing the underlying organization or eliminating the recurring cost. When the bond ends, the fiscal problem remains.</p>
+
+  <p><strong>So what does the $40.5&nbsp;million actually buy: additional capacity to deliver Measure U, or relief for a General Fund the City&rsquo;s own budget says has run a structural deficit for years?</strong></p>
+
+  <h2 id="the-staffing-bridge">Show the staffing bridge</h2>
+  <p>The City can answer that question with a compact, auditable staffing bridge:</p>
+  <div class="tw"><table>
+    <thead><tr><th>Show</th><th>What voters should be able to see</th></tr></thead>
+    <tbody>
+      <tr><td>Baseline</td><td>Each employee&rsquo;s existing work and current funding source</td></tr>
+      <tr><td>Measure U work</td><td>The new bond work assigned to that employee and the percentage of time charged to U</td></tr>
+      <tr><td>Old work</td><td>What stops, slows, is reassigned, contracted out, or backfilled</td></tr>
+      <tr><td>New capacity</td><td>New hires, added hours, consultants, management, and support attributable to U</td></tr>
+      <tr><td>No-bond case</td><td>What happens to the positions and workload if U fails</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>Those records should allow the auditor to trace payroll charges to actual Measure U work and allow voters to see how much additional delivery capacity their borrowing purchased.</p>
+
+  <h2 id="conclusion">The standard</h2>
+  <p><strong>An infrastructure bond is a commitment of capital to deliver durable projects. Using borrowed money to carry existing payroll&mdash;and avoid hard decisions about the size and work of the organization&mdash;would be an abuse of taxpayer trust.</strong></p>
+
+  <p class="back"><a href="quiz-u-money-is-not-capacity.html">Take the quiz: A Capital Bond for a Payroll Problem?</a></p>
+
+  <footer>
+    <h2>Sources</h2>
+    <ul>
+      <li>City of Berkeley, captions of the March 17, 2026 special meeting, pp. 31&ndash;33, 00:43:06&ndash;00:45:36. Councilmember O&rsquo;Keefe is identified from the Chair&rsquo;s call immediately before her question; the answer is attributed to the City Manager by the staff member who followed it with &ldquo;as the city manager said.&rdquo; <a href="https://berkeleyca.gov/your-government/city-council/city-council-agendas/city-council-2026-03-17">City meeting page</a></li>
+      <li>City Manager, <em>Presentation and Discussion of Second Community Survey Results and Direction Regarding Potential Ballot Measures</em>, May 19, 2026 special meeting, Item 1: working financial framework (p. 16) and staffing line &ldquo;over 12 years&rdquo; (p. 63). <a href="https://berkeleyca.gov/sites/default/files/2026-05/2026-05-19%20Special%20Item%2001%20Presentation%20and%20Discussion.pdf">City PDF</a></li>
+      <li>City of Berkeley, captions of the May 19, 2026 special and regular meetings, pp. 62&ndash;63, 01:30:27&ndash;01:31:45. Councilmember Blackaby is identified from the Chair&rsquo;s call; the question was addressed to the City Manager.</li>
+      <li>City Manager, <em>Proposed FY 2027 &amp; FY 2028 Biennial Budget</em>, May 19, 2026, Item 21, pp. 4&ndash;5: persistent structural deficit and personnel-cost causes. <a href="https://berkeleyca.gov/sites/default/files/2026-05/2026-05-19%20Item%2021%20Proposed%20FY%202027%20and%20FY%202028.pdf">City PDF</a></li>
+      <li>Measure U, full text: &sect;1 (p. 1), projected General Fund deficits; &sect;&sect;2&ndash;3 (pp. 3&ndash;4), eligible planning, program management and construction costs; &sect;6(B) (p. 4), proceeds used only for specified purposes. <a href="https://berkeleyca.gov/sites/default/files/Berkeley_Bond%20Measure%20-%20Full%20Text.pdf">City PDF</a></li>
+    </ul>
+    <p>The $40.5&nbsp;million is a working-framework figure. Measure U sets no staffing amount.</p>
+    <p>Related: <a href="quiz-u-money-is-not-capacity.html">The quiz</a> &middot; <a href="quiz-u-who-pays.html">Who Pays the Staff?</a> &middot; <a href="how-berkeley-got-to-300m.html">How Did Berkeley Get to a $300 Million Bond?</a></p>
+  </footer>
+</div>
+</body>
+</html>
