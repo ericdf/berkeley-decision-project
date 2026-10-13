@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>General Taxes Are General for a Reason</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; line-height: 1.35;
+     margin: 1.9rem 0 .7rem; color: var(--ink); }
+p { margin-bottom: 1.05rem; }
+ul, ol { margin: 0 0 1.05rem 1.3rem; }
+li { margin-bottom: .4rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head><body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Policy proposal</div>
+  <h1>General Taxes Are General for a Reason</h1>
+  <p class="standfirst">A compelling public purpose is not a permanent exemption from prioritization, performance standards, or opportunity cost.</p>
+  <div class="byline">A proposed policy, not a City rule in effect &middot; October 2026</div>
+
+  <p><em>Berkeley can value an objective deeply without committing every future discretionary dollar associated with it to whatever projects are proposed in its name.</em></p>
+
+  <p>In 2018, Berkeley voters approved Measure P, a higher property-transfer tax on high-value transactions, promoted as a source of funding for homeless services. Six years later, in November 2024, they approved Measure W, which revised and extended the tax, with higher tiers taking effect January 1, 2027. The measures were plainly presented in the context of homelessness: shelter, rehousing, mental-health support, and related services are real community priorities.</p>
+
+  <p>The ballot language matters in another way. Measure P&rsquo;s ballot question described &ldquo;raising funds for general municipal purposes such as&rdquo; navigation centers, mental-health support, and rehousing, naming homeless services as examples. Measure W&rsquo;s described the levy as &ldquo;the existing general tax on transfers of real property.&rdquo; Both questions are reproduced on the City&rsquo;s <a href="https://berkeleyca.gov/your-government/our-work/bond-revenue-measures/measure-p-w">Measure P and W page</a>. Those words define the flexibility voters authorized. The ordinance itself makes the revenue &ldquo;available to pay the usual and current expenses of conducting the municipal government of the City, as determined by the City Council,&rdquo; and requires Council to consider, but not necessarily follow, the recommendations of the Homeless Services Panel of Experts the measure created.</p>
+
+  <p>In practice, Berkeley has directed the proceeds toward homelessness-related programs. That allocation is Council&rsquo;s policy choice, made under a general tax that permits others. It can be justified, and it can be reconsidered. Reconsideration should begin with a question Berkeley ought to ask of every discretionary expenditure:</p>
+
+  <p class="pull">What public result are we buying, why is this the City&rsquo;s job, and does this expenditure rank high enough to deserve the next dollar?</p>
+
+  <p>Five different questions get collapsed whenever a purpose-associated tax comes up. Keeping them apart is most of the discipline this page proposes.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Question</th><th>What answers it</th><th>Measures P and W</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Legal character</strong></td><td>The ordinance: general tax, special tax, bond proceeds, restricted grant, contract, or mandate</td><td>General tax; Council determines use; Council must consider, but need not follow, the Panel of Experts&rsquo; recommendations, and must inform the Panel annually of their implementation</td></tr>
+      <tr><td><strong>Voter-facing commitment</strong></td><td>What officials and campaigns said the money would do</td><td>Homeless services, named as examples in the ballot question</td></tr>
+      <tr><td><strong>City role</strong></td><td>The <a href="framework.html">Category 1/2/3 framework</a>, applied function by function</td><td>Varies by function; homelessness is not one category</td></tr>
+      <tr><td><strong>Effectiveness</strong></td><td>Outcomes, cost per result, and comparison with alternatives</td><td>Partly measured; see the 2025 audit below</td></tr>
+      <tr><td><strong>Annual allocation</strong></td><td>Council&rsquo;s budget decision, weighed against every other claim on general revenue</td><td>Made each budget cycle</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>A public value is not a spending formula</h2>
+
+  <p>A resident can support reducing homelessness and oppose a particular homelessness project. The public may agree on the value and reasonably disagree on the intervention, provider, location, cost, performance, or the share of a finite municipal budget the City should commit.</p>
+
+  <p>Berkeley already exercises discretion of this kind elsewhere. The Measure T1 bond&rsquo;s project list was <a href="measure-u-is-t1-again.html">repeatedly rewritten after the election</a>, and the proposed Measure U gives Council the same latitude over which eligible capital projects receive money. The Decision Project has argued that those changes need public change control. The same governance principle applies across program areas. Flexibility should not operate only when reallocating money <em>toward</em> a favored project and disappear when a program with a strong constituency is asked to justify its continued claim on general revenue.</p>
+
+  <p>Voters who supported a tax for a stated purpose deserve a public explanation if Council changes the way its proceeds are used. Honoring a purpose includes evaluating the performance of the activities undertaken in its name.</p>
+
+  <h2>Classify the responsibility, then test the expenditure</h2>
+
+  <p>The Berkeley Decision Project&rsquo;s <a href="framework.html">Category 1/2/3 framework</a> separates three roles:</p>
+
+  <p><strong><a href="framework.html#cat1">Category 1</a> &mdash; Berkeley must ensure it is done.</strong> Core municipal outcomes the City is answerable for, with adequate funding, a minimum competent service level, and accountability. Ensuring an outcome does not always mean performing it through a standalone City department.</p>
+
+  <p><strong><a href="framework.html#cat2">Category 2</a> &mdash; Berkeley should act with necessary partners.</strong> The City should participate where outcomes depend on county government, other agencies, nonprofits, or contracted providers, setting binding responsibilities, performance measures, and financial terms.</p>
+
+  <p><strong><a href="framework.html#cat3">Category 3</a> &mdash; Berkeley should not own or continue it.</strong> Activities that do not justify a continuing Berkeley role should be stopped, transferred, or not started, with appropriate treatment of contractual, legal, and transition obligations.</p>
+
+  <p>Those classifications apply to <strong>functions and delivery responsibilities</strong>. &ldquo;Homelessness&rdquo; is many functions. A municipal public-space hygiene responsibility, regional clinical treatment, a City-funded shelter contract, and a housing-acquisition program need not belong in the same category merely because their recipients overlap. How much the work should cost, and whether the current approach works, are separate questions that classification leaves open.</p>
+
+  <p>A Category 1 function can be poorly managed and need redesign. A Category 2 partnership can be extremely effective and merit expansion. A Category 3 decision can acknowledge the worthiness of an objective while determining another institution should carry responsibility. The means of meeting a priority&mdash;better management, lower-cost delivery, staffing, partnerships, higher revenue, or reduced scope&mdash;is a separate decision.</p>
+
+  <p><strong>No program earns an automatic appropriation simply by being attached to a community value.</strong> The investment case should establish intended outcomes, a realistic baseline, measurable results, total cost, comparative alternatives, institutional capacity, and what continuation or expansion would accomplish. That is the case the Decision Project asks of any request for money in <a href="show-your-work.html">Show Your Work</a>.</p>
+
+  <h2>The more revenue arrives, the more important the test becomes</h2>
+
+  <p>A volatile transfer tax raises a particular risk. When high-value transactions generate unusually large receipts, there may be a temptation to expand programs to match the available money. New contracts and facilities can turn revenue peaks into continuing expense. When transactions slow, those commitments remain.</p>
+
+  <p>Whether that has happened in Berkeley is a question for the budget record. The City should publish the chronology: proceeds received; appropriations made; what was contractually committed; what was actually spent; what programs were added or expanded; and what measurable outcomes changed. It should distinguish one-time spending from recurring commitments and evaluate any asserted savings elsewhere in government.</p>
+
+  <p>The starting figures are already public. Measure P&rsquo;s ballot question estimated $6&ndash;8 million a year; Measure W&rsquo;s estimated an additional $2&ndash;4 million. The City&rsquo;s <a href="https://berkeleyca.gov/your-government/our-work/bond-revenue-measures/measure-p-w">Measure P/W page</a> reports that Measure P has provided about $11 million a year on average, and a March 2025 City Manager memo puts the range at roughly $6.5 million to $20 million, fluctuating &ldquo;greatly with market conditions.&rdquo; In fiscal year 2024 the City spent about $35 million on homelessness, roughly two-thirds of it from Measure P. The City&rsquo;s page also identifies concrete projects and services in shelter, street conditions and hygiene, permanent housing, and staffing. That record is the starting point for evaluation.</p>
+
+  <p>Receipts above a ballot estimate are general revenue, with every competing claim on general revenue already against them; exceeding an estimate creates no surplus by itself. The test at each budget decision is whether actual and proposed expenditures meet the same standards that would apply if they drew directly from any other part of the General Fund.</p>
+
+  <h2>Performance before expansion; reconsideration before continuation</h2>
+
+  <p>A citywide policy should require a documented performance and alternatives review before significantly expanding programs funded with discretionary general taxes. The review should go beyond counting contacts, beds, contracts, dollars spent, or other activities&mdash;the distinction <a href="measuring-nothing.html">Measuring Nothing</a> traces through Berkeley&rsquo;s budget history. It should ask about durable outcomes appropriate to each service and their cost, while adjusting comparisons for case complexity, external conditions, and the populations served.</p>
+
+  <p>There is independent support for improving measurement. The Homeless Response Team exists because of a 2021 Council allocation of Measure P, according to the City Manager&rsquo;s March 2025 memo. The City Auditor&rsquo;s July 2025 audit of that team found it tracked some outcomes tied to its goals, such as shelter offers, encampment closures, and trash removal, but did not report others, such as shelter enrollments and Coordinated Entry assessments, until after the audit period; its reports were cumulative rather than broken out by period. In its response, the City Manager&rsquo;s Office agreed with the recommendations and pointed to a revamped performance report released in May 2025, which adds shelter enrollments, service referrals, and enrollment rates by shelter type, and committed to publishing quarterly reports in that format beginning in August 2025. The same audit records that unsheltered homelessness in Berkeley fell 45 percent between 2022 and 2024. A gap in outcome data is a governance information problem, not evidence of poor results. Reliable outcome measures, reported consistently over time, are what Council needs to decide renewals and expansions.</p>
+
+  <p>The same rule must apply in every department. A high-performing project may warrant more money even in a difficult budget year. A low-performing program should face redesign, a smaller pilot, another provider, or a justified end&mdash;even when an associated tax is producing ample cash.</p>
+
+  <p class="pull">The ability to pay is a constraint; it is not evidence of value.</p>
+
+  <h2>Make General Fund discretion real</h2>
+
+  <p>Berkeley should adopt a <strong>General Revenue Allocation and Performance Policy</strong> governing discretionary general-tax revenue and the programs financed from it. The policy would require the annual budget to present the legal restrictions, existing obligations, priorities, and alternative uses of these resources openly, instead of quietly treating past appropriations as permanent entitlements.</p>
+
+  <p>The policy should impose five disciplines:</p>
+
+  <ol>
+    <li><strong>One transparent revenue inventory.</strong> Show general-tax receipts and forecasts, by source, alongside restricted and committed amounts, existing fund policies, legal requirements, and discretionary capacity. Avoid double-counting revenues already budgeted, obligated, or dependent on volatile receipts.</li>
+    <li><strong>Explicit city-role classification.</strong> Assign major functions and delivery responsibilities to Category 1, 2, or 3, with written rationale and a plan for partnerships or exit where applicable. Do not use categories as shorthand for across-the-board cuts or to prescribe whether new taxes should be used.</li>
+    <li><strong>Program admission and continuation tests.</strong> For material additions, expansions, and periodic renewals, require evidence of outcomes, comparative alternatives, full cost, execution capacity, and a named decision owner&mdash;the framework&rsquo;s <a href="framework.html#start">start</a>, <a href="framework.html#stop">stop</a>, and <a href="framework.html#continue">continue</a> discipline. Budget availability alone must never satisfy the test.</li>
+    <li><strong>Opportunity-cost disclosure.</strong> Show what else Berkeley could do with truly discretionary dollars, including necessary services and maintenance, and disclose the program or capacity displaced. A proposed allocation to an important purpose should be able to explain why it outranks the alternative use, beyond repeating that the purpose is important.</li>
+    <li><strong>Public change control.</strong> For substantial changes to well-established purpose-associated allocations, require findings explaining what is changing, why, effects on beneficiaries and service levels, and the treatment of outstanding contracts, restricted funds, and commitments. Report the decision and subsequent outcomes at a scheduled interval.</li>
+  </ol>
+
+  <p>The result is a decision system that can support continuing, increasing, reducing, or reallocating an appropriation based on evidence and citywide priorities. It neither diverts everything above a set dollar amount nor preserves everything already assigned.</p>
+
+  <p>A stabilization reserve may be appropriate for an unusually volatile stream, but its size and permitted uses should follow modeled obligations and downside scenarios, not a figure borrowed from a ballot estimate. A reserve protects defensible commitments through lean periods; it should not shield all current programs from review.</p>
+
+  <h2>Honor voter expectations by showing the decision</h2>
+
+  <p>The fact that a tax is legally general does not erase the political context in which voters adopted it. Many residents supported Measures P and W because of homelessness. Their expectations deserve a candid answer, not a lawyerly dismissal.</p>
+
+  <p>Council should therefore explain any major reallocation in plain language: what the tax was represented as supporting; what law actually requires; which programs have achieved what results; what would be reduced or preserved; which other municipal responsibilities would be financed instead; and why the change advances the public interest. It should also explain when the evidence supports keeping or increasing homelessness investments.</p>
+
+  <p>Voter trust and discretionary budgeting are consistent when the reason for each change is public and the same standards apply across priorities. The inconsistency comes from treating discretion as a virtue for some spending choices and an impossibility for others.</p>
+
+  <p class="pull">A community value deserves serious pursuit. It does not confer immunity from analysis, comparison, criticism, or standards of execution.</p>
+
+  <p>That is what it should mean to treat a general tax as general: the continuing responsibility to use public money where it can accomplish the most, with the purpose that won voters&rsquo; support kept in plain view.</p>
+
+  <h2>The policy in detail</h2>
+
+  <p>What follows is a proposed model for the policy. Berkeley has not adopted it.</p>
+
+  <div class="beat">
+    <div class="beat-h">Name</div>
+    <p>General Revenue Allocation and Performance Policy.</p>
+  </div>
+
+  <div class="beat">
+    <div class="beat-h">Scope</div>
+    <p>All discretionary general-tax allocation decisions, including but not limited to Measure P and W proceeds, with the same program-value standards applied to discretionary General Fund spending from other sources. Legally restricted funds remain governed by their restrictions. Contractual commitments and transition costs must be identified and honored, or lawfully renegotiated, before any reallocation.</p>
+  </div>
+
+  <div class="beat">
+    <div class="beat-h">Decision points</div>
+    <p>Proposed annual and biennial budgets, midyear appropriations, material new or expanded contracts, high-value transfers among funds, periodic program continuation reviews, and material revisions to established allocations. The review runs on this schedule, before tax revenue unexpectedly rises or a deficit forces abrupt cuts.</p>
+  </div>
+
+  <h3>Required artifact: the Revenue Allocation and Opportunity-Cost Statement</h3>
+
+  <p>A concise public statement, attached to staff reports or budgets, containing:</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Field</th><th>Required disclosure</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Revenue and legal status</strong></td><td>Source, current receipts, realistic forecast, legally general or restricted character, governing instruments</td></tr>
+      <tr><td><strong>Already committed</strong></td><td>Existing contracts, authorized appropriations, reserves, pass-through requirements, obligations, and fiscal-year timing</td></tr>
+      <tr><td><strong>City role</strong></td><td>Category 1/2/3 classification of the particular <strong>function</strong>, not a blanket program-area judgment</td></tr>
+      <tr><td><strong>Outcome and execution</strong></td><td>Need, baseline, measurable results, cost per relevant result, provider, operational readiness, oversight owner</td></tr>
+      <tr><td><strong>Alternatives</strong></td><td>Delivery alternatives including County or partner delivery, redesign, consolidation, lower-cost model, continuation, reduction, and lawful discontinuation</td></tr>
+      <tr><td><strong>Opportunity cost</strong></td><td>Other City priorities and affected service levels if funding remains where it is or moves elsewhere</td></tr>
+      <tr><td><strong>Volatility and obligations</strong></td><td>Best, base, and worst plausible receipts; recurring costs; reserve adequacy; expiration and review dates</td></tr>
+      <tr><td><strong>Public reliance</strong></td><td>Original voter-facing purpose, material changes, beneficiary effects, and why the policy still respects public trust</td></tr>
+      <tr><td><strong>Decision and follow-through</strong></td><td>Council action, date, next public review, thresholds for expand / redesign / exit, published actual results</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>The statement separates what is authorized, allocated, encumbered, spent, and delivered. Those are five different numbers, and a budget that reports only one of them cannot be evaluated.</p>
+
+  <div class="beat">
+    <div class="beat-h">Procedural default</div>
+    <p>A missing material field cannot be marked &ldquo;zero&rdquo; or &ldquo;not applicable&rdquo; without a stated rationale. A material decision may proceed with unresolved costs or absent performance data only on an explicit finding. Recurring programs are not presumed to pass because they already exist. Thresholds are proportional and implementation is phased, so trivial procurements carry no analysis overhead.</p>
+  </div>
+
+  <div class="beat">
+    <div class="beat-h">Enforcement</div>
+    <p>Staff prepares the public statement. The City Manager and Finance validate fiscal and legal status; relevant service experts validate performance metrics; commissions with relevant expertise review where practical. Where a revenue stream has a chartered advisory body&mdash;Measure P&rsquo;s Homeless Services Panel of Experts, whose recommendations Council must consider and annually report back on&mdash;the statement goes to that body and records its recommendation. Council adopts, modifies, or rejects appropriations <strong>with recorded reasons</strong>. City Auditor findings inform the record, but the Auditor does not certify Council&rsquo;s policy choices. The City publishes follow-up results and corrective actions.</p>
+  </div>
+
+  <div class="beat">
+    <div class="beat-h">Decision latitude</div>
+    <p>Council remains free to fund very high-value homelessness programs, preserve service continuity, create reserves, reallocate lawful discretionary funds, or decline low-value expansions. The policy hard-codes no spending outcome. It can be faithfully followed and still produce different allocations in different budget years.</p>
+  </div>
+
+  <footer>
+    <h3>Sources</h3>
+    <p>City of Berkeley, <a href="https://berkeleyca.gov/your-government/our-work/bond-revenue-measures/measure-p-w">Measure P (2018) and Measure W (2024)</a> &mdash; both ballot questions as adopted: Measure P, &ldquo;raising funds for general municipal purposes such as navigation centers, mental health support, rehousing and other services for the homeless &hellip; generating an estimated $6,000,000&ndash;$8,000,000 annually; and establishing Homeless Services Panel of Experts to recommend homeless services&rdquo;; Measure W, &ldquo;effective January 1, 2027, setting the existing general tax on transfers of real property &hellip; removing January 1, 2029 expiration date; generating an estimated additional $2M&ndash;$4M annually, until repealed.&rdquo; Also the statement that &ldquo;Measure P provides $11 million of funding on average,&rdquo; the FY2024 homelessness funding mix, and the description of funded projects. Retrieved October 13, 2026. Measure W here is the November 2024 transfer-tax measure.</p>
+    <p>Alameda County Registrar of Voters, <a href="https://acvote.alamedacountyca.gov/acvote-assets/02_election_information/PDFs/20181106/en/Measures/12%20-%20Measure%20P%20-%20City%20of%20Berkeley.pdf">Measure P ballot materials, November 6, 2018</a> &mdash; City Attorney&rsquo;s impartial analysis (revenues &ldquo;would be used to fund general municipal services&rdquo;; Council &ldquo;would not be required to adopt&rdquo; the Panel&rsquo;s recommendations) and BMC &sect;7.52.190(I): the revenue &ldquo;is available to pay the usual and current expenses of conducting the municipal government of the City, as determined by the City Council,&rdquo; and Council &ldquo;shall consider, but need not follow, the Panel&rsquo;s recommendations&rdquo; and &ldquo;shall annually inform the Panel&rdquo; of their implementation.</p>
+    <p>City Attorney, <a href="https://berkeleyca.gov/sites/default/files/documents/2024-07-30%20Special%20Item%2006d%20Ballot%20Measure%20Amending%20Chapter%207.52%20of%20the%20Berkeley.pdf">Ballot Measure Amending Chapter 7.52 &hellip; to Increase and Extend the General Real Property Transfer Tax</a>, Council special meeting, July 30, 2024 &mdash; the measure as proposed, including the carried-forward &sect;7.52.190(I) and Section 4, &ldquo;This Ordinance imposes a general tax.&rdquo; The tiers and thresholds in this draft differ from the ballot question voters approved; the City&rsquo;s Measure P/W page above is the source for the adopted question.</p>
+    <p>City Manager, <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-attachments/2025-06-12%20Item%2002%20Supplemental%20Materials_2025-03-28%20Measure%20P%20and%20Impact%20on%20Homeless%20Services%20in%20Berkeley.pdf"><em>Measure P and Impact on Homeless Services in Berkeley</em></a>, memo to Council dated March 28, 2025 &mdash; average of $11 million annually, with revenues that &ldquo;have ranged from ~$6.5M to ~$20M&rdquo; and &ldquo;fluctuate greatly with market conditions&rdquo;; about $35 million spent on homelessness in FY2024, roughly 66 percent from Measure P; the Homeless Response Team described as &ldquo;a direct result of an allocation of Measure P made by the City Council in 2021.&rdquo;</p>
+    <p>City Manager, <a href="https://berkeleyca.gov/sites/default/files/documents/2019-01-15%20WS%20Item%2002%20Uses%20for%20Measure%20P%20Funding.pdf"><em>Uses for Measure P Funding</em></a>, Council worksession, January 15, 2019 &mdash; the initial staff recommendations on funding priorities and on the role of the Panel of Experts.</p>
+    <p>City Auditor, <a href="https://berkeleyca.gov/sites/default/files/documents/2025-07-29%20Special%20Item%2002b%20Homeless%20Response%20Team%20Opportunities.pdf"><em>Homeless Response Team: Opportunities Exist to Strengthen Procedures and Better Track Outcomes</em></a>, report dated July 16, 2025, presented to Council July 29, 2025 &mdash; outcome tracking and reporting findings; six recommendations, which the City Manager&rsquo;s Office agreed to; and the 45 percent decrease in unsheltered homelessness between 2022 and 2024.</p>
+    <p>Government Finance Officers Association, <a href="https://www.gfoa.org/materials/adopting-financial-policies">Adopting Financial Policies</a> &mdash; &ldquo;GFOA recommends that governments formally adopt financial policies,&rdquo; which &ldquo;usually outlive their creators&rdquo; and &ldquo;define limits on the actions staff may take.&rdquo;</p>
+    <p>Category definitions follow <a href="framework.html">A Strategy for Strategy</a>, sections <a href="framework.html#cat1">Category 1</a>, <a href="framework.html#cat2">Category 2</a>, and <a href="framework.html#cat3">Category 3</a>.</p>
+    <h3>Related</h3>
+    <p><a href="grants-are-not-a-business-case.html">A Grant Is Not a Business Case</a> &mdash; the companion proposal on outside funding &middot;
+    <a href="show-your-work.html">Show Your Work</a> &middot;
+    <a href="fungibility-isnt-fun.html">Fungibility Isn&rsquo;t Fun</a> &mdash; how overlapping revenue sources interact &middot;
+    <a href="measuring-nothing.html">Measuring Nothing</a> &middot;
+    <a href="index.html">Decision Project home</a></p>
+    <h3>Corrections</h3>
+    <p>Corrections are welcome and are published when received.</p>
+  </footer>
+
+</div>
+</body>
+</html>

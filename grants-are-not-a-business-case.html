@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Grant Is Not a Business Case</title>
+<meta name="description" content="Why outside funding should change the cost of an option—not determine whether Berkeley pursues it. A proposed Grant Net-Value Statement for material grants.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; line-height: 1.35;
+     margin: 1.9rem 0 .7rem; color: var(--ink); }
+p { margin-bottom: 1.05rem; }
+ul, ol { margin: 0 0 1.05rem 1.3rem; }
+li { margin-bottom: .55rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+a { color: var(--quote); }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+/* Source note set directly after the locked opening: it carries the debate citations and the
+   reconciliation caveat on the $83 million without altering a word of the opening itself. */
+.srcnote { background: var(--panel); border: 1px solid var(--rule); border-left: 3px solid var(--quote);
+           border-radius: 0 4px 4px 0; padding: 1rem 1.2rem; margin: 1.6rem 0 2rem;
+           font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--ink-2); }
+.srcnote .lbl { display: block; font-size: .66rem; font-weight: 700; letter-spacing: .12em;
+                text-transform: uppercase; color: var(--quote); margin-bottom: .5rem; }
+.srcnote p { margin-bottom: .7rem; }
+.srcnote p:last-child { margin-bottom: 0; }
+
+.proposal { background: var(--accent-soft); border: 1px solid var(--rule); border-left: 4px solid var(--accent);
+            border-radius: 4px; padding: 1.1rem 1.25rem 1.2rem; margin: 1.4rem 0; }
+.proposal-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+              text-transform: uppercase; color: var(--accent); margin-bottom: .7rem; }
+.proposal ol { margin-bottom: 0; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin: 1.2rem 0 .5rem; font-weight: 700; }
+footer h3:first-child { margin-top: 0; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+@media print {
+  .nav { position: static; }
+  .srcnote, .proposal { break-inside: avoid; }
+}
+</style>
+</head><body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+  <div class="kicker">Proposal</div>
+  <h1>A Grant Is Not a Business Case</h1>
+  <p class="standfirst">Why outside funding should change the cost of an option&mdash;not determine whether Berkeley pursues it.</p>
+  <div class="byline">A proposal for grant decisions &middot; October 2026</div>
+
+  <p>In an October 2026 debate over Berkeley's proposed $300 million infrastructure bond, Councilmember Brent Blackaby pointed to Measure T1 as a success: the City had turned $100 million in bond proceeds into an additional $83 million in state and federal grants.</p>
+
+  <p>That is an impressive gross number. But it leaves a more consequential question unanswered: <strong>What was the net value to Berkeley?</strong></p>
+
+  <p>A grant reduces the initial cost of acquiring an asset or launching a program. It does not necessarily pay to operate, maintain, insure, repair, or eventually replace it. Nor does it account for foregone tax revenue, effects on surrounding properties and businesses, or services the City becomes politically committed to sustaining.</p>
+
+  <p>At the same debate, Jim McGrath, who helped lead the Measure T1 campaign, described Berkeley's recurring problem: it buys things it doesn't maintain.</p>
+
+  <p>The two observations belong together. Additional grant dollars are valuable, but they are not themselves evidence of a sound investment. The relevant question is what the City gains, what obligations it assumes, and what alternatives it forgoes over the full life of the commitment.</p>
+
+  <div class="srcnote" id="debate-sources">
+    <span class="lbl">Sources for the opening</span>
+    <p>Berkeley Neighborhoods Council, <a href="https://www.berkeleyneighborhoodscouncil.com/event/berkeley-ballot-measures-forum">Berkeley Ballot Measures Forum</a>, Saturday, October 10, 2026, Measure U segment. Video: <a href="https://www.youtube.com/watch?v=S1uz7A2B41U">&ldquo;BNC Ballot Measures Forum 10 10 2026&rdquo;</a>. Quotations are from a machine transcript of the recording (automatic captions with automatic speaker labels), with case and punctuation normalized; speaker identifications are checked against the audio. Timestamps are positions in that video.</p>
+    <p><strong>Blackaby</strong>, <a href="https://www.youtube.com/watch?v=S1uz7A2B41U&amp;t=2090s">34:50&ndash;35:11</a>: &ldquo;There's a real opportunity to get even more bang for our buck out of this measure. &hellip; T1 was a hundred million dollar infrastructure bond that the city leveraged to generate another 83 million dollars in additional grants from state and federal sources.&rdquo; Later in the forum, <a href="https://www.youtube.com/watch?v=S1uz7A2B41U&amp;t=3270s">54:30&ndash;54:50</a>: &ldquo;We took out $100 million in bonds, matched by another $83 million in grants &hellip; T1, I think, was a success by most measures.&rdquo;</p>
+    <p><strong>McGrath</strong>, <a href="https://www.youtube.com/watch?v=S1uz7A2B41U&amp;t=2644s">44:04&ndash;44:13</a>, during audience questions: &ldquo;The auditor has talked about what is Berkeley's malaise, which is it buys stuff that it doesn't maintain.&rdquo; This is his characterization of the City Auditor's work, not a quotation from an audit. The captions label this passage &ldquo;Speaker A&rdquo;; the recording confirms it is McGrath, who introduces himself at <a href="https://www.youtube.com/watch?v=S1uz7A2B41U&amp;t=2556s">42:36</a>: &ldquo;My name is Jim McGrath. I ran the campaign for Measure T1, and then I spent four years working on allocation.&rdquo; The Auditor's most recent financial-condition report puts Berkeley's unfunded capital and deferred maintenance needs at about $1.8 billion in FY 2024, in 2025 dollars.<sup><a href="#s-auditor">[1]</a></sup></p>
+    <p><strong>Blackaby's reply</strong>, <a href="https://www.youtube.com/watch?v=S1uz7A2B41U&amp;t=2780s">46:20&ndash;46:40</a>: &ldquo;I agree with you that we should make sure that in our budget on an annual basis, we need to have enough budget for maintenance of existing capital &hellip; I think one of the reasons that we are here is that maintenance was not appropriately budgeted in the past.&rdquo;</p>
+    <p><strong>The $83 million is Blackaby's figure, attributed to him.</strong> The City's December 2, 2025 staff report on potential ballot measures says T1 was &ldquo;fully allocated, leveraging an additional $80 million in grant and other funding resources, to produce over $183 million in 76 community benefiting infrastructure projects.&rdquo;<sup><a href="#s-staff">[2]</a></sup> These are summary descriptions, rounded and possibly aggregated differently, and neither has been reconciled here against award documents or spending records. The questions that matter are the ones a summary cannot answer: how much was grants rather than other funding resources, how much was awarded rather than spent, and how much of the outside money came because of T1 rather than alongside it.</p>
+  </div>
+
+  <h2>The $83 million is an input, not the answer</h2>
+
+  <p>Blackaby's figure is his description of the financing assembled around Measure T1. It is worth checking how much funding was awarded, how much was actually spent, which programs received it, and what portion would have been available without the bond. But even if the full figure is confirmed, a tally of incoming dollars tells us only how a project or program was financed. It does not tell us whether undertaking it was the right decision.</p>
+
+  <p>A successful grant application can solve a financing problem while creating an operating problem. A free building is not a free building to own. A new service paid for over three years may acquire staff, users, contracts, and a public expectation that it will continue in year four. Each of those consequences can be justified. None should arrive as a surprise after approval.</p>
+
+  <p>The Government Finance Officers Association (GFOA) already recommends that governments adopt grant policies requiring strategic alignment and multi-year cost-benefit analysis <em>before applying for or accepting</em> awards.<sup><a href="#s-gfoa-policy">[3]</a></sup> GFOA's capital-planning guidance likewise calls for quantifying the costs to operate, maintain, and renew or replace an asset, and for identifying the sources that will pay them.<sup><a href="#s-gfoa-capital">[4]</a></sup> Berkeley could make those disciplines explicit and enforceable in its own decision process.</p>
+
+  <h2>Begin with the problem, not the grant opportunity</h2>
+
+  <p>The correct sequence is to define a public problem, decide Berkeley's appropriate responsibility, compare delivery options, and only then examine how grants alter the costs and benefits of those options.</p>
+
+  <p>Under the Berkeley Decision Project's <a href="framework.html">Category 1/2/3 framework</a>, the City should <strong>ensure the outcome</strong> of the functions for which municipal responsibility is justified (<a href="framework.html#cat1">Category 1</a>), whether or not it performs them itself; <strong>partner</strong> where other institutions are better suited to delivery (<a href="framework.html#cat2">Category 2</a>); and <strong>exit or decline</strong> activities that do not justify a continuing Berkeley role (<a href="framework.html#cat3">Category 3</a>). These categories classify responsibility and delivery roles. They are <strong>not</strong> a shorthand for three funding mechanisms or an automatic evaluation of whether a program works. Category 1 still requires competent execution; Category 2 still requires enforceable partnership terms; Category 3 may involve worthwhile work better pursued by someone else.</p>
+
+  <p>A grant can improve an option's affordability. It cannot by itself establish that an activity belongs in Category 1 or 2, that a new facility is necessary, or that an alternative delivery model is inferior. &ldquo;Apply because the money is available&rdquo; reverses the decision process.</p>
+
+  <h2>Count the whole commitment</h2>
+
+  <p>Every material grant proposal should disclose a lifecycle account, not merely an award amount and local match. The account should distinguish <strong>cash costs</strong>, <strong>foregone revenues</strong>, <strong>public benefits</strong>, and <strong>uncertainty</strong> rather than pretending they are all interchangeable dollars.</p>
+
+  <p><strong>Startup and financing.</strong> Identify capital/acquisition costs, design, permitting, local matching funds, cash-flow and reimbursement exposure, grant-administration costs, restrictions, timing risks, and the possibility of clawbacks. Distinguish grants that are awarded from funds that are hoped for. Measure whether supposedly &ldquo;leveraged&rdquo; resources were truly dependent on the local investment.</p>
+
+  <p><strong>Operations and renewal.</strong> Price staffing, utilities, insurance, service contracts, inspections, security as applicable, maintenance, periodic rehabilitation, reserves, and eventual replacement. Identify which costs are covered during the grant and which become local obligations afterward. A hypothetical 25-year facility with a $2 million local match and $600,000 in annual local operating costs would require $15 million of nominal operating outlays over 25 years before rehabilitation and replacement. That illustration is <strong>not</strong> a Berkeley project calculation and is <strong>not</strong> present value; real assessments must model timing, escalation, discounting where appropriate, and actual funding.</p>
+
+  <p><strong>Revenue and economic effects.</strong> If the City acquires or repurposes a revenue-producing parcel, evaluate lost hotel, transfer, sales, lease, or property-tax revenue as applicable. A qualifying nonprofit-owned housing property <em>may</em> qualify for a property-tax welfare exemption, but no blanket exemption or dollar loss should be assumed: eligibility, parcel circumstances, assessment, and Berkeley's share must be established. For projects in commercial districts, examine measurable changes in business activity, access, public services, and neighborhood conditions. The assessment should not declare that a shelter necessarily harms neighboring businesses or presume the motives of people who use it. Evaluate likely effects, mitigation, and benefits with the same seriousness as fiscal cost.</p>
+
+  <p><strong>Service and social value.</strong> A financial ledger is necessary but insufficient. Measure durable public outcomes: lives improved, housing stability, safety, access, asset condition, time saved, or other results appropriate to the project. Include distributional impacts and benefits that resist dollar monetization. Compare the proposed investment with real alternatives, including not proceeding, piloting at a smaller scale, contracting, regional delivery, or improving an existing program.</p>
+
+  <p>The aim is to show <strong>the full public proposition</strong>&mdash;what is gained and what Berkeley must give up to pursue it&mdash;without a falsely precise number that makes social benefits disappear.</p>
+
+  <h2>The grant cliff is a decision, not a surprise</h2>
+
+  <p>A service established with outside money can be difficult to unwind. That difficulty is the reason to decide continuation <em>before launch</em>.</p>
+
+  <p>For a grant-funded program, Council should identify the grant's expiration date, the service level planned at that date, the expected continuing annual cost, the source of funds if the program continues, and the circumstances in which the program will stop, contract, transfer, or be redesigned. Labor and contract terms, legal obligations, resident needs, and orderly transition costs belong in that analysis. GFOA's grants-administration guidance makes the same point: grants may &ldquo;commit a government to financially maintain a program or asset after the expiration of the grant,&rdquo; and governments should plan for services that continue if the grant is reduced or ends.<sup><a href="#s-gfoa-admin">[5]</a></sup></p>
+
+  <p>A grant that funds a pilot should be treated as an opportunity to learn. Define the baseline, intended outcomes, evaluation date, and the conditions for expansion or closure. A pilot that continues merely because staff and beneficiaries have come to rely on it is no longer a pilot; it has become an ongoing municipal commitment without a fresh decision.</p>
+
+  <h2>A policy that changes the order of operations</h2>
+
+  <p>Berkeley should require a concise <strong>Grant Net-Value Statement</strong> before applying for or accepting any material grant that creates an asset, service, match, land-use commitment, or operating obligation. Small routine reimbursements with no material continuing exposure can use a simplified review. Emergency grants can receive expedited provisional approval, with a deadline for full analysis before irreversible commitments.</p>
+
+  <p>The statement should be public, accompany the Council staff report, and answer eight questions:</p>
+
+  <div class="proposal">
+    <div class="proposal-h">Proposed: Grant Net-Value Statement</div>
+    <ol>
+      <li><strong>Purpose.</strong> What precisely is the problem, and which measurable outcome is sought?</li>
+      <li><strong>Role.</strong> Why does the activity fit Category 1 or 2 rather than Category 3, and who will deliver it?</li>
+      <li><strong>Alternatives.</strong> What would Berkeley do without this grant? What better or cheaper options were compared?</li>
+      <li><strong>Attribution.</strong> How much funding is awarded, contingent, reimbursable, restricted, or actually incremental to a project that would otherwise proceed?</li>
+      <li><strong>Lifecycle.</strong> What are the capital, local-match, operating, maintenance, renewal, closure, and replacement costs, with timing and funding sources?</li>
+      <li><strong>External consequences.</strong> What revenue may disappear, which businesses or neighbors may be affected, and what mitigation or broader public benefits are expected?</li>
+      <li><strong>Continuation.</strong> What happens when the grant ends, and who may authorize the next local dollar?</li>
+      <li><strong>Accountability.</strong> Who owns the outcome, when is it reviewed, and what triggers redesign, termination, or a new approval?</li>
+    </ol>
+  </div>
+
+  <p>A missing answer must be disclosed as missing&mdash;not converted into zero cost. Material unknowns should require a funding contingency or prevent an irreversible commitment until resolved. An unusually promising grant may still justify exploration, but no deadline should substitute for the decision Berkeley would make if it were spending its own money.</p>
+
+  <p>Berkeley's own capital plan already says that &ldquo;completion of a capital project usually impacts the operating budget,&rdquo; and each project page in the adopted FY 2025&ndash;2029 Capital Improvement Program carries a line for that impact.<sup><a href="#s-cip">[6]</a></sup> The Grant Net-Value Statement applies the same discipline at the moment it matters most: before the City commits to the grant.</p>
+
+  <h2>The result worth celebrating</h2>
+
+  <p>A City that announces a major grant award, and wants residents to judge its financial management, should later report the project it delivered, its continuing costs, its measured outcomes, and the local commitments that came with the grant.</p>
+
+  <p>The better announcement follows <strong>&ldquo;We brought in $83 million&rdquo;</strong> with <strong>&ldquo;Here is what the additional financing made possible, what Berkeley will pay over the life of the work, and why the public value exceeds the alternatives.&rdquo;</strong></p>
+
+  <p class="pull">Winning the grant is a financing accomplishment. Whether accepting it was a good decision is a separate question.</p>
+
+  <footer>
+    <h3>Sources</h3>
+    <p id="s-auditor">[1] Berkeley City Auditor, <em>Berkeley's Financial Condition (FY 2016&ndash;FY 2025): Structural Deficit Poses Risk to Financial Sustainability</em>, April 8, 2026, section 7, &ldquo;Capital Assets&rdquo; (pp. 34&ndash;35): &ldquo;In FY 2024, the City reported about $1.8 billion in unfunded capital and deferred maintenance needs in the FY 2025-FY 2029 Capital Improvement Program&rdquo; (Figure 24, in 2025 dollars), and &ldquo;If a city does not regularly maintain its capital assets, it can face deferred maintenance costs down the line.&rdquo; <a href="https://berkeleyca.gov/sites/default/files/2026-03/Berkeleys_Financial_Condition_%28FY_2016-FY_2025%29_-_Structural_Deficit_Poses_Risk_to_Financial_Sustainability.pdf">Report</a>.</p>
+    <p id="s-staff">[2] City Manager, <em>Discussion Regarding Potential Ballot Measures for the November 3, 2026, General Municipal Election</em>, Council special meeting, December 2, 2025, Item 2, packet p. 7 of 50. <a href="https://berkeleyca.gov/sites/default/files/documents/2025-12-02%20Special%20Item%2002%20Discussion%20Regarding%20Potential%20Ballot.pdf">Staff report</a>. The Parks and Waterfront Commission's April 2026 bond subcommittee report repeats the figure as &ldquo;an additional $80 million in grants, producing over $183 million in total infrastructure investment.&rdquo;</p>
+    <p id="s-gfoa-policy">[3] Government Finance Officers Association, <a href="https://www.gfoa.org/materials/establishing-an-effective-grants-policy"><em>Establishing an Effective Grants Policy</em></a> (board approval February 2013): a grants policy should assess &ldquo;the extent to which a grant is consistent with the government[']s mission, strategic priorities, and/or adopted plans,&rdquo; and &ldquo;should require a multi-year cost/benefit analysis prior to application or acceptance,&rdquo; including &ldquo;potential costs that might need to be incurred by the government beyond the grant period&rdquo;; and it should require an evaluation of the grant-funded program or asset before deciding whether to continue a grant at the end of the initial grant period.</p>
+    <p id="s-gfoa-capital">[4] GFOA, <a href="https://www.gfoa.org/materials/multi-year-capital-planning"><em>Multi-Year Capital Planning</em></a> (best practice, board approval September 2022): the asset life cycle covers &ldquo;costs to operate, maintain, administer and renew or replace the capital asset&rdquo;; &ldquo;Life cycle costs will impact future annual operating budgets&rdquo;; and &ldquo;the sources of funding for those costs should be identified.&rdquo;</p>
+    <p id="s-gfoa-admin">[5] GFOA, <a href="https://www.gfoa.org/materials/grants-administration"><em>Grants Administration</em></a> (best practice, board approval September 2022): grants carry &ldquo;specialized requirements&rdquo; with &ldquo;negative consequences for failing to meet these requirements,&rdquo; may &ldquo;commit a government to financially maintain a program or asset after the expiration of the grant,&rdquo; and governments should &ldquo;develop a contingency plan for funding services that will be continued even if the grant funding is reduced or terminated.&rdquo;</p>
+    <p id="s-cip">[6] City of Berkeley, <a href="https://berkeleyca.gov/sites/default/files/documents/FY-2025-2029-Capital-Improvement-Program.pdf"><em>Adopted Capital Improvement Program, Fiscal Years 2025&ndash;2029</em></a>, Executive Summary: project pages include &ldquo;source(s) of funding and anticipated amount(s) and impact on the operating budget&rdquo;; &ldquo;A completion of a capital project usually impacts the operating budget.&rdquo;</p>
+    <p>GFOA guidance is cited for independent good-practice principles. GFOA has not assessed any Berkeley grant or endorsed this proposal.</p>
+
+    <h3>Disclosure</h3>
+    <p>This site is published by Eric Friedman, who argued against Measure U opposite Councilmember Blackaby at the forum quoted above.</p>
+
+    <h3>Related</h3>
+    <p><a href="general-taxes-are-general.html">General Taxes Are General for a Reason</a> &mdash; the companion proposal &middot;
+    <a href="framework.html">A Strategy for Strategy</a> &mdash; Category 1/2/3 and <a href="framework.html#start-stop-continue">Start, Stop, Continue</a> &middot;
+    <a href="show-your-work.html">Show Your Work</a> &mdash; evidence before funding decisions &middot;
+    <a href="build-once.html">If You Build It, a Plan Will Come</a> &middot;
+    <a href="small-sites.html">Buy Once, Pay Forever</a> &middot;
+    <a href="index.html">Decision Project home</a></p>
+
+    <h3>Corrections</h3>
+    <p>Corrections are welcome and are published when received.</p>
+  </footer>
+
+</div>
+</body>
+</html>
