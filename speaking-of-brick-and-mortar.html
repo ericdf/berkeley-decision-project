@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berkeley Is Betting Its Budget on Business. Where Is the Economic Strategy?</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; line-height: 1.35;
+     margin: 1.9rem 0 .7rem; color: var(--ink); }
+p { margin-bottom: 1.05rem; }
+ul, ol { margin: 0 0 1.05rem 1.3rem; }
+li { margin-bottom: .4rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.tw { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; }
+th { text-align: left; font-size: .68rem; font-weight: 700; letter-spacing: .09em;
+     text-transform: uppercase; color: var(--ink-2); padding: .65rem .9rem;
+     border-bottom: 1px solid var(--rule); }
+td { padding: .68rem .9rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+     line-height: 1.55; }
+tbody tr:last-child td { border-bottom: 0; }
+
+.amt { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.beat { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+        padding: 1.1rem 1.25rem; margin: 1.4rem 0; }
+.beat-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.beat p { font-size: .96rem; }
+
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+</head><body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+
+
+<div class="wrap">
+  <div class="kicker">Economic development · Evidence check</div>
+  <h1>Berkeley Is Betting Its Budget on Business. Where Is the Economic Strategy?</h1>
+  <p class="standfirst">At her State of the City, Mayor Adena Ishii celebrated 600 new brick-and-mortar businesses, nearly 20% hotel-revenue growth, and storefront vacancy of just 6.3%. The first claim is extraordinary, the second unexplained, and the third blinkered. Together, they raise serious questions about City leadership's understanding of the commercial economy on which Berkeley's finances increasingly depend.</p>
+  <div class="byline">Mayor Adena Ishii's State of the City, September 23, 2026 · Reviewed October 19, 2026</div>
+
+  <p>Inside the Freight &amp; Salvage, Mayor Adena Ishii delivered an upbeat account of Berkeley's business climate.</p>
+  <p>Outside, attendees encountered gutted storefronts, stalled construction, and businesses that had disappeared.</p>
+  <p>Across Shattuck Avenue, <a href="https://www.sfgate.com/local/article/half-price-books-berkeley-closing-20634290.php">Half Price Books had closed after twenty years</a>. The bookseller cited declining customer traffic and an inability to negotiate a sustainable lease. Its former premises were being converted into temporary artist studios and a retail arts marketplace.</p>
+  <p>A block away, Center Street's commercial frontage included shuttered properties awaiting stalled redevelopment. South on Shattuck, another block had remained inactive for years.</p>
+  <p>The Mayor knew about Downtown's commercial problems. In December 2025, she <a href="https://berkeleyca.gov/sites/default/files/documents/2025-12-02%20Item%2033%20Referral%20to%20the%20City%20Manager%20and%20City.pdf">co-sponsored a Council proposal</a> documenting businesses vacated for redevelopment, utilities removed, and construction delayed when market conditions deteriorated. A subsequent proposal identified nine stalled Downtown housing developments.</p>
+  <p>Her address was titled <em>Doing Business in Berkeley</em>. She explicitly connected business development to the City's structural deficit and its need to grow revenue.</p>
+  <p>At a time when Berkeley is counting on another <strong>$9 million to $10 million annually</strong> from a proposed sales tax, the Mayor's understanding of its commercial economy matters.</p>
+
+  <h2>Six hundred new businesses. Which ones?</h2>
+  <p>During a discussion of her visits to commercial districts, the Mayor announced:</p>
+  <blockquote><p>“Speaking of brick and mortar, 600 new businesses have opened over the past year.”</p><p class="attrib"><a href="https://www.youtube.com/watch?v=E60sHdlVJxU&amp;t=1453s">State of the City, September 23, 2026, around 24:13</a></p></blockquote>
+  <p>She reported visiting more than 200 businesses personally and described a dedicated staff member working on business relations.</p>
+  <p>Yet she offered no examples establishing the claimed scale of new brick-and-mortar openings.</p>
+  <p>She praised Ambi Robotics, Boychik Bagels, Takara Sake, and other established Berkeley businesses. Ambi's growth from five employees in 2018 to forty today was a concrete success story. None of these examples explained the reported 600 openings in the preceding twelve months.</p>
+  <p><strong>Six hundred is an astonishing number.</strong></p>
+  <p>An analysis of Berkeley's business-license, zoning, and parcel records identified approximately <strong>1,255–1,598 active licenses</strong> in storefront-oriented categories in commercially zoned areas. That estimate is an imperfect proxy for physical businesses, but it provides a useful scale comparison.</p>
+  <p class="pull">Six hundred openings would represent the equivalent of 38–48% of that inventory in a single year.</p>
+  <p>Berkeley is a largely built-out city. Its economic dashboard shows little growth in the share of commercial ground-floor space occupied by retail. Six hundred genuine physical openings would therefore imply extraordinary turnover among existing businesses, substantial reuse of vacant space, or both.</p>
+  <p>Such a claim demands some basic supporting information.</p>
+  <p>Where did these 600 businesses open? How many replaced other businesses? How many established businesses closed? Which commercial corridors gained or lost occupied storefronts? What was the net change?</p>
+  <p>The publicly available business-license file cannot answer those questions because it lacks the necessary opening and closing dates.</p>
+  <p>A figure of 600 gross openings could be arithmetically correct while commercial districts lose businesses overall. That possibility makes the missing closure count especially consequential.</p>
+  <p><strong>If Berkeley really experienced turnover equivalent to nearly half its storefront-business inventory, the Mayor should be investigating the reasons. If the figure reflects something less dramatic, she should explain what was counted.</strong></p>
+
+  <h2>The problem with 6.3% vacancy</h2>
+  <p>The Mayor celebrated Berkeley's declining storefront vacancy rate: 6.3%, down from 7.5% a year earlier.</p>
+  <p>She accurately reported the City's published figure. The definition behind that statistic deserves equal attention.</p>
+  <p><a href="https://berkeleyca.gov/sites/default/files/2026-03/2026-03-10%20Special%20Item%2001%20Berkeley%20Economic%20Dashboards.pdf">Berkeley's March 2026 economic dashboard</a> explains that more than <strong>52 Downtown commercial spaces, totaling approximately 204,399 square feet</strong>, were classified as leased or pending development rather than vacant.</p>
+  <p>Those spaces include properties caught in the transition from former commercial uses to redevelopment. Their exclusion helps explain why Downtown can appear much emptier than its reported vacancy rate suggests.</p>
+  <p>The discrepancy is substantial. A December 2025 Council proposal co-sponsored by Ishii cited a Downtown Berkeley Association estimate of <strong>28.2% vacancy in 2024, including redevelopment properties</strong>.</p>
+  <p>The two percentages use different geographic coverage and counting methods and describe different periods. Their divergence illustrates how much a vacancy statistic depends on what the City chooses to count.</p>
+  <p>To a merchant operating beside a block of gutted storefronts, the distinction between vacant space and inactive space awaiting development offers little practical comfort. Both can reduce pedestrian activity, customer visits, and the appeal of the commercial district.</p>
+  <p>Berkeley's year-over-year improvement deserves recognition. So does the substantial inactive commercial space excluded from the headline vacancy category.</p>
+  <p class="pull">A serious assessment would report occupied storefronts, inactive redevelopment properties, closures, openings, and net change together.</p>
+
+  <h2>Nearly 20% hotel-revenue growth?</h2>
+  <p>The Mayor described her office's collaboration with Visit Berkeley, including World Cup watch parties, and told the audience:</p>
+  <blockquote><p>“These activities brought 1.4 million visitors, and hotel revenue increased nearly 20%.”</p><p class="attrib">State of the City, September 23, 2026</p></blockquote>
+  <p>The <a href="https://berkeleyca.gov/sites/default/files/2026-03/2026-03-10%20Special%20Item%2001%20Berkeley%20Economic%20Dashboards.pdf#page=14">Office of Economic Development's published 2025 figures</a> tell a more modest story. Berkeley hotels generated approximately $76 million in revenue, an increase of <strong>3.3% over 2024</strong>. Average occupancy rose from 71% to 71.5%.</p>
+  <p>The City's Budget Office projected a double-digit increase in a different measure: <strong>22.4% growth in net hotel-tax collections for fiscal 2026</strong>. That projection was driven substantially by recovery of delinquent taxes from a major hotel, including penalties and interest.</p>
+  <p>Recovery of overdue taxes strengthens municipal collections. Hotel-revenue growth measures customer spending on accommodations.</p>
+  <p>The Mayor supplied no accounting period or source for her nearly 20% figure. A later 2026 hotel-revenue series might support it. The City should publish the underlying calculation.</p>
+  <p>The claim about visitors raises an additional question. How many of the reported 1.4 million visitors came because of the activities she described? The City's 2025 hospitality dashboard separately estimated 1.6 million overnight visitors. Crediting promotional programs with visitor totals requires evidence of incremental visitation attributable to those programs.</p>
+  <p>That distinction becomes especially important when examining the City's investment in tourism promotion.</p>
+
+  <h2>Visit Berkeley: Paying to promote a city that no longer exists</h2>
+  <p>Berkeley has dedicated <strong>one-twelfth of its transient-occupancy-tax revenue</strong> to Visit Berkeley through its tourism-promotion contract. That represents one percentage point of the City's 12% hotel tax.</p>
+  <p>In June 2026, <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-june-9-2026">Council approved raising the multiyear contract ceiling to approximately $4.61 million</a>, allowing additional hotel-tax receipts to flow through to Visit Berkeley. The organization also receives separate hotel-funded Tourism Business Improvement District assessments.</p>
+  <p>This is a substantial commitment of revenue generated by the hospitality industry, expressly intended to strengthen that industry.</p>
+  <p><a href="https://www.visitberkeley.com/">Visit Berkeley's public materials</a> nevertheless contain glaring discrepancies with Berkeley's actual commercial conditions.</p>
+  <ul>
+    <li>Its homepage, as captured on August 31, 2026, led with a photograph of the Berkeley Kite Festival, which was canceled in 2022.</li>
+    <li>Its first suggestion for exploring Berkeley &ldquo;like a local&rdquo; sent families to the Habitot Children&rsquo;s Discovery Museum. Habitot has no building; it describes itself as &ldquo;100% Mobile&rdquo; and is raising money to reopen in two to five years.</li>
+    <li>Its <a href="https://www.visitberkeley.com/media-press/press-kit/berkeleys-boroughs/">description of Downtown</a> lists Half Price Books first under &ldquo;Shop.&rdquo; The store closed in November 2025.</li>
+    <li>A manual audit of its restaurant directory on August 31, 2026 found <strong>13 closed restaurants</strong> still listed, among them Paisan, Champion&rsquo;s Curry, Northside Cafe and Garden Variety. The same audit found the closed hotel at 920 University Avenue still listed under lodging.</li>
+  </ul>
+  <p>The Half Price Books example is particularly revealing. The Mayor discussed the temporary arts activation of its former premises during her speech and reported that her office contributed $2,500 toward it. Yet Visit Berkeley's promotional material continued directing shoppers to the departed bookstore.</p>
+  <p>A visitor arriving in Berkeley with these recommendations could encounter a closed business, a museum that no longer operates at its former location, or an annual festival that no longer takes place.</p>
+  <p class="pull">The City's hospitality taxes finance tourism promotion. The City should know whether that promotion accurately represents what visitors can actually experience.</p>
+  <p>Visit Berkeley is a separate nonprofit operating under City agreements. Council authorizes the relevant contracts and assessment arrangements. Those arrangements create opportunities to set standards for listing accuracy, performance reporting, and measurable economic results.</p>
+  <p>The current discrepancies invite basic questions: How frequently are listings checked? Who is accountable for correcting them? What visitor spending can be attributed to the program? What does the City receive for the hotel-tax revenue it commits?</p>
+
+  <h2>A 50-year business closes</h2>
+  <p>Twenty-five days after the Mayor's speech, <a href="https://www.sfgate.com/food/article/nabolom-bakery-berkekey-closure-22480409.php">Nabolom Bakery &amp; Pizzeria closed</a> in the Elmwood district.</p>
+  <p>The bakery traced its history to 1976. Its popularity, distinctive products, and deep neighborhood roots had sustained it through decades of commercial change.</p>
+  <p>Its owners described an increasingly difficult operating environment: rising ingredient and utility costs, staffing problems, competition, expensive capital improvements, and employees struggling to afford living in Berkeley.</p>
+  <p>They reported raising prices while gross revenue remained flat.</p>
+  <p>They also <a href="https://www.sfchronicle.com/food/restaurants/article/nabolom-bakery-berkeley-politics-closure-22482696.php">described political backlash</a> involving their public positions on policing, immigration, Gaza, and neighborhood upzoning. According to the owners, these controversies contributed to commercial pressure alongside broader financial problems.</p>
+  <p><strong>The bakery's owners describe a combination of financial and political pressures, rather than a single City policy, as the explanation for its closure.</strong></p>
+  <p>Their experience illustrates several challenges a serious economic-development strategy should examine together.</p>
+  <p>Berkeley's housing costs influence workforce availability. Land-use decisions and disputes over development affect established commercial districts. Political conflicts can impose additional costs on businesses already operating with thin margins.</p>
+  <p>Nabolom stood in the Elmwood, one of Berkeley's most established and commercially attractive neighborhoods. Even there, a beloved institution with a half-century history could no longer make its business model work.</p>
+  <p>Its closure underscores the importance of retention. Replacing a longstanding institution with a new business does not necessarily restore its customer relationships, reputation, neighborhood role, or accumulated commercial value.</p>
+
+  <h2>Why a single closure can affect an entire commercial district</h2>
+  <p>Businesses within a shopping district depend on one another.</p>
+  <p>Consider Hopkins Street. Monterey Market attracts shoppers whose trips may also include Magnani's, Hopkins Street Bakery, Gioia Pizzeria, and nearby merchants.</p>
+  <p>The loss of an anchor such as Monterey Market could change where customers do all their shopping. Some might consolidate their trips at Berkeley Bowl or another destination. Neighboring businesses could lose traffic despite remaining otherwise competitive.</p>
+  <p>That hypothetical illustrates an important feature of the City's fiscal exposure.</p>
+  <p>Most ordinary grocery sales are exempt from California sales tax. Restaurant meals and other taxable purchases made during the same shopping trip contribute to local sales-tax revenue.</p>
+  <p class="pull">A grocery store can support the taxable sales of nearby restaurants and shops even when most of what it sells produces no sales tax.</p>
+  <p>Commercial districts have relationships and dependencies that disappear when officials examine each business or storefront in isolation.</p>
+  <p>The viability of an anchor depends partly on the businesses surrounding it. Those businesses, in turn, depend on the convenience and attraction of the district as a whole.</p>
+  <p>Large-scale turnover can disrupt those relationships. A series of closures can reduce foot traffic, weaken remaining merchants, and create additional vacancies.</p>
+  <p>A municipal economic strategy needs to understand commercial districts as connected systems.</p>
+
+  <h2>The City is changing the economics of a shopping trip</h2>
+  <p>In June 2026, Berkeley's City Council <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-june-30-2026">approved extending parking-meter hours to 8 p.m. citywide and introducing paid Sunday parking</a>. A motion to drop the Sunday charges failed 2&ndash;6; the Mayor voted against it.</p>
+  <p>The approved changes also permit meter expansion into additional commercial areas and the eventual transition to cashless equipment. Implementation is being phased.</p>
+  <p>City staff estimated that the longer meter hours and Sunday charges would generate about <strong>$2.9 million a year</strong> in new meter revenue, or about $635,000 after the cost of added enforcement. Staff also argued that charging during high-demand periods could increase turnover and improve access to parking.</p>
+  <p>These are competing economic considerations that deserve evaluation.</p>
+  <p>Paid parking changes the cost of visiting a commercial district. Greater turnover may help customers find spaces. Higher charges may discourage some visits, shorten others, or shift shopping to competing destinations.</p>
+  <p>The consequences will vary by corridor, customer base, and available alternatives.</p>
+  <p>A commercial district anchored by restaurants and entertainment may experience the changes differently from one dependent on quick grocery trips or Sunday neighborhood shopping.</p>
+  <p><strong>How much of the projected parking revenue represents genuinely new City income, and how much might be offset by reduced visits, displaced purchases, or weaker taxable sales?</strong></p>
+  <p>The City should publish the assumptions, establish pre-implementation baselines, and monitor the results.</p>
+  <p>The same Council that says it wants to protect local businesses has chosen policies that change customers' incentives to visit them. That tradeoff belongs in an economic-development strategy.</p>
+
+  <h2>Berkeley's $10 million dependency</h2>
+  <p>Measure V asks voters to raise Berkeley's sales-tax rate by half a percentage point, to 10.75%. The measure is estimated to generate <strong>$9 million to $10 million annually</strong> for the General Fund.</p>
+  <p>Sales taxes generally impose a larger burden relative to income on lower-income households. The proposed increase also arrives in a city where some employers already struggle to hire workers who can afford to live nearby.</p>
+  <p>The Mayor herself said Berkeley must diversify its economy and retain businesses instead of watching them grow elsewhere.</p>
+  <p>Those objectives invite questions about the City's revenue projections.</p>
+  <p>What assumptions underlie the $9–10 million estimate? How sensitive is the forecast to slower taxable-sales growth? How are business closures, shopping patterns, online competition, parking charges, and displacement to neighboring commercial districts reflected in the model?</p>
+  <p>The City's <a href="https://berkeleyca.gov/sites/default/files/2026-03/2026-03-10%20Special%20Item%2001%20Berkeley%20Economic%20Dashboards.pdf">economic dashboard</a> reported sales-tax revenue growth of just 0.2% over the measured period through the second quarter of 2025, with the retail category declining 4% year over year in that quarter. Its subsequent sales-tax forecast projected nominal growth of approximately 1.7% for FY2026 and 1.3% for FY2027.</p>
+  <p>These figures make the assumptions behind Measure V consequential.</p>
+  <p>Aggregate taxable sales can remain stable as individual merchants come and go. But commercial dependencies and correlated closures can produce risks that are difficult to detect by looking at each merchant separately.</p>
+  <p>The City should disclose the revenue model's assumptions and show what happens when those assumptions change.</p>
+  <p>Berkeley's financial condition makes the distinction between a dependable revenue forecast and a hopeful one especially important.</p>
+
+  <h2>What a serious business-development agenda would measure</h2>
+  <p>Mayor Ishii described visiting more than 200 businesses, holding monthly office hours, helping firms navigate permits, organizing industry events, supporting temporary storefront activation, and contributing to a business-damage mitigation fund.</p>
+  <p>These activities demonstrate engagement. The speech provided little evidence of their economic results.</p>
+  <p>A substantial economic-development agenda would measure business openings and closures separately; track survival rates and commercial occupancy by corridor; identify businesses at risk of departure; examine permitting times and costs; assess workforce affordability; monitor the health of anchor businesses and related merchants; and evaluate the effects of redevelopment delays on existing commercial activity.</p>
+  <p>It would assess the economic effects of City decisions, including parking prices, construction disruption, redevelopment policy, and the interaction of taxable and tax-exempt businesses.</p>
+  <p>It would measure the results of tourism promotion, business assistance, and City-supported initiatives.</p>
+  <p>And it would ask which interventions actually work. How many businesses remained because the City solved a problem? How much private investment was retained or attracted? Did vacancy fall because businesses occupied spaces, or because spaces moved into a different classification? Did visitor promotion increase taxable sales and hotel nights?</p>
+  <p>The City already collects much of the necessary economic data. Its Office of Economic Development produces detailed dashboards. Its Budget Office produces tax-revenue projections. Its commissions and Council receive reports identifying stalled projects, business costs, and commercial-vacancy problems.</p>
+  <p>The challenge is to turn that information into an integrated strategy with priorities, measurable objectives, and accountability.</p>
+
+  <h2>What leadership requires</h2>
+  <p>Berkeley's commercial economy faces interconnected pressures: housing affordability, labor costs, business failures, changing consumer behavior, stalled redevelopment, and local policy choices that can alter the economics of an entire shopping district.</p>
+  <p>The City's fiscal future increasingly depends on understanding those pressures.</p>
+  <p>The Mayor's State of the City offered impressive numbers. Six hundred new brick-and-mortar businesses. Nearly 20% hotel-revenue growth. Just 6.3% storefront vacancy.</p>
+  <p>Each deserved scrutiny. The first implied extraordinary turnover. The second lacked a disclosed revenue series. The third omitted commercially inactive properties that the Mayor herself had previously identified as a major downtown problem.</p>
+  <p>At 24:13 of the <a href="https://www.youtube.com/watch?v=E60sHdlVJxU&amp;t=1453s">live stream</a>, as the Mayor announced the 600, the camera cut to City Manager Paul Buddenhagen and Councilmembers Igor Tregub and Terry Taplin, applauding. The City Manager&rsquo;s departments publish the dashboard, the vacancy survey and the revenue reports that test the figure. He and the Council share responsibility for testing figures presented as evidence of Berkeley's economic progress.</p>
+  <p>A figure of that magnitude should have prompted immediate questions. Which 600 businesses? Where are they? How many others closed? What happened to net commercial occupancy and taxable sales?</p>
+  <p>Those questions also belong in Council's consideration of a revenue forecast, a parking-policy change, and a tourism-promotion contract.</p>
+  <p class="pull">Berkeley's economic future requires leaders who understand the forces shaping its commercial districts, challenge extraordinary statistics, and demand financial analysis before committing public resources. The standard should be especially demanding when the City is asking residents for more money.</p>
+  <p><strong>The applause came easily. The questions that protect a city's economic future deserve at least as much attention.</strong></p>
+
+  <footer>
+    <h3>Sources and method</h3>
+    <p>Mayor Adena Ishii, <a href="https://www.youtube.com/watch?v=E60sHdlVJxU">2026 State of the City address</a>, September 23, 2026, Berkeley Community Media (600 businesses at approximately 24:13). Her April 15, 2026 budget email was distributed to constituents and retained by this site&rsquo;s publisher.</p>
+    <p>City of Berkeley Office of Economic Development, <a href="https://berkeleyca.gov/sites/default/files/2026-03/2026-03-10%20Special%20Item%2001%20Berkeley%20Economic%20Dashboards.pdf"><em>2025 Economic Dashboards</em></a>, City Manager&rsquo;s report, March 10, 2026: pp. 3&ndash;4 of report (storefront vacancies, Downtown reclassification, tax performance); dashboard p. 14 (hotel revenue); pp. 19&ndash;21 (retail inventory, district vacancy and &ldquo;leased or pending development&rdquo; classification). Compare <a href="https://berkeleyca.gov/sites/default/files/city-council-meetings/2025-02-25%20Special%20Agenda%20Packet%20-%20Council.pdf">2024 City Manager report, February 25, 2025</a> (about 240,000 square feet and over 50 Downtown spaces similarly classified).</p>
+    <p>City of Berkeley open data: Business Licenses, Zoning and Parcels, exported October 19, 2026. The active license snapshot contained 13,776 records. Storefront proxy counts are derived by selecting Retail Trade, Grocer, Entertainment Recreation, Business Personal Repair Services, Massage, Cannabis and Motor Vehicle Sales license categories, matching available assessor parcel identifiers to parcels and zoning, and separating commercial/industrial parcels from other uses in commercially zoned areas. Records lacking parcel identifiers and non-identical categories mean the 1,255&ndash;1,598 range is illustrative, not a census or a dated opening series.</p>
+    <p>City Manager, <a href="https://berkeleyca.gov/sites/default/files/2026-05/2026-05-19%20Item%2021%20Proposed%20FY%202027%20and%20FY%202028%20-%20Supp%202.pdf">Proposed FY2027&ndash;28 Budget, Supplemental Packet 2</a>, May 19, 2026, mid-year General Fund revenue report (sales-tax forecast and transient-occupancy-tax projection).</p>
+    <p>Mayor Ishii (co-sponsor), Councilmembers Tregub, Blackaby and O&rsquo;Keefe, <a href="https://berkeleyca.gov/sites/default/files/documents/2025-12-02%20Item%2033%20Referral%20to%20the%20City%20Manager%20and%20City.pdf"><em>Vibrant Storefront Policy</em></a>, December 2, 2025, esp. pp. 1&ndash;5: stalled retail deactivations, withdrawn utilities, redevelopment economics and the Downtown Berkeley Association&rsquo;s 2024 28.2% estimate including redevelopment sites.</p>
+    <p>Councilmember Kesarwani (author), Mayor Ishii and Councilmember Tregub (co-sponsors), <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-agendas/2026-01-26%20Agenda%20Packet%20-%20Agenda%20Committee.pdf#page=19"><em>Referral to Establish a Citywide Local Density Bonus Program</em></a>, February 10, 2026, pp. 1&ndash;3, appendix in the January 26 Agenda &amp; Rules packet: nine stalled downtown developments, addresses and conditions (some wording in the report is internally imprecise about whether a site had broken ground). <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-september-15-2026">Council September 15, 2026 agenda</a>, item 20, &ldquo;Commercial Vacancy Blight Prevention and Mitigation&rdquo;: proposal to prevent deactivation and manage delayed developments.</p>
+    <p><a href="https://www.sfgate.com/local/article/half-price-books-berkeley-closing-20634290.php">SFGATE, July 6, 2025</a>, on the planned November 30 closure of Half Price Books in the Kress Building at Shattuck and Addison; <a href="https://peninsulapress.com/2025/12/22/half-price-books-closes-a-20-year-chapter-in-berkeley/">Peninsula Press, December 22, 2025</a>, reporting the completed closure and other inactive Downtown blocks. The Freight &amp; Salvage lists its address as <a href="https://thefreight.org/contact-us-orig/">2020 Addison Street</a>.</p>
+
+    <p>City of Berkeley, <a href="https://berkeleyca.gov/sites/default/files/documents/2023-07-25%20Item%2004%20Contract%20Berkeley%20Convention%20and%20Visitor.pdf">Visit Berkeley transient-occupancy-tax allocation, July 25, 2023</a> (one-twelfth of annual TOT), and <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-june-9-2026">June 9, 2026 Council agenda, item 7</a> (Visit Berkeley contract ceiling amended to $4,614,351).</p>
+    <p>City Council, <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-june-30-2026">June 30, 2026 agenda, item 1</a>, second reading of parking-meter Ordinance 8,012-N.S. (8 p.m. and Sunday parking changes); staff fiscal projection and implementation details in the <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-june-9-2026">June 9 Council materials, item 24</a>. Authorization and implementation are separate steps.</p>
+    <p>Visit Berkeley: homepage, &ldquo;Things to Do&rdquo; page and restaurant directory as captured on August 31, 2026 (Kite Festival homepage image; Habitot as the first &ldquo;explore Berkeley like a local&rdquo; suggestion; 13 closed restaurants and the closed 920 University Avenue hotel still listed, from a manual review of the directory); Habitot&rsquo;s description of itself as &ldquo;100% Mobile&rdquo; from its site the same day; <a href="https://www.visitberkeley.com/media-press/press-kit/berkeleys-boroughs/">&ldquo;Berkeley&rsquo;s Boroughs&rdquo; press kit</a> (Half Price Books). The Kite Festival was canceled in 2022 after its permit fee rose (CBS San Francisco, July 31, 2022).</p>
+    <p><a href="https://www.sfgate.com/food/article/nabolom-bakery-berkekey-closure-22480409.php">SFGATE</a> on Nabolom Bakery &amp; Pizzeria&rsquo;s October 18, 2026 closure after 50 years and its cost and staffing problems; <a href="https://www.sfchronicle.com/food/restaurants/article/nabolom-bakery-berkeley-politics-closure-22482696.php">San Francisco Chronicle</a> on the owners&rsquo; account of political backlash alongside rising costs.</p>
+    <h3>Related</h3>
+    <p><a href="economic-development-strategy.html">Where Is the Economic Development Strategy?</a> &middot;
+    <a href="measure-v-debate-fact-check.html">Fact-Checking the Measure V Debate</a> &middot;
+    <a href="quiz-why-another-sales-tax.html">Why Another Sales Tax?</a> &middot;
+    <a href="index.html">Decision Project home</a></p>
+    <h3>Corrections</h3>
+    <p>Documented corrections and source data from the City are welcome.</p>
+  </footer>
+</div>
+
+</body>
+</html>
