@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Financial Riptide at the Waterfront</title>
+<meta name="description" content="Berkeley charges waterfront parks and recreation to a boating fund. The resulting shortfall now pushes the waterfront toward a ferry with no nearby riders, at the expense of the recreation the waterfront exists for.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --node:#8a8f98; --boat:#2a78d6; --nonboat:#eb6834; --support:#6250d6; --parks:#1baf7a; --neutral:#a7abb2;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331;
+    --node:#7d838c; --boat:#3987e5; --nonboat:#d95926; --support:#9085e9; --parks:#199e70; --neutral:#6c727b; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+  --node:#7d838c; --boat:#3987e5; --nonboat:#d95926; --support:#9085e9; --parks:#199e70; --neutral:#6c727b;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --node:#8a8f98; --boat:#2a78d6; --nonboat:#eb6834; --support:#6250d6; --parks:#1baf7a; --neutral:#a7abb2;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; line-height: 1.35;
+     margin: 1.9rem 0 .7rem; color: var(--ink); }
+p { margin-bottom: 1.05rem; }
+ul, ol { margin: 0 0 1.05rem 1.3rem; }
+li { margin-bottom: .55rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+a { color: var(--quote); }
+sup a { text-decoration: none; font-family: var(--sans); font-size: .72em; }
+
+blockquote { margin: 1.4rem 0; padding: .9rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0; }
+blockquote p { margin-bottom: .5rem; }
+blockquote .attrib { font-family: var(--sans); font-size: .76rem; color: var(--ink-2); margin: 0; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+.srcnote { background: var(--panel); border: 1px solid var(--rule); border-left: 3px solid var(--quote);
+           border-radius: 0 4px 4px 0; padding: 1rem 1.2rem; margin: 1.6rem 0 2rem;
+           font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--ink-2); }
+.srcnote .lbl { display: block; font-size: .66rem; font-weight: 700; letter-spacing: .12em;
+                text-transform: uppercase; color: var(--quote); margin-bottom: .5rem; }
+.srcnote p { margin-bottom: .7rem; }
+.srcnote p:last-child { margin-bottom: 0; }
+
+.proposal { background: var(--accent-soft); border: 1px solid var(--rule); border-left: 4px solid var(--accent);
+            border-radius: 4px; padding: 1.1rem 1.25rem 1.2rem; margin: 1.4rem 0; }
+.proposal-h { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .12em;
+              text-transform: uppercase; color: var(--accent); margin-bottom: .7rem; }
+.proposal ol { margin-bottom: 0; }
+
+/* Data tables in the reading column. */
+table.data { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .82rem; line-height: 1.45; margin: 1.2rem 0 1.4rem; }
+table.data th, table.data td { text-align: left; padding: .45rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+table.data th { font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); font-weight: 700; }
+table.data td.n, table.data th.n { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tscroll { overflow-x: auto; }
+
+/* Flow charts: wider than the reading column on large screens, scroll inside their box on small ones.
+   The SVGs are pre-rendered (d3-sankey layout, serialized); the script at the end adds hover and focus. */
+.fig { width: min(1080px, calc(100vw - 32px)); margin: 2rem 0 2rem calc(50% - min(540px, 50vw - 16px));
+       background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 1rem 1rem 1.1rem;
+       font-family: var(--sans); }
+.fig-h { font-size: 1rem; font-weight: 700; margin-bottom: .25rem; }
+.fig-sub { font-size: .8rem; color: var(--ink-2); line-height: 1.5; margin-bottom: .7rem; max-width: 80ch; }
+.legend { display: flex; flex-wrap: wrap; gap: .35rem 1.2rem; font-size: .78rem; color: var(--ink-2); margin-bottom: .6rem; }
+.legend span { display: inline-flex; align-items: center; gap: .45rem; }
+.sw { width: 13px; height: 13px; border-radius: 3px; display: inline-block; }
+.sw.hatch { background: repeating-linear-gradient(45deg, var(--neutral) 0 2.5px, transparent 2.5px 6px); outline: 1px solid var(--neutral); outline-offset: -1px; }
+.fig .scroll { overflow-x: auto; }
+.fig-cap { font-size: .78rem; color: var(--ink-2); line-height: 1.55; margin-top: .6rem; max-width: 84ch; }
+.fig-hint { font-size: .72rem; color: var(--ink-3); margin-top: .35rem; }
+svg.chart { display: block; min-width: 860px; width: 100%; height: auto; }
+svg.chart .lbl { font-family: var(--sans); font-size: 13px; fill: var(--ink); pointer-events: none; }
+svg.chart .lbl .v { font-family: var(--mono); font-size: 12px; fill: var(--ink-2); }
+svg.chart .colhead { font-family: var(--sans); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; fill: var(--ink-3); font-weight: 600; }
+svg.chart .link { fill: none; stroke-opacity: .42; transition: stroke-opacity .12s; cursor: default; }
+svg.chart .link:focus { outline: none; }
+svg.chart .node rect { stroke: var(--panel); stroke-width: 1; }
+svg.chart .node:focus { outline: none; }
+svg.chart .node:focus rect { stroke: var(--ink); stroke-width: 2; }
+svg.chart.hl .link { stroke-opacity: .1; }
+svg.chart.hl .link.on { stroke-opacity: .82; }
+#tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--ground); font-family: var(--sans);
+       font-size: .8rem; padding: .5rem .65rem; border-radius: 6px; max-width: 300px; line-height: 1.4; z-index: 60; }
+#tip b { display: block; font-weight: 600; }
+#tip .m { font-family: var(--mono); }
+#tip .note { display: block; margin-top: .25rem; opacity: .8; }
+details.figs { margin: .8rem 0 0; font-size: .8rem; }
+details.figs summary { cursor: pointer; color: var(--quote); font-weight: 600; }
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin: 1.2rem 0 .5rem; font-weight: 700; }
+footer h3:first-child { margin-top: 0; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+@media (prefers-reduced-motion: reduce) { svg.chart .link { transition: none; } }
+@media print {
+  .nav { position: static; }
+  .srcnote, .proposal, .fig { break-inside: avoid; }
+  .fig { width: auto; margin-left: 0; }
+  svg.chart { min-width: 0; }
+  .fig-hint, #tip { display: none; }
+}
+
+.pq-primary { margin: 2.2rem 0; padding: 1.4rem 1.5rem; background: var(--accent-soft); border-left: 6px solid var(--accent);
+              border-radius: 0 6px 6px 0; }
+.pq-primary p { font-size: 1.6rem; line-height: 1.3; font-weight: 600; margin-bottom: .6rem; }
+.pq-primary p.attrib { font-family: var(--sans); font-size: .76rem; font-weight: 400; color: var(--ink-2); margin: 0; }
+details.rec { border-top: 1px solid var(--rule); padding: .7rem 0; }
+details.rec:last-of-type { border-bottom: 1px solid var(--rule); }
+details.rec > summary { cursor: pointer; font-family: var(--sans); font-weight: 700; font-size: .98rem; color: var(--ink); }
+details.rec[open] > summary { margin-bottom: 1rem; }
+@media (max-width: 640px) { .pq-primary p { font-size: 1.25rem; } }
+</style>
+</head><body>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div>
+
+<div class="wrap">
+
+
+  <div class="kicker">The waterfront</div>
+  <h1>A Financial Riptide Is Threatening to Reshape Berkeley's Waterfront</h1>
+  <div class="byline">Berkeley Decision Project &middot; October 2026</div>
+
+  <p>Berkeley has created a financial problem on its waterfront, and now that problem threatens to determine the waterfront's future.</p>
+
+  <p>Unlike parks and recreation elsewhere in the city, waterfront parks, landscaping, recreation programs and other public services have long been charged to the Marina Fund. That fund relies heavily on revenue from boaters and waterfront businesses. The City has effectively required the marina to subsidize services ordinarily supported by other municipal funding sources.<sup><a href="#s-att2">[10]</a> <a href="#s-mmp">[27]</a></sup></p>
+
+  <p>In 2023, California's Division of Boating and Waterways called out the problem. The State found that Berkeley was using its enterprise fund to support non-revenue-generating activities. Its analysis showed that boating revenue could cover boating costs and loan payments. The marina's financial problem is a consequence of the City's funding structure.<sup><a href="#s-dbw23">[1]</a></sup></p>
+
+  <blockquote class="pq-primary">
+    <p>&ldquo;This is not how enterprise funds are typically used.&rdquo;</p>
+    <p class="attrib">California Division of Boating and Waterways, quoted in Council Item 19, July 25, 2023, p. 12<sup><a href="#s-item19">[2]</a></sup></p>
+  </blockquote>
+
+  <p>The State offered Berkeley a choice: provide additional financial security for a $5.5 million dock-replacement loan, or move non-boating expenses off the Marina Fund. Berkeley instead borrowed the money internally from its Workers' Compensation Fund.<sup><a href="#s-item19">[2]</a></sup></p>
+
+  <p>The City has since shifted about $1.58 million in waterfront expenses to Parks Tax funding.<sup><a href="#s-prw">[13]</a></sup> That demonstrates that the allocation of costs can be changed. But why should the financial health of the marina depend on paying for public services that the City ordinarily funds elsewhere?</p>
+
+  <h2>Ferry-tale economics</h2>
+
+  <p>Against this backdrop, Berkeley is pursuing a ferry terminal whose construction could attract outside funding, but whose operation would require ongoing subsidies.</p>
+
+  <p>The ferry has a fundamental problem: almost nobody lives near the proposed terminal. Unlike BART stations embedded in residential and commercial neighborhoods, the ferry would sit at the end of a road, far from the population it needs to attract. The regional ferry agency said so in its 2022 business plan: the terminal would be &ldquo;approximately one mile from the east side of Interstate 80, where the populated area of Berkeley begins. Because of this, walking to or from the terminal will be impractical for many trips.&rdquo;<sup><a href="#s-wetabp">[30]</a></sup> Nobody will move closer: the waterfront is State tidelands, where &ldquo;no residential development is permitted.&rdquo;<sup><a href="#s-pc21">[31]</a></sup></p>
+
+  <p>The project anticipates substantial driving to the terminal and parking there. That adds traffic and environmental impacts to a service already facing difficult economics.</p>
+
+  <p>Our <a href="pier-ferry.html">separate ferry analysis</a> examines why the proposed service is unlikely to cover its operating costs without continuing subsidies: in the year its feasibility rests on, the agency's plan has the public paying slightly more per ride than the rider. Construction grants cannot make an unsuccessful transportation service financially sustainable.</p>
+
+  <p>The DoubleTree hotel is a warning. It pays rent to the Marina Fund, but it is isolated from downtown Berkeley and the university, and by September 2026 it owed the City about $890,000.<sup><a href="#s-prw">[13]</a></sup> Revenue that depends on businesses poorly connected to the rest of the city is fragile, and a ferry terminal would sit in the same district.</p>
+
+  <p>The waterfront also carries more than $163 million in unfunded capital needs, a separate problem that a service needing operating subsidies would do nothing to relieve.<sup><a href="#s-prw">[13]</a></sup></p>
+
+  <h2>Where is Berkeley's mobility vision?</h2>
+
+  <p>The ferry's dependence on automobile access exposes a contradiction in Berkeley's transportation policies.</p>
+
+  <p>On Hopkins Street, the Council voted in July 2026 to install protected bike lanes through a neighborhood shopping district, with permits for residents &ldquo;living on or adjacent to a block with parking loss.&rdquo;<sup><a href="#s-hop">[32]</a></sup> Councilmember Mark Humbert, a co-sponsor, put the case in climate terms:</p>
+
+  <blockquote>
+    <p>&ldquo;We here in Berkeley cannot act like climate change is a hoax by refusing to take action in our community and in our lives. We must avoid making Berkeley a city that believes in climate action, except if it would mean parking our second car further away from our house.&rdquo;</p>
+    <p class="attrib">Councilmember Mark Humbert, Council meeting of July 28, 2026, 5:45:58<sup><a href="#s-hop">[32]</a></sup></p>
+  </blockquote>
+
+  <p>Yet at the waterfront, Berkeley is planning a transportation service that expects people to drive to a parking lot before boarding.</p>
+
+  <p>Imagine the commute: drive to the ferry, park, cross the Bay, return and drive home. Stopping on Hopkins to pick up dinner becomes harder, because parking has been removed in the name of reducing automobile use.</p>
+
+  <p>North Berkeley BART is within walking distance of Hopkins Street, just as Berkeley Bowl is from Ashby BART and Trader Joe&rsquo;s is from Downtown Berkeley BART; drivers have Berkeley Bowl West, with ample parking and the Emery Go-Round shuttle at its door.</p>
+
+  <p>Parking can be right in one place and wrong in another. What is missing is a citywide mobility vision that weighs door-to-door travel, access to businesses, driving and emissions across these choices. Instead, the City risks encouraging driving to an isolated ferry while discouraging it in an existing shopping district. Does Berkeley's transportation policy reflect a consistent environmental vision, or is project funding driving the decisions?</p>
+
+  <h2>Risking recreation to rebuild what was once a jewel of the Bay</h2>
+
+  <p>The Berkeley Pier opened in 1927 for ferries carrying passengers and their cars, early in the automobile age. When the Bay Bridge opened in 1936, demand for the ferries collapsed, and service to San Francisco ended in October 1937, the year the Golden Gate Bridge opened.<sup><a href="#s-deir">[16]</a></sup> The pier found its lasting value as recreation: from 1938 until it closed in 2015, it was a public promenade reaching far over the water, with sweeping views and an experience available almost nowhere else.</p>
+
+  <p>A century later, Berkeley proposes a passenger ferry terminal there whose parking study expects 52 percent of riders to drive or carpool to the boat, and 4 percent to walk.<sup><a href="#s-tdm">[19]</a></sup> The Council that voted to remove parking on Hopkins Street in the name of climate action is weighing a waterfront terminal that most riders would reach by car.</p>
+
+  <p>Rebuilding the structure does not by itself restore the experience. If free or convenient access and parking are lost, the rebuilt pier may not become the beloved public destination it once was.</p>
+
+  <p class="pull">Berkeley risks sacrificing existing waterfront recreation to rebuild what was once a recreational jewel of the Bay.</p>
+
+  <p>The surrounding waterfront already supports sailing, windsurfing, wing foiling, kayaking and small-boat recreation. These activities depend on nearby parking, loading, launch facilities and direct shoreline access. The San Francisco Boardsailing Association's <a href="https://sfba.org/images/2026/SFBA_State_of_Access_2026_1.pdf"><em>The State of Recreational Access to the San Francisco Bay: 2026</em></a> documents the risks from parking charges, time limits and shoreline-access changes.<sup><a href="#s-sfba">[22]</a></sup></p>
+
+  <p>A ferry terminal would add traffic, parking demand, passenger facilities and competition for space. Once the infrastructure is built and the waterfront reorganized around it, there may be no practical way to reverse the changes.</p>
+
+  <h2>Vision first, financing second</h2>
+
+  <p>Albany, just north of Berkeley, offers a contrast. Its General Plan makes open space, public access to the shoreline and outdoor recreation the primary objectives of any change on its waterfront, and only then turns to fiscal impacts and implementation.<sup><a href="#s-alb-gp">[35]</a></sup> Albany lacks Berkeley's marina and enterprise-fund obligations, so this is a comparison of decision sequence, not of municipal finances.</p>
+
+  <p>Berkeley already knows what its waterfront is for: public recreation, maritime activities and shoreline access that are hard to replace elsewhere. It should affirm that purpose and correct the financial scheme that undermined it, rather than let funding opportunities redefine it.</p>
+
+  <p>A city's vision should determine its investments&mdash;not the availability of funding determine its vision.</p>
+
+  <p>Berkeley should not let available project funding override the waterfront's recreational purpose. Repair the Marina Fund's allocation of public-service costs, and invest in sustaining waterfront recreation. The ferry's economics, environmental logic and effect on existing recreation require scrutiny before an irreversible commitment.</p>
+
+
+  <h2 id="record">The record behind this article</h2>
+
+  <p>Supporting evidence: the Marina Fund charts and accounts, and the primary-source record behind the article. Each section opens on its own.</p>
+  <details class="rec">
+  <summary>Where the Marina Fund's money comes from and goes (charts)</summary>
+
+  <p>The Marina Fund was created in 1964 to repay the State loans that built the marina.<sup><a href="#s-item19">[2]</a></sup> The waterfront sits on tidelands granted to the City in 1913, and revenue earned there is spent there.<sup><a href="#s-mfu18">[3]</a></sup> The fund became the account for the whole waterfront, and the City manages it as an enterprise fund, &ldquo;in which revenue is expected to cover expenses.&rdquo;<sup><a href="#s-nov24">[8]</a></sup> The City's audited report groups it with zero waste, sewers and parking: activities &ldquo;intended to recover all or a significant portion of their costs through user fees and charges.&rdquo;<sup><a href="#s-acfr">[14]</a></sup></p>
+
+  <p>The chart shows where the money came from and went in fiscal year 2023, the only year for which this project found the City's spending broken down by activity. Each band is drawn to scale. Hover over a band to see its amount; hover over a bar to trace its flows.</p>
+
+  <div class="fig" id="fig23">
+    <div class="fig-h">Marina Fund, fiscal year 2023</div>
+    <p class="fig-sub">Revenue is the FY2023 actual. Spending is the City's FY2023 estimate by category, split by the City's boating percentages as tabulated by the State. Both charts use the same dollar scale.</p>
+    <div class="legend" aria-label="Legend">
+      <span><i class="sw" style="background:var(--boat)"></i>Boating</span>
+      <span><i class="sw" style="background:var(--nonboat)"></i>Non-boating</span>
+      <span><i class="sw" style="background:var(--support)"></i>One-time support from outside the fund</span>
+      <span><i class="sw" style="background:var(--parks)"></i>Parks Tax</span>
+      <span><i class="sw" style="background:var(--neutral)"></i>Mixed or not split</span>
+      <span><i class="sw hatch"></i>Approximate</span>
+    </div>
+    <div class="scroll"><svg class="chart" role="img" aria-labelledby="d23" viewBox="0 0 1080 660"><desc id="d23">Flow diagram of the Marina Fund in fiscal year 2023, from revenue sources through boating and non-boating shares to spending categories, with waterfront hotel tax flowing to the General Fund. Figures are in the table below.</desc><defs><pattern id="h-c23" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2.5" height="6" style="fill:var(--neutral)"></rect></pattern></defs><g><text class="colhead" x="224" y="14" text-anchor="end">Revenue</text><text class="colhead" x="412" y="14" text-anchor="start">Fund</text><text class="colhead" x="614" y="14" text-anchor="start">Share</text><text class="colhead" x="816" y="14" text-anchor="start">Spending</text></g><g><path class="link" d="M224,120.29C318,120.29,318,160.17,412,160.17" tabindex="0" style="stroke:var(--boat)" stroke-width="172.58023380429196" aria-label="FY2023: Berth rentals to Marina Fund, $3,615,881" data-s="berth" data-t="fund" data-tip="Berth rentals → Marina Fund|$3,615,881|"></path><path class="link" d="M224,248.311C318,248.311,318,262.191,412,262.191" tabindex="0" style="stroke:var(--boat)" stroke-width="31.461562462614058" aria-label="FY2023: Other boating fees and fines to Marina Fund, $659,179" data-s="fees" data-t="fund" data-tip="Other boating fees and fines → Marina Fund|$659,179|"></path><path class="link" d="M224,335.916C318,335.916,318,323.796,412,323.796" tabindex="0" style="stroke:var(--nonboat)" stroke-width="91.74869529275463" aria-label="FY2023: Waterfront leases to Marina Fund, $1,922,308" data-s="lease" data-t="fund" data-tip="Waterfront leases → Marina Fund|$1,922,308|"></path><path class="link" d="M224,413.181C318,413.181,318,375.061,412,375.061" tabindex="0" style="stroke:var(--neutral)" stroke-width="10.780176258069998" aria-label="FY2023: Interest, events, programs to Marina Fund, $225,865" data-s="other" data-t="fund" data-tip="Interest, events, programs → Marina Fund|$225,865|"></path><path class="link" d="M224,472.015C318,472.015,318,407.895,412,407.895" tabindex="0" style="stroke:var(--support)" stroke-width="54.88766606946848" aria-label="FY2023: Federal aid (ARPA) to Marina Fund, $1,150,000" data-s="arpa" data-t="fund" data-tip="Federal aid (ARPA) → Marina Fund|$1,150,000|"></path><path class="link" d="M224,540.512C318,540.512,318,450.393,412,450.393" tabindex="0" style="stroke:url(#h-c23)" stroke-width="30.10831898777263" aria-label="FY2023: Drawn from reserves to Marina Fund, $630,826" data-s="gap" data-t="fund" data-tip="Drawn from reserves → Marina Fund|$630,826|Approximate: spending estimate less actual revenue. Actual FY2023 drawdown was $892,589."></path><path class="link" d="M224,613.783C318,613.783,318,612.899,412,612.899" tabindex="0" style="stroke:url(#h-c23)" stroke-width="64.43334712502822" aria-label="FY2023: Waterfront hotel tax to General Fund, $1.0–1.7M" data-s="tot" data-t="gf" data-tip="Waterfront hotel tax → General Fund|$1.0–1.7M|City range $1.0–1.7M; drawn at the midpoint"></path><path class="link" d="M426,152.27C520,152.27,520,125.59,614,125.59" tabindex="0" style="stroke:var(--boat)" stroke-width="156.77950659505032" aria-label="FY2023: Marina Fund to Boating share, $3,284,826" data-s="fund" data-t="sb" data-tip="Marina Fund → Boating share|$3,284,826|"></path><path class="link" d="M426,328.3C520,328.3,520,327.62,614,327.62" tabindex="0" style="stroke:var(--nonboat)" stroke-width="195.28139066338193" aria-label="FY2023: Marina Fund to Non-boating share, $4,091,513" data-s="fund" data-t="sn" data-tip="Marina Fund → Non-boating share|$4,091,513|"></path><path class="link" d="M426,445.694C520,445.694,520,471.014,614,471.014" tabindex="0" style="stroke:var(--neutral)" stroke-width="39.505707888134246" aria-label="FY2023: Marina Fund to Debt service, state dock loans, $827,719" data-s="fund" data-t="debt" data-tip="Marina Fund → Debt service, state dock loans|$827,719|"></path><path class="link" d="M628,83.988C722,83.988,722,70.788,816,70.788" tabindex="0" style="stroke:var(--boat)" stroke-width="73.57557997077473" aria-label="FY2023: Boating share to Marina operations, $1,541,547" data-s="sb" data-t="ops" data-tip="Boating share → Marina operations|$1,541,547|"></path><path class="link" d="M628,246.195C722,246.195,722,123.791,816,123.791" tabindex="0" style="stroke:var(--nonboat)" stroke-width="32.43159457148003" aria-label="FY2023: Non-boating share to Marina operations, $679,503" data-s="sn" data-t="ops" data-tip="Non-boating share → Marina operations|$679,503|"></path><path class="link" d="M628,129.486C722,129.486,722,174.718,816,174.718" tabindex="0" style="stroke:var(--boat)" stroke-width="17.421345210449296" aria-label="FY2023: Boating share to Building maintenance, $365,010" data-s="sb" data-t="bldg" data-tip="Boating share → Building maintenance|$365,010|"></path><path class="link" d="M628,275.477C722,275.477,722,196.495,816,196.495" tabindex="0" style="stroke:var(--nonboat)" stroke-width="26.131970087268666" aria-label="FY2023: Non-boating share to Building maintenance, $547,514" data-s="sn" data-t="bldg" data-tip="Non-boating share → Building maintenance|$547,514|"></path><path class="link" d="M628,306.611C722,306.611,722,253.629,816,253.629" tabindex="0" style="stroke:var(--nonboat)" stroke-width="36.13636884595333" aria-label="FY2023: Non-boating share to Landscape services, $757,125" data-s="sn" data-t="land" data-tip="Non-boating share → Landscape services|$757,125|"></path><path class="link" d="M628,337.876C722,337.876,722,310.893,816,310.893" tabindex="0" style="stroke:var(--nonboat)" stroke-width="26.392805822111836" aria-label="FY2023: Non-boating share to Recreation, $552,979" data-s="sn" data-t="rec" data-tip="Non-boating share → Recreation|$552,979|"></path><path class="link" d="M628,140.811C722,140.811,722,352.704,816,352.704" tabindex="0" style="stroke:var(--boat)" stroke-width="5.228360427751179" aria-label="FY2023: Boating share to Security, $109,544" data-s="sb" data-t="sec" data-tip="Boating share → Security|$109,544|"></path><path class="link" d="M628,354.267C722,354.267,722,358.513,816,358.513" tabindex="0" style="stroke:var(--nonboat)" stroke-width="6.390165269023354" aria-label="FY2023: Non-boating share to Security, $133,886" data-s="sn" data-t="sec" data-tip="Non-boating share → Security|$133,886|"></path><path class="link" d="M628,150.12C722,150.12,722,394.403,816,394.403" tabindex="0" style="stroke:var(--boat)" stroke-width="13.390538199523364" aria-label="FY2023: Boating share to Waterfront management, $280,557" data-s="sb" data-t="mgmt" data-tip="Boating share → Waterfront management|$280,557|"></path><path class="link" d="M628,364.539C722,364.539,722,408.176,816,408.176" tabindex="0" style="stroke:var(--nonboat)" stroke-width="14.154192683968143" aria-label="FY2023: Non-boating share to Waterfront management, $296,557" data-s="sn" data-t="mgmt" data-tip="Non-boating share → Waterfront management|$296,557|"></path><path class="link" d="M628,165.688C722,165.688,722,450.125,816,450.125" tabindex="0" style="stroke:var(--boat)" stroke-width="17.743989230127216" aria-label="FY2023: Boating share to Capital and minor maintenance, $371,770" data-s="sb" data-t="cap" data-tip="Boating share → Capital and minor maintenance|$371,770|"></path><path class="link" d="M628,383.789C722,383.789,722,471.17,816,471.17" tabindex="0" style="stroke:var(--nonboat)" stroke-width="24.34597316177344" aria-label="FY2023: Non-boating share to Capital and minor maintenance, $510,094" data-s="sn" data-t="cap" data-tip="Non-boating share → Capital and minor maintenance|$510,094|"></path><path class="link" d="M628,189.269C722,189.269,722,524.053,816,524.053" tabindex="0" style="stroke:var(--boat)" stroke-width="29.41969355642455" aria-label="FY2023: Boating share to Admin, overhead, internal services, $616,398" data-s="sb" data-t="adm" data-tip="Boating share → Admin, overhead, internal services|$616,398|"></path><path class="link" d="M628,410.612C722,410.612,722,553.412,816,553.412" tabindex="0" style="stroke:var(--nonboat)" stroke-width="29.29832022180311" aria-label="FY2023: Non-boating share to Admin, overhead, internal services, $613,855" data-s="sn" data-t="adm" data-tip="Non-boating share → Admin, overhead, internal services|$613,855|"></path></g><g><g class="node" data-id="berth" data-tip="Berth rentals|$3,615,881|"><rect x="210" y="34" width="14" height="172.580233804292" rx="2" style="fill:var(--boat)"></rect><text class="lbl" x="202" y="120.290116902146" text-anchor="end"><tspan x="202" dy="-0.15em">Berth rentals</tspan><tspan class="v" x="202" dy="1.25em">$3.62M</tspan></text></g><g class="node" data-id="fees" data-tip="Other boating fees and fines|$659,179|"><rect x="210" y="232.580233804292" width="14" height="31.461562462614097" rx="2" style="fill:var(--boat)"></rect><text class="lbl" x="202" y="248.31101503559904" text-anchor="end"><tspan x="202" dy="-0.15em">Other boating fees and fines</tspan><tspan class="v" x="202" dy="1.25em">$659K</tspan></text></g><g class="node" data-id="lease" data-tip="Waterfront leases|$1,922,308|"><rect x="210" y="290.0417962669061" width="14" height="91.74869529275463" rx="2" style="fill:var(--nonboat)"></rect><text class="lbl" x="202" y="335.9161439132834" text-anchor="end"><tspan x="202" dy="-0.15em">Waterfront leases</tspan><tspan class="v" x="202" dy="1.25em">$1.92M</tspan></text></g><g class="node" data-id="other" data-tip="Interest, events, programs|$225,865|"><rect x="210" y="407.7904915596607" width="14" height="10.780176258070014" rx="2" style="fill:var(--neutral)"></rect><text class="lbl" x="202" y="413.18057968869573" text-anchor="end"><tspan x="202" dy="-0.15em">Interest, events, programs</tspan><tspan class="v" x="202" dy="1.25em">$226K</tspan></text></g><g class="node" data-id="arpa" data-tip="Federal aid (ARPA)|$1,150,000|"><rect x="210" y="444.57066781773074" width="14" height="54.88766606946831" rx="2" style="fill:var(--support)"></rect><text class="lbl" x="202" y="472.0145008524649" text-anchor="end"><tspan x="202" dy="-0.15em">Federal aid (ARPA)</tspan><tspan class="v" x="202" dy="1.25em">$1.15M</tspan></text></g><g class="node" data-id="gap" data-tip="Drawn from reserves|$630,826|"><rect x="210" y="525.458333887199" width="14" height="30.108318987772805" rx="2" style="fill:url(#h-c23)"></rect><text class="lbl" x="202" y="540.5124933810855" text-anchor="end"><tspan x="202" dy="-0.15em">Drawn from reserves</tspan><tspan class="v" x="202" dy="1.25em">$631K</tspan></text></g><g class="node" data-id="tot" data-tip="Waterfront hotel tax|$1.0–1.7M|"><rect x="210" y="581.5666528749719" width="14" height="64.43334712502826" rx="2" style="fill:url(#h-c23)"></rect><text class="lbl" x="202" y="613.783326437486" text-anchor="end"><tspan x="202" dy="-0.15em">Waterfront hotel tax</tspan><tspan class="v" x="202" dy="1.25em">$1.0–1.7M</tspan></text></g><g class="node" data-id="fund" data-tip="Marina Fund|$8,204,058|"><rect x="412" y="73.88007783643835" width="14" height="391.56665287497174" rx="2" style="fill:var(--node)"></rect><text class="lbl" x="412" y="55.880077836438346" text-anchor="start"><tspan x="412" dy="0">Marina Fund</tspan><tspan class="v" x="412" dy="1.25em">$8.20M</tspan></text></g><g class="node" data-id="gf" data-tip="General Fund|$1.0–1.7M|"><rect x="412" y="580.6822252068491" width="14" height="64.43334712502815" rx="2" style="fill:var(--node)"></rect><text class="lbl" x="412" y="562.6822252068491" text-anchor="start"><tspan x="412" dy="0">General Fund</tspan><tspan class="v" x="412" dy="1.25em">$1.0–1.7M</tspan></text></g><g class="node" data-id="sb" data-tip="Boating share|$3,284,826|"><rect x="614" y="47.19981591429038" width="14" height="156.77950659505032" rx="2" style="fill:var(--boat)"></rect><text class="lbl" x="614" y="29.199815914290383" text-anchor="start"><tspan x="614" dy="0">Boating share</tspan><tspan class="v" x="614" dy="1.25em">$3.28M</tspan></text></g><g class="node" data-id="sn" data-tip="Non-boating share|$4,091,513|"><rect x="614" y="229.9793225093407" width="14" height="195.2813906633819" rx="2" style="fill:var(--nonboat)"></rect><text class="lbl" x="614" y="211.9793225093407" text-anchor="start"><tspan x="614" dy="0">Non-boating share</tspan><tspan class="v" x="614" dy="1.25em">$4.09M</tspan></text></g><g class="node" data-id="debt" data-tip="Debt service, state dock loans|$827,719|"><rect x="614" y="451.26071317272266" width="14" height="39.505707888134225" rx="2" style="fill:var(--neutral)"></rect><text class="lbl" x="614" y="433.26071317272266" text-anchor="start"><tspan x="614" dy="0">Debt service, state dock loans</tspan><tspan class="v" x="614" dy="1.25em">$828K</tspan></text></g><g class="node" data-id="ops" data-tip="Marina operations|$2,221,050|"><rect x="816" y="34" width="14" height="106.00717454225475" rx="2" style="fill:var(--node)"></rect><text class="lbl" x="838" y="87.00358727112737" text-anchor="start"><tspan x="838" dy="-0.15em">Marina operations</tspan><tspan class="v" x="838" dy="1.25em">$2.22M</tspan></text></g><g class="node" data-id="bldg" data-tip="Building maintenance|$912,524|"><rect x="816" y="166.00717454225475" width="14" height="43.553315297717916" rx="2" style="fill:var(--node)"></rect><text class="lbl" x="838" y="187.7838321911137" text-anchor="start"><tspan x="838" dy="-0.15em">Building maintenance</tspan><tspan class="v" x="838" dy="1.25em">$913K</tspan></text></g><g class="node" data-id="land" data-tip="Landscape services|$757,125|"><rect x="816" y="235.56048983997266" width="14" height="36.136368845953314" rx="2" style="fill:var(--node)"></rect><text class="lbl" x="838" y="253.62867426294932" text-anchor="start"><tspan x="838" dy="-0.15em">Landscape services</tspan><tspan class="v" x="838" dy="1.25em">$757K</tspan></text></g><g class="node" data-id="rec" data-tip="Recreation|$552,979|"><rect x="816" y="297.696858685926" width="14" height="26.392805822111768" rx="2" style="fill:var(--node)"></rect><text class="lbl" x="838" y="310.89326159698186" text-anchor="start"><tspan x="838" dy="-0.15em">Recreation</tspan><tspan class="v" x="838" dy="1.25em">$553K</tspan></text></g><g class="node" data-id="sec" data-tip="Security|$243,430|"><rect x="816" y="350.08966450803774" width="14" height="11.618525696774498" rx="2" style="fill:var(--node)"></rect><text class="lbl" x="838" y="355.898927356425" text-anchor="start"><tspan x="838" dy="-0.15em">Security</tspan><tspan class="v" x="838" dy="1.25em">$243K</tspan></text></g><g class="node" data-id="mgmt" data-tip="Waterfront management|$577,114|"><rect x="816" y="387.70819020481224" width="14" height="27.544730883491525" rx="2" style="fill:var(--node)"></rect><text class="lbl" x="838" y="401.480555646558" text-anchor="start"><tspan x="838" dy="-0.15em">Waterfront management</tspan><tspan class="v" x="838" dy="1.25em">$577K</tspan></text></g><g class="node" data-id="cap" data-tip="Capital and minor maintenance|$881,864|"><rect x="816" y="441.25292108830376" width="14" height="42.0899623919006" rx="2" style="fill:var(--node)"></rect><text class="lbl" x="838" y="462.29790228425406" text-anchor="start"><tspan x="838" dy="-0.15em">Capital and minor maintenance</tspan><tspan class="v" x="838" dy="1.25em">$882K</tspan></text></g><g class="node" data-id="adm" data-tip="Admin, overhead, internal services|$1,230,253|"><rect x="816" y="509.34288348020436" width="14" height="58.718013778227714" rx="2" style="fill:var(--node)"></rect><text class="lbl" x="838" y="538.7018903693182" text-anchor="start"><tspan x="838" dy="-0.75em">Admin,</tspan><tspan x="838" dy="1.2em">overhead,</tspan><tspan x="838" dy="1.2em">internal services</tspan><tspan class="v" x="838" dy="1.25em">$1.23M</tspan></text></g></g></svg></div>
+    <p class="fig-cap">Revenue and spending come from different documents on different bases, so the reserves band is approximate; the actual FY2023 drawdown was $892,589. Waterfront hotel tax goes to the General Fund; the City's estimates of it range from $1.0 million to $1.7 million a year, and the band is drawn at the midpoint.<sup><a href="#s-forecast">[11]</a> <a href="#s-dbw23">[1]</a> <a href="#s-att2">[10]</a> <a href="#s-item19">[2]</a></sup></p>
+    <p class="fig-hint">Bands and bars respond to the mouse, a tap, or the Tab key. The figures are listed in full below the second chart.</p>
+  </div>
+
+  <p>Boating revenue covers the cost of boating.<sup><a href="#s-dbw23">[1]</a></sup> The non-boating side includes $757,125 for landscaping and $552,979 for recreation programs, both counted as zero percent boating. The City's July 2023 dock-loan report traces warnings that the fund was underfunded back to Council minutes of November 1999.<sup><a href="#s-item19">[2]</a></sup></p>
+
+  <p>The 2003 Berkeley Marina Master Plan lists &ldquo;Parks Tax &ndash; Landscape Gardeners&rdquo; among the waterfront's outside funding sources: $121,895 in FY1998, between $107,000 and $124,000 a year through the FY2003 budget, and a projected $966,334 for FY2016&ndash;20. The Parks Tax also paid part of a planner.<sup><a href="#s-mmp">[27]</a></sup> By FY2007 the budget carried $519,707 for &ldquo;Marina Landscaping&rdquo; in the Marina division, and by FY2023 the City charged $757,125 of waterfront landscaping to the Marina Fund.<sup><a href="#s-budget">[15]</a> <a href="#s-att2">[10]</a></sup> The 2003 plan expected the Parks Tax to keep paying. The records this project reviewed do not show when, or by what decision, the cost moved.</p>
+
+  <p>By fiscal year 2026 the picture had changed in two ways. Measure Y, the 2024 Parks Tax increase, moved $1.579 million of waterfront park and landscaping costs out of the fund for good, and the General Fund sent $1.4 million in.<sup><a href="#s-prw">[13]</a></sup></p>
+
+  <div class="fig" id="fig26">
+    <div class="fig-h">Marina Fund, fiscal year 2026</div>
+    <p class="fig-sub">Revenue and spending are FY2026 actuals as reported to the Parks, Recreation and Waterfront Commission in September 2026. The City has not published FY2026 spending by category, so this chart cannot show the boating split.</p>
+    <div class="legend" aria-label="Legend">
+      <span><i class="sw" style="background:var(--boat)"></i>Boating</span>
+      <span><i class="sw" style="background:var(--nonboat)"></i>Non-boating</span>
+      <span><i class="sw" style="background:var(--support)"></i>One-time support from outside the fund</span>
+      <span><i class="sw" style="background:var(--parks)"></i>Parks Tax</span>
+      <span><i class="sw" style="background:var(--neutral)"></i>Mixed or not split</span>
+      <span><i class="sw hatch"></i>Approximate</span>
+    </div>
+    <div class="scroll"><svg class="chart" role="img" aria-labelledby="d26" viewBox="0 0 1080 644"><desc id="d26">Flow diagram of the Marina Fund in fiscal year 2026, from revenue sources including a one-time General Fund transfer to total spending and an addition to reserves, with Parks Tax money paying waterfront park and landscape costs outside the fund. Figures are in the table below.</desc><defs><pattern id="h-c26" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2.5" height="6" style="fill:var(--neutral)"></rect></pattern></defs><g><text class="colhead" x="224" y="14" text-anchor="end">Revenue</text><text class="colhead" x="412" y="14" text-anchor="start">Fund</text><text class="colhead" x="614" y="14" text-anchor="start"></text><text class="colhead" x="816" y="14" text-anchor="start">Spending</text></g><g><path class="link" d="M224,129.306C318,129.306,318,154.039,412,154.039" tabindex="0" style="stroke:var(--boat)" stroke-width="190.61130699137956" aria-label="FY2026: Berth rentals (“Berthers”) to Marina Fund, $3,971,848" data-s="berth" data-t="fund" data-tip="Berth rentals (“Berthers”) → Marina Fund|$3,971,848|"></path><path class="link" d="M224,302.542C318,302.542,318,301.276,412,301.276" tabindex="0" style="stroke:var(--nonboat)" stroke-width="103.86227872755892" aria-label="FY2026: Waterfront leases to Marina Fund, $2,164,222" data-s="lease" data-t="fund" data-tip="Waterfront leases → Marina Fund|$2,164,222|"></path><path class="link" d="M224,407.755C318,407.755,318,380.488,412,380.488" tabindex="0" style="stroke:var(--neutral)" stroke-width="54.562463110896005" aria-label="FY2026: Other fees, interest, programs to Marina Fund, $1,136,941" data-s="other" data-t="fund" data-tip="Other fees, interest, programs → Marina Fund|$1,136,941|City's “Other” line ($2,536,941) less the $1.4M General Fund transfer"></path><path class="link" d="M224,494.629C318,494.629,318,441.363,412,441.363" tabindex="0" style="stroke:var(--support)" stroke-width="67.18681827399523" aria-label="FY2026: General Fund transfer (one-time) to Marina Fund, $1,400,000" data-s="gft" data-t="fund" data-tip="General Fund transfer (one-time) → Marina Fund|$1,400,000|"></path><path class="link" d="M426,260.184C621,260.184,621,246.646,816,246.646" tabindex="0" style="stroke:var(--neutral)" stroke-width="402.9011127670464" aria-label="FY2026: Marina Fund to Marina Fund spending (not broken out), $8,395,420" data-s="fund" data-t="spend" data-tip="Marina Fund → Marina Fund spending (not broken out)|$8,395,420|"></path><path class="link" d="M426,468.296C621,468.296,621,480.757,816,480.757" tabindex="0" style="stroke:var(--neutral)" stroke-width="13.321802327367772" aria-label="FY2026: Marina Fund to Added to reserves, $277,592" data-s="fund" data-t="res" data-tip="Marina Fund → Added to reserves|$277,592|"></path><path class="link" d="M224,592.111C520,592.111,520,591.474,816,591.474" tabindex="0" style="stroke:var(--parks)" stroke-width="75.77713289617033" aria-label="FY2026: Parks Tax (Measure Y) to Waterfront parks and landscaping, paid outside the fund, $1,579,000" data-s="ptax" data-t="parks" data-tip="Parks Tax (Measure Y) → Waterfront parks and landscaping, paid outside the fund|$1,579,000|About $1.1M staff and $400K other costs, moved from the Marina Fund in July 2025"></path></g><g><g class="node" data-id="berth" data-tip="Berth rentals (“Berthers”)|$3,971,848|"><rect x="210" y="34" width="14" height="190.61130699137962" rx="2" style="fill:var(--boat)"></rect><text class="lbl" x="202" y="129.3056534956898" text-anchor="end"><tspan x="202" dy="-0.15em">Berth rentals (“Berthers”)</tspan><tspan class="v" x="202" dy="1.25em">$3.97M</tspan></text></g><g class="node" data-id="lease" data-tip="Waterfront leases|$2,164,222|"><rect x="210" y="250.61130699137962" width="14" height="103.86227872755896" rx="2" style="fill:var(--nonboat)"></rect><text class="lbl" x="202" y="302.5424463551591" text-anchor="end"><tspan x="202" dy="-0.15em">Waterfront leases</tspan><tspan class="v" x="202" dy="1.25em">$2.16M</tspan></text></g><g class="node" data-id="other" data-tip="Other fees, interest, programs|$1,136,941|"><rect x="210" y="380.4735857189386" width="14" height="54.56246311089603" rx="2" style="fill:var(--neutral)"></rect><text class="lbl" x="202" y="407.7548172743866" text-anchor="end"><tspan x="202" dy="-0.15em">Other fees, interest, programs</tspan><tspan class="v" x="202" dy="1.25em">$1.14M</tspan></text></g><g class="node" data-id="gft" data-tip="General Fund transfer (one-time)|$1,400,000|"><rect x="210" y="461.0360488298346" width="14" height="67.18681827399519" rx="2" style="fill:var(--support)"></rect><text class="lbl" x="202" y="494.6294579668322" text-anchor="end"><tspan x="202" dy="-0.15em">General Fund transfer (one-time)</tspan><tspan class="v" x="202" dy="1.25em">$1.40M</tspan></text></g><g class="node" data-id="ptax" data-tip="Parks Tax (Measure Y)|$1,579,000|"><rect x="210" y="554.2228671038298" width="14" height="75.77713289617031" rx="2" style="fill:var(--parks)"></rect><text class="lbl" x="202" y="592.111433551915" text-anchor="end"><tspan x="202" dy="-0.15em">Parks Tax (Measure Y)</tspan><tspan class="v" x="202" dy="1.25em">$1.58M</tspan></text></g><g class="node" data-id="fund" data-tip="Marina Fund|$8,673,012|"><rect x="412" y="58.73363823602455" width="14" height="416.22291509441436" rx="2" style="fill:var(--node)"></rect><text class="lbl" x="412" y="40.73363823602455" text-anchor="start"><tspan x="412" dy="0">Marina Fund</tspan><tspan class="v" x="412" dy="1.25em">$8.67M</tspan></text></g><g class="node" data-id="spend" data-tip="Marina Fund spending (not broken out)|$8,395,420|"><rect x="816" y="45.19542194543287" width="14" height="402.90111276704636" rx="2" style="fill:var(--neutral)"></rect><text class="lbl" x="838" y="246.64597832895606" text-anchor="start"><tspan x="838" dy="-0.15em">Marina Fund spending (not broken out)</tspan><tspan class="v" x="838" dy="1.25em">$8.40M</tspan></text></g><g class="node" data-id="res" data-tip="Added to reserves|$277,592|"><rect x="816" y="474.09653471247924" width="14" height="13.321802327367777" rx="2" style="fill:var(--neutral)"></rect><text class="lbl" x="838" y="480.75743587616313" text-anchor="start"><tspan x="838" dy="-0.15em">Added to reserves</tspan><tspan class="v" x="838" dy="1.25em">$278K</tspan></text></g><g class="node" data-id="parks" data-tip="Waterfront parks and landscaping, paid outside the fund|$1,579,000|"><rect x="816" y="553.5857383405338" width="14" height="75.77713289617043" rx="2" style="fill:var(--parks)"></rect><text class="lbl" x="838" y="591.4743047886191" text-anchor="start"><tspan x="838" dy="-0.75em">Waterfront parks and landscaping,</tspan><tspan x="838" dy="1.2em">paid outside the fund</tspan><tspan class="v" x="838" dy="1.25em">$1.58M</tspan></text></g></g></svg></div>
+    <p class="fig-cap">The City reports FY2026 revenue in three lines. &ldquo;Berthers&rdquo; is shown as boating; &ldquo;Other&rdquo; mixes boating fees with interest and programs and is shown as mixed, after removing the $1.4 million General Fund transfer the City counts inside it. The Parks Tax band is spent outside the Marina Fund, so it is in neither the fund's revenue nor its spending. FY2026 waterfront hotel tax has not been published and is not shown.<sup><a href="#s-prw">[13]</a></sup></p>
+    <details class="figs">
+      <summary>Every figure in both charts</summary>
+      <div class="tscroll"><table class="data"><thead><tr><th>Year</th><th>From</th><th>To</th><th class="n">Amount</th></tr></thead><tbody><tr><td>FY2023</td><td>Berth rentals</td><td>Marina Fund</td><td class="n">$3,615,881</td></tr><tr><td>FY2023</td><td>Other boating fees and fines</td><td>Marina Fund</td><td class="n">$659,179</td></tr><tr><td>FY2023</td><td>Waterfront leases</td><td>Marina Fund</td><td class="n">$1,922,308</td></tr><tr><td>FY2023</td><td>Interest, events, programs</td><td>Marina Fund</td><td class="n">$225,865</td></tr><tr><td>FY2023</td><td>Federal aid (ARPA)</td><td>Marina Fund</td><td class="n">$1,150,000</td></tr><tr><td>FY2023</td><td>Drawn from reserves</td><td>Marina Fund</td><td class="n">$630,826</td></tr><tr><td>FY2023</td><td>Waterfront hotel tax</td><td>General Fund</td><td class="n">$1.0–1.7M</td></tr><tr><td>FY2023</td><td>Marina Fund</td><td>Boating share</td><td class="n">$3,284,826</td></tr><tr><td>FY2023</td><td>Marina Fund</td><td>Non-boating share</td><td class="n">$4,091,513</td></tr><tr><td>FY2023</td><td>Marina Fund</td><td>Debt service, state dock loans</td><td class="n">$827,719</td></tr><tr><td>FY2023</td><td>Boating share</td><td>Marina operations</td><td class="n">$1,541,547</td></tr><tr><td>FY2023</td><td>Non-boating share</td><td>Marina operations</td><td class="n">$679,503</td></tr><tr><td>FY2023</td><td>Boating share</td><td>Building maintenance</td><td class="n">$365,010</td></tr><tr><td>FY2023</td><td>Non-boating share</td><td>Building maintenance</td><td class="n">$547,514</td></tr><tr><td>FY2023</td><td>Non-boating share</td><td>Landscape services</td><td class="n">$757,125</td></tr><tr><td>FY2023</td><td>Non-boating share</td><td>Recreation</td><td class="n">$552,979</td></tr><tr><td>FY2023</td><td>Boating share</td><td>Security</td><td class="n">$109,544</td></tr><tr><td>FY2023</td><td>Non-boating share</td><td>Security</td><td class="n">$133,886</td></tr><tr><td>FY2023</td><td>Boating share</td><td>Waterfront management</td><td class="n">$280,557</td></tr><tr><td>FY2023</td><td>Non-boating share</td><td>Waterfront management</td><td class="n">$296,557</td></tr><tr><td>FY2023</td><td>Boating share</td><td>Capital and minor maintenance</td><td class="n">$371,770</td></tr><tr><td>FY2023</td><td>Non-boating share</td><td>Capital and minor maintenance</td><td class="n">$510,094</td></tr><tr><td>FY2023</td><td>Boating share</td><td>Admin, overhead, internal services</td><td class="n">$616,398</td></tr><tr><td>FY2023</td><td>Non-boating share</td><td>Admin, overhead, internal services</td><td class="n">$613,855</td></tr><tr><td>FY2026</td><td>Berth rentals (“Berthers”)</td><td>Marina Fund</td><td class="n">$3,971,848</td></tr><tr><td>FY2026</td><td>Waterfront leases</td><td>Marina Fund</td><td class="n">$2,164,222</td></tr><tr><td>FY2026</td><td>Other fees, interest, programs</td><td>Marina Fund</td><td class="n">$1,136,941</td></tr><tr><td>FY2026</td><td>General Fund transfer (one-time)</td><td>Marina Fund</td><td class="n">$1,400,000</td></tr><tr><td>FY2026</td><td>Marina Fund</td><td>Marina Fund spending (not broken out)</td><td class="n">$8,395,420</td></tr><tr><td>FY2026</td><td>Marina Fund</td><td>Added to reserves</td><td class="n">$277,592</td></tr><tr><td>FY2026</td><td>Parks Tax (Measure Y)</td><td>Waterfront parks and landscaping, paid outside the fund</td><td class="n">$1,579,000</td></tr></tbody></table></div>
+    </details>
+  </div>
+  </details>
+  <details class="rec">
+  <summary>How the gap gets filled: aid, cost shifts, the dock loan, staff and the asset policy</summary>
+
+  <p>From fiscal year 2008 through 2021 the fund received no transfer from the General Fund or any other City fund; the City's annual filings with the State Lands Commission, the State Controller's data and the audited financial reports agree.<sup><a href="#s-acfr">[14]</a> <a href="#s-slc">[26]</a></sup> Since then the gap has been closed one year at a time:</p>
+
+  <div class="tscroll"><table class="data">
+    <thead><tr><th>Year</th><th>Measure</th><th class="n">Amount</th></tr></thead>
+    <tbody>
+      <tr><td>FY2022</td><td>Federal pandemic aid (ARPA)</td><td class="n">$1,400,000</td></tr>
+      <tr><td>FY2023</td><td>Federal pandemic aid (ARPA)</td><td class="n">$1,150,000</td></tr>
+      <tr><td>FY2024</td><td>One-time cost shifts to other funds, including capital staff and two gardeners</td><td class="n">$800,000</td></tr>
+      <tr><td>FY2025</td><td>&ldquo;Holidays&rdquo; from indirect-cost and workers' compensation charges, and a shift to the Parks Tax</td><td class="n">$704,000</td></tr>
+      <tr><td>FY2026</td><td>Measure Y: waterfront park and landscaping costs moved to the Parks Tax, permanently</td><td class="n">$1,579,000</td></tr>
+      <tr><td>FY2026</td><td>General Fund transfer</td><td class="n">$1,400,000</td></tr>
+    </tbody>
+  </table></div>
+  <p class="srcnote"><span class="lbl">Sources for the table</span>FY2022&ndash;23 aid and FY2024 shifts: Budget &amp; Finance Committee presentations, May 22 and October 28, 2025.<sup><a href="#s-bf">[12]</a></sup> FY2025: Interim City Manager memo, July 17, 2024, p. 2 ($159,000 indirect costs, $198,000 workers' compensation, $347,000 Parks Tax).<sup><a href="#s-att2">[10]</a></sup> FY2026: Parks, Recreation and Waterfront Commission packet, September 9, 2026, pp. 15 and 21.<sup><a href="#s-prw">[13]</a></sup></p>
+
+  <p><strong>The dock loan.</strong> In July 2023, after the State's lender attached loan conditions the City did not accept, the Council authorized an internal loan of $5.5 million from the City's Workers' Compensation Fund to replace the marina's D and E docks. The staff report set the rate at 2.8 percent, about $500,000 in total interest, repaid from waterfront hotel tax at about $1 million a year starting in fiscal year 2025. It also said the repayment &ldquo;may be considered as continued General Fund support to the Marina Fund.&rdquo;<sup><a href="#s-item19">[2]</a></sup> On paper the internal loan was the cheaper choice: a 30-year State loan at 4.5 percent would cost about $341,700 a year and about $4.75 million in interest.</p>
+
+  <p>The audited statements show the $5.5 million leaving the Workers' Compensation Fund in fiscal year 2024 as a transfer to the General Fund. No loan receivable was recorded, and no repayment appears through fiscal year 2025. In fiscal year 2026 the City moved a further $5.2 million from the Workers' Compensation Fund to the General Fund to balance the budget.<sup><a href="#s-acfr">[14]</a></sup> The internal loan is cheaper than the State loan only if it is repaid, and the audited statements do not record it as owed.</p>
+
+  <p><strong>The staff the fund pays.</strong> Some of the people charged to the Marina Fund work at the waterfront, and some do not. The fund pays 85 percent of the Waterfront Manager and 60 percent of an Assistant Civil Engineer hired for the Measure T1 bond program.<sup><a href="#s-prw">[13]</a></sup> It pays $573,818 for &ldquo;portion of 9 PRW Director/Admin staff costs.&rdquo;<sup><a href="#s-att2">[10]</a></sup> In the fiscal year 2025 adopted budget, Marina Fund personnel costs were $4.40 million while the Waterfront division's salaries and benefits were $3.10 million; about $1.3 million of the fund's personnel cost sits outside the division.<sup><a href="#s-budget">[15]</a></sup></p>
+
+  <p>No document reviewed states how any of these shares was set. The State's report says shared staff costs &ldquo;can only be allocated between boating and non-boating activities by using estimated workloads,&rdquo; and calls the breakdown the City supplied &ldquo;an informal report prepared at DBW's request.&rdquo;<sup><a href="#s-dbw23">[1]</a></sup> Every documented change to a share that this project found gives the same kind of reason: the balance of the fund that pays, never a change in the work. In one respect the fund is charged less than it could be: the indirect-cost charge posted to the waterfront has been lower in every year with data than the City's cost-allocation plan computes.</p>
+
+  <p><strong>The asset policy.</strong> In May 2022 the Council approved an Asset Management Policy whose scope names the &ldquo;Waterfront&rdquo; among the assets of the Parks, Recreation and Waterfront Department. It requires estimates of &ldquo;the cost to inspect, maintain, repair and replace infrastructure systems over its useful life,&rdquo; to be &ldquo;incorporated into annual budget requests,&rdquo; and an Annual Maintenance Plan shared during budget development and made public.<sup><a href="#s-amp">[28]</a></sup> The Mayor's Vision 2050 task force reported in December 2025 with the same work still ahead: an asset management program for &ldquo;facilities, street paving, sidewalks and sewers by July 2027,&rdquo; and an annual maintenance plan as a future task. The waterfront is not on that list.<sup><a href="#s-v2050">[29]</a></sup></p>
+  </details>
+  <details class="rec">
+  <summary>The planning record since 2018</summary>
+
+  <p>Planning documents since 2018, in order:</p>
+
+  <ul>
+    <li><strong>April 2018.</strong> The City Manager put the waterfront's annual gap at $2.3 million, &ldquo;more than one third of current total Marina Fund revenues,&rdquo; and listed &ldquo;redevelopment of the Berkeley Pier to include a WETA ferry terminal&rdquo; among new revenue sources.<sup><a href="#s-mfu18">[3]</a></sup></li>
+    <li><strong>October 2018.</strong> The request for proposals for the specific plan set its goal as &ldquo;a financially self-sustainable, publicly-owned marina area&rdquo; and asked consultants to reach &ldquo;financial sustainability as soon as possible by optimizing revenues.&rdquo;<sup><a href="#s-rfp">[4]</a></sup></li>
+    <li><strong>February 2020.</strong> The State's loan report recorded that &ldquo;the City expects new sources of revenue such as new ferry service to cover capital improvement needs,&rdquo; and that &ldquo;the City has not forecasted an amount of capital per year that will be necessary to meet this need.&rdquo;<sup><a href="#s-dbw20">[5]</a></sup></li>
+    <li><strong>April 2021.</strong> The City's market consultant found that large-scale ferry service &ldquo;will likely generate very modest direct revenues to the Marina Fund.&rdquo;<sup><a href="#s-kma">[6]</a></sup></li>
+    <li><strong>March 2023.</strong> Staff told the Council that &ldquo;it is not possible to generate all the revenue needed at the Waterfront.&rdquo;<sup><a href="#s-ws23">[7]</a></sup></li>
+    <li><strong>November 2024.</strong> Staff presented three development scenarios by what each would add to the fund: $2.2 million, $3.5 million or $4.8 million a year. Staff recommended the middle one. The Council voted 8&ndash;0, one member absent, to &ldquo;proceed with the EIR with the highest development scenario.&rdquo; Staff had described studying the largest scenario as a way to capture the maximum environmental impact.<sup><a href="#s-nov24">[8]</a></sup></li>
+    <li><strong>November 2024.</strong> The Parks, Recreation and Waterfront Commission asked the City to &ldquo;reorient primary goal of WSP from revenue generation to enhancing quality (including environmental quality) of waterfront experience and widening appeal to a broader range of the public.&rdquo;<sup><a href="#s-nov24">[8]</a></sup></li>
+    <li><strong>May 2026.</strong> The draft parking plan for the pier-ferry: &ldquo;Parking revenue helps offset the structural deficit in the Marina Fund.&rdquo;<sup><a href="#s-pmp">[18]</a></sup></li>
+  </ul>
+
+  <p>Staff told the Council in 2023 that the waterfront cannot pay for itself. The specific plan's project page still describes it as &ldquo;a path for achieving a financially self-sustainable, publicly owned marina.&rdquo;<sup><a href="#s-wsp">[9]</a></sup></p>
+  </details>
+  <details class="rec">
+  <summary>The pier and the ferry</summary>
+
+  <p>The Berkeley Pier has been closed since 2015. In 2019 restoring or rebuilding it was estimated at $17 million to $55 million, and that year's agreement with the regional ferry agency, WETA, said funding &ldquo;would be difficult to obtain for solely public recreation uses.&rdquo;<sup><a href="#s-mou">[23]</a></sup> The Draft EIR considered a new pier without ferry service and rejected it as infeasible: &ldquo;WETA would only provide project funding if the ferry is included.&rdquo;<sup><a href="#s-deir">[16]</a></sup> Every alternative the EIR analyzes includes the ferry.</p>
+
+  <p>The $300 million Measure U bond's project list carries no ferry or pier-terminal project.<sup><a href="#s-measu">[25]</a></sup> Construction funding for the full project has not been identified; its costs and conditions are examined in <a href="pier-ferry.html">Checkpoints That Don&rsquo;t Check</a>.</p>
+  </details>
+  <details class="rec">
+  <summary>What the environmental review left out</summary>
+
+  <p>The EIR excludes parking from its impact analysis by design: the City &ldquo;does not analyze the loss of, or change in, parking capacity as a CEQA impact.&rdquo;<sup><a href="#s-deir">[16]</a></sup> Its recreation finding is headed &ldquo;The project will create a net increase in recreational facilities,&rdquo; and it finds &ldquo;no impact related to potential conflict with recreational uses.&rdquo; The only significant recreation impact it finds is construction noise from pile driving.<sup><a href="#s-deir">[16]</a></sup></p>
+
+  <p>The Bay Plan, which governs the City's permits from the Bay Conservation and Development Commission, is specific about launch sites:</p>
+
+  <blockquote>
+    <p>&ldquo;(3) Sufficient, convenient parking that accommodates expected use should be provided at sites improved for launching non-motorized small boats.&rdquo;</p>
+    <p class="attrib">San Francisco Bay Plan, Recreation Policy 3, p. 72</p>
+  </blockquote>
+
+  <p>The EIR quotes four other parts of Recreation Policy 3. It does not quote that one.<sup><a href="#s-deir">[16]</a> <a href="#s-bayplan">[20]</a></sup> It finds the project consistent with the Bay Plan's direction that park and marina parking &ldquo;should not be usurped by ferry patrons,&rdquo; and adds that &ldquo;consistency with this policy related to parking would not be considered an environmental impact under CEQA.&rdquo;<sup><a href="#s-deir">[16]</a></sup></p>
+
+  <p>The parking plans fill in what the EIR leaves out. The draft parking plan sets four-hour limits from 9 to 5 at the South Cove lots, and says &ldquo;free full-day parking will remain available on Marina Blvd and University Avenue.&rdquo;<sup><a href="#s-pmp">[18]</a></sup> The San Francisco Boardsailing Association's 2026 access report puts that free parking up to a third of a mile from the launches, which it says &ldquo;does not work for anyone carrying a sail, a kayak or a wing.&rdquo;<sup><a href="#s-sfba">[22]</a></sup> The City's parking consultants estimated ferry demand at 356 to 389 spaces a day; the traffic study shows pier and recreation demand as a dash and says it &ldquo;would be expected to self-regulate.&rdquo;<sup><a href="#s-tdm">[19]</a> <a href="#s-app">[17]</a></sup> Paul Kamen, a naval architect, put the gap to the City in his scoping comments: &ldquo;How many parking spaces will be required to serve recreational pier visitors? ZERO, according to the Kittelson parking studies.&rdquo;<sup><a href="#s-kamen">[21]</a></sup></p>
+
+  <p>In August 2026 the Bay Conservation and Development Commission voted 12&ndash;7 to hear the City's paid-parking application as a major permit rather than as an administrative one, with the chair noting the Commission was &ldquo;not deciding in any manner on the merits.&rdquo;<sup><a href="#s-bcdc">[24]</a></sup></p>
+
+  <p><strong>The climate case.</strong> The EIR finds the project's greenhouse-gas effects less than significant and consistent with City climate policy. It notes that &ldquo;Berkeley does not have a current qualified Climate Action Plan,&rdquo; and tests consistency against the measures of the 2009 plan.<sup><a href="#s-deir">[16]</a></sup> Its net operating reduction of 2,368 metric tons a year rests mostly on a credit of 2,351 metric tons for existing car commutes the ferry would replace, and on battery-electric ferries, which the EIR assumes throughout without an enforceable commitment. Against that reduction it counts 48,601 metric tons of construction emissions, which on the EIR's figures take about twenty years to repay (this project's arithmetic).</p>
+  </details>
+  <details class="rec">
+  <summary>Albany's record</summary>
+
+  <p>Albany's shoreline question is the future of Golden Gate Fields, the closed racetrack on the Albany&ndash;Berkeley line, mostly in Albany. Its record, in order:</p>
+
+  <ul>
+    <li><strong>1990.</strong> Albany voters passed Measure C, a citizens' initiative, 3,429 to 1,295. Any change to waterfront land use or zoning goes to a public vote.<sup><a href="#s-alb-meas">[33]</a> <a href="#s-alb-gp">[35]</a></sup></li>
+    <li><strong>2010.</strong> The Voices to Vision process &ldquo;brought together about one in every ten Albany adults&rdquo; to say what the waterfront should become.<sup><a href="#s-alb-v2v">[34]</a></sup></li>
+    <li><strong>2016.</strong> The Waterfront Element of Albany's General Plan put the goal in writing.<sup><a href="#s-alb-gp">[35]</a></sup></li>
+  </ul>
+
+  <blockquote>
+    <p>&ldquo;The primary objectives of any future change in use should be the preservation of maximum feasible open space, public access to the shoreline, improvement of outdoor recreation activities, integration with the McLaughlin Eastshore State Park, and enhancement of the waterfront's unique qualities.&rdquo;</p>
+    <p class="attrib">Albany 2035 General Plan, Waterfront Element, Policy W-6.1</p>
+  </blockquote>
+
+  <p>Policy W-6.4 requires that any decision on Golden Gate Fields consider the fiscal impact on the City and the school district and include &ldquo;measures to achieve a positive fiscal outcome.&rdquo; Policy W-1.10 requires new waterfront park improvements to consider &ldquo;the long-term costs of operations and maintenance, and potential impacts on Albany's municipal budget.&rdquo;<sup><a href="#s-alb-gp">[35]</a></sup> Albany then planned for the cost of its choice. In July 2026 its council placed Measures P and Q on the November ballot: if any parcel of 500,000 square feet or more becomes tax-exempt, the street and emergency-services parcel taxes switch to a per-square-foot rate so their revenue holds.<sup><a href="#s-alb-pq">[36]</a></sup> The Golden Gate Fields site exceeds that threshold many times over.</p>
+
+  <p>Berkeley knows Albany as a comparison. Staff and councilmembers cited Albany's 10.75 percent sales tax rate in making the case for the 2026 sales-tax measure, and staff tables compare Berkeley's property-tax bills with Albany's.<sup><a href="#s-taxcomp">[37]</a></sup> In the waterfront record the comparison came from the public. Jim McGrath, a former chair of Berkeley's waterfront commission, wrote to the Bay Conservation and Development Commission's Design Review Board in 2025 that the Albany Beach Bay Trail project was a clear case study of latent demand for shoreline access, and that &ldquo;the city, however, has ignored this case study and its implications for Berkeley.&rdquo;<sup><a href="#s-drb">[38]</a></sup> No Berkeley waterfront planning document this project reviewed mentions Albany's Waterfront Element.</p>
+
+  <p>Albany has no marina and no enterprise fund to balance. Golden Gate Fields is private land; the Trust for Public Land holds an option on it in partnership with the East Bay Regional Park District, which would own and operate the park, so Albany's budget would not carry its upkeep. Berkeley owns its waterfront and pays to run it.</p>
+  </details>
+
+  <footer>
+    <h3>Sources</h3>
+    <p id="s-dbw23">[1] California Division of Boating and Waterways, <a href="https://dbw.parks.ca.gov/pages/28702/files/Berkeley%20Marina%20loan%20Feasibility%20Report%20Update%20-%206.20.2023_FINAL%20Remediated.pdf"><em>Berkeley Marina Loan Feasibility Report Update</em></a>, June 2023: &ldquo;not how enterprise funds are typically used,&rdquo; p. 4; staff allocation and &ldquo;informal report,&rdquo; pp. 10&ndash;11; boating revenue against boating cost, pp. 13&ndash;14; Table 6, FY2023 spending by category with boating shares (44.5 percent of $7,376,339), p. 19.</p>
+    <p id="s-item19">[2] City of Berkeley, Council Item 19, <a href="https://berkeleyca.gov/sites/default/files/documents/2023-07-25%20Item%2019%205.5M%20Loan%20for%20D%20and%20E%20Dock%20Replacement.pdf"><em>$5.5M Loan for D and E Dock Replacement</em></a>, July 25, 2023, and the <a href="https://berkeleyca.gov/sites/default/files/documents/2023-07-25%20Item%2019%205.5M%20Loan%20for%20D%20and%20E%20Dock%20Replacement%20-%20REV%20PRW.pdf">revised report</a>: fund history and the 1999 minutes, pp. 4&ndash;5; waterfront hotel tax estimates; 2.8 percent rate, $500,000 interest and $1 million annual repayment; &ldquo;continued General Fund support.&rdquo; The State-loan comparison is this project's arithmetic: $5.5 million at 4.5 percent over 30 years.</p>
+    <p id="s-mfu18">[3] City Manager, <a href="https://berkeleyca.gov/sites/default/files/documents/Marina%20Fund%20Update%20041218.pdf"><em>Waterfront / Marina Fund Update</em></a>, off-agenda memo, April 12, 2018: tidelands revenue spent at the waterfront, p. 1; $2.3 million gap and the WETA terminal among new revenue sources, p. 9.</p>
+    <p id="s-rfp">[4] City of Berkeley, <a href="https://berkeleyca.gov/sites/default/files/documents/Berkeley%20Marina%20Area%20Specific%20Plan%20-%20BMASP%20-%20RFP%20-%202018-10-10.pdf"><em>Berkeley Marina Area Specific Plan, Request for Proposals</em></a>, October 10, 2018, PDF pp. 2, 6.</p>
+    <p id="s-dbw20">[5] Division of Boating and Waterways, <a href="https://dbw.parks.ca.gov/pages/28702/files/20200211%20Berkeley%20Marina%20loan%20Feasibility%20Report%20-%20FINAL%20Remediated.pdf"><em>Berkeley Marina Loan Feasibility Report</em></a>, February 2020, pp. 10&ndash;11. The report records what the City told the State.</p>
+    <p id="s-kma">[6] Keyser Marston Associates, <a href="https://berkeleyca.gov/sites/default/files/documents/2021-04-16%20Draft%20Implementation%20Strategy%20-%20Keyser%20Marston.pdf"><em>Draft Implementation Strategy</em></a>, April 2021, p. 9.</p>
+    <p id="s-ws23">[7] City Manager, <a href="https://berkeleyca.gov/sites/default/files/documents/2023-03-20%20WS%20Item%2001%20Update%20on%20the%20Waterfront%20Specific%20Plan_0.pdf"><em>Update on the Waterfront Specific Plan</em></a>, Council worksession, March 20, 2023, p. 12.</p>
+    <p id="s-nov24">[8] City Manager, <a href="https://berkeleyca.gov/sites/default/files/documents/2024-11-18%20WS%20Item%2001%20Update%20on%20the%20Waterfront%20Specific%20Plan.pdf"><em>Update on the Waterfront Specific Plan</em></a>, Council worksession, November 18, 2024 (staff recommendation and the study-the-largest rationale, pp. 19&ndash;20), and the <a href="https://berkeleyca.gov/sites/default/files/documents/2024-11-18%20WS%20Item%2001%20Update%20on%20the%20Waterfront%20Specific%20Plan%20-%20Pres.pdf">presentation</a> (scenarios, slide 21; Commission recommendation, slide 22). Council action: <a href="https://berkeleyca.gov/sites/default/files/documents/2024-11-18_Annotated-Agenda-Council.pdf">annotated agenda</a>, November 18, 2024, p. 1.</p>
+    <p id="s-wsp">[9] City of Berkeley, <a href="https://berkeleyca.gov/your-government/our-work/capital-projects/waterfront-specific-plan">Waterfront Specific Plan project page</a>, read October 20, 2026. Guiding principles: Draft Waterfront Specific Plan, November 8, 2024, pp. 62&ndash;63.</p>
+    <p id="s-att2">[10] Interim City Manager, <a href="https://berkeleyca.gov/sites/default/files/documents/2024-07-17%20Reference%20Information%20for%20Potential%20Parks%20Tax%20Increase.pdf"><em>Reference Information for Potential Parks Tax Increase</em></a>, July 17, 2024: FY2025 balancing measures, p. 2; Attachment 2, FY2023 Marina Fund costs by category with staff notes and debt service, p. 7.</p>
+    <p id="s-forecast">[11] City of Berkeley, <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-attachments/2024-06-05%20Item%2002%20Marina%20Fund%20Forecast.pdf"><em>5-Year Financial Plan, Marina Fund</em></a>, Budget &amp; Finance Committee, June 5, 2024: FY2023 actual revenue by source.</p>
+    <p id="s-bf">[12] Budget &amp; Finance Committee, Marina Fund update presentations, <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-attachments/2025-05-22%20Item%2001%20Presentation%20-%20Marina%20Fund%20Update%20%28revised%29.pdf">May 22, 2025</a> and <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-attachments/2025-10-28%20Item%2003%20Marina%20Fund%20Update%20Presentation.pdf">October 28, 2025</a>.</p>
+    <p id="s-prw">[13] Parks, Recreation and Waterfront Commission, <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-agendas/PRW%20Agenda%202026-09-09_0.pdf">agenda packet, September 9, 2026</a>: Measure Y shift, p. 15; staff shares, p. 18; FY2026 actual revenue, spending and General Fund transfer, p. 21. See also the <a href="https://berkeleyca.gov/sites/default/files/legislative-body-meeting-attachments/PRW%20Comm%202026-10-14%20-%20Handouts.pdf">handouts of October 14, 2026</a>.</p>
+    <p id="s-acfr">[14] City of Berkeley, Annual Comprehensive Financial Reports for <a href="https://berkeleyca.gov/sites/default/files/documents/annual-comprehensive-financial-report-fy2023.pdf">FY2023</a>, <a href="https://berkeleyca.gov/sites/default/files/documents/annual-comprehensive-financial-report-fy2024.pdf">FY2024</a> (Workers' Compensation Fund transfer out of $5.5 million; transfers note; no advance recorded) and <a href="https://berkeleyca.gov/sites/default/files/2026-01/annual-comprehensive-financial-report-fy2025.pdf">FY2025</a> (no transfer back; transmittal letter on the further $5.2 million transfer in FY2026; enterprise funds and business-type activities, p. 9).</p>
+    <p id="s-budget">[15] City of Berkeley, <a href="https://berkeleyca.gov/sites/default/files/documents/FY-2025-2026-Proposed-Biennial-Budget.pdf"><em>Adopted Budget, Fiscal Year 2025&ndash;2026</em></a>: Marina Fund personnel, PDF p. 168; Waterfront division, PDF p. 339. The $1.3 million difference is this project's arithmetic. FY2007 Marina Landscaping: <em>Adopted Biennial Budget, FY2010&ndash;2011</em>, Parks, Recreation and Waterfront financial summary, p. 203.</p>
+    <p id="s-deir">[16] City of Berkeley, <a href="https://berkeleyca.gov/sites/default/files/2026-02/Berkeley-Water-Transportation-Pier-Ferry-Project-Draft-EIR.pdf"><em>Berkeley Water Transportation Pier-Ferry Project, Draft EIR</em></a>, February 2026: Impact REC-1, p. ES-13; parking and CEQA, p. 3-11; Recreation Policy 3 quotations and the recreation analysis, &sect;3.11; Bay Plan consistency table, &sect;3.9; climate plan status and greenhouse-gas tables, &sect;3.6 (pp. 3.6-36 and following); the no-ferry alternative, p. 5-27; history of the Berkeley Pier, &sect;3.4 and &sect;3.11 (PDF pp. 246, 249, 515). PDF page numbers are in this project's notes and available on request.</p>
+    <p id="s-app">[17] <a href="https://berkeleyca.gov/sites/default/files/2026-02/Berkeley-Water-Transportation-Pier-Ferry-Project-Draft-EIR-Appendices-2-of-2.pdf">Draft EIR Appendices, 2 of 2</a>, Appendix F, transportation memo of January 16, 2026, Table 4 and p. 4 (appendix PDF p. 91).</p>
+    <p id="s-pmp">[18] City of Berkeley, <a href="https://berkeleyca.gov/sites/default/files/2026-05/Pier-Ferry%20Parking%20Management%20Plan%20-%20Public%20Review%20Draft.pdf"><em>Pier-Ferry Parking Management Implementation Plan</em>, public review draft</a>, May 8, 2026: time limits and free full-day parking, p. 8; &ldquo;helps offset the structural deficit,&rdquo; p. 12 (PDF p. 15).</p>
+    <p id="s-tdm">[19] Kittelson &amp; Associates for the City of Berkeley, <a href="https://berkeleyca.gov/sites/default/files/documents/Berkeley-WTPF-Parking-and-TDM-Plan-March-2025-Public-Draft.pdf"><em>Parking and TDM Plan</em>, public draft</a>, March 2025: Table 5, ridership by mode of access, PDF p. 23; parking demand, PDF p. 24.</p>
+    <p id="s-bayplan">[20] San Francisco Bay Conservation and Development Commission, <a href="https://www.bcdc.ca.gov/wp-content/uploads/sites/354/2025/05/SanFranciscoBayPlan_ADA.pdf"><em>San Francisco Bay Plan</em></a>: Recreation Policy 3, p. 72; ferry parking, p. 74.</p>
+    <p id="s-kamen">[21] Paul Kamen, Naval Architect, P.E., addendum to EIR scoping comments, May 19, 2025, published in the project's document library. The 389-space figure is the upper bound in the Parking and TDM Plan [20].</p>
+    <p id="s-sfba">[22] San Francisco Boardsailing Association, <a href="https://sfba.org/images/2026/SFBA_State_of_Access_2026_1.pdf"><em>The State of Recreational Access to the San Francisco Bay: 2026</em></a>, pp. 6&ndash;7. The distance is SFBA's figure.</p>
+    <p id="s-mou">[23] City of Berkeley and WETA, Memorandum of Understanding, Council consent Item 9, March 12, 2019, p. 5.</p>
+    <p id="s-bcdc">[24] Bay Conservation and Development Commission, <a href="https://www.bcdc.ca.gov/wp-content/uploads/sites/354/2025/12/Commission-Meeting-Minutes-from-August-6-2026.pdf">minutes of August 6, 2026</a>, PDF pp. 9, 21.</p>
+    <p id="s-measu">[25] Measure U project list as presented to the Council, May 19, 2026. Its waterfront projects are a restroom, a perimeter pathway, Marina Boulevard sea-level-rise and Bay Trail work, dock timber piles, Seawall Drive and Bay Trail work to the pier, and the South Cove seawall.</p>
+    <p id="s-slc">[26] California State Lands Commission, <a href="https://www.slc.ca.gov/granted-public-trust-lands/grantees/berkeley/">granted lands filings, City of Berkeley</a>, FY2015&ndash;FY2024; State Controller, <a href="https://bythenumbers.sco.ca.gov/">city financial data</a>.</p>
+    <p id="s-mmp">[27] City of Berkeley, <a href="https://berkeleyca.gov/sites/default/files/2022-02/Berkeley-Marina-Master-Plan-2.pdf"><em>Berkeley Marina Master Plan</em>, part 2</a>, 2003, Appendix A, p. 69, &ldquo;Capital Improvement Projects Funded through Grants and Other Sources&rdquo; (Other Funds: Parks Tax &ndash; Landscape Gardeners; Parks Tax Planner). The appendix tables are labeled &ldquo;MONDO 11.5,&rdquo; the spreadsheet model behind the plan's fund analysis.</p>
+    <p id="s-amp">[28] City Manager, <a href="https://berkeleyca.gov/sites/default/files/2022-04/2022-05-10%20Item%2031%20Vision%202050%20Strategic%20Asset.pdf"><em>Vision 2050: Strategic Asset Management Plan and Asset Management Policy</em></a>, Council Item 31, May 10, 2022, Exhibit B, Asset Management Policy, &sect;&sect;5&ndash;7 (packet pp. 54&ndash;56). Council approval: Agenda &amp; Rules Committee packet, September 14, 2026, Item 2.</p>
+    <p id="s-v2050">[29] Mayor's Vision 2050 Task Force, <a href="https://berkeleyca.gov/sites/default/files/documents/2025-12-02%20Special%20Item%2001%20Sharing%20the%20Final%20Report%20of%20the%20Mayor.pdf"><em>Realize Vision 2050</em>, final report</a>, Council special meeting, December 2, 2025, Item 1, Goal No. 3 (packet p. 11).</p>
+    <p id="s-wetabp">[30] Water Emergency Transportation Authority, <em>Berkeley Ferry Service Business Plan</em>, Version 1.0, prepared by Economic &amp; Planning Systems and CDM Smith, March 17, 2022, mode of access, PDF p. 31. Archived as berkeley-public-records:pier-ferry-2022-03-17-weta-business-plan.</p>
+    <p id="s-pc21">[31] City Manager, <a href="https://berkeleyca.gov/sites/default/files/documents/2021-12-07%20Item%2002%20Large%20Scale%20Ferry%20Feasibility%20Study%E2%80%93%20A%20Preferred%20Concept.pdf"><em>Large Scale Ferry Feasibility Study &ndash; A Preferred Concept</em></a>, Council worksession, December 7, 2021, Item 2, p. 15 (State tidelands).</p>
+    <p id="s-hop">[32] City Council, regular meeting of July 28, 2026, Item 27, <em>Referral to Schedule Hopkins Street for Paving with Enhanced Safety Improvements for all Users</em>: <a href="https://berkeleyca.gov/sites/default/files/city-council-meetings/2026-07-28%20Annotated%20Agenda%20-%20Council.pdf">annotated agenda</a>, pp. 12&ndash;14 (recommendation, co-sponsors, and the 7&ndash;2 vote); meeting captions at 5:43:24&ndash;5:46:16 (Councilmember Humbert, introduced by the chair and moving the extension before speaking).</p>
+    <p id="s-alb-meas">[33] City of Albany, <a href="https://www.albanyca.gov/files/assets/city/v/1/administration/documents/city-measures-since-1990-2024.pdf"><em>City Measures since 1990</em></a>: Measure C, June 1990.</p>
+    <p id="s-alb-v2v">[34] City of Albany, <a href="https://www.albanyca.gov/files/assets/city/v/1/administration/documents/waterfront/2010-voices-to-vision-fina.pdf"><em>Voices to Vision</em>, final report</a>, April 5, 2010, p. 2.</p>
+    <p id="s-alb-gp">[35] City of Albany, <a href="https://albanyca.gov/files/assets/city/v/1/administration/documents/waterfront/final-adopted-2035-general.pdf"><em>Albany 2035 General Plan</em></a>, Waterfront Element, adopted April 18, 2016: Measure C summary; Policies W-1.10, W-6.1 and W-6.4.</p>
+    <p id="s-alb-pq">[36] City of Albany, <a href="https://www.albanyca.gov/Government/Election-Information/Ballot-Measures-for-General-Municipal-Election-2026">Ballot Measures for the General Municipal Election 2026</a>: City Attorney's impartial analyses of Measures P and Q, and the council presentation of July 20, 2026 (&ldquo;No change in estimated revenue&rdquo;).</p>
+    <p id="s-taxcomp">[37] City Manager, <a href="https://berkeleyca.gov/sites/default/files/documents/2025-12-02%20Special%20Item%2002%20Discussion%20Regarding%20Potential%20Ballot.pdf"><em>Discussion Regarding Potential Ballot Measures</em></a>, December 2, 2025 (Berkeley, Oakland and Albany property-tax table); Council special meeting reports of March 17 and May 19, 2026 (sales-tax comparisons).</p>
+    <p id="s-drb">[38] Jim McGrath, letter in the <a href="https://www.bcdc.ca.gov/event/november-3-2025-design-review-board-meeting/">BCDC Design Review Board packet of November 3, 2025</a>, PDF p. 61.</p>
+
+    <h3>Method</h3>
+    <p>The charts are drawn from the figures in the City and State documents above; no figure is estimated except the FY2023 reserves band (the City's spending estimate less actual revenue) and the midpoint of the hotel-tax range, both marked. The FY2023 spending split is the City's, as tabulated by the State, and the City has published no later one. Statements that a document does not contain something are bounded to the documents cited here, the Draft EIR read in full, and the Waterfront Specific Plan record on the City's project page.</p>
+
+    <h3>Related</h3>
+    <p><a href="pier-ferry.html">Checkpoints That Don&rsquo;t Check</a> &mdash; the pier-ferry project's costs and conditions &middot;
+    <a href="grants-are-not-a-business-case.html">A Grant Is Not a Business Case</a> &middot;
+    <a href="hopkins-fire-review.html">The Hopkins Street fire review</a> &middot;
+    <a href="framework.html">A Strategy for Strategy</a> &mdash; Category 1/2/3 &middot;
+    <a href="index.html">Decision Project home</a></p>
+
+    <h3>Corrections</h3>
+    <p>Corrections are welcome and are published when received.</p>
+  </footer>
+
+</div>
+<div id="tip" hidden></div>
+<script>
+/* Hover and keyboard focus for the pre-rendered flow charts. Each band carries data-s/data-t
+   (its end nodes) and data-tip ("title|amount|note"); each bar carries data-id and data-tip. */
+(function () {
+  var tip = document.getElementById("tip");
+  function fill(el) {
+    var parts = el.getAttribute("data-tip").split("|");
+    tip.textContent = "";
+    var b = document.createElement("b"); b.textContent = parts[0]; tip.appendChild(b);
+    var m = document.createElement("span"); m.className = "m"; m.textContent = parts[1]; tip.appendChild(m);
+    if (parts[2]) { var n = document.createElement("span"); n.className = "note"; n.textContent = parts[2]; tip.appendChild(n); }
+    tip.hidden = false;
+  }
+  function place(x, y) {
+    var r = tip.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight;
+    var left = x + 14, top = y + 14;
+    if (left + r.width > vw - 8) left = Math.max(8, x - r.width - 14);
+    if (top + r.height > vh - 8) top = Math.max(8, y - r.height - 14);
+    tip.style.left = left + "px"; tip.style.top = top + "px";
+  }
+  function light(svg, el) {
+    svg.classList.add("hl");
+    var links = svg.querySelectorAll(".link");
+    var id = el.getAttribute("data-id");
+    for (var i = 0; i < links.length; i++) {
+      var l = links[i];
+      var on = id ? (l.getAttribute("data-s") === id || l.getAttribute("data-t") === id) : l === el;
+      l.classList.toggle("on", on);
+    }
+  }
+  function clear(svg) {
+    svg.classList.remove("hl");
+    var on = svg.querySelectorAll(".link.on");
+    for (var i = 0; i < on.length; i++) on[i].classList.remove("on");
+    tip.hidden = true;
+  }
+  var charts = document.querySelectorAll("svg.chart");
+  for (var c = 0; c < charts.length; c++) (function (svg) {
+    var nodes = svg.querySelectorAll(".node");
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].setAttribute("tabindex", "0");
+      nodes[i].setAttribute("role", "img");
+      nodes[i].setAttribute("aria-label", nodes[i].getAttribute("data-tip").split("|").slice(0, 2).join(", "));
+    }
+    svg.addEventListener("pointermove", function (e) {
+      var el = e.target.closest ? e.target.closest("[data-tip]") : null;
+      if (!el) { clear(svg); return; }
+      fill(el); light(svg, el); place(e.clientX, e.clientY);
+    });
+    svg.addEventListener("pointerdown", function (e) {
+      var el = e.target.closest ? e.target.closest("[data-tip]") : null;
+      if (!el) { clear(svg); return; }
+      fill(el); light(svg, el); place(e.clientX, e.clientY);
+    });
+    svg.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") clear(svg); });
+    svg.addEventListener("focusin", function (e) {
+      var el = e.target.closest("[data-tip]");
+      if (!el) return;
+      fill(el); light(svg, el);
+      var r = el.getBoundingClientRect();
+      place(r.left + r.width / 2, r.top + Math.min(r.height / 2, 40));
+    });
+    svg.addEventListener("focusout", function () { clear(svg); });
+  })(charts[c]);
+  window.addEventListener("scroll", function () { tip.hidden = true; }, { passive: true });
+})();
+/* Open every collapsed record section for printing, and restore it afterward. */
+(function () {
+  var opened = [];
+  window.addEventListener("beforeprint", function () {
+    var d = document.querySelectorAll("details:not([open])");
+    for (var i = 0; i < d.length; i++) { d[i].open = true; opened.push(d[i]); }
+  });
+  window.addEventListener("afterprint", function () { while (opened.length) opened.pop().open = false; });
+})();
+</script>
+</body>
+</html>
