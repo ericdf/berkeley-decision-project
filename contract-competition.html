@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-bdp-chrome-lang>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berkeley Wants New Taxes. Its Audit Found a Contracting System Without Basic Controls.</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+.wrap p a { color: var(--quote); }
+footer ul { padding-left: 1.1rem; margin-bottom: .8rem; }
+footer li { margin-bottom: .45rem; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+<style data-bdp-chrome>.bdp-skip{position:absolute;left:-9999px;top:0;z-index:1000;padding:10px 14px;background:var(--panel,#fff);color:var(--ink,#111);font:600 14px/1.2 system-ui,sans-serif;border:2px solid var(--accent,#2F6F68);border-radius:0 0 6px 0;text-decoration:none}.bdp-skip:focus{left:0}a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent,#2F6F68);outline-offset:2px}.bdp-paths,.bdp-crumbs,.bdp-site-footer{box-sizing:border-box;max-width:46rem;margin:0 auto;background:var(--panel,#fff);color:var(--ink,#1a1a1a);font:14px/1.5 system-ui,sans-serif}.bdp-paths{display:flex;flex-wrap:wrap;gap:4px 18px;padding:10px 26px;font-weight:600}.bdp-paths a,.bdp-crumbs a,.bdp-site-footer a{color:var(--accent,#2F6F68)}.bdp-paths a{text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}.bdp-paths a[aria-current]{border-bottom-color:var(--accent,#2F6F68)}.bdp-crumbs{padding:4px 26px;font-size:13px}.bdp-site-footer{margin:40px auto;padding:18px 26px;border:1px solid var(--rule,#ccc);border-radius:8px}.bdp-site-footer p{margin:0 0 8px}.bdp-site-footer p:last-child{margin:0}</style></head>
+<body><a class="bdp-skip" href="#bdp-content" data-bdp-chrome>Skip to content</a>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div><span id="bdp-content" data-bdp-chrome></span>
+
+<div class="wrap">
+
+  <div class="kicker">Major Governance Failure</div>
+  <h1>Berkeley Wants New Taxes. Its Audit Found a Contracting System Without Basic Controls.</h1>
+  <p class="standfirst"><em>Four unsigned contract amendments worth $500,000 each sat in a box under a desk. In FY2024, 94 contracts worth $43 million had no documented evidence of competition. Berkeley authorized nearly $85 million in recycling contracts over ten years without seeking bids.</em></p>
+  <div class="byline"></div>
+
+  <p>Berkeley is asking voters for a half-cent sales-tax increase and a $300 million bond. The City says the measures need flexibility and promises oversight. The audit of its existing contracting system shows what happens when flexibility has no working controls: contracts disappear into paper files, competition is skipped, and no one produces a full accounting of what the failures cost.</p>
+
+  <div class="pull">How much smaller would Berkeley’s structural deficit be if the City weren’t mismanaging millions of dollars in contracts?</div>
+
+  <p>The City Auditor found four unsigned amendments worth $500,000 apiece in a box under a desk. The City had approved the spending; the paperwork was still unfinished. That image captures a broader breakdown. In FY2024, 94 of 218 contracts, with a listed value of $43 million, had no documented evidence of competition. And 38 percent of 53 waivers approved by City management did not clearly meet the City’s rules. <a href="https://berkeleyca.gov/sites/default/files/2026-02/City_Contracts_-_Outdated_Process_Led_to_Non-Competitive_Contracts.pdf">City Auditor’s report</a></p>
+
+  <p>The audit found paper contracts hand-carried between departments, no central system to track contracts and competition, inconsistent waiver decisions, missing amendment guidance, limited training, and key purchasing vacancies. It also found 95 active service contracts that began at or below the $50,000 formal-competition threshold and were later amended above it. The amendments added an average of $218,026 per contract without competition. This was not one forgotten file. It was a system that allowed basic controls to fail across the City.</p>
+
+  <h2>$85M and no documented bid since the 1980s</h2>
+  <p>The recycling contracts show the failure at scale. An outside consultant recommended an RFP in 2011. The Zero Waste Commission disputed that report, citing incomplete analysis and process. In 2020, Public Works staff asked Council to put recycling processing out to bid. Council removed the request from the proposed list. In 2021, Council approved new sole-source contracts with both providers. Staff reports cited third-party reviews finding the providers’ costs reasonable compared with nearby communities. Those comparisons did not involve competing bids; the Auditor said the City cannot readily determine whether the contracts offer the best value without open competition. Over ten years, the contracts were authorized at nearly $85 million without competition.</p>
+
+  <p>The 2021 cost comparisons did not answer what competition was meant to answer: whether another provider could offer better value. The public record does not explain why Council removed staff’s 2020 request to bid the work. The providers received contracts without having to compete. That raises the question of whether Council protected favored vendors. There is no way to know whether the City could have received better value without bids. Competitive bidding exists to make vendors compete and reveal what the City can get for its money.</p>
+
+  <div class="pull">Cronyism is certainly one possibility. Without bids, the City doesn’t know.</div>
+
+  <p>The Auditor’s first recommendation was to put the recycling contracts out to competition. The City agreed, but left the timing “to be determined.” In October, Council did not set a bid date. It did not ask management to calculate what the failures cost, whether the City paid more than it should have, or what consequences staff faced. The audit and management response did not provide that accounting either.</p>
+
+  <h2>Management without oversight <em>is</em> mismanagement</h2>
+  <p>The accountability failure reaches management. The audit documents processes managers allowed to become ungovernable: files left under desks, missing records, contracts amended past the competition threshold, and no reliable way to track competition. The record identifies no staff consequence and no manager held responsible for the contracts’ value or results.</p>
+
+  <p>At the audit hearing, the City Manager pointed to actions in the management response. Councilmembers praised management’s responsiveness.</p>
+
+  <div class="pull">That is praise for damage control, not accountability.</div>
+
+  <p>It is like applauding someone for cleaning up the ashes while never asking how the fire started, what was lost, or who was responsible. The transcript records no such questions.</p>
+
+  <h2>Championing flexibility while watering down oversight</h2>
+  <p>Council has a separate responsibility: oversight. It heard the Auditor describe the failures on March 10 and required progress reports on the 13 recommendations. A week later, Council directed staff to prepare ballot language for a sales tax and a bond. The sales-tax proposal had already been under discussion in January. The push for new measures was underway as Council was hearing that its existing controls had failed. <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-january-27-2026">January 27 agenda</a> · <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-march-10-2026">March 10 agenda</a> · <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-march-17-2026">March 17 Council action</a></p>
+
+  <p>Seven months later, Council considered a proposed ordinance built around one of the Auditor’s 13 recommendations: adding a competition requirement in the City Code for covered service contracts above $100,000. The proposal also called for quarterly Council reports on outside legal-services contracts and amendments, and required departments to rebid contracts under the Purchasing Manual’s timeframes, touching parts of two other recommendations. It would raise Council’s approval threshold from $50,000 to $100,000, so contracts between those amounts would no longer come before Council for approval. The Purchasing Manual would still require competition above $50,000. The proposal set no specific date to bid the recycling contracts. <a href="https://berkeleyca.gov/sites/default/files/2026-10-27%20Item%2025%20Amendment%20to%20Berkeley%20Municipal.pdf">October 27 Item 25 packet</a></p>
+
+  <div class="pull">The solution to an oversight failure is more oversight, not less.</div>
+
+  <h2>No accountability in sight</h2>
+  <p>Neither the audit nor the management response provided a full accounting of what the failures cost or what consequences staff faced. The proposed ordinance did not require one or identify who would be answerable for results. It also set no public date to bid the recycling contracts.</p>
+
+  <p>The timing matters. While Council was preparing new tax measures, the City was asking voters to trust it with more money and broad discretion. Measure U’s project list is non-exhaustive, and its text says the City Council cannot guarantee enough bond money to complete all needed improvements. Measure V’s sales-tax revenue would go to the General Fund and could be spent on any valid municipal purpose; it is not legally reserved for the services highlighted in campaign materials. <a href="https://berkeleyca.gov/sites/default/files/Berkeley_Bond%20Measure%20-%20Full%20Text.pdf">Measure U text</a> · <a href="https://berkeleyca.gov/sites/default/files/Berkeley_Sales%20Tax%20-%20Full%20Text.pdf">Measure V text</a> · <a href="https://berkeleyca.gov/sites/default/files/Nov%202026%20Impartial%20Analyses.pdf">City Attorney’s impartial analyses</a></p>
+
+  <p>The City is asking for flexibility and promising accountability at the same time its audit shows how little accountability its existing system delivered. When controls fail across departments, the answer is tighter conditions, named responsibility, and consequences—not more money under the same system’s discretion.</p>
+
+  <footer>
+    <h3>Sources and accuracy notes</h3>
+    <ul>
+      <li><a href="https://berkeleyca.gov/sites/default/files/2026-02/City_Contracts_-_Outdated_Process_Led_to_Non-Competitive_Contracts.pdf">City Auditor, <em>City Contracts: Outdated Process Led to Non-Competitive Contracts</em> (Feb. 19, 2026)</a>, especially pp. 6–23 and 25–29.</li>
+      <li><a href="https://berkeleyca.gov/sites/default/files/2026-10-27%20Item%2025%20Amendment%20to%20Berkeley%20Municipal.pdf">October 27 Item 25 packet</a>.</li>
+      <li><a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-january-27-2026">January 27 Council agenda</a>; <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-march-10-2026">March 10 Council agenda</a>; <a href="https://berkeleyca.gov/city-council-regular-meeting-eagenda-march-17-2026">March 17 Council agenda</a>.</li>
+      <li><a href="https://berkeleyca.gov/sites/default/files/Berkeley_Bond%20Measure%20-%20Full%20Text.pdf">Measure U full text</a>; <a href="https://berkeleyca.gov/sites/default/files/Berkeley_Sales%20Tax%20-%20Full%20Text.pdf">Measure V full text</a>; <a href="https://berkeleyca.gov/sites/default/files/Nov%202026%20Impartial%20Analyses.pdf">City Attorney’s impartial analyses</a>.</li>
+    </ul>
+  </footer>
+
+</div>
+<div class="bdp-site-footer" data-bdp-chrome><p>Every figure on this site traces to a primary document. Corrections are welcome and are published when received.</p><p>Related project: <a href="https://ericdf.github.io/council-scorecards/">Council Scorecards</a> assesses the conduct and performance of Berkeley&rsquo;s elected officials against a disclosed methodology.</p></div></body>
+</html>
