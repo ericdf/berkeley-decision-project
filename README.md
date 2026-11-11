@@ -13,7 +13,7 @@ officeholder.
 Generated publication output. **Do not author here.** Every page is built from the
 private source repository and overwritten on each publish.
 
-- **Source:** `ericdf/Berkeley-council-scorecards` (private)
+- **Source:** `ericdf/berkeley-council-analysis` (private)
 - **Build:** `build_publications.py`, driven by `publications.json`
 - **Publish:** `./publish-policy.sh` from the source repo
 - **Deploy:** GitHub Pages, serving this repository's root directory

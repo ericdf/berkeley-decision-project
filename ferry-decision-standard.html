@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Case for Everything Except the Decision — Berkeley Decision Project</title>
+<meta name="description" content="Taplin's Berkeley ferry defense illustrates recurring failures of public investment decisions—and a concrete standard for choosing better.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+:root[data-theme="light"] {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5; --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72;
+       -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+
+.wrap { max-width: 40rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.2rem; }
+
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.6rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance; }
+h2 .when { display: block; font-size: .69rem; font-weight: 700; letter-spacing: .13em;
+           text-transform: uppercase; color: var(--accent); margin-bottom: .32rem; }
+p { margin-bottom: 1.05rem; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+blockquote { margin: 1.3rem 0; padding: 1rem 1.2rem; background: var(--quote-soft);
+             border-left: 3px solid var(--quote); border-radius: 0 4px 4px 0;
+             font-size: 1rem; line-height: 1.65; }
+blockquote p { margin-bottom: .7rem; }
+blockquote p:last-child { margin-bottom: 0; }
+.attrib { font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .6rem;
+          font-style: normal; }
+
+.pull { margin: 2rem 0; padding: 1.2rem 0 1.2rem 1.3rem; border-left: 4px solid var(--accent);
+        font-size: 1.22rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+
+
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; font-weight: 700; }
+footer p { margin-bottom: .8rem; }
+footer a { color: var(--quote); }
+.wrap p a { color: var(--quote); }
+.quiz-teaser { font-family: var(--sans); font-size: 1.08rem; color: var(--ink); margin-bottom: 1.1rem; }
+footer ul { padding-left: 1.1rem; margin-bottom: .8rem; }
+footer li { margin-bottom: .45rem; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1.1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  .pull { font-size: 1.05rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+<style data-bdp-chrome>.bdp-skip{position:absolute;left:-9999px;top:0;z-index:1000;padding:10px 14px;background:var(--panel,#fff);color:var(--ink,#111);font:600 14px/1.2 system-ui,sans-serif;border:2px solid var(--accent,#2F6F68);border-radius:0 0 6px 0;text-decoration:none}.bdp-skip:focus{left:0}a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent,#2F6F68);outline-offset:2px}.bdp-paths,.bdp-crumbs,.bdp-site-footer{box-sizing:border-box;max-width:46rem;margin:0 auto;background:var(--panel,#fff);color:var(--ink,#1a1a1a);font:14px/1.5 system-ui,sans-serif}.bdp-paths{display:flex;flex-wrap:wrap;gap:4px 18px;padding:10px 26px;font-weight:600}.bdp-paths a,.bdp-crumbs a,.bdp-site-footer a{color:var(--accent,#2F6F68)}.bdp-paths a{text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}.bdp-paths a[aria-current]{border-bottom-color:var(--accent,#2F6F68)}.bdp-crumbs{padding:4px 26px;font-size:13px}.bdp-site-footer{margin:40px auto;padding:18px 26px;border:1px solid var(--rule,#ccc);border-radius:8px}.bdp-site-footer p{margin:0 0 8px}.bdp-site-footer p:last-child{margin:0}</style></head>
+<body><a class="bdp-skip" href="#bdp-content" data-bdp-chrome>Skip to content</a>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div><span id="bdp-content" data-bdp-chrome></span>
+
+<div class="wrap">
+<div class="kicker">Case study · Waterfront</div><h1>The Case for Everything Except the Decision</h1><p class="standfirst">Councilmember Taplin's defense of the ferry runs through nine of the ways Berkeley makes expensive decisions without establishing their value.</p><div class="byline">November 2026</div><p><strong>Of all the things Berkeley could do with these resources, why this?</strong></p><p>Councilmember Terry Taplin's <a href="https://mailchi.mp/49ebff44893f/september-2025-newsletter-18214071">November newsletter</a> makes an extensive case for Berkeley's proposed ferry terminal and replacement pier. Eleven years of planning. More than sixty outreach events. Nearly a thousand projected weekday round-trip riders. Thousands of tons of avoided greenhouse gas emissions. A new public pier, waterfront plaza, bicycle connections, and emergency transportation capacity. And the prospect of regional, state, and federal agencies paying much of the bill.</p><p>The project is estimated to cost $139 million in 2028 dollars, excluding the electric ferries. Taplin details the benefits and the work already invested in the proposal. He offers little basis for concluding that those benefits justify the investment compared with other ways to improve Berkeley's waterfront and transportation system.</p><p>His argument illustrates recurring failures documented by the Berkeley Decision Project. Each makes a questionable investment easier to approve. Together they can make an expensive project seem inevitable.</p><section><h2>A solution in search of its problem</h2><p>Taplin argues that West Berkeley lacks adequate regional transit. He cites the Alameda County Transportation Commission's 2020 Community-Based Transportation Plan and forecasts of 955 weekday round-trip ferry riders in the first year, increasing to 1,160. He describes those passengers as Berkeley neighbors traveling to jobs and classes without sitting in Interstate 80 traffic.</p>
+<p>Where would the passengers live? Where would they work or study? How would they reach the terminal? How many would otherwise take BART, a bus, or another ferry? How many would drive from communities outside Berkeley?</p>
+<p>The Ferry Building serves downtown San Francisco. Riders headed elsewhere would need another connection. The newsletter offers no demonstrated basis for its suggestion that the ferry would provide a substantial transportation benefit for students. The proposed terminal's parking requirements also suggest a market extending beyond residents who can walk or bicycle to the waterfront.</p>
+<p>A ferry that attracts motorists from neighboring communities could serve a legitimate regional purpose. Berkeley would supply waterfront land, parking capacity, and local infrastructure for that regional service. Residents would experience the traffic and changes in recreational access. The geographic distribution of benefits and burdens belongs at the center of the investment decision.</p>
+<p>Our proposal on grant decisions makes the same point about sequence: <a href="grants-are-not-a-business-case.html">begin with the problem, not the grant opportunity</a>, compare the ways of addressing it, and only then ask what outside money changes.</p>
+<p>A problem establishes the need to consider solutions. It leaves the choice among them open.</p></section>
+<section><h2>Eleven years inside the box</h2><p>Taplin cites more than sixty outreach events, over twenty focus groups, hundreds of survey responses, commission reviews, and opportunities for public comment. Residents helped shape the proposed terminal, pier, plaza, and associated improvements. The larger choices remained constrained.</p>
+<p>Berkeley could build a new recreational pier independently of a ferry terminal. It could examine an inner-Marina ferry landing while replacing the public pier separately. It could compare ferry service with investments in existing transit. It could determine how much waterfront land should be devoted to regional commuter parking. These choices deserve a common evaluation of cost, public benefit, environmental impact, and long-term obligations.</p>
+<p>Taplin cites the loss of eight boat slips, additional ferry travel time, dredging, and conflicts with recreational parking as disadvantages of an inner-Marina terminal. He also argues that this location would leave the old pier deteriorating and forgo the proposed plaza and Bay Trail improvements. Those last two consequences follow from bundling the ferry and pier projects. Berkeley could locate a ferry inside the Marina and invest separately in public waterfront amenities.</p>
+<p>Taplin estimates that repairing the existing pier would cost $22 million to $65 million while extending its life by roughly a decade. That may justify replacing the aging structure. It supplies no estimate for building a new recreational pier without a ferry terminal.</p>
+<p>The public has been invited to help design a particular answer. The fundamental choice of what Berkeley should build has received far less attention. This is the pattern explored in our essay on <a href="constrained-choice.html">constrained choice</a>.</p></section>
+<section><h2>The certainty of numbers that haven't happened</h2><p>Taplin presents projected environmental benefits as decisive: 19,000 fewer vehicle miles traveled per day and 2,368 metric tons of greenhouse gas emissions avoided annually. These figures depend on predictions about future passenger behavior.</p>
+<p>A commuter switching from BART adds a ferry rider without eliminating a car trip. Someone driving from another East Bay community to the Marina adds an access trip. A rider headed beyond the Ferry Building needs another connection. The mix determines the actual environmental benefit.</p>
+<p>The forecast may account for these patterns. Taplin supplies the totals without the assumptions needed to judge their sensitivity. His projected 25-minute crossing is attractive for some travelers, but door-to-door journeys include access, parking, waiting, and onward transportation.</p>
+<p>Berkeley has repeatedly struggled to connect expenditures with measured results. Our <a href="measuring-nothing.html">Measuring Nothing</a> essay examines the broader problem. Here, modeled outcomes are offered as justification before service exists. The public should see projected origins, destinations, current travel modes, access modes, and door-to-door times, along with the effect of changing those assumptions.</p>
+<p>A precise forecast can still be wrong. Precision makes its assumptions more important.</p></section>
+<section><h2>A business case with a moving target</h2><p>Taplin invokes SF Bay Ferry's 2022 business plan. Four years later, Berkeley is considering a specific terminal location, pier design, parking arrangement, and capital program. The estimated $139 million construction cost, expressed in 2028 dollars, excludes the electric vessels required for service.</p>
+<p>A current business case would connect the latest design and costs to updated ridership, operating, environmental, and alternatives analyses. It would disclose vessel costs, expected annual subsidy, maintenance and replacement obligations, and the effect of a different terminal location or a smaller public pier.</p>
+<p>The newsletter supplies no consolidated accounting. A project can change through individually defensible design decisions until it bears little resemblance to the investment first evaluated. Our earlier <a href="pier-ferry.html">ferry analysis</a> raised this concern about the changing project and its business case.</p>
+<p>Recalculate the costs and benefits of the proposal actually before Berkeley, alongside credible alternatives.</p></section>
+<section><h2>The public money that disappears</h2><p>Taplin emphasizes that Berkeley will not subsidize ferry operations because SF Bay Ferry will operate the service. That matters to the municipal budget. Regional taxpayers and transportation users will still bear any operating subsidy.</p>
+<p>He also emphasizes regional, state, and federal construction funding. According to his newsletter, approximately $11.1 million has been secured for planning, design, and environmental review. Outside funding can make a project more affordable for Berkeley while distorting priorities across public agencies.</p>
+<p>The undertaking consumes public resources regardless of which agency writes the checks. Some grants are restricted to particular transportation purposes; those restrictions narrow the comparison without eliminating choices among eligible projects. A complete accounting would identify construction, vessels, operations, maintenance, and eventual replacement costs, who pays each, and what benefits those expenditures purchase. <a href="grants-are-not-a-business-case.html">A Grant Is Not a Business Case</a> sets out that lifecycle account item by item.</p>
+<p>Berkeley residents pay taxes beyond City Hall. They have an interest in whether regional transportation dollars are spent effectively.</p></section>
+<section><h2>When the deadline makes the decision</h2><p>Taplin says Berkeley must complete environmental review by December 2026 to preserve funding eligibility. He describes the November 17 Council action as a step toward competing for grants rather than an immediate authorization to spend $139 million.</p>
+<p>That procedural distinction matters. It also illustrates how expensive projects accumulate momentum. Planning expenditure leads to environmental clearance; clearance preserves grant eligibility; grant deadlines create pressure for approvals; grant awards make substantial redesign harder. Each step appears to preserve options. Together they narrow the City's practical freedom to choose.</p>
+<p>This project has already traveled much of that path in small steps. <a href="consent-drip.html">Two Calendars</a> traces how its agreements, grants and design and environmental contracts reached the Council as consent items, one at a time. <a href="build-once.html">If You Build It, a Plan Will Come</a> shows the same order of operations on a building: the commitment first, the operating cost later.</p>
+<p>The newsletter details the risk of missing the deadline. It provides no comparable assessment of the risk of advancing a project before the alternatives have been fairly evaluated. The Council should know the probability of securing funds, the obligations attached, and the alternatives foreclosed.</p>
+<p>A deadline creates urgency. It supplies no evidence of investment merit.</p></section>
+<section><h2>Process becomes the evidence</h2><p>Eleven years of study, environmental review, public meetings, commission endorsements, responses to comments, mitigation measures, and further regulatory approvals create an impression of comprehensive validation.</p>
+<p>Each process has a purpose. Environmental review examines defined impacts. Public meetings can improve designs. Commissions apply specialized expertise. Their findings address different questions from whether this project provides the best public value.</p>
+<p>Taplin says construction pile-driving noise is the project's one environmental impact that cannot be fully mitigated, while other identified impacts can be mitigated. That finding matters. So does a consistent environmental and economic comparison of credible ways to provide ferry service and waterfront access.</p>
+<p>The amount of process tells residents how much work has occurred. It does not establish that the resulting investment deserves priority.</p></section>
+<section><h2>The missing opportunity cost</h2><p>Taplin promises a replacement pier, a waterfront plaza, bicycle connections, electric ferry service, emergency transportation capacity, and improved Bay access. Each has potential value. Their combined price is substantial.</p>
+<p>Berkeley could pursue several independently. A public pier can provide recreation without a ferry. Bicycle improvements can be evaluated on their transportation merits. Emergency access can be compared with other resilience investments. Ferry service can be compared across terminal locations.</p>
+<p>Bundling benefits creates a coalition while obscuring the cost of satisfying each interest. A pier supporter may feel compelled to accept the ferry. A transit supporter may be asked to accept a particular waterfront redevelopment. The Council needs to know what each component costs, which benefits depend on the others, and what a smaller package would deliver.</p>
+<p>Berkeley faces a recurring structural deficit and extensive infrastructure needs. Even with outside grants, waterfront land, staff time, maintenance obligations, and political attention are finite. The newsletter catalogs benefits without establishing their value relative to other uses of those resources. <a href="crayon-box.html">The Crayon Box</a> describes what happens when the options that would change what the City spends its money on stop being considered; <a href="small-sites.html">Buy Once, Pay Forever</a> describes what happens when a purchase is weighed without the cost of keeping it.</p></section>
+<section><h2>Different standards for different claims</h2><p>Taplin scrutinizes the inner-Marina alternative for boat-slip losses, extra travel time, parking conflicts, and dredging. The preferred South Cove location receives more favorable treatment.</p>
+<p>He cites 1,541 public parking spaces across the waterfront and says approximately 300 remain empty even on the busiest Saturday. A useful analysis would show where those spaces are, when they are available, their distance from the terminal, overlap with recreational demand, and how proposed parking assignments would be enforced.</p>
+<p>Additional inner-Marina travel time should be weighed against South Cove access time, parking demand, construction cost, dredging, and recreational impacts. The same assumptions, cost boundaries, and treatment of uncertainty should apply to both locations.</p>
+<p>Forecast ridership and emissions savings deserve at least as much scrutiny as the obstacles invoked to reject alternatives.</p></section>
+<section><h2>A decision standard Berkeley can use</h2><p>Before committing to construction, Council should require a public comparison of the proposed South Cove ferry and pier, an inner-Marina terminal with a separate public pier, a new recreational pier without ferry service, improvements to existing regional transit, and a no-build baseline.</p>
+<p>Every option should use a common planning period and comparable assumptions. The comparison should disclose:</p>
+<ul><li><strong>Full public cost:</strong> construction, vessels, operations, maintenance, replacement, and eventual decommissioning; responsible agencies and funding sources; and Berkeley's direct obligations.</li><li><strong>Transportation benefit:</strong> origins, destinations, current modes, complete door-to-door travel times, net automobile trips avoided, and public subsidy per additional transit trip, distinguishing Berkeley residents from regional riders.</li><li><strong>Waterfront and environmental effects:</strong> net emissions including access trips and ferry operations, construction impacts, parking displacement, recreation, boating, shoreline access, and resilience.</li><li><strong>Opportunity costs:</strong> comparable benefits available from separate projects and existing transit, including which improvements actually depend on combining the ferry and pier.</li><li><strong>Uncertainty and accountability:</strong> low, central, and high estimates, assumptions that could change the ranking, measurable performance targets, and consequences if results fall short.</li></ul>
+<p>The Council should publish the expected benefits, full costs, risks, and distribution of burdens for each option. <strong>Approval should require three findings:</strong> the preferred option performs better than credible alternatives on stated objectives; its expected benefits justify its full public cost under reasonable assumptions; and its financial and environmental risks are acceptable to those who will bear them.</p>
+<p>If the evidence cannot support those findings, Council should defer the capital commitment, narrow the project, or reconsider its design. This standard leaves room for the ferry to win. It requires the ferry to earn that outcome.</p></section>
+<section><h2>Eleven years is enough time to ask</h2><p>The City has invested years of staff effort, planning money, political attention, and public participation. Those expenditures are behind us. Much larger construction and operating commitments lie ahead.</p>
+<p>The newsletter shows how a preferred project acquires an appearance of inevitability. The public was consulted. The design was refined. Environmental review advanced. Agencies expressed support. Grants became available. Deadlines approached.</p>
+<p>Each accomplishment makes the next step easier to defend. None establishes that the project delivers the greatest public value.</p>
+<p>Eleven years of planning have produced a detailed proposal and a substantial record of engagement. They have yet to produce the comparison needed to justify the investment.</p>
+<p><strong>Of all the things Berkeley could do with these resources, why this?</strong></p>
+<p>The Council should answer that question before committing the public to build it.</p></section><footer>
+    <h3>Sources and related reading</h3>
+    <p><a href="https://mailchi.mp/49ebff44893f/september-2025-newsletter-18214071">Taplin's November newsletter</a>; <a href="pier-ferry.html">Funding a Ferry With More Questions Than Answers</a>; <a href="constrained-choice.html">Constrained Choice</a>. Numerical forecasts and project descriptions attributed to Taplin are claims in his newsletter; their underlying models are not independently reproduced here.</p>
+  </footer>
+</div>
+<div class="bdp-site-footer" data-bdp-chrome><p>Every figure on this site traces to a primary document. Corrections are welcome and are published when received.</p><p>Related project: <a href="https://ericdf.github.io/council-scorecards/">Council Scorecards</a> assesses the conduct and performance of Berkeley&rsquo;s elected officials against a disclosed methodology.</p></div></body>
+</html>
