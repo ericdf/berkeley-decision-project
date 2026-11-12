@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berkeley Pier-Ferry Project: Finding Aid — Berkeley Decision Project</title>
+<meta name="description" content="A guide to every record in the Berkeley Public Records archive on the Berkeley pier and ferry terminal project, arranged by series, with what each contains and where to read it.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ground:#f6f7f9; --panel:#fff; --ink:#1a1f2b; --ink-2:#586074; --ink-3:#8b93a5;
+  --rule:#e0e4ea; --rule-soft:#eef1f5;
+  --accent:#2F6F68; --accent-soft:#E5F0ED;
+  --quote:#2c4a7c; --quote-soft:#eef3fa;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+    --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+    --quote:#8fb3e0; --quote-soft:#1a2331; }
+}
+:root[data-theme="dark"] {
+  --ground:#13161d; --panel:#1a1e27; --ink:#e7eaf0; --ink-2:#a4acbc; --ink-3:#7a8296;
+  --rule:#2c333f; --rule-soft:#232935; --accent:#79B8AE; --accent-soft:#203330;
+  --quote:#8fb3e0; --quote-soft:#1a2331;
+}
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.65;
+       -webkit-font-smoothing: antialiased; }
+.nav { position: sticky; top: 0; z-index: 50; background: #1a1a2e; border-bottom: 1px solid #2f3d5c; }
+.nav a { display: block; padding: 9px 26px; text-decoration: none; }
+.nav .t { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .4px; font-family: var(--sans); }
+.nav .s { font-size: 11px; color: #8899bb; margin-top: 3px; font-family: var(--sans); }
+.nav a:hover .t { color: #4e8ecb; }
+.wrap { max-width: 44rem; margin: 0 auto; padding: 3rem 1.4rem 5rem; }
+.wrap a { color: var(--quote); }
+.kicker { font-family: var(--sans); font-size: .69rem; font-weight: 700; letter-spacing: .16em;
+          text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+h1 { font-size: 2.3rem; line-height: 1.12; font-weight: 600; letter-spacing: -.02em;
+     text-wrap: balance; margin-bottom: .9rem; }
+.standfirst { font-size: 1.16rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 1.1rem; }
+.byline { font-family: var(--sans); font-size: .78rem; color: var(--ink-3);
+          padding-bottom: 1.6rem; border-bottom: 2px solid var(--ink); margin-bottom: 2rem; }
+.byline a { color: var(--ink-3); }
+h2 { font-family: var(--sans); font-size: 1.28rem; font-weight: 700; line-height: 1.3;
+     margin: 2.8rem 0 .9rem; letter-spacing: -.01em; text-wrap: balance;
+     padding-top: .6rem; border-top: 1px solid var(--rule); }
+h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; line-height: 1.35; margin-bottom: .3rem; }
+p { margin-bottom: 1rem; }
+code { font-family: var(--mono); font-size: .82em; overflow-wrap: anywhere; }
+pre { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; padding: .8rem 1rem;
+      overflow-x: auto; margin-bottom: 1rem; font-size: .9rem; line-height: 1.5; }
+.callout { margin: 0 0 2rem; padding: 1rem 1.2rem; background: var(--accent-soft);
+           border-left: 4px solid var(--accent); border-radius: 0 4px 4px 0; font-family: var(--sans);
+           font-size: .95rem; line-height: 1.55; }
+.callout p { margin: 0; }
+dl.summary { display: grid; grid-template-columns: 7.5rem 1fr; gap: .45rem 1rem; font-size: .98rem; }
+dl.summary dt { font-family: var(--sans); font-size: .78rem; font-weight: 700; letter-spacing: .06em;
+                text-transform: uppercase; color: var(--ink-2); padding-top: .2rem; }
+.series-list { padding-left: 1.4rem; font-family: var(--sans); font-size: .95rem; line-height: 1.7; }
+.series-desc { color: var(--ink-2); }
+ol.chron { list-style: none; font-size: .97rem; }
+ol.chron li { padding: .55rem 0; border-bottom: 1px solid var(--rule-soft); }
+.rec-date { font-family: var(--sans); font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+            text-transform: uppercase; color: var(--accent); margin-bottom: .2rem; }
+ol.chron .rec-date { display: block; }
+.meta, .pub { font-family: var(--sans); font-size: .8rem; color: var(--ink-2); }
+.rec { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px;
+       padding: 1rem 1.15rem .9rem; margin: 0 0 1rem; scroll-margin-top: 4rem; }
+.rec p { margin-bottom: .55rem; }
+.rec .outcome { font-size: .95rem; }
+ul.docs { list-style: none; border-top: 1px solid var(--rule-soft); padding-top: .55rem; }
+ul.docs li { font-family: var(--sans); font-size: .86rem; line-height: 1.5; margin-bottom: .55rem; }
+ul.docs li:last-child { margin-bottom: 0; }
+.doc-title { font-weight: 600; }
+.links { font-family: var(--sans); font-size: .82rem; }
+ul.docs code { color: var(--ink-3); }
+ul.passing, #gaps ul, #analysis ul { padding-left: 1.2rem; font-size: .93rem; }
+ul.passing li, #gaps li, #analysis li { margin-bottom: .45rem; }
+section[id] { scroll-margin-top: 4rem; }
+footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--rule);
+         font-family: var(--sans); font-size: .79rem; color: var(--ink-2); line-height: 1.62; }
+footer h3 { font-size: .84rem; color: var(--ink); margin-bottom: .5rem; }
+@media (max-width: 640px) {
+  .wrap { padding: 2rem 1rem 3.5rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.12rem; }
+  dl.summary { grid-template-columns: 1fr; gap: .1rem; }
+  dl.summary dd { margin-bottom: .6rem; }
+  .rec { padding: .85rem .9rem .8rem; }
+  .nav a { padding: 8px 16px; }
+}
+</style>
+<style data-bdp-chrome>.bdp-skip{position:absolute;left:-9999px;top:0;z-index:1000;padding:10px 14px;background:var(--panel,#fff);color:var(--ink,#111);font:600 14px/1.2 system-ui,sans-serif;border:2px solid var(--accent,#2F6F68);border-radius:0 0 6px 0;text-decoration:none}.bdp-skip:focus{left:0}a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent,#2F6F68);outline-offset:2px}.bdp-paths,.bdp-crumbs,.bdp-site-footer{box-sizing:border-box;max-width:46rem;margin:0 auto;background:var(--panel,#fff);color:var(--ink,#1a1a1a);font:14px/1.5 system-ui,sans-serif}.bdp-paths{display:flex;flex-wrap:wrap;gap:4px 18px;padding:10px 26px;font-weight:600}.bdp-paths a,.bdp-crumbs a,.bdp-site-footer a{color:var(--accent,#2F6F68)}.bdp-paths a{text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}.bdp-paths a[aria-current]{border-bottom-color:var(--accent,#2F6F68)}.bdp-crumbs{padding:4px 26px;font-size:13px}.bdp-site-footer{margin:40px auto;padding:18px 26px;border:1px solid var(--rule,#ccc);border-radius:8px}.bdp-site-footer p{margin:0 0 8px}.bdp-site-footer p:last-child{margin:0}</style></head>
+<body><a class="bdp-skip" href="#bdp-content" data-bdp-chrome>Skip to content</a>
+<div class="nav"><a href="index.html"><div class="t">&#8962; BERKELEY DECISION PROJECT</div><div class="s">Better questions. Better evidence. Better choices.</div></a></div><span id="bdp-content" data-bdp-chrome></span>
+
+<div class="wrap">
+<div class="kicker">Finding aid · Waterfront</div>
+<h1>Berkeley Pier-Ferry Project: Finding Aid</h1>
+<p class="standfirst">Every record in the Berkeley Public Records archive that bears on the proposed ferry terminal and replacement pier at the Berkeley Marina, arranged by series, with what each contains and where to read it.</p>
+<div class="byline">Compiled November 12, 2026 from archive commit <a href="https://github.com/ericdf/berkeley-public-records/tree/9eca05f751f3b6dbf057e58bda9e03a32057b8cb"><code>9eca05f</code></a></div>
+<div class="callout"><p><strong>Before the Council: November 17, 2026, Item 26.</strong> A public hearing to certify the project EIR, approve the project and act on its use permit. The archive holds the full packet, including the Final EIR: <a href="https://berkeleyca.gov/sites/default/files/2026-11-17%20Item%2026%20Berkeley%20Water%20Transportation.pdf">original (PDF, 127.6 MB, publisher&#x27;s copy)</a>, <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2026-11-17-item-26-staff-report-text.txt">searchable text</a>. <a href="#2026-11-17_EIR_project_approval">Description</a>.</p></div>
+<section id="summary"><h2>The collection</h2><dl class="summary">
+<dt>Subject</dt><dd>The Berkeley Water Transportation Pier-Ferry Project: a new public pier and ferry terminal at the Berkeley Marina, planned by the City of Berkeley with the San Francisco Bay Area Water Emergency Transportation Authority (WETA).</dd>
+<dt>Dates</dt><dd>2018–2026</dd>
+<dt>Extent</dt><dd>88 documents in 71 descriptions, plus 30 records that mention the project in passing</dd>
+<dt>Creators</dt><dd>City of Berkeley (City Council, City Manager, Parks, Recreation &amp; Waterfront); WETA; the Bay Conservation and Development Commission; consultants to each; members of the public</dd>
+<dt>Repository</dt><dd><a href="https://github.com/ericdf/berkeley-public-records">Berkeley Public Records</a>, a public archive of City records with every file fingerprinted in a manifest. Files too large for the repository are held at the Internet Archive.</dd>
+<dt>Access</dt><dd>Every record listed is public. Each has its original document, a plain-text version for searching, and an archive record giving its source, retrieval date and sha256.</dd>
+</dl></section>
+<section id="scope"><h2>Scope and content</h2>
+<p>The records run from the City's 2018 contract for a pier condition assessment and ferry feasibility study to the 2026 environmental impact report and the Council hearing on project approval. They include the City–WETA agreements and the contracts and grants that funded design and environmental review; WETA's business plan for Berkeley service; the parking studies; BCDC design review; and the waterfront plans and Marina Fund reports that anticipate ferry service.</p>
+<p>A record is described here when it is about the project or carries a decision, figure or statement about it. Records that only name the project in a list are gathered under <a href="#passing">Mentions in passing</a>. The descriptions say what each document contains. The Decision Project's analysis is on the pages listed under <a href="#analysis">Analysis built on these records</a>.</p></section>
+<section id="arrangement"><h2>Arrangement</h2><ol class="series-list">
+<li><a href="#chronology">Council actions, in order</a></li>
+<li><a href="#series-council">Council actions and their reports</a> (17)</li>
+<li><a href="#series-planning">Project planning and status</a> (6)</li>
+<li><a href="#series-weta">WETA records</a> (3)</li>
+<li><a href="#series-environmental">Environmental review</a> (3)</li>
+<li><a href="#series-parking">Parking and transportation demand</a> (4)</li>
+<li><a href="#series-bcdc">Bay Conservation and Development Commission</a> (6)</li>
+<li><a href="#series-waterfront">Waterfront planning and the Marina Fund</a> (14)</li>
+<li><a href="#series-budget">Budget and capital program</a> (9)</li>
+<li><a href="#series-public">Public comment and community records</a> (4)</li>
+<li><a href="#series-recordings">Meeting transcripts</a> (5)</li>
+<li><a href="#passing">Mentions in passing</a></li>
+<li><a href="#gaps">Not in the archive</a></li>
+<li><a href="#searching">Searching the archive yourself</a></li></ol></section>
+<section id="chronology"><h2>Council actions, in order</h2>
+<p>Each step the City Council took on the project, with the outcome recorded in its annotated agenda.</p><ol class="chron">
+<li><span class="rec-date">January 23, 2018</span> <a href="#2018-01-23_GHD_contract_amendment">Contract No. 10632 Amendment: GHD, Inc. for Structural Condition Assessment &amp; Ferry Transportation Feasibility Study for Berkeley Pier</a><br><span class="meta">Item 17. Adopted Resolution No. 68,294–N.S.</span></li>
+<li><span class="rec-date">March 12, 2019</span> <a href="#2019-03-12_MOU">Memorandum of Understanding: Planning Phase for the viability of a potential WETA Ferry Service and Public Recreation Pier at the Berkeley Marina</a><br><span class="meta">Consent Calendar Item 9. Adopted Resolution No. 68,782–N.S.</span></li>
+<li><span class="rec-date">June 25, 2019</span> <a href="#2019-06-25_GHD_contract_amendment">Contract No. 10632 Amendment: GHD, Inc. for the WETA MOU Planning Phase</a><br><span class="meta">Consent Calendar Item 30. Adopted Resolution No. 68,983–N.S.</span></li>
+<li><span class="rec-date">February 16, 2021</span> <a href="#2021-02-16_worksession">Berkeley Marina Area Specific Plan and Pier/Ferry Work Session</a><br><span class="meta">Special meeting (work session) Item 2. 19 speakers. Presentation made and discussion held.</span></li>
+<li><span class="rec-date">December 7, 2021</span> <a href="#2021-12-07_preferred_concept">Large Scale Ferry Feasibility Study – A Preferred Concept</a><br><span class="meta">Special meeting (work session) Item 2. 15 speakers. Presentation made and discussion held.</span></li>
+<li><span class="rec-date">May 31, 2022</span> <a href="#2022-05-31_BeST_plan_resolution">Berkeley Strategic Transportation Plan Update and Grant Application Opportunities</a><br><span class="meta">Item 19. Adopted Resolution No. 70,399–N.S. (Water Transportation/Ferry Project), with three other resolutions.</span></li>
+<li><span class="rec-date">December 13, 2022</span> <a href="#2022-12-13_SCC_grant">Grant Contracts with the State Coastal Conservancy to receive the FY2022 State Budget Allocation of $15 Million for improvement projects at the Berkeley Waterfront</a><br><span class="meta">Special meeting Item 2. Adopted Resolution No. 70,629–N.S.</span></li>
+<li><span class="rec-date">July 11, 2023</span> <a href="#2023-07-11_ACTC_grant">Accepting grant funds from the Alameda County Transportation Commission for the Berkeley Pier Water Transportation / Ferry Project Design Phase</a><br><span class="meta">Consent Calendar Item 17. Adopted Resolution No. 70,950–N.S.</span></li>
+<li><span class="rec-date">December 5, 2023</span> <a href="#2023-12-05_skinner_resolution">Nancy Skinner Municipal Pier Resolution</a><br><span class="meta">Consent Calendar Item 10. Approved the recommendation (referral to the Commission).</span></li>
+<li><span class="rec-date">May 14, 2024</span> <a href="#2024-05-14_COWI_contract">Contract: COWI North America, Inc. for Engineering and Design of the Berkeley Water Transportation Pier Ferry Project</a><br><span class="meta">Consent Calendar Item 8. Adopted Resolution No. 71,326–N.S.</span></li>
+<li><span class="rec-date">May 14, 2024</span> <a href="#2024-05-14_MOU_amendment1">Amendment #1 to the WETA Memorandum of Understanding for the Berkeley Water Transportation Pier Ferry Project</a><br><span class="meta">Consent Calendar Item 7. Adopted Resolution No. 71,325–N.S.</span></li>
+<li><span class="rec-date">July 9, 2024</span> <a href="#2024-07-09_Rincon_contract">Contract: Rincon Consultants, Inc. for environmental support services for the Berkeley Water Transportation Pier Ferry Project</a><br><span class="meta">Consent Calendar Item 11. Adopted Resolution No. 71,443–N.S.</span></li>
+<li><span class="rec-date">November 18, 2024</span> <a href="#2024-11-18_WSP_worksession">Update on the Waterfront Specific Plan for the City of Berkeley Public Tidelands Area</a><br><span class="meta">Special meeting (work session) Item 1. 22 speakers. M/S/C (Taplin/Kesarwani) directing staff to complete the parking study, prepare a nature- and recreation-based concept for Cesar Chavez Park, proceed with the EIR on the highest development scenario, and return with the revised plan and EIR. Ayes 8; absent: Arreguin.</span></li>
+<li><span class="rec-date">September 9, 2025</span> <a href="#2025-09-09_SCC_grant_amendment">Grant Agreement Amendment with State Coastal Conservancy to re-allocate $1.7M to: a) the Bay Trail Segment at Shorebird Park (design phase); and b) recreation improvements at the Gateway Pier and the J&amp;K Parking Lot</a><br><span class="meta">Consent Calendar Item 13. Adopted Resolution No. 71,943–N.S.</span></li>
+<li><span class="rec-date">January 27, 2026</span> <a href="#2026-01-27_199_Seawall_option">Option Agreement with TSA Holding Group, LLC for 199 Seawall Drive</a><br><span class="meta">Consent Calendar Item 6. Adopted Resolution No. 72,099–N.S.</span></li>
+<li><span class="rec-date">July 7, 2026</span> <a href="#2026-07-07_WSP_environmental_review">Waterfront Specific Plan Environmental Review Authorization and Near-Term Priority Adjustments</a><br><span class="meta">Action Calendar Item 9. Moved to the Consent Calendar. Approved the recommendation.</span></li>
+<li><span class="rec-date">September 15, 2026</span> <a href="#2026-09-15_SR2TBT_grant_application">Grant Application: Safe Routes to Transit and Bay Trail Program (SR2TBT)</a><br><span class="meta">Consent Calendar Item 12. Adopted Resolution No. 72,430–N.S.</span></li>
+<li><span class="rec-date">November 17, 2026</span> <a href="#2026-11-17_EIR_project_approval">Berkeley Water Transportation Pier-Ferry Project Environmental Impact Report, Project Approval, and Use Permit</a><br><span class="meta">Public Hearing Item 26. Calendared for public hearing.</span></li>
+</ol></section>
+<section id="series-council"><h2>Council actions and their reports</h2>
+<p class="series-desc">Agreements, contracts, grants and work sessions that came before the City Council, with the outcome the annotated agenda records.</p>
+<article class="rec" id="2018-01-23_GHD_contract_amendment">
+<p class="rec-date">January 23, 2018</p>
+<h3>Contract No. 10632 Amendment: GHD, Inc. for Structural Condition Assessment &amp; Ferry Transportation Feasibility Study for Berkeley Pier</h3>
+<p class="meta">City of Berkeley — City Clerk · City Council, January 23, 2018, Item 17</p>
+<p>Amends the City&#x27;s contract with GHD, Inc. for a structural condition assessment and ferry transportation feasibility study for the Berkeley Pier. The archive holds the annotated agenda; the staff report is not archived.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Adopted Resolution No. 68,294–N.S.</p>
+<ul class="docs">
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2018-01-23</span><br><span class="pub">City of Berkeley — City Clerk</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2018-01-23-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2018-01-23-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2018-01-23-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2018-01-23-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2019-03-12_MOU">
+<p class="rec-date">March 12, 2019</p>
+<h3>Memorandum of Understanding: Planning Phase for the viability of a potential WETA Ferry Service and Public Recreation Pier at the Berkeley Marina</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront (Office of the City Manager) · City Council, March 12, 2019, Consent Calendar Item 9</p>
+<p>Memorandum of understanding with WETA for a planning phase (technical feasibility study and public engagement) on a potential ferry service and public recreation pier, accepting up to $250,000 in WETA funding.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Adopted Resolution No. 68,782–N.S.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2019-03-12-mou.pdf">Original (PDF, 3.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2019-03-12-mou-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2019-03-12-mou.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2019-03-12-mou</code></li>
+<li><span class="doc-title">Annotated agenda, March 12, 2019</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2019-03-12-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2019-03-12-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2019-03-12-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2019-03-12-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2019-06-25_GHD_contract_amendment">
+<p class="rec-date">June 25, 2019</p>
+<h3>Contract No. 10632 Amendment: GHD, Inc. for the WETA MOU Planning Phase</h3>
+<p class="meta">City of Berkeley — City Clerk · City Council, June 25, 2019, Consent Calendar Item 30</p>
+<p>Increases the GHD, Inc. contract by $360,000, to a new amount not to exceed $690,744, for the WETA MOU planning phase (technical feasibility study and public engagement). The archive holds the annotated agenda; the staff report is not archived.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Adopted Resolution No. 68,983–N.S.</p>
+<ul class="docs">
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2019-06-25</span><br><span class="pub">City of Berkeley — City Clerk</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2019-06-25-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2019-06-25-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2019-06-25-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2019-06-25-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2021-02-16_worksession">
+<p class="rec-date">February 16, 2021</p>
+<h3>Berkeley Marina Area Specific Plan and Pier/Ferry Work Session</h3>
+<p class="meta">City Council, February 16, 2021, Special meeting (work session) Item 2</p>
+<p>Council work session on the Marina Area Specific Plan and the Berkeley Pier/Ferry Facility Planning Study: agenda material and the staff presentation on the status of both projects, waterfront issues and possible solutions.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> 19 speakers. Presentation made and discussion held.</p>
+<ul class="docs">
+<li><span class="doc-title">Berkeley Marina Area Specific Plan and Pier/Ferry Work Session</span><br><span class="pub">City of Berkeley — Office of the City Manager; Parks, Recreation &amp; Waterfront</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2021-02-16-berkeley-marina-area-specific-plan-and-pier-ferry-work-session.pdf">Original (PDF, 7.8 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2021-02-16-berkeley-marina-area-specific-plan-and-pier-ferry-work-session.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2021-02-16-berkeley-marina-area-specific-plan-and-pier-ferry-work-session</code></li>
+<li><span class="doc-title">Berkeley Marina Area Specific Plan + Berkeley Pier/Ferry Facility Planning Study (Council Worksession presentation)</span><br><span class="pub">City of Berkeley — Parks, Recreation &amp; Waterfront</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2021-02-16-berkeley-marina-area-specific-plan-berkeley-pier-ferry-facility.pdf">Original (PDF, 11.0 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2021-02-16-berkeley-marina-area-specific-plan-berkeley-pier-ferry-facility-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2021-02-16-berkeley-marina-area-specific-plan-berkeley-pier-ferry-facility.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2021-02-16-berkeley-marina-area-specific-plan-berkeley-pier-ferry-facility</code></li>
+<li><span class="doc-title">Annotated agenda, February 16, 2021</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2021-02-16-special-annotated-agenda.pdf">Original (PDF, 58 KB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2021-02-16-special-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2021-02-16-special-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2021-02-16-special-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2022-05-31_BeST_plan_resolution">
+<p class="rec-date">May 31, 2022</p>
+<h3>Berkeley Strategic Transportation Plan Update and Grant Application Opportunities</h3>
+<p class="meta">City of Berkeley — City Clerk · City Council, May 31, 2022, Item 19</p>
+<p>Transportation plan update and grant applications. The annotated agenda records a separate resolution for the Water Transportation/Ferry Project among the item&#x27;s four resolutions; the staff report is not archived.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Adopted Resolution No. 70,399–N.S. (Water Transportation/Ferry Project), with three other resolutions.</p>
+<ul class="docs">
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2022-05-31</span><br><span class="pub">City of Berkeley — City Clerk</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2022-05-31-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2022-05-31-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2022-05-31-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2022-05-31-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2022-12-13_SCC_grant">
+<p class="rec-date">December 13, 2022</p>
+<h3>Grant Contracts with the State Coastal Conservancy to receive the FY2022 State Budget Allocation of $15 Million for improvement projects at the Berkeley Waterfront</h3>
+<p class="meta">City of Berkeley — Office of the City Manager; Parks, Recreation &amp; Waterfront · City Council, December 13, 2022, Special meeting Item 2</p>
+<p>Grant contracts for a $15 million state allocation to five waterfront projects, including $2.961 million for environmental review and design of the Pier-Ferry Project.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Adopted Resolution No. 70,629–N.S.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2022-12-13-special-item-02-staff-report.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2022-12-13-special-item-02-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2022-12-13-special-item-02-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2022-12-13-special-item-02-staff-report</code></li>
+<li><span class="doc-title">Annotated agenda, December 13, 2022</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2022-12-13-special-annotated-agenda.pdf">Original (PDF, 0.2 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2022-12-13-special-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2022-12-13-special-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2022-12-13-special-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2023-07-11_ACTC_grant">
+<p class="rec-date">July 11, 2023</p>
+<h3>Accepting grant funds from the Alameda County Transportation Commission for the Berkeley Pier Water Transportation / Ferry Project Design Phase</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront (Office of the City Manager) · City Council, July 11, 2023, Consent Calendar Item 17</p>
+<p>Accepts an Alameda County Transportation Commission grant of $5,138,685 for the design phase of the Berkeley Pier Water Transportation/Ferry Project.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Adopted Resolution No. 70,950–N.S.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2023-07-11-actc-grant.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2023-07-11-actc-grant-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2023-07-11-actc-grant.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2023-07-11-actc-grant</code></li>
+<li><span class="doc-title">Annotated agenda, July 11, 2023</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2023-07-11-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2023-07-11-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2023-07-11-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2023-07-11-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2023-12-05_skinner_resolution">
+<p class="rec-date">December 5, 2023</p>
+<h3>Nancy Skinner Municipal Pier Resolution</h3>
+<p class="meta">City of Berkeley — City Council (Councilmember Taplin, author; Kesarwani, co-sponsor) · City Council, December 5, 2023, Consent Calendar Item 10</p>
+<p>Councilmember item, authored by Taplin and co-sponsored by Kesarwani, referring to the Parks, Recreation and Waterfront Commission a resolution to rename the Berkeley Municipal Pier for State Senator Nancy Skinner.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Approved the recommendation (referral to the Commission).</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2023-12-05-skinner-resolution.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2023-12-05-skinner-resolution-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2023-12-05-skinner-resolution.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2023-12-05-skinner-resolution</code></li>
+<li><span class="doc-title">Annotated agenda, December 5, 2023</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2023-12-05-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2023-12-05-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2023-12-05-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2023-12-05-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2024-05-14_COWI_contract">
+<p class="rec-date">May 14, 2024</p>
+<h3>Contract: COWI North America, Inc. for Engineering and Design of the Berkeley Water Transportation Pier Ferry Project</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront (Office of the City Manager) · City Council, May 14, 2024, Consent Calendar Item 8</p>
+<p>Engineering and design contract with COWI North America, Inc., not to exceed $6,500,000.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Adopted Resolution No. 71,326–N.S.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2024-05-14-cowi-contract.pdf">Original (PDF, 0.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2024-05-14-cowi-contract-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2024-05-14-cowi-contract.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2024-05-14-cowi-contract</code></li>
+<li><span class="doc-title">Annotated agenda, May 14, 2024</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2024-05-14-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2024-05-14-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2024-05-14-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2024-05-14-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2024-05-14_MOU_amendment1">
+<p class="rec-date">May 14, 2024</p>
+<h3>Amendment #1 to the WETA Memorandum of Understanding for the Berkeley Water Transportation Pier Ferry Project</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront (Office of the City Manager) · City Council, May 14, 2024, Consent Calendar Item 7</p>
+<p>Amendment #1 to the City–WETA memorandum of understanding, accepting up to $3,000,000 in WETA funding for the engineering, design and environmental phase.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Adopted Resolution No. 71,325–N.S.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2024-05-14-mou-amendment1.pdf">Original (PDF, 1.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2024-05-14-mou-amendment1-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2024-05-14-mou-amendment1.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2024-05-14-mou-amendment1</code></li>
+<li><span class="doc-title">Annotated agenda, May 14, 2024</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2024-05-14-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2024-05-14-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2024-05-14-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2024-05-14-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2024-07-09_Rincon_contract">
+<p class="rec-date">July 9, 2024</p>
+<h3>Contract: Rincon Consultants, Inc. for environmental support services for the Berkeley Water Transportation Pier Ferry Project</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront (Office of the City Manager) · City Council, July 9, 2024, Consent Calendar Item 11</p>
+<p>Environmental support services contract with Rincon Consultants, Inc., not to exceed $3,080,000 including $280,000 of contingency, for July 15, 2024 through June 1, 2027.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Adopted Resolution No. 71,443–N.S.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2024-07-09-rincon-contract.pdf">Original (PDF, 0.2 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2024-07-09-rincon-contract-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2024-07-09-rincon-contract.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2024-07-09-rincon-contract</code></li>
+<li><span class="doc-title">Annotated agenda, July 9, 2024</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2024-07-09-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2024-07-09-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2024-07-09-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2024-07-09-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2024-11-18_WSP_worksession">
+<p class="rec-date">November 18, 2024</p>
+<h3>Update on the Waterfront Specific Plan for the City of Berkeley Public Tidelands Area</h3>
+<p class="meta">City Council, November 18, 2024, Special meeting (work session) Item 1</p>
+<p>Waterfront Specific Plan update, with a section on the Berkeley Pier with Ferry Access Project and on the waterfront parking and transportation demand management study, which the project funded.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> 22 speakers. M/S/C (Taplin/Kesarwani) directing staff to complete the parking study, prepare a nature- and recreation-based concept for Cesar Chavez Park, proceed with the EIR on the highest development scenario, and return with the revised plan and EIR. Ayes 8; absent: Arreguin.</p>
+<ul class="docs">
+<li><span class="doc-title">Update on the Waterfront Specific Plan for the City of Berkeley Public Tidelands Area</span><br><span class="pub">City of Berkeley — Office of the City Manager; Parks, Recreation &amp; Waterfront</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2024-11-18-special-item-01-staff-report.pdf">Original (PDF, 7.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2024-11-18-special-item-01-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2024-11-18-special-item-01-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2024-11-18-special-item-01-staff-report</code></li>
+<li><span class="doc-title">Waterfront Specific Plan for the City of Berkeley Public Tidelands Area (Council Worksession presentation)</span><br><span class="pub">City of Berkeley — Parks, Recreation &amp; Waterfront</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2024-11-18-special-item-01-presentation.pdf">Original (PDF, 8.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2024-11-18-special-item-01-presentation-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2024-11-18-special-item-01-presentation.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2024-11-18-special-item-01-presentation</code></li>
+<li><span class="doc-title">Annotated agenda, November 18, 2024</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2024-11-18-special-annotated-agenda.pdf">Original (PDF, 0.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2024-11-18-special-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2024-11-18-special-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2024-11-18-special-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2025-09-09_SCC_grant_amendment">
+<p class="rec-date">September 9, 2025</p>
+<h3>Grant Agreement Amendment with State Coastal Conservancy to re-allocate $1.7M to: a) the Bay Trail Segment at Shorebird Park (design phase); and b) recreation improvements at the Gateway Pier and the J&amp;K Parking Lot</h3>
+<p class="meta">City of Berkeley — Office of the City Manager; Parks, Recreation &amp; Waterfront · City Council, September 9, 2025, Consent Calendar Item 13</p>
+<p>Reallocates $1.7 million within the State Coastal Conservancy grant and reports the status of the funded projects, including environmental review and design of the Pier-Ferry Project (completion in 2027).</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Adopted Resolution No. 71,943–N.S.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2025-09-09-item-13-staff-report.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2025-09-09-item-13-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2025-09-09-item-13-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2025-09-09-item-13-staff-report</code></li>
+<li><span class="doc-title">Annotated agenda, September 9, 2025</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2025-09-09-regular-annotated-agenda-v2.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2025-09-09-regular-annotated-agenda-v2-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2025-09-09-regular-annotated-agenda-v2.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2025-09-09-regular-annotated-agenda-v2</code></li>
+</ul></article>
+<article class="rec" id="2026-01-27_199_Seawall_option">
+<p class="rec-date">January 27, 2026</p>
+<h3>Option Agreement with TSA Holding Group, LLC for 199 Seawall Drive</h3>
+<p class="meta">City of Berkeley — Office of the City Manager; Parks, Recreation &amp; Waterfront · City Council, January 27, 2026, Consent Calendar Item 6</p>
+<p>Option agreement for the 199 Seawall Drive building; states that design and environmental permitting for related site improvements are under way, at 30% design, as part of the Pier Ferry project.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Adopted Resolution No. 72,099–N.S.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2026-01-27-item-06-staff-report.pdf">Original (PDF, 6.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2026-01-27-item-06-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-01-27-item-06-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-01-27-item-06-staff-report</code></li>
+<li><span class="doc-title">Annotated agenda, January 27, 2026</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2026-01-27-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2026-01-27-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-01-27-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-01-27-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2026-07-07_WSP_environmental_review">
+<p class="rec-date">July 7, 2026</p>
+<h3>Waterfront Specific Plan Environmental Review Authorization and Near-Term Priority Adjustments</h3>
+<p class="meta">City of Berkeley — Councilmember Terry Taplin, District 2 · City Council, July 7, 2026, Action Calendar Item 9</p>
+<p>Councilmember item (Taplin) authorizing environmental review of the Waterfront Specific Plan. It reports the completed Pier-Ferry parking and TDM plan and its designation of the Seawall Drive Lot (250 spaces) as the primary ferry parking.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Moved to the Consent Calendar. Approved the recommendation.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2026-07-07-item-09-staff-report.pdf">Original (PDF, 0.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2026-07-07-item-09-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-07-07-item-09-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-07-07-item-09-staff-report</code></li>
+<li><span class="doc-title">Annotated agenda, July 7, 2026</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2026-07-07-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2026-07-07-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-07-07-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-07-07-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2026-09-15_SR2TBT_grant_application">
+<p class="rec-date">September 15, 2026</p>
+<h3>Grant Application: Safe Routes to Transit and Bay Trail Program (SR2TBT)</h3>
+<p class="meta">City of Berkeley — Office of the City Manager; Parks, Recreation &amp; Waterfront · City Council, September 15, 2026, Consent Calendar Item 12</p>
+<p>Authorizes an application to the Metropolitan Transportation Commission for up to $25,000,000 toward construction of landside elements of the Pier-Ferry Project. The program requires no local match.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Adopted Resolution No. 72,430–N.S.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2026-09-15-item-12-staff-report.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2026-09-15-item-12-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-09-15-item-12-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-09-15-item-12-staff-report</code></li>
+<li><span class="doc-title">Annotated agenda, September 15, 2026</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2026-09-15-regular-annotated-agenda.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2026-09-15-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-09-15-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-09-15-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2026-11-17_EIR_project_approval">
+<p class="rec-date">November 17, 2026</p>
+<h3>Berkeley Water Transportation Pier-Ferry Project Environmental Impact Report, Project Approval, and Use Permit</h3>
+<p class="meta">City of Berkeley — Office of the City Manager · City Council, November 17, 2026, Public Hearing Item 26</p>
+<p>Staff report and full packet for the public hearing to certify the project EIR (SCH #2025040995), adopt CEQA findings and a mitigation monitoring and reporting program, approve the project, and act on its use permit. The packet includes the Final EIR.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> Calendared for public hearing.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://berkeleyca.gov/sites/default/files/2026-11-17%20Item%2026%20Berkeley%20Water%20Transportation.pdf">Original (PDF, 127.6 MB, publisher&#x27;s copy)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2026-11-17-item-26-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-11-17-item-26-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-11-17-item-26-staff-report</code></li>
+</ul></article>
+</section>
+<section id="series-planning"><h2>Project planning and status</h2>
+<p class="series-desc">Feasibility work, public engagement, project updates and City plans that describe the project.</p>
+<article class="rec" id="2021-10-21_questionnaire_results">
+<p class="rec-date">October 21, 2021</p>
+<h3>Berkeley Pier/Ferry Feasibility Study — Online Questionnaire #1 Results Report</h3>
+<p class="meta">City of Berkeley Department of Parks, Recreation and Waterfront and San Francisco Bay Area Water Emergency Transportation Authority (WETA)</p>
+<p>Results report for the first online questionnaire of the Berkeley Pier/Ferry Feasibility Study, issued by the City and WETA.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2021-10-21-questionnaire-results.pdf">Original (PDF, 0.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2021-10-21-questionnaire-results-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2021-10-21-questionnaire-results.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2021-10-21-questionnaire-results</code></li>
+</ul></article>
+<article class="rec" id="2021-12-07_preferred_concept">
+<p class="rec-date">December 7, 2021</p>
+<h3>Large Scale Ferry Feasibility Study – A Preferred Concept</h3>
+<p class="meta">City of Berkeley — Parks, Recreation and Waterfront (Office of the City Manager) · City Council, December 7, 2021, Special meeting (work session) Item 2</p>
+<p>Agenda material for the December 7, 2021 Council work session on the Large Scale Ferry Feasibility Study: the preferred concept&#x27;s waterside and landside elements and its capital cost estimate.</p>
+<p class="outcome"><strong>Recorded outcome:</strong> 15 speakers. Presentation made and discussion held.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2021-12-07-preferred-concept.pdf">Original (PDF, 8.7 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2021-12-07-preferred-concept-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2021-12-07-preferred-concept.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2021-12-07-preferred-concept</code></li>
+<li><span class="doc-title">Annotated agenda, December 7, 2021</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2021-12-07-special-annotated-agenda.pdf">Original (PDF, 58 KB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2021-12-07-special-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2021-12-07-special-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2021-12-07-special-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2021-12-07_worksession_presentation">
+<p class="rec-date">December 7, 2021</p>
+<h3>Large Scale Ferry Feasibility Study (City Council Work Session presentation)</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront · Worksession Item 02</p>
+<p>Slides from the December 7, 2021 work session, presented by City, WETA and consultant staff: the City–WETA partnership, public engagement, the preferred concept, and the WETA business plan.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2021-12-07-ws-item-02-presentation.pdf">Original (PDF, 2.0 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2021-12-07-ws-item-02-presentation-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2021-12-07-ws-item-02-presentation.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2021-12-07-ws-item-02-presentation</code></li>
+</ul></article>
+<article class="rec" id="2025-03-18_hazard_mitigation_plan">
+<p class="rec-date">March 18, 2025</p>
+<h3>City of Berkeley 2024 Local Hazard Mitigation Plan, Final</h3>
+<p class="meta">City of Berkeley</p>
+<p>Citywide hazard plan; notes the two small-scale commuter ferries operating from the Marina and names added ferry and bus service as a substitute for BART after a major Hayward fault earthquake.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://archive.org/details/berkeley-public-records-hazards-2025-03-18-city-of-berkeley-2024-local-5e397221">Original (PDF, 102.3 MB, Internet Archive)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/hazards/hazards-2025-03-18-city-of-berkeley-2024-local-hazard-mitigation-plan-final-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/hazards-2025-03-18-city-of-berkeley-2024-local-hazard-mitigation-plan-final.json">Archive record</a></span><br><code>berkeley-public-records:hazards-2025-03-18-city-of-berkeley-2024-local-hazard-mitigation-plan-final</code></li>
+</ul></article>
+<article class="rec" id="2025-04-15_climate_action_update">
+<p class="rec-date">April 15, 2025</p>
+<h3>Climate Action Plan and Resilience Update</h3>
+<p class="meta">City of Berkeley — Office of the City Manager · Information Calendar Item 23</p>
+<p>Information report; describes the project as reconstruction of the Berkeley Pier with all-electric ferry service between Berkeley and San Francisco.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2025-04-15-item-23-staff-report.pdf">Original (PDF, 9.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2025-04-15-item-23-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2025-04-15-item-23-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2025-04-15-item-23-staff-report</code></li>
+</ul></article>
+<article class="rec" id="2025-10-24_project_update">
+<p class="rec-date">October 24, 2025</p>
+<h3>Berkeley Pier-Ferry Project Update (City Manager off-agenda memo)</h3>
+<p class="meta">City of Berkeley — Office of the City Manager</p>
+<p>City Manager off-agenda memo on the project&#x27;s status: design, environmental review, cost estimate, funding, and answers to frequently asked questions.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2025-10-24-project-update.pdf">Original (PDF, 14.8 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2025-10-24-project-update-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2025-10-24-project-update.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2025-10-24-project-update</code></li>
+</ul></article>
+</section>
+<section id="series-weta"><h2>WETA records</h2>
+<p class="series-desc">Records of the San Francisco Bay Area Water Emergency Transportation Authority, the ferry operator and the City&#x27;s partner.</p>
+<article class="rec" id="2022-03-17_WETA_business_plan">
+<p class="rec-date">March 17, 2022</p>
+<h3>WETA Berkeley Ferry Service Business Plan, Version 1.0</h3>
+<p class="meta">San Francisco Bay Area Water Emergency Transportation Authority (WETA); prepared by Economic &amp; Planning Systems for CDM Smith</p>
+<p>WETA&#x27;s business plan for Berkeley ferry service, prepared by Economic &amp; Planning Systems for CDM Smith: ridership, vessels, operating costs, fares, farebox recovery, and capital and operating funding sources.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2022-03-17-weta-business-plan.pdf">Original (PDF, 1.9 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2022-03-17-weta-business-plan-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2022-03-17-weta-business-plan.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2022-03-17-weta-business-plan</code></li>
+</ul></article>
+<article class="rec" id="2024-10-10_WETA_Richmond_service_update">
+<p class="rec-date">October 10, 2024</p>
+<h3>Richmond Service Update</h3>
+<p class="meta">San Francisco Bay Area Water Emergency Transportation Authority (San Francisco Bay Ferry)</p>
+<p>WETA board presentation on Richmond service and the five-year operating plan; lists Berkeley–San Francisco service for FY29 in Tier 1 of WETA&#x27;s 2050 Service Vision.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2024-10-10-richmond-service-update.pdf">Original (PDF, 3.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2024-10-10-richmond-service-update-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2024-10-10-richmond-service-update.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2024-10-10-richmond-service-update</code></li>
+</ul></article>
+<article class="rec" id="2025-08-14_WETA_onboard_survey">
+<p class="rec-date">August 14, 2025</p>
+<h3>2025 Onboard Ferry Survey Summary Report</h3>
+<p class="meta">San Francisco Bay Area Water Emergency Transportation Authority (WETA); prepared and conducted by Corey, Canapary &amp; Galanis Research</p>
+<p>Summary report of WETA&#x27;s 2025 onboard rider survey, conducted by Corey, Canapary &amp; Galanis Research.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2025-08-14-weta-onboard-ferry-survey.pdf">Original (PDF, 0.9 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2025-08-14-weta-onboard-ferry-survey-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2025-08-14-weta-onboard-ferry-survey.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2025-08-14-weta-onboard-ferry-survey</code></li>
+</ul></article>
+</section>
+<section id="series-environmental"><h2>Environmental review</h2>
+<p class="series-desc">CEQA documents. The Final EIR is in the archive inside the November 17, 2026 Council packet (Council actions, above).</p>
+<article class="rec" id="2025-05-19_Kamen_EIR_scoping_addendum">
+<p class="rec-date">May 19, 2025</p>
+<h3>Paul Kamen, Naval Architect P.E. — Addendum to Pier-Ferry EIR scoping comments (email to City staff with attachment)</h3>
+<p class="meta">Paul Kamen (private commenter); published by the City of Berkeley in the Pier-Ferry project document library</p>
+<p>Addendum to EIR scoping comments from Paul Kamen, naval architect, on parking demand, vessel electrification and emergency use; published in the City&#x27;s project document library.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2025-05-19-kamen-eir-scoping-addendum.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2025-05-19-kamen-eir-scoping-addendum-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2025-05-19-kamen-eir-scoping-addendum.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2025-05-19-kamen-eir-scoping-addendum</code></li>
+</ul></article>
+<article class="rec" id="2026-02-28_draft_EIR">
+<p class="rec-date">February 28, 2026</p>
+<h3>Berkeley Water Transportation Pier Ferry Project Draft Environmental Impact Report</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront Department (prepared by Rincon Consultants, Inc.)</p>
+<p>Draft EIR prepared by Rincon Consultants: project description, impact analysis, mitigation, alternatives, and a summary of scoping comments.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://archive.org/details/berkeley-public-records-pier-ferry-2026-02-28-berkeley-water-transporta-ca0299a0">Original (PDF, 30.7 MB, Internet Archive)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2026-02-28-berkeley-water-transportation-pier-ferry-project-draft-environmental-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2026-02-28-berkeley-water-transportation-pier-ferry-project-draft-environmental.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2026-02-28-berkeley-water-transportation-pier-ferry-project-draft-environmental</code></li>
+</ul></article>
+<article class="rec" id="2026-06-30_draft_EIR_appendices">
+<p class="rec-date">June 30, 2026</p>
+<h3>Draft EIR Appendices (1 of 2 and 2 of 2)</h3>
+<p>Technical appendices to the Draft EIR, in two volumes.</p>
+<ul class="docs">
+<li><span class="doc-title">Berkley Water Transportation Pier Ferry Project Draft EIR Appendices (1 of 2)</span><br><span class="pub">City of Berkeley — Parks, Recreation, &amp; Waterfront Department</span><br><span class="links"><a href="https://archive.org/details/berkeley-public-records-pier-ferry-2026-06-30-draft-eir-appendices-1-of-2">Original (PDF, 62.2 MB, Internet Archive)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2026-06-30-draft-eir-appendices-1-of-2-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2026-06-30-draft-eir-appendices-1-of-2.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2026-06-30-draft-eir-appendices-1-of-2</code></li>
+<li><span class="doc-title">Berkley Water Transportation Pier Ferry Project Draft EIR Appendices (2 of 2)</span><br><span class="pub">City of Berkeley — Parks, Recreation, &amp; Waterfront Department</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2026-06-30-berkley-water-transportation-pier-ferry-project-draft-eir-appendices.pdf">Original (PDF, 9.8 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2026-06-30-berkley-water-transportation-pier-ferry-project-draft-eir-appendices-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2026-06-30-berkley-water-transportation-pier-ferry-project-draft-eir-appendices.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2026-06-30-berkley-water-transportation-pier-ferry-project-draft-eir-appendices</code></li>
+</ul></article>
+</section>
+<section id="series-parking"><h2>Parking and transportation demand</h2>
+<p class="series-desc">Parking studies and plans for ferry riders and other waterfront users.</p>
+<article class="rec" id="2025-03-07_parking_TDM_plan">
+<p class="rec-date">March 7, 2025</p>
+<h3>Water Transportation Pier-Ferry Project Parking and TDM Plan, Public Draft</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront (prepared by Kittelson &amp; Associates, Inc.)</p>
+<p>Parking and transportation demand management plan by Kittelson &amp; Associates: existing waterfront parking, demand added by ferry service and other new uses, and TDM and parking strategies.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2025-03-07-water-transportation-pier-ferry-project-parking-and-tdm-plan-public.pdf">Original (PDF, 13.6 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2025-03-07-water-transportation-pier-ferry-project-parking-and-tdm-plan-public-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2025-03-07-water-transportation-pier-ferry-project-parking-and-tdm-plan-public.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2025-03-07-water-transportation-pier-ferry-project-parking-and-tdm-plan-public</code></li>
+</ul></article>
+<article class="rec" id="2025-05-07_parking_TDM_addendum">
+<p class="rec-date">May 7, 2025</p>
+<h3>Water Transportation Pier-Ferry Project Parking and TDM Plan, Revised Draft Addendum</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront (prepared by Kittelson &amp; Associates, Inc.)</p>
+<p>Revised draft addendum to the March 2025 parking and TDM plan.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2025-05-07-water-transportation-pier-ferry-project-parking-and-tdm-plan-revised.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2025-05-07-water-transportation-pier-ferry-project-parking-and-tdm-plan-revised-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2025-05-07-water-transportation-pier-ferry-project-parking-and-tdm-plan-revised.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2025-05-07-water-transportation-pier-ferry-project-parking-and-tdm-plan-revised</code></li>
+</ul></article>
+<article class="rec" id="2026-05-08_parking_management_plan">
+<p class="rec-date">May 8, 2026</p>
+<h3>Berkeley Water Transportation Ferry Pier Project: Draft Parking Management Implementation Plan, Public Review Draft</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront</p>
+<p>Public review draft of the project&#x27;s parking management implementation plan.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2026-05-08-berkeley-water-transportation-ferry-pier-project-draft-parking.pdf">Original (PDF, 1.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2026-05-08-berkeley-water-transportation-ferry-pier-project-draft-parking-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2026-05-08-berkeley-water-transportation-ferry-pier-project-draft-parking.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2026-05-08-berkeley-water-transportation-ferry-pier-project-draft-parking</code></li>
+</ul></article>
+<article class="rec" id="2026-09-09_PRW_commission_packet">
+<p class="rec-date">September 9, 2026</p>
+<h3>Parks, Recreation, and Waterfront Commission Regular Meeting Agenda, September 9, 2026</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront · Item 9</p>
+<p>Commission agenda packet. Its attached draft minutes record a Commission discussion of the Draft Pier-Ferry Parking Management Implementation Plan, and the agenda lists the Pier-Ferry Project as a future item.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/parks-recreation-and-waterfront-commission-2026-09-09-item-09-agenda-packet.pdf">Original (PDF, 11.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/parks-recreation-and-waterfront-commission-2026-09-09-item-09-agenda-packet-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/parks-recreation-and-waterfront-commission-2026-09-09-item-09-agenda-packet.json">Archive record</a></span><br><code>berkeley-public-records:parks-recreation-and-waterfront-commission-2026-09-09-item-09-agenda-packet</code></li>
+</ul></article>
+</section>
+<section id="series-bcdc"><h2>Bay Conservation and Development Commission</h2>
+<p class="series-desc">BCDC design review, permitting, and the Bay Plan that governs it.</p>
+<article class="rec" id="2025-05-12_BCDC_DRB_public_comments">
+<p class="rec-date">May 12, 2025</p>
+<h3>Public comments received for the May 12, 2025 BCDC Design Review Board meeting (Berkeley Waterfront and Berkeley Pier Ferry Project)</h3>
+<p class="meta">San Francisco Bay Conservation and Development Commission (BCDC), State of California</p>
+<p>Public comments BCDC received for that briefing.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2025-05-12-bcdc-drb-public-comments.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2025-05-12-bcdc-drb-public-comments-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2025-05-12-bcdc-drb-public-comments.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2025-05-12-bcdc-drb-public-comments</code></li>
+</ul></article>
+<article class="rec" id="2025-05-12_BCDC_DRB_staff_report">
+<p class="rec-date">May 12, 2025</p>
+<h3>Berkeley Waterfront and Berkeley Pier Ferry Project; Pre-Application Briefing (For Design Review Board consideration on May 12, 2025)</h3>
+<p class="meta">San Francisco Bay Conservation and Development Commission (BCDC), State of California</p>
+<p>BCDC staff report for the Design Review Board&#x27;s pre-application briefing on the project, May 12, 2025.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2025-05-12-bcdc-drb-staff-report.pdf">Original (PDF, 0.9 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2025-05-12-bcdc-drb-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2025-05-12-bcdc-drb-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2025-05-12-bcdc-drb-staff-report</code></li>
+</ul></article>
+<article class="rec" id="2025-11-03_BCDC_design_review">
+<p class="rec-date">February 25, 2026</p>
+<h3>Draft Summary of November 3, 2025, BCDC Design Review Board Meeting (Berkeley Waterfront and Ferry Pier)</h3>
+<p class="meta">San Francisco Bay Conservation and Development Commission (BCDC), State of California</p>
+<p>Draft summary of the BCDC Design Review Board&#x27;s November 3, 2025 review of the Berkeley Waterfront and Ferry Pier, with attached public comment.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/pier_ferry/pier-ferry-2025-11-03-bcdc-design-review.pdf">Original (PDF, 7.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/pier_ferry/pier-ferry-2025-11-03-bcdc-design-review-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/pier-ferry-2025-11-03-bcdc-design-review.json">Archive record</a></span><br><code>berkeley-public-records:pier-ferry-2025-11-03-bcdc-design-review</code></li>
+</ul></article>
+<article class="rec" id="2026-07-31_Bay_Plan">
+<p class="rec-date">July 31, 2026</p>
+<h3>San Francisco Bay Plan</h3>
+<p class="meta">San Francisco Bay Conservation and Development Commission</p>
+<p>BCDC&#x27;s San Francisco Bay Plan, the basis for its permit decisions; its transportation findings and policies refer to ferry service and terminals.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://archive.org/details/berkeley-public-records-waterfront-2026-07-31-san-francisco-bay-plan">Original (PDF, 34.0 MB, Internet Archive)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2026-07-31-san-francisco-bay-plan-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2026-07-31-san-francisco-bay-plan.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2026-07-31-san-francisco-bay-plan</code></li>
+</ul></article>
+<article class="rec" id="2026-07-23_BCDC_administrative_listing">
+<p class="rec-date">August 6, 2026</p>
+<h3>Listing of Administrative Matters (For Commission consideration on August 6, 2026)</h3>
+<p class="meta">San Francisco Bay Conservation and Development Commission</p>
+<p>BCDC listing that includes the City&#x27;s application for a paid parking program at three waterfront lots; it notes that the City and WETA propose the Pier Ferry Project, for which a major permit application is anticipated.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2026-07-23-listing-of-administrative-matters-for-commission-consideration-on.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2026-07-23-listing-of-administrative-matters-for-commission-consideration-on-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2026-07-23-listing-of-administrative-matters-for-commission-consideration-on.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2026-07-23-listing-of-administrative-matters-for-commission-consideration-on</code></li>
+</ul></article>
+<article class="rec" id="2026-08-06_BCDC_minutes">
+<p class="rec-date">August 6, 2026</p>
+<h3>Approved Minutes of August 6, 2026 Hybrid Commission Meeting</h3>
+<p class="meta">San Francisco Bay Conservation and Development Commission</p>
+<p>Approved BCDC minutes; public comment on the waterfront paid parking application connects it to parking for the ferry project.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2026-08-06-approved-minutes-of-august-6-2026-hybrid-commission-meeting.pdf">Original (PDF, 0.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2026-08-06-approved-minutes-of-august-6-2026-hybrid-commission-meeting-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2026-08-06-approved-minutes-of-august-6-2026-hybrid-commission-meeting.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2026-08-06-approved-minutes-of-august-6-2026-hybrid-commission-meeting</code></li>
+</ul></article>
+</section>
+<section id="series-waterfront"><h2>Waterfront planning and the Marina Fund</h2>
+<p class="series-desc">Specific plans, consultant studies and Marina Fund reports that treat the ferry as part of the waterfront&#x27;s future.</p>
+<article class="rec" id="2018-04-12_marina_fund_update">
+<p class="rec-date">April 12, 2018</p>
+<h3>Waterfront / Marina Fund Update</h3>
+<p class="meta">City of Berkeley — Office of the City Manager</p>
+<p>Report on the Marina Fund; names redevelopment of the Berkeley Pier to include a WETA ferry terminal among planned waterfront projects.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/budgets/budgets-2018-04-12-waterfront-marina-fund-update.pdf">Original (PDF, 6.0 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/budgets/budgets-2018-04-12-waterfront-marina-fund-update-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/budgets-2018-04-12-waterfront-marina-fund-update.json">Archive record</a></span><br><code>berkeley-public-records:budgets-2018-04-12-waterfront-marina-fund-update</code></li>
+</ul></article>
+<article class="rec" id="2018-10-10_BMASP_RFP">
+<p class="rec-date">October 10, 2018</p>
+<h3>Request for Proposals (RFP), Specification No. 18-11248-C, for the Berkeley Marina Area Specific Plan (BMASP) &amp; Draft Environmental Impact Report (DEIR)</h3>
+<p class="meta">City of Berkeley — Finance Department, General Services Division</p>
+<p>Request for proposals for the Marina Area Specific Plan; lists the pier structural assessment and the small-scale and WETA ferry terminal feasibility studies as ongoing.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2018-10-10-request-for-proposals-rfp-specification-no-18-11248-c-for-the.pdf">Original (PDF, 2.8 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2018-10-10-request-for-proposals-rfp-specification-no-18-11248-c-for-the-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2018-10-10-request-for-proposals-rfp-specification-no-18-11248-c-for-the.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2018-10-10-request-for-proposals-rfp-specification-no-18-11248-c-for-the</code></li>
+</ul></article>
+<article class="rec" id="2020-02-14_DBW_loan_feasibility">
+<p class="rec-date">February 14, 2020</p>
+<h3>Berkeley Marina Loan Feasibility Report</h3>
+<p class="meta">California Department of Parks and Recreation, Division of Boating and Waterways</p>
+<p>State Division of Boating and Waterways loan feasibility report; records the City&#x27;s expectation that new revenue such as ferry service would offset Marina capital costs from FY 2025/26.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2020-02-14-berkeley-marina-loan-feasibility-report.pdf">Original (PDF, 2.0 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2020-02-14-berkeley-marina-loan-feasibility-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2020-02-14-berkeley-marina-loan-feasibility-report.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2020-02-14-berkeley-marina-loan-feasibility-report</code></li>
+</ul></article>
+<article class="rec" id="2021-03-26_KMA_amenities_assessment">
+<p class="rec-date">March 26, 2021</p>
+<h3>Berkeley Marina Area Specific Plan: Draft Existing Amenities and Operations Assessment</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront (written by Keyser Marston Associates, Inc.)</p>
+<p>Keyser Marston assessment of Marina amenities and operations; treats large-scale ferry service as a development opportunity and a condition of its upper-end food and beverage estimate.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2021-03-26-berkeley-marina-area-specific-plan-draft-existing-amenities-and.pdf">Original (PDF, 1.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2021-03-26-berkeley-marina-area-specific-plan-draft-existing-amenities-and-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2021-03-26-berkeley-marina-area-specific-plan-draft-existing-amenities-and.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2021-03-26-berkeley-marina-area-specific-plan-draft-existing-amenities-and</code></li>
+</ul></article>
+<article class="rec" id="2021-04-19_KMA_implementation_strategy">
+<p class="rec-date">April 19, 2021</p>
+<h3>Berkeley Marina Area Specific Plan: Draft Implementation Strategy</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront (written by Keyser Marston Associates, Inc.)</p>
+<p>Keyser Marston implementation strategy; estimates the revenue potential of large-scale ferry service to the Marina Fund.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2021-04-19-berkeley-marina-area-specific-plan-draft-implementation-strategy.pdf">Original (PDF, 1.2 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2021-04-19-berkeley-marina-area-specific-plan-draft-implementation-strategy-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2021-04-19-berkeley-marina-area-specific-plan-draft-implementation-strategy.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2021-04-19-berkeley-marina-area-specific-plan-draft-implementation-strategy</code></li>
+</ul></article>
+<article class="rec" id="2022-02-16_waterfront_CIP_list">
+<p class="rec-date">February 16, 2022</p>
+<h3>Berkeley Waterfront CIP Projects 2008 to Present</h3>
+<p class="meta">City of Berkeley — Office of the City Manager</p>
+<p>List of waterfront capital projects since 2008 with amounts and funding sources, including the completed Pier-Ferry Feasibility Study.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2022-02-16-berkeley-waterfront-cip-projects-2008-to-present.pdf">Original (PDF, 0.2 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2022-02-16-berkeley-waterfront-cip-projects-2008-to-present-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2022-02-16-berkeley-waterfront-cip-projects-2008-to-present.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2022-02-16-berkeley-waterfront-cip-projects-2008-to-present</code></li>
+</ul></article>
+<article class="rec" id="2022-06-08_BMASP_update">
+<p class="rec-date">June 8, 2022</p>
+<h3>Berkeley Marina Area Specific Plan Update</h3>
+<p class="meta">City of Berkeley — Office of the City Manager</p>
+<p>Specific plan status memo with a timeline of meetings, including the February 16, 2021 BMASP and Pier/Ferry work session.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2022-06-08-berkeley-marina-area-specific-plan-update.pdf">Original (PDF, 0.2 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2022-06-08-berkeley-marina-area-specific-plan-update-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2022-06-08-berkeley-marina-area-specific-plan-update.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2022-06-08-berkeley-marina-area-specific-plan-update</code></li>
+</ul></article>
+<article class="rec" id="2022-08-31_AB691_summary">
+<p class="rec-date">August 31, 2022</p>
+<h3>AB 691 Summary - Berkeley</h3>
+<p class="meta">California State Lands Commission</p>
+<p>State Lands Commission summary of Berkeley&#x27;s sea-level-rise assessment for its granted tidelands; mentions a potential partnership with WETA on a ferry terminal.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2022-08-31-ab-691-summary-berkeley.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2022-08-31-ab-691-summary-berkeley-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2022-08-31-ab-691-summary-berkeley.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2022-08-31-ab-691-summary-berkeley</code></li>
+</ul></article>
+<article class="rec" id="2022-09-22_KMA_revenue_assessment">
+<p class="rec-date">September 22, 2022</p>
+<h3>Revised Draft Assessment: Revenue Generating Potential and Financial Feasibility of New Hotel and Food and Beverage Development Within the Berkeley Marina Area</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront (prepared by Keyser Marston Associates, Inc., as a subconsultant to Hargreaves Jones)</p>
+<p>Keyser Marston hotel and food and beverage feasibility assessment; conditions its upper-end estimate on complementary uses including large-scale ferry service.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2022-09-22-revised-draft-assessment-revenue-generating-potential-and-financial.pdf">Original (PDF, 1.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2022-09-22-revised-draft-assessment-revenue-generating-potential-and-financial-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2022-09-22-revised-draft-assessment-revenue-generating-potential-and-financial.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2022-09-22-revised-draft-assessment-revenue-generating-potential-and-financial</code></li>
+</ul></article>
+<article class="rec" id="2023-03-20_WSP_worksession">
+<p class="rec-date">March 20, 2023</p>
+<h3>Update on the Waterfront Specific Plan (Council work session, March 20, 2023)</h3>
+<p>Work session report and presentation; states that the Pier/Ferry project would proceed separately, with its own project-level CEQA review, and be included as a use in the specific plan.</p>
+<ul class="docs">
+<li><span class="doc-title">Update on the Waterfront Specific Plan for the City of Berkeley Public Tidelands Area</span><br><span class="pub">City of Berkeley — Office of the City Manager; Parks, Recreation &amp; Waterfront</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2023-03-20-ws-item-01-staff-report.pdf">Original (PDF, 3.7 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2023-03-20-ws-item-01-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2023-03-20-ws-item-01-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2023-03-20-ws-item-01-staff-report</code></li>
+<li><span class="doc-title">Waterfront Specific Plan for the City of Berkeley Public Tidelands Area (City Council worksession presentation)</span><br><span class="pub">City of Berkeley — Parks, Recreation &amp; Waterfront</span><br><span class="links"><a href="https://archive.org/details/berkeley-public-records-waterfront-2023-03-20-waterfront-specific-plan-055ed64b">Original (PDF, 26.8 MB, Internet Archive)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2023-03-20-waterfront-specific-plan-for-the-city-of-berkeley-public-tidelands-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2023-03-20-waterfront-specific-plan-for-the-city-of-berkeley-public-tidelands.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2023-03-20-waterfront-specific-plan-for-the-city-of-berkeley-public-tidelands</code></li>
+</ul></article>
+<article class="rec" id="2023-09-23_WSP_public_draft">
+<p class="rec-date">September 23, 2023</p>
+<h3>DRAFT Waterfront Specific Plan for the City of Berkeley Public Tidelands Area (Public Draft September 23, 2023)</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront</p>
+<p>First public draft of the Waterfront Specific Plan; discusses the pier and ferry project.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://archive.org/details/berkeley-public-records-waterfront-2023-09-23-draft-waterfront-specific-a2d6b77d">Original (PDF, 90.2 MB, Internet Archive)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2023-09-23-draft-waterfront-specific-plan-for-the-city-of-berkeley-public-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2023-09-23-draft-waterfront-specific-plan-for-the-city-of-berkeley-public.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2023-09-23-draft-waterfront-specific-plan-for-the-city-of-berkeley-public</code></li>
+</ul></article>
+<article class="rec" id="2024-01-23_WSP_update">
+<p class="rec-date">January 23, 2024</p>
+<h3>Waterfront Specific Plan Update</h3>
+<p class="meta">City of Berkeley — Office of the City Manager</p>
+<p>Memo postponing the specific plan&#x27;s Council meeting until the Pier Ferry project&#x27;s parking and TDM study is complete, and describing the study&#x27;s funding.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-2024-01-23-waterfront-specific-plan-update.pdf">Original (PDF, 0.2 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2024-01-23-waterfront-specific-plan-update-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2024-01-23-waterfront-specific-plan-update.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2024-01-23-waterfront-specific-plan-update</code></li>
+</ul></article>
+<article class="rec" id="2024-11-08_WSP_public_draft">
+<p class="rec-date">November 8, 2024</p>
+<h3>DRAFT Waterfront Specific Plan for the City of Berkeley Public Tidelands Area (Public Draft November 8, 2024)</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront</p>
+<p>Second public draft of the Waterfront Specific Plan; lists a reopened Berkeley Pier and ferry access among the amenities it plans for.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://archive.org/details/berkeley-public-records-waterfront-2024-11-08-draft-waterfront-specific-285e39e3">Original (PDF, 172.6 MB, Internet Archive)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-2024-11-08-draft-waterfront-specific-plan-for-the-city-of-berkeley-public-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-2024-11-08-draft-waterfront-specific-plan-for-the-city-of-berkeley-public.json">Archive record</a></span><br><code>berkeley-public-records:waterfront-2024-11-08-draft-waterfront-specific-plan-for-the-city-of-berkeley-public</code></li>
+</ul></article>
+<article class="rec" id="2025-10-28_marina_fund_update">
+<p class="rec-date">October 28, 2025</p>
+<h3>Marina Fund Update (presentation)</h3>
+<p class="meta">City of Berkeley — Parks, Recreation &amp; Waterfront · Item 3</p>
+<p>Marina Fund presentation; lists Berkeley Pier/Ferry ($11.1M) among grant-funded waterfront projects.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-budget-finance-committee-2025-10-28-item-03-presentation.pdf">Original (PDF, 1.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-budget-finance-committee-2025-10-28-item-03-presentation-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-budget-finance-committee-2025-10-28-item-03-presentation.json">Archive record</a></span><br><code>berkeley-public-records:bcc-budget-finance-committee-2025-10-28-item-03-presentation</code></li>
+</ul></article>
+</section>
+<section id="series-budget"><h2>Budget and capital program</h2>
+<p class="series-desc">Capital plans, bond reports and budget documents that carry the project.</p>
+<article class="rec" id="2020-01-21_T1_update">
+<p class="rec-date">January 21, 2020</p>
+<h3>Update on Measure T1 City Infrastructure Bond Program</h3>
+<p class="meta">City of Berkeley — Office of the City Manager; Parks, Recreation &amp; Waterfront; Public Works · Information Calendar Item 52</p>
+<p>Measure T1 status report; records that the pier planning phase was expanded to study a potential ferry facility and public recreation on a shared pier.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2020-01-21-item-52-staff-report.pdf">Original (PDF, 0.7 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2020-01-21-item-52-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2020-01-21-item-52-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2020-01-21-item-52-staff-report</code></li>
+</ul></article>
+<article class="rec" id="2020-12-15_T1_phase2">
+<p class="rec-date">December 15, 2020</p>
+<h3>Revised Agenda Packet, Berkeley City Council meeting of December 15, 2020 (contains Item 14, Measure T1 Phase 2, at packet pp. 203-243)</h3>
+<p class="meta">City of Berkeley — City Clerk (agenda packet) · Item 14</p>
+<p>Measure T1 Phase 2 project selection; records support for rebuilding the pier and willingness to consider sharing it with a WETA ferry facility, and states that reconstruction by Berkeley acting alone is beyond T1 funding.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/t1/t1-2020-12-15-revised-agenda-packet-item14-t1-phase2.pdf">Original (PDF, 20.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/t1/t1-2020-12-15-revised-agenda-packet-item14-t1-phase2-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/t1-2020-12-15-revised-agenda-packet-item14-t1-phase2.json">Archive record</a></span><br><code>berkeley-public-records:t1-2020-12-15-revised-agenda-packet-item14-t1-phase2</code></li>
+</ul></article>
+<article class="rec" id="2021-03-16_parks_CIP_worksession">
+<p class="rec-date">March 16, 2021</p>
+<h3>Parks Capital Improvement Plan, Recent Projects and Ongoing Needs</h3>
+<p class="meta">City of Berkeley — Office of the City Manager · Worksession Item 3a</p>
+<p>Parks capital work session report; lists the Municipal Pier Structural Assessment and Ferry Feasibility Study with its funding sources (T1, Marina Fund, WETA).</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2021-03-16-special-item-03a-staff-report.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2021-03-16-special-item-03a-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2021-03-16-special-item-03a-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2021-03-16-special-item-03a-staff-report</code></li>
+</ul></article>
+<article class="rec" id="2024-07-17_parks_tax_reference">
+<p class="rec-date">July 17, 2024</p>
+<h3>Reference Information for Potential Parks Tax Increase</h3>
+<p class="meta">City of Berkeley — City Manager&#x27;s Office</p>
+<p>Background for a parks tax measure; its table of unfunded waterfront needs includes the Berkeley Pier with Ferry Access Project and the grant and WETA funding received.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/budgets/budgets-2024-07-17-reference-information-for-potential-parks-tax-increase.pdf">Original (PDF, 0.8 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/budgets/budgets-2024-07-17-reference-information-for-potential-parks-tax-increase-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/budgets-2024-07-17-reference-information-for-potential-parks-tax-increase.json">Archive record</a></span><br><code>berkeley-public-records:budgets-2024-07-17-reference-information-for-potential-parks-tax-increase</code></li>
+</ul></article>
+<article class="rec" id="2025-03-28_PRW_CIP_update">
+<p class="rec-date">March 28, 2025</p>
+<h3>Parks, Recreation, and Waterfront Department Capital Improvement Project and Minor Maintenance Program Update</h3>
+<p class="meta">City of Berkeley — Office of the City Manager</p>
+<p>Department capital update; lists the Berkeley Pier – Water Transportation Project in design, funded by grants and WETA, and the unfunded waterfront needs.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/t1/t1-2025-03-28-parks-recreation-and-waterfront-department-capital-improvement.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/t1/t1-2025-03-28-parks-recreation-and-waterfront-department-capital-improvement-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/t1-2025-03-28-parks-recreation-and-waterfront-department-capital-improvement.json">Archive record</a></span><br><code>berkeley-public-records:t1-2025-03-28-parks-recreation-and-waterfront-department-capital-improvement</code></li>
+</ul></article>
+<article class="rec" id="2025-11-06_AAO1_presentation">
+<p class="rec-date">November 6, 2025</p>
+<h3>First Amendment to the FY 2026 Annual Appropriations Ordinance (AAO#1) and Preliminary FY 2025 Year-end Status (presentation)</h3>
+<p class="meta">City of Berkeley — Finance/Budget Office, Budget &amp; Finance Policy Committee · Budget &amp; Finance Policy Committee Item 02a</p>
+<p>Budget amendment presentation; lists $964,158 for Berkeley Pier w/Ferry Access among other funds.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/budgets/budgets-2025-11-06-aao1-fy2026-presentation.pdf">Original (PDF, 0.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/budgets/budgets-2025-11-06-aao1-fy2026-presentation-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/budgets-2025-11-06-aao1-fy2026-presentation.json">Archive record</a></span><br><code>berkeley-public-records:budgets-2025-11-06-aao1-fy2026-presentation</code></li>
+</ul></article>
+<article class="rec" id="2026-05-28_CIP_presentation">
+<p class="rec-date">May 28, 2026</p>
+<h3>Proposed Five-Year Capital Improvement Program, Fiscal Years 2027-2031 (presentation)</h3>
+<p class="meta">City of Berkeley · Item 2</p>
+<p>Proposed CIP presentation; lists the ACTC and WETA grants to the Berkeley Pier–Water Transportation Project and the design and environmental phase.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-budget-finance-committee-2026-05-28-item-02-presentation.pdf">Original (PDF, 11.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-budget-finance-committee-2026-05-28-item-02-presentation-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-budget-finance-committee-2026-05-28-item-02-presentation.json">Archive record</a></span><br><code>berkeley-public-records:bcc-budget-finance-committee-2026-05-28-item-02-presentation</code></li>
+</ul></article>
+<article class="rec" id="2026-06-16_proposed_CIP">
+<p class="rec-date">June 16, 2026</p>
+<h3>Proposed Five-Year Capital Improvement Program (CIP) and Proposed Five-Year CIP Public Hearing No. 1</h3>
+<p class="meta">City of Berkeley — Office of the City Manager; Budget Office · Item 40c</p>
+<p>Proposed FY 2027–2031 CIP; lists the Pier Ferry Project&#x27;s design and environmental phase and its grant funding.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2026-06-16-item-40c-staff-report.pdf">Original (PDF, 20.7 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2026-06-16-item-40c-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-06-16-item-40c-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-06-16-item-40c-staff-report</code></li>
+</ul></article>
+<article class="rec" id="2026-06-23_budget_adoption">
+<p class="rec-date">June 23, 2026</p>
+<h3>Adoption of Fiscal Years 2027 and 2028 Biennial Budget and Fiscal Years 2027 – 2031 Capital Improvement Program</h3>
+<p class="meta">City of Berkeley — Office of the City Manager; Budget Office · Special Meeting Item 01</p>
+<p>Budget adoption report; carries the same CIP listing of the Pier Ferry Project&#x27;s design and environmental phase.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2026-06-23-special-item-01-staff-report.pdf">Original (PDF, 15.9 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2026-06-23-special-item-01-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-06-23-special-item-01-staff-report.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-06-23-special-item-01-staff-report</code></li>
+</ul></article>
+</section>
+<section id="series-public"><h2>Public comment and community records</h2>
+<p class="series-desc">Commission minutes, communications listings and published third-party material.</p>
+<article class="rec" id="council_communications">
+<p class="rec-date">June 29, 2021</p>
+<h3>Communications to the Council on the ferry, as listed in annotated agendas</h3>
+<p>Each annotated agenda lists the written communications the Council received, by subject and sender. These meetings list communications on the ferry, the pier or the waterfront parking plan. The communications themselves are not in the public archive.</p>
+<ul class="docs">
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2021-06-29</span><br><span class="pub">City of Berkeley — City Clerk</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2021-06-29-regular-annotated-agenda.pdf">Original (PDF, 0.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2021-06-29-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2021-06-29-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2021-06-29-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2021-09-14</span><br><span class="pub">City of Berkeley — City Clerk</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2021-09-14-regular-annotated-agenda.pdf">Original (PDF, 0.2 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2021-09-14-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2021-09-14-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2021-09-14-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2022-01-18</span><br><span class="pub">City of Berkeley — City Clerk</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2022-01-18-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2022-01-18-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2022-01-18-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2022-01-18-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2023-06-27</span><br><span class="pub">City of Berkeley — City Clerk</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2023-06-27-regular-annotated-agenda.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2023-06-27-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2023-06-27-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2023-06-27-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2024-01-30</span><br><span class="pub">City of Berkeley — City Clerk</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2024-01-30-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2024-01-30-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2024-01-30-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2024-01-30-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2025-04-15</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2025-04-15-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2025-04-15-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2025-04-15-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2025-04-15-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2025-06-03</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2025-06-03-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2025-06-03-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2025-06-03-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2025-06-03-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2026-02-24</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2026-02-24-regular-annotated-agenda.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2026-02-24-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-02-24-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-02-24-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2026-04-14</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2026-04-14-regular-annotated-agenda.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2026-04-14-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-04-14-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-04-14-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2026-05-12</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2026-05-12-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2026-05-12-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-05-12-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-05-12-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2026-05-19</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2026-05-19-regular-annotated-agenda.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2026-05-19-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-05-19-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-05-19-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2026-06-09</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2026-06-09-regular-annotated-agenda.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2026-06-09-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-06-09-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-06-09-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2026-07-28</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2026-07-28-regular-annotated-agenda.pdf">Original (PDF, 0.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2026-07-28-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-07-28-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-07-28-regular-annotated-agenda</code></li>
+<li><span class="doc-title">Annotated Agenda — Berkeley City Council regular meeting, 2026-10-13</span><br><span class="pub">City of Berkeley — City Clerk Department</span><br><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2026-10-13-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2026-10-13-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-10-13-regular-annotated-agenda.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-10-13-regular-annotated-agenda</code></li>
+</ul></article>
+<article class="rec" id="2025-11-12_PRW_commission_minutes">
+<p class="rec-date">November 12, 2025</p>
+<h3>Parks, Recreation, and Waterfront Commission — Regular Meeting, Wednesday, November 12, 2025 — Minutes - Draft (with attachments)</h3>
+<p class="meta">City of Berkeley — Parks, Recreation and Waterfront Commission · Item 17</p>
+<p>Commission minutes; public comment includes ferry options.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/parks-recreation-and-waterfront-commission-2025-11-12-item-17-draft-minutes.pdf">Original (PDF, 1.0 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/parks-recreation-and-waterfront-commission-2025-11-12-item-17-draft-minutes-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/parks-recreation-and-waterfront-commission-2025-11-12-item-17-draft-minutes.json">Archive record</a></span><br><code>berkeley-public-records:parks-recreation-and-waterfront-commission-2025-11-12-item-17-draft-minutes</code></li>
+</ul></article>
+<article class="rec" id="2026-03-11_PRW_commission_minutes">
+<p class="rec-date">March 11, 2026</p>
+<h3>Parks, Recreation, and Waterfront Commission — Regular Meeting, Wednesday, March 11, 2026 — Minutes - Draft (with attachments)</h3>
+<p class="meta">City of Berkeley — Parks, Recreation and Waterfront Commission · Item 9 and Item 12</p>
+<p>Commission minutes; public comment on the Draft EIR, the ferry and the Marina parking plan.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/parks-recreation-and-waterfront-commission-2026-03-11-item-09-draft-minutes.pdf">Original (PDF, 2.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/parks-recreation-and-waterfront-commission-2026-03-11-item-09-draft-minutes-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/parks-recreation-and-waterfront-commission-2026-03-11-item-09-draft-minutes.json">Archive record</a></span><br><code>berkeley-public-records:parks-recreation-and-waterfront-commission-2026-03-11-item-09-draft-minutes</code></li>
+</ul></article>
+<article class="rec" id="2026-10-01_SFBA_access_audit">
+<p class="rec-date">October 1, 2026</p>
+<h3>The State of Recreational Access to The San Francisco Bay: 2026, Annual Site Access Audit (San Francisco Boardsailing Association)</h3>
+<p class="meta">San Francisco Boardsailing Association (SFBA), a nonprofit windsurfing and water-sports user group</p>
+<p>Annual site audit by the San Francisco Boardsailing Association, a water-sports user group; its Berkeley Marina entry addresses paid parking and the proposed ferry terminal. Published third-party document.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/T0/community/community-2026-10-01-the-state-of-recreational-access-to-the-san-francisco-bay-2026-annual.pdf">Original (PDF, 3.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/third-party/community-2026-10-01-the-state-of-recreational-access-to-the-san-francisco-bay-2026-annual-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/community-2026-10-01-the-state-of-recreational-access-to-the-san-francisco-bay-2026-annual.json">Archive record</a></span><br><code>berkeley-public-records:community-2026-10-01-the-state-of-recreational-access-to-the-san-francisco-bay-2026-annual</code></li>
+</ul></article>
+</section>
+<section id="series-recordings"><h2>Meeting transcripts</h2>
+<p class="series-desc">Machine caption transcripts of meetings where the project came up. The archive&#x27;s transcripts begin in December 2024; earlier meetings have annotated agendas only.</p>
+<article class="rec" id="2025-06-24_special_captions">
+<p class="rec-date">June 24, 2025</p>
+<h3>BCC 2025-06-24 Special Captioning</h3>
+<p>Public comment connects proposed Marina parking charges to future ferry riders.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/council-captions/bcc-2025-06-24-special-captions.pdf">Original (PDF, 1.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/council-captions/bcc-2025-06-24-special-captions-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2025-06-24-special-captions.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2025-06-24-special-captions</code></li>
+</ul></article>
+<article class="rec" id="2026-04-16_budget_committee_captions">
+<p class="rec-date">April 16, 2026</p>
+<h3>BCC 2026-04-16 Budget Committee Captioning</h3>
+<p>Public comment raises the cost of the new ferry and pier.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/council-captions/bcc-2026-04-16-budget-committee-captions-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-04-16-budget-committee-captions-text.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-04-16-budget-committee-captions-text</code></li>
+</ul></article>
+<article class="rec" id="2026-07-07_regular_captions">
+<p class="rec-date">July 7, 2026</p>
+<h3>BCC 2026-07-07 Regular Captioning</h3>
+<p>The meeting at which Item 9 (Waterfront Specific Plan environmental review) was moved to the Consent Calendar and approved.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/council-captions/bcc-2026-07-07-regular-captions.pdf">Original (PDF, 2.8 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/council-captions/bcc-2026-07-07-regular-captions-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-07-07-regular-captions.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-07-07-regular-captions</code></li>
+</ul></article>
+<article class="rec" id="2026-09-15_regular_captions">
+<p class="rec-date">September 15, 2026</p>
+<h3>BCC 2026-09-15 Regular Captioning</h3>
+<p>Public comment on Item 12, the SR2TBT grant application for the project&#x27;s landside elements.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/council-captions/bcc-2026-09-15-regular-captions.pdf">Original (PDF, 2.7 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/council-captions/bcc-2026-09-15-regular-captions-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-09-15-regular-captions.json">Archive record</a></span><br><code>berkeley-public-records:bcc-2026-09-15-regular-captions</code></li>
+</ul></article>
+<article class="rec" id="2026-10-22_budget_committee_captions">
+<p class="rec-date">October 22, 2026</p>
+<h3>2026-10-22 Budget Committee Captioning Text- Policy Committee</h3>
+<p class="meta">City of Berkeley — City Clerk</p>
+<p>Waterfront discussion that refers to State Coastal Conservancy funding for a parking lot and the adjacent old ferry dock; public comment addresses the ferry.</p>
+<ul class="docs">
+<li><span class="links"><a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/council-captions/bcc-budget-finance-committee-2026-10-22-regular-captions.vtt">Original (VTT, 0.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/council-captions/bcc-budget-finance-committee-2026-10-22-regular-captions-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-budget-finance-committee-2026-10-22-regular-captions.json">Archive record</a></span><br><code>berkeley-public-records:bcc-budget-finance-committee-2026-10-22-regular-captions</code></li>
+</ul></article>
+</section>
+<section id="passing"><h2>Mentions in passing</h2>
+<p>These records name the project, the pier or WETA without describing them: a line in a project list, a definition, a planning narrative, a cross-reference. Annotated agendas for 2025-05-20, 2025-06-17 (both versions), 2025-06-24 and 2026-06-23 match &#x27;ferry&#x27; only because a speaker&#x27;s surname is Ferry.</p>
+<ul class="passing">
+<li>January 6, 1969: San Francisco Bay Plan <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/waterfront/waterfront-1969-01-06-san-francisco-bay-plan.pdf">Original (PDF, 14.9 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/waterfront/waterfront-1969-01-06-san-francisco-bay-plan-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/waterfront-1969-01-06-san-francisco-bay-plan.json">Archive record</a>)</span></li>
+<li>April 5, 2010: Voices to Vision: A Community Vision for Albany&#x27;s Waterfront <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/peer_cities/peer-cities-2010-04-05-voices-to-vision-a-community-vision-for-albany-s-waterfront.pdf">Original (PDF, 3.2 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/peer_cities/peer-cities-2010-04-05-voices-to-vision-a-community-vision-for-albany-s-waterfront-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/peer-cities-2010-04-05-voices-to-vision-a-community-vision-for-albany-s-waterfront.json">Archive record</a>)</span></li>
+<li>June 27, 2017: Recommendations for implementing Phase 1 of the Measure T1 City Infrastructure and Facilities Program (with joint Public Works / Parks &amp; Waterfront commission report) <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/t1/t1-2017-06-27-item49-t1-phase1-commission-recommendations.pdf">Original (PDF, 5.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/t1/t1-2017-06-27-item49-t1-phase1-commission-recommendations-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/t1-2017-06-27-item49-t1-phase1-commission-recommendations.json">Archive record</a>)</span></li>
+<li>May 2020: Sustainable and Resilient Infrastructure: Creating a Better Future for Berkeley (presented by the Vision 2050 Task Force) <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/vision2050/vision2050-2020-05-vision-2050-framework.pdf">Original (PDF, 7.9 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/vision2050/vision2050-2020-05-vision-2050-framework-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/vision2050-2020-05-vision-2050-framework.json">Archive record</a>)</span></li>
+<li>April 20, 2021: Contract: O.C. Jones &amp; Sons, Inc. for the Berkeley Marina Roadway Improvements Project: University Avenue (West Frontage Road to Marina Boulevard), Marina Boulevard, and Spinnaker Way Project <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2021-04-20-item-17-staff-report.pdf">Original (PDF, 0.5 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2021-04-20-item-17-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2021-04-20-item-17-staff-report.json">Archive record</a>)</span></li>
+<li>January 20, 2022: Discuss Vision 2050, Infrastructure Priorities, Stakeholder and Community Engagement, and City’s Bonding Capacity; and Seek Direction on November 2022 Revenue Measure(s) <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2022-01-20-ws-item-01-staff-report.pdf">Original (PDF, 2.8 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2022-01-20-ws-item-01-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2022-01-20-ws-item-01-staff-report.json">Archive record</a>)</span></li>
+<li>April 30, 2022: Strategic Asset Management Plan <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/vision2050/vision2050-2022-04-30-strategic-asset-management-plan.pdf">Original (PDF, 3.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/vision2050/vision2050-2022-04-30-strategic-asset-management-plan-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/vision2050-2022-04-30-strategic-asset-management-plan.json">Archive record</a>)</span></li>
+<li>May 10, 2022: Vision 2050: Strategic Asset Management Plan and Asset Management Policy <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2022-05-10-item-31-staff-report.pdf">Original (PDF, 20.6 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2022-05-10-item-31-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2022-05-10-item-31-staff-report.json">Archive record</a>)</span></li>
+<li>June 28, 2022: Amending Contract No. 32100184 with O.C. Jones &amp; Sons, Inc. for the Berkeley Marina Roadway Improvements Project <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2022-06-28-item-22-staff-report.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2022-06-28-item-22-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2022-06-28-item-22-staff-report.json">Archive record</a>)</span></li>
+<li>September 20, 2022: Residential Objective Standards: Middle Housing and Southside <span class="links">(<a href="https://archive.org/details/berkeley-public-records-bcc-2022-09-20-ws-item-01-staff-report">Original (PDF, 60.4 MB, Internet Archive)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2022-09-20-ws-item-01-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2022-09-20-ws-item-01-staff-report.json">Archive record</a>)</span></li>
+<li>September 12, 2023: Annotated Agenda — Berkeley City Council regular meeting, 2023-09-12 <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/annotated-agendas/bcc-2023-09-12-regular-annotated-agenda.pdf">Original (PDF, 0.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/annotated-agendas/bcc-2023-09-12-regular-annotated-agenda-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2023-09-12-regular-annotated-agenda.json">Archive record</a>)</span></li>
+<li>2024: Adopted Capital Improvement Program, Fiscal Years 2025-2029 <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/budgets/budgets-adopted-cip-fy2025-2029.pdf">Original (PDF, 9.6 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/budgets/budgets-adopted-cip-fy2025-2029-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/budgets-adopted-cip-fy2025-2029.json">Archive record</a>)</span></li>
+<li>May 24, 2024: Community Survey for Potential November 2024 Ballot Measures <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2024-05-24-special-item-01-staff-report.pdf">Original (PDF, 4.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2024-05-24-special-item-01-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2024-05-24-special-item-01-staff-report.json">Archive record</a>)</span></li>
+<li>July 30, 2024: Ballot Measure – Increasing the Parks, Trees and Landscaping Maintenance Tax <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2024-07-30-special-item-06c-staff-report.pdf">Original (PDF, 2.0 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2024-07-30-special-item-06c-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2024-07-30-special-item-06c-staff-report.json">Archive record</a>)</span></li>
+<li>October 2024: Draft Environmental Impact Report, Gilman Gateway Rezone Project, Berkeley, California, SCH# 2022120549 <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/zoning/zoning-2024-10-draft-environmental-impact-report-gilman-gateway-rezone-project.pdf">Original (PDF, 20.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/zoning/zoning-2024-10-draft-environmental-impact-report-gilman-gateway-rezone-project-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/zoning-2024-10-draft-environmental-impact-report-gilman-gateway-rezone-project.json">Archive record</a>)</span></li>
+<li>October 1, 2024: Grant Application: Regional Measure 3: 2025 Safe Routes to Transit and Bay Trail Program for the Bay Trail Extension <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2024-10-01-item-02-staff-report.pdf">Original (PDF, 0.2 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2024-10-01-item-02-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2024-10-01-item-02-staff-report.json">Archive record</a>)</span></li>
+<li>March 11, 2025: 2025 City Council Referral Prioritization Process Using Re-Weighted Range Voting (RRV) <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2025-03-11-special-item-01-staff-report.pdf">Original (PDF, 1.7 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2025-03-11-special-item-01-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2025-03-11-special-item-01-staff-report.json">Archive record</a>)</span></li>
+<li>March 25, 2025: BCC 2025-03-25 Regular Captioning <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/council-captions/bcc-2025-03-25-regular-captions.pdf">Original (PDF, 1.6 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/council-captions/bcc-2025-03-25-regular-captions-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2025-03-25-regular-captions.json">Archive record</a>)</span></li>
+<li>March 25, 2025: 2025 City Council Referral Prioritization Results Using Re-Weighted Range Voting (RRV) <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2025-03-25-special-item-03-staff-report.pdf">Original (PDF, 1.0 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2025-03-25-special-item-03-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2025-03-25-special-item-03-staff-report.json">Archive record</a>)</span></li>
+<li>December 2, 2025: Sharing the Final Report of the Mayor&#x27;s Vision 2050 Task Force (&quot;Realize Vision 2050&quot;) <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/vision2050/vision2050-2025-12-02-mayors-task-force-final-report.pdf">Original (PDF, 3.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/vision2050/vision2050-2025-12-02-mayors-task-force-final-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/vision2050-2025-12-02-mayors-task-force-final-report.json">Archive record</a>)</span></li>
+<li>January 20, 2026: Changes to Selected Recreation and Camps Facilities and Program Fees <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2026-01-20-item-23-staff-report.pdf">Original (PDF, 0.6 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2026-01-20-item-23-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-01-20-item-23-staff-report.json">Archive record</a>)</span></li>
+<li>January 27, 2026: Selected Marina Fee Increases <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2026-01-27-item-19-staff-report.pdf">Original (PDF, 0.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2026-01-27-item-19-staff-report-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-01-27-item-19-staff-report.json">Archive record</a>)</span></li>
+<li>February 2, 2026: PRW Capital Projects Monthly Update – January 2026 <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/t1/t1-2026-02-02-prw-capital-projects-monthly-update-january-2026.pdf">Original (PDF, 1.3 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/t1/t1-2026-02-02-prw-capital-projects-monthly-update-january-2026-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/t1-2026-02-02-prw-capital-projects-monthly-update-january-2026.json">Archive record</a>)</span></li>
+<li>April 1, 2026: Parks, Recreation &amp; Waterfront Capital Projects Update — South Cove Improvements Ribbon Cutting <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/t1/t1-2026-04-01-parks-recreation-waterfront-capital-projects-update-south-cove.pdf">Original (PDF, 1.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/t1/t1-2026-04-01-parks-recreation-waterfront-capital-projects-update-south-cove-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/t1-2026-04-01-parks-recreation-waterfront-capital-projects-update-south-cove.json">Archive record</a>)</span></li>
+<li>May 19, 2026: Supplemental Agenda Material for Supplemental Packet 2: Proposed FY 2027 and FY 2028 Biennial Budget and Proposed Biennial Budget Public Hearing #1 <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-2026-05-19-item-21-supplemental-agenda-material-supp-2.pdf">Original (PDF, 10.4 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-2026-05-19-item-21-supplemental-agenda-material-supp-2-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-05-19-item-21-supplemental-agenda-material-supp-2.json">Archive record</a>)</span></li>
+<li>May 19, 2026: Proposed FY 2027 and FY 2028 Biennial Budget and Proposed Biennial Budget Public Hearing #1 <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/budgets/budgets-2026-05-19-proposed-fy2027-fy2028-biennial-budget.pdf">Original (PDF, 10.2 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/budgets/budgets-2026-05-19-proposed-fy2027-fy2028-biennial-budget-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/budgets-2026-05-19-proposed-fy2027-fy2028-biennial-budget.json">Archive record</a>)</span></li>
+<li>May 28, 2026: Capital Improvement Program Overview, Proposed Capital Improvement Program 2027-2031 <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/staff-reports/bcc-budget-finance-committee-2026-05-28-item-02-cip-overview.pdf">Original (PDF, 4.1 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/staff-reports/bcc-budget-finance-committee-2026-05-28-item-02-cip-overview-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-budget-finance-committee-2026-05-28-item-02-cip-overview.json">Archive record</a>)</span></li>
+<li>July 7, 2026: PRW Capital Projects &amp; T1 Quarterly Update - June 2026 <span class="links">(<a href="https://github.com/ericdf/berkeley-public-records/blob/main/L0/sources/t1/t1-2026-07-07-prw-capital-projects-t1-quarterly-update-june-2026.pdf">Original (PDF, 1.7 MB)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/t1/t1-2026-07-07-prw-capital-projects-t1-quarterly-update-june-2026-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/t1-2026-07-07-prw-capital-projects-t1-quarterly-update-june-2026.json">Archive record</a>)</span></li>
+<li>August 3, 2026: Draft Environmental Impact Report, Solid Waste and Recycling Transfer Station Replacement Project, City of Berkeley, Alameda County, California, State Clearinghouse Number 2023080733 <span class="links">(<a href="https://archive.org/details/berkeley-public-records-transfer-station-2026-08-03-draft-eir">Original (PDF, 88.9 MB, Internet Archive)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/sources/transfer_station/transfer-station-2026-08-03-draft-eir-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/transfer-station-2026-08-03-draft-eir.json">Archive record</a>)</span></li>
+<li>October 27, 2026: Agenda Packet, Berkeley City Council Regular Meeting, October 27, 2026 <span class="links">(<a href="https://archive.org/details/berkeley-public-records-bcc-2026-10-27-regular-agenda-packet">Original (PDF, 36.8 MB, Internet Archive)</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/L1/agenda-packets/bcc-2026-10-27-regular-agenda-packet-text.txt">Text</a> · <a href="https://github.com/ericdf/berkeley-public-records/blob/main/manifest/bcc-2026-10-27-regular-agenda-packet.json">Archive record</a>)</span></li>
+</ul></section>
+<section id="gaps"><h2>Not in the archive</h2><ul>
+<li>Staff reports for the January 23, 2018, June 25, 2019 and May 31, 2022 Council items. Their annotated agendas are listed above.</li>
+<li>The written communications to the Council. The annotated agendas list them by subject and sender.</li>
+<li>WETA board agendas, minutes and staff reports, apart from the two WETA documents listed.</li>
+<li>The Facilities, Infrastructure, Transportation, Environment and Sustainability Committee packet of September 3, 2025.</li>
+<li>The Final EIR as a separate document. It is in the archive inside the November 17, 2026 Council packet.</li>
+<li>Transcripts of Council meetings before December 2024. The archive's caption transcripts begin then; for earlier meetings it holds annotated agendas.</li>
+</ul></section>
+<section id="searching"><h2>Searching the archive yourself</h2>
+<p>The archive adds records daily, and this aid lists what it held at commit <code>9eca05f</code>. To find what has arrived since, use two searches.</p>
+<p><strong>The project collection.</strong> The archive files the project's records under the collection <code>pier_ferry</code>, in <a href="https://github.com/ericdf/berkeley-public-records/tree/main/L0/sources/pier_ferry">L0/sources/pier_ferry</a> (originals) and <a href="https://github.com/ericdf/berkeley-public-records/tree/main/L1/sources/pier_ferry">L1/sources/pier_ferry</a> (text).</p>
+<p><strong>Everything else.</strong> Council reports, agendas, transcripts and other agencies' records that discuss the ferry are filed by document type, so they turn up only by searching the text. <a href="https://github.com/search?q=repo%3Aericdf%2Fberkeley-public-records+ferry&amp;type=code">GitHub code search</a> covers most of it. For a complete search, clone the archive and search its text layers:</p>
+<pre><code>git clone --depth 1 https://github.com/ericdf/berkeley-public-records
+cd berkeley-public-records
+grep -rliE 'ferr(y|ies)|WETA' L1 L2 T0</code></pre>
+<p>Expect false positives, such as the speaker surnamed Ferry. Cite a record by its archive id and check the copy you read against the sha256 in its archive record.</p></section>
+<section id="analysis"><h2>Analysis built on these records</h2><ul>
+<li><a href="pier-ferry.html">Funding a Ferry With More Questions Than Answers</a></li>
+<li><a href="ferry-decision-standard.html">The Case for Everything Except the Decision</a></li>
+<li><a href="ferry-approval.html">Happily Never After: A Ferry Tale</a></li>
+<li><a href="waterfront-fund.html">A Financial Riptide Is Threatening to Reshape Berkeley&#x27;s Waterfront</a></li>
+</ul></section>
+<footer><h3>About this finding aid</h3>
+<p>Compiled by the Berkeley Decision Project from its source registry for the pier-ferry project. Titles, dates, publishers and file details come from the archive manifest; the descriptions and the Council outcomes come from the documents and annotated agendas themselves. A finding aid is the guide a research library publishes to a collection: what it holds, how it is arranged, and how to use it.</p></footer>
+</div>
+<div class="bdp-site-footer" data-bdp-chrome><p>Every figure on this site traces to a primary document. Corrections are welcome and are published when received.</p><p>Related project: <a href="https://ericdf.github.io/council-scorecards/">Council Scorecards</a> assesses the conduct and performance of Berkeley&rsquo;s elected officials against a disclosed methodology.</p></div></body>
+</html>
